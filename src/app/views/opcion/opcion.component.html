@@ -1,0 +1,85 @@
+
+
+    <div   *ngIf=" opcion!=null  "  style="font-family:Arial, Helvetica, sans-serif;"   >
+
+        <div style="font-family:Arial, Helvetica, sans-serif;" >
+            <h3>{{opcionAccion}} </h3>  
+        </div>
+
+        <table cellpadding="2"  cellspacing="2"   border="0" >                                    
+            <tr    >
+               <td>Clave</td>
+               <td>
+                <input type="text" pInputText   size="30"     [(ngModel)]="opcion.clave"   /> 
+               </td>
+             </tr>   
+             <tr    >
+                <td>Texto</td>
+                <td>
+                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.texto"   /> 
+                </td>
+              </tr>     
+              
+              <tr    >
+                <td>Valor</td>
+                <td>
+                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.valor"   /> 
+                </td>
+              </tr>         
+              
+              <tr    >
+                <td>Tag</td>
+                <td>
+                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.tag"   /> 
+                </td>
+              </tr>         
+              
+              <tr>
+                <td>Visible</td>
+                <td>
+                  <p-inputSwitch [(ngModel)]="visible"></p-inputSwitch>
+               </td>
+             </tr>    
+             
+             <tr>
+              <td>Enabled</td>
+              <td>
+                <p-inputSwitch [(ngModel)]="enabled"></p-inputSwitch>
+             </td>
+           </tr>                           
+             
+                            
+           <tr    >
+            <td>Orden</td>
+            <td>
+               <input type="text" pInputText     [(ngModel)]="opcion.orden"   /> 
+           </td>              
+           </tr>
+
+           <tr *ngIf = "soyFiltro">
+            <td>Filtro</td>
+            <td>
+              <p-dropdown      [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedOpcion"   [options]="opcionFiltrada"  optionLabel="texto"></p-dropdown>
+           </td>
+         </tr> 
+              
+              <tr  >
+                <td colspan="2"  >
+                <div style="margin-top:10px ;"  >
+                 
+                    <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarOpcion()"></button>
+                    
+                    <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelarOpcion()"></button>
+                   
+                </div>
+                </td>
+
+              </tr>  
+
+             
+
+            
+        </table>         
+        
+ 
+    </div>  

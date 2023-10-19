@@ -1,0 +1,116 @@
+
+<style>
+
+.ui-dialog {
+    max-height: 100%;
+}
+.ui-dialog .ui-dialog-content {
+    height: 100%;
+}
+
+</style>
+
+
+
+<div   >
+ 
+
+
+
+    <div     >
+
+        <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
+            <h3>REGIONES </h3>  
+        </div>
+
+        <p-toolbar>
+            <div class="ui-toolbar-group-left">
+                <button pButton type="button"  (click)="agregarRegion()"    label="Agregar región" icon="pi pi-plus"></button>                 
+            </div>                      
+        </p-toolbar>
+     
+        <div     >
+
+
+
+            <div    >
+
+                
+    
+                <p-toolbar>
+                    <div   *ngIf="selectedRegion"   class="ui-toolbar-group-left">
+                        <button pButton type="button"  (click)="modificarRegion()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>  
+                        <button pButton type="button"  (click)="confirmDeleteRegion()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>                   
+                    </div>                      
+                </p-toolbar>
+     
+            </div>    
+
+
+            <p-table #dtRegiones  (onRowSelect)="regionChanged()"      [value]="regiones"    [paginator]="true" [rows]="30"  selectionMode="single" [(selection)]="selectedRegion"  dataKey="regionId"  >
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                          
+                           <th style="width: 100px;"  >Id</th>
+                           <th style="width: 100px;"  >Clave</th>
+                            <th style="width: 100px;"  >Nombre</th>
+                            <th style="width: 300px;"  >Marca</th>
+                            <th style="width: 120px;"  >Empresa</th>
+                                                 
+                    </tr>
+
+                    <tr>
+                         
+                        <th></th> 
+                        <th></th> 
+                        <th  >
+                            <input size="10"  pInputText type="text" (input)="dtRegiones.filter($event.target.value, 'nombre' , 'contains')">
+                         </th> 
+                         <th  >
+                            <input size="10"  pInputText type="text" (input)="dtRegiones.filter($event.target.value, 'marca' , 'contains')">
+                         </th>  
+                         <th  >
+                            <input size="10"  pInputText type="text" (input)="dtRegiones.filter($event.target.value, 'empresa' , 'contains')">
+                         </th>  
+                       
+
+                     </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-region>
+                    <tr  [pSelectableRow]="region" >
+                          
+
+                        <td>{{region.regionId}}</td>  
+                        <td>{{region.clave}}</td>  
+                        <td>{{region.nombre}}</td>     
+                        <td>{{region.marca}}</td> 
+                        <td>{{region.empresa}}</td> 
+                                            
+                    </tr>
+                </ng-template>
+
+            
+
+            </p-table>
+        
+        </div> 
+
+
+     
+
+
+
+        
+    </div>
+
+   
+   
+</div>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<p-contextMenu #cmRegiones popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsRegion"></p-contextMenu>
+
+
+
+

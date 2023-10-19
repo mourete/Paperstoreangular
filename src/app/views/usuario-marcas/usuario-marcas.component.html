@@ -1,0 +1,161 @@
+
+
+ <p-messages [value]="msgs"   [escape]=true  ></p-messages>
+
+ <div       >
+   <table  border="0"   cellpadding="1"  cellspacing="1"      >
+
+    <tr>
+      <td  style="width: 150px;font-weight: bold;">NOMBRE:</td>
+      <td style="text-align:left">
+        {{usuario?.nombre}}
+     </td>
+   </tr>       
+   <tr>
+    <td  style="width: 150px;font-weight: bold;">USUARIO:</td>
+    <td style="text-align:left">
+      {{usuario?.userName}}
+   </td>
+ </tr>        
+ <tr>
+  <td  style="width: 150px;font-weight: bold;">CORREO:</td>
+  <td style="text-align:left">
+    {{usuario?.mail}}
+ </td>
+</tr>   
+
+<tr>
+  <td>&nbsp;	</td>
+  <td>
+    &nbsp;	
+ </td>
+</tr>   
+  
+            
+    <tr>
+        <td>Empresa</td>
+        <td>
+          <p-dropdown    (onChange)="empresaChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedUsuarioEmpresa"   [options]="usuarioEmpresas"  optionLabel="nombreEmpresa"></p-dropdown>
+       </td>
+     </tr>       
+
+
+    
+
+
+       <tr slot="height:10px;"   >
+        <td   colspan="2"  >&nbsp; </td> 
+        
+       </tr>     
+
+    
+
+     <tr   >
+        <td>Marcas</td> 
+        <td   >
+           
+
+            <p-table     (onRowSelect)="marcaChanged()"     [style]="{width:'600px'}"    [paginator]="false" [rows]="10"   [value]="usuarioMarcas"     selectionMode="single"  [(selection)]="selectedUsuarioMarca"    dataKey="marcaId"      >
+
+              <ng-template pTemplate="header" >
+                <tr>
+                        <th     >Marcas</th>
+                        <th     >Todas las regiones</th>
+                                                                                        
+                </tr>
+            </ng-template>
+
+        
+              <ng-template pTemplate="body" let-um    let-rowIndex="rowIndex"   >
+                  <tr  [pSelectableRow]="um"      >          
+                      <td     > 
+                          <table  cellpadding='1'   >
+                             <tr> 
+                                   <td style="width: 55px;" > <p-inputSwitch [(ngModel)]="um.flagSeleccionada"  (onChange)="marcaSwitchChange($event,um)"    ></p-inputSwitch> </td>
+                                   <td> {{um.marca}} </td>
+                             </tr>
+                    
+                        </table>
+                      </td>           
+                     
+                      <td>  
+
+                        <table  cellpadding='1'   >
+                            <tr> 
+                                  <td style="width: 55px;" > <p-inputSwitch [(ngModel)]="um.flagTodo"    [disabled]="!um.flagSeleccionada"      (onChange)="marcaSwitchTodoChange($event,um)"     ></p-inputSwitch> </td>
+                                  <td>Todas sus regiones   </td>
+                            </tr>
+                   
+                       </table>
+
+                      </td>       
+                                    
+                  </tr>
+              </ng-template>     
+          </p-table>
+
+
+
+       </td>
+       </tr>    
+
+       <tr slot="height:10px;"   >
+        <td   colspan="2"  >&nbsp; </td> 
+        
+       </tr>     
+     
+
+
+       <tr     >
+        <td>Regiones</td> 
+        <td   >
+           
+
+            <p-table        [style]="{width:'600px'}"    [paginator]="false"     [value]="usuarioRegiones"         dataKey="regionId"      >
+
+              <ng-template pTemplate="header" >
+                <tr>
+                        <th     >Regiones</th>
+                        
+                                                                                        
+                </tr>
+            </ng-template>
+
+        
+              <ng-template pTemplate="body" let-ur    let-rowIndex="rowIndex"   >
+                  <tr  [pSelectableRow]="ur"      >          
+                      <td     > 
+                          <table  cellpadding='1'   >
+                             <tr> 
+                                   <td style="width: 55px;" > <p-inputSwitch [(ngModel)]="ur.flagSeleccionada"    (onChange)="regionSwitchChange($event,ur)"     [disabled]="!ur.flagEditable"     ></p-inputSwitch> </td>
+                                   <td> {{ur.nombre}} </td>
+                             </tr>
+                    
+                        </table>
+                      </td>           
+     
+                                    
+                  </tr>
+              </ng-template>     
+          </p-table>
+
+
+
+       </td>
+       </tr>           
+
+
+
+      
+       </table>                
+
+      
+
+ </div>
+ <div style="padding:20px;"  >
+ 
+   
+   <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
+  
+</div>
+

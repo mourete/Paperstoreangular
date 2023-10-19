@@ -1,0 +1,2 @@
+ng build
+ng build --prod --base-href /

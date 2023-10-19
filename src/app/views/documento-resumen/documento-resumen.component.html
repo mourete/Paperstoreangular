@@ -1,0 +1,65 @@
+
+
+              <div  *ngIf="documentoResumen && documentoResumen.documento"   >
+                <table  border="0" >
+          
+                      <tr>
+                         <td>Clave</td>
+                         <td>
+                            {{documentoResumen.documento.clave}} 
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>Nombre</td>
+                        <td>
+                           {{documentoResumen.documento.nombre}}
+                       </td>
+                     </tr>       
+                     
+                     <tr>
+                        <td>Estatus</td>
+                        <td>
+                             {{documentoResumen.documento.estatus}}   
+                       </td>
+                     </tr>          
+                     
+                     <tr>
+                        <td>Fecha de creación</td>
+                        <td>
+                            
+                       </td>
+                     </tr>       
+          
+                    
+                   
+                    </table>                
+
+                   
+                <div   >
+
+
+                    <p-table [value]="documentoResumen.secciones"    [paginator]="true" [rows]="10"   >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Nombre sección</th>
+                                <th>Total de preguntas</th>
+                                <th>Preguntas opcionales</th>
+                                <th>Preguntas obligatorias</th>                                
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-seccion>
+                            <tr>
+                                <td>{{seccion.nombre}}</td>
+                                <td></td>        
+                                <td></td>  
+                                <td></td>           
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+
+                </div>
+               
+              
+            </div>

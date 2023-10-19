@@ -1,0 +1,153 @@
+
+
+ <p-messages [value]="msgs"   [escape]=true  ></p-messages>
+
+ <div    *ngIf="usuario"    >
+
+ 
+  
+  <form [formGroup]="profileUsuario" (ngSubmit)="onSubmit()" class="box-model form-support-margin">
+   
+   <table  border="0"   cellpadding="1"  cellspacing="1"      >
+
+
+    <tr     >
+        <td>Usuario</td>
+        <td>
+           <input type="text" pInputText  [style]="{'width':'30rem'}"   formControlName="userName"  [(ngModel)]="usuario.userName" /> 
+           <div *ngIf="f.nombre.errors?.required">
+            Usuario es requerido
+          </div>
+          
+       </td>
+    </tr>   
+
+
+    <tr     >
+        <td>Nombre</td>
+       
+       <td>
+        <input type="text" pInputText formControlName="nombre"  [style]="{'width':'30rem'}"    [(ngModel)]="usuario.nombre"   pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" />
+        <div *ngIf="f.nombre.errors?.required">
+         Nombre es requerido
+       </div>
+       <div *ngIf="f.nombre.errors?.pattern">
+         Nombre solo acepta letras
+       </div> 
+    </td>
+    </tr>       
+
+
+    <tr    style="padding:15px;"   >
+        <td>Contraseña:</td>
+        <td>
+           <input type="password" pInputText  [style]="{'width':'30rem'}"  formControlName="pass"   [(ngModel)]="usuario.pass"   /> 
+           <div *ngIf="f.pass.errors?.required">
+            Contraseña es requerido
+          </div>
+       </td>
+     </tr>  
+
+
+     <tr      style="padding:15px;"   >
+        <td>Repita contraseña:</td>
+        <td>
+           <input type="password" [style]="{'width':'30rem'}"  pInputText   formControlName="passwordConfirm"  [(ngModel)]="passwordConfirm"   /> 
+       </td>
+     </tr>       
+
+
+     <tr     >
+        <td>Correo electrónico</td>
+        <td>
+           <input type="text" [style]="{'width':'30rem'}"  pInputText     formControlName="mail"  [(ngModel)]="usuario.mail"   pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required/> 
+           <div *ngIf="f.mail.errors?.required">
+            Correo es requerido
+          </div>
+          <div *ngIf="f.mail.errors?.pattern">
+           Correo invalido
+          </div>
+       </td>
+    </tr>            
+
+
+    <tr>
+        <td>Dirección</td>
+        <td>
+           <textarea pInputTextarea  [style]="{'width':'30rem'}" [rows]="2" [cols]="35"   formControlName="direccion" [(ngModel)]="usuario.direccion"   ></textarea> 
+       </td>
+     </tr> 
+
+
+     <tr     >
+        <td>Teléfono</td>
+        <td>
+           <input type="text" pInputText  [style]="{'width':'30rem'}"  formControlName="telefono"  [(ngModel)]="usuario.telefono"   /> 
+       </td>
+    </tr>           
+
+
+     <tr>
+       <td>Puesto</td>
+       <td>
+         <p-dropdown  [style]="{'width':'30rem'}"   (onChange)="puestoChanged()"   formControlName="selectedPuesto" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedPuesto"   [options]="puestos"  optionLabel="nombre"></p-dropdown>
+      </td>
+    </tr>         
+            
+   
+  
+     <tr slot="height:10px;"   >
+        <td   colspan="2"  >&nbsp; </td> 
+        
+    </tr>     
+
+
+
+     <tr>
+        <td>Perfiles</td> 
+        <td>
+           
+          <p-listbox  [options]="usuarioPerfiles" [(ngModel)]="usuarioPerfilSeleccionado" [metaKeySelection]="false" [checkbox]="true" [multiple]="true"
+          [required]="true" [filter]="true" formControlName="flag_seleccionado" [listStyle]="{'max-height':'250px'}" [style]="{'width':'30rem'}" optionLabel="nombre">
+          </p-listbox>
+       </td>
+       </tr>  
+
+
+       <tr slot="height:10px;"   >
+        <td   colspan="2"  >&nbsp; </td> 
+        
+       </tr>     
+
+    
+
+     <tr >
+        <td>Puestos</td> 
+        <td   >
+           
+          <p-tree [value]="accesos" min="1" formControlName="flag_puesto" selectionMode="checkbox"  [style]="{'width':'30rem'}"
+          [(selection)]="accesosSeleccionados" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+         
+       </td>
+       </tr>    
+
+
+     
+
+
+
+      
+       </table>                
+
+      </form>    
+     
+
+ </div>
+ <div style="padding:20px;"  >
+    
+   <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guadarUsuario()" ></button>
+   
+   <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
+
+  
+</div>

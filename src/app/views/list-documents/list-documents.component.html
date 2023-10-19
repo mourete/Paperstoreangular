@@ -1,0 +1,122 @@
+
+
+
+
+
+<div    *ngIf=" !designing "   >
+ 
+
+
+
+    <div   *ngIf="documentos && !designing "    >
+
+        <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
+            <h3>DOCUMENTOS </h3>  
+        </div>
+
+        <p-toolbar>
+            <div class="ui-toolbar-group-left">
+                <button pButton type="button"  (click)="agregarDocumento()"    label="Agregar documento" icon="pi pi-plus"></button>                 
+            </div>                      
+        </p-toolbar>
+     
+        <div     >
+
+
+
+            <div    >
+
+                
+    
+                <p-toolbar>
+                    <div   *ngIf="selectedDocumento"   class="ui-toolbar-group-left">
+                        <button pButton type="button"  (click)="modificarDocumento()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>  
+                        <button pButton type="button"  (click)="confirmDeleteDocumento()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>  
+                        <button pButton type="button"  (click)="designDocumento()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-file"></button>  
+                 
+                    </div>                      
+                </p-toolbar>
+     
+            </div>    
+
+
+            <p-table #dtDoc  (onRowSelect)="documentoChanged()"      [value]="documentos"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedDocumento"  dataKey="documentoId"  >
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                       
+                            <!-- <th style="width: 100px;"  >Acciones</th> -->
+                            <th  style="width: 120px;" >Id</th>
+                            <th  >Clave</th>
+                            <th>Nombre</th>
+                            <th>Estatus</th>
+                       
+                    </tr>
+
+                    <tr>
+                         
+                       
+                        <th  style="width: 120px;" >
+                            <input size="10"  pInputText type="text" (input)="dtDoc.filter($event.target.value, 'documentoId' , 'contains')">
+                         </th>     
+                         
+                         <th >
+                            <input size="20"  pInputText type="text" (input)="dtDoc.filter($event.target.value, 'clave' , 'contains')">
+                         </th>
+
+                         <th style="text-align: left; " >
+                            <input size="16"  pInputText type="text" (input)="dtDoc.filter($event.target.value, 'nombre' , 'contains')">
+                         </th>
+
+                         <th style="text-align: left; " >
+                            <input size="16"  pInputText type="text" (input)="dtDoc.filter($event.target.value, 'estatus' , 'contains')">
+                         </th>
+
+                    </tr>                    
+
+
+                </ng-template>
+                <ng-template pTemplate="body" let-documento>
+                    <tr  [pSelectableRow]="documento" >
+                       <!--  <td   >
+                            <div  > 
+                            <p-menu #menuDocumento popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsDocumento"></p-menu>
+                            <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'22px' , 'height':'22px'  }"  pButton icon="pi pi-list"   (click)="menuDocumento.toggle($event);onClickMenuDocumento(documento);"></button>
+                            </div> 
+                        </td>    -->
+                        <td style="width: 120px;" >{{documento.documentoId}}</td>
+                        <td>{{documento.clave}}</td>
+                        <td>{{documento.nombre}}</td>     
+                        <td>{{documento.estatus}}</td> 
+                    </tr>
+                </ng-template>
+
+            
+
+            </p-table>
+        
+        </div> 
+
+
+     
+
+
+
+        
+    </div>
+
+   
+   
+</div>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<p-contextMenu #cmDocumentos popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsDocumento"></p-contextMenu>
+
+
+<div  style="text-align: left;"   *ngIf="selectedDocumento && designing " >
+
+    <a   style="font-size:1.1em;margin-bottom:10px;"   [routerLink]="[]" (click)="backToDocumentList()" >Regresar a lista de documentos</a>
+
+<app-display-document  [varDocumentoId]="selectedDocumento.documentoId"  [varDocumento]="selectedDocumento"></app-display-document>
+
+</div>

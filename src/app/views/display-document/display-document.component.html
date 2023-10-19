@@ -1,0 +1,164 @@
+<style>
+
+.ui-dialog {
+    width: auto !important;
+}
+
+</style>
+
+
+
+
+<div style="font-family:Arial, Helvetica, sans-serif;" >
+    <h3> DISEÑO DE DOCUMENTO </h3>  
+  </div>
+ 
+
+
+<div  style="text-align: left; font-size: 1.1em; "   *ngIf="documento"   >
+
+
+    <div  style="margin-bottom: 10px;" >
+        
+        <table  border="0" >
+          
+            <tr>
+               <td  style="width: 150px;font-weight: bold;"  >CLAVE:</td>
+               <td>
+                  {{varDocumento.clave}} 
+              </td>
+            </tr>
+
+            <tr>
+              <td   style="font-weight: bold;" >NOMBRE:</td>
+              <td>
+                 {{documento.nombre}}
+             </td>
+           </tr>       
+           
+           <tr>
+              <td   style="font-weight: bold;" >ESTATUS:</td>
+              <td>
+                   {{varDocumento.estatus}}   
+             </td>
+           </tr>          
+           
+           <tr>
+              <td   style="font-weight: bold;" >OBSERVACIONES:</td>
+              <td>
+                {{documento.observaciones}}  
+             </td>
+           </tr>       
+
+          
+         
+          </table>       
+    
+    
+    
+    </div>
+
+
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button"  (click)="agregarSeccion(0)"    label="Agregar sección" icon="pi pi-plus"></button>
+             
+        </div>
+        
+      
+    </p-toolbar>
+
+
+
+    <div   *ngIf="documento.secciones"   style="margin: 0px;"   >
+        <p-panel   *ngFor="let seccion of documento.secciones; index as indexSec "    [toggleable]="true"    > 
+    
+
+            <p-header>
+                <div class="ui-helper-clearfix">
+                    <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">{{indexSec+1}}.{{seccion.nombre}}</span>
+                    <p-menu #menu popup="popup"   [style]="{   'width':'250px'  }"    [model]="items"></p-menu>
+                    <button type="button" [style]="{'float':'right'}"  pButton icon="pi pi-list"   (click)="menu.toggle($event);onClickMenuSeccion(seccion);"></button>
+
+                       
+                </div>
+
+
+
+            </p-header>
+
+
+              <div   *ngIf="seccion.conceptos"   >
+
+
+
+                <p-toolbar>
+                    <div class="ui-toolbar-group-left">
+                       
+                        <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'22px' , 'height':'22px' , 'margin-right' : '5px'  }"  pButton icon="pi pi-arrow-up"      (click)="changeConceptoOrder(1);"   [attr.disabled]="disabled ? '' : null" ></button>
+                        <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'22px' , 'height':'22px' , 'margin-right' : '5px'  }"  pButton icon="pi pi-arrow-down"    (click)="changeConceptoOrder(0);"    [attr.disabled]="disabled ? '' : null"  ></button>   
+                        <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'22px' , 'height':'22px' , 'margin-right' : '5px'  }"  pButton icon="pi pi-pencil"    (click)="clickBotonEditarConcepto();"   [attr.disabled]="disabled ? '' : null"   ></button>   
+                        
+                    </div>                      
+                </p-toolbar>            
+
+
+
+                <p-table   (onRowSelect)="onRowSelectConcepto($event)"    [contextMenu]="cmConceptos"    [(contextMenuSelection)]="concepto"    [value]="seccion.conceptos"   [(selection)]="concepto"        selectionMode="single"    dataKey="conceptoOID"  >
+                    
+                    <ng-template pTemplate="body" let-concepto    let-rowIndex="rowIndex"   >
+                        <tr  [pSelectableRow]="concepto"   [pContextMenuRow]="concepto"     >
+
+  
+                            <td  style="width: 50px;"  >{{rowIndex+1}} </td>
+                            <td   style="width: 160px;" >{{concepto.clave}}</td>
+                            <td *ngIf="concepto.tipoConceptoId!=10"  >{{concepto.descripcion}}</td>
+                            <td *ngIf="concepto.tipoConceptoId==10"  colspan="2"> {{concepto.descripcion}}</td> 
+                            <td  *ngIf="concepto.tipoConceptoId==6"  >
+                                <p-dropdown  [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedOption"   [options]="concepto.opciones"  optionLabel="texto"></p-dropdown>
+                            </td>           
+                            <td  *ngIf="concepto.tipoConceptoId==1 || concepto.tipoConceptoId==2 || concepto.tipoConceptoId==3 || concepto.tipoConceptoId==12 "  >
+                                 <input type="text" pInputText  /> 
+                            </td>
+                            
+                            <td  *ngIf="concepto.tipoConceptoId==4 || concepto.tipoConceptoId==13"   >
+                                <p-calendar   showIcon="true" showButtonBar="true"></p-calendar>
+                           </td>                           
+                           <td  *ngIf="concepto.tipoConceptoId==8"   >
+                                <input type="file" />
+                            </td>  
+                           <td  *ngIf="concepto.tipoConceptoId==5"   >
+                                <p-calendar [timeOnly]="true"  showIcon="false" showTime="true" hourFormat="12"></p-calendar>
+                            </td>        
+                            
+                            <td  *ngIf="concepto.tipoConceptoId==7"   >
+                                <div   *ngIf="concepto.opciones"     >
+                                    <div   *ngFor="let opcion of concepto.opciones"   style="margin: 5px;"  >
+                                          <p-checkbox     name="groupname" label="{{opcion.texto}}"  ></p-checkbox>                                   
+                                     </div>
+                                </div>
+                                 
+                            </td>                               
+                                                    
+                             
+    
+                        </tr>
+                    </ng-template>     
+                </p-table>
+
+
+
+
+              
+                   
+
+              </div>  
+        </p-panel>
+    </div>
+</div>
+
+
+ 
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<p-contextMenu   (onShow)="onMenuConceptoShow($event)"     #cmConceptos popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsConcepto"></p-contextMenu>

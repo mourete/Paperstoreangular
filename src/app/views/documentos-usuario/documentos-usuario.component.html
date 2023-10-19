@@ -1,0 +1,200 @@
+
+
+ 
+<style>
+
+a:hover {
+   color: black;
+   text-decoration: underline;
+   font-weight: bold;
+}
+
+a:link{
+    color: black;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+a:active{
+    color: black;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+a:visited{
+    color: black;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+
+</style>
+
+
+
+<div *ngIf="!mostrandoInstancia"  >
+     <div   style="font-family:Arial, Helvetica, sans-serif;margin: 20px;font-size: 1.1em;"   >
+
+        <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
+            <h3>DOCUMENTOS </h3>  
+        </div>
+ 
+     
+        <div  *ngIf=" documentosUsuario && documentosUsuario.marcasCiudad "        >
+
+            <table    style="background-color: #DAE6F2; width: 100%; "    cellpadding="2"  cellspacing="0"   >
+            <tr>
+            <td>       
+
+            <table   style="background-color: #DAE6F2; width: 100%;  "    cellpadding="4"  cellspacing="0"   *ngIf=" documentosUsuario.marcasCiudad.length>0 "      >
+                 
+                    <tr    >
+                       
+                            <th  style="text-align: left;vertical-align: top;width: 150px;  "    >Marca</th>
+                            <th   style="text-align: left;vertical-align: top;  "    >Documentos</th>
+                            
+                       
+                    </tr>
+                 
+                 
+                    <tr   style="background-color: #ffffff;"    *ngFor=" let marca of  documentosUsuario.marcasCiudad  "  >
+                         
+
+                        <td  style="text-align: left;vertical-align: top; font-weight: bold;  "    >{{marca.marca }}</td>    
+                        <td   style="text-align: left;vertical-align: top;  "   >
+
+                            <div      >
+
+                                <table  style="margin-left: 10px;"    >
+                                    <tr>                       
+                                        <td    style="text-align: left;vertical-align: top;font-weight: bold;  "    >{{marca.ciudad}}</td>                                                                                                             
+                                    </tr>
+                                    <tr>
+                                       <td   style="text-align: left;vertical-align: top;  "   >
+                                          <div  *ngIf=" marca.sucursales && marca.sucursales.length>0  "   >   
+                                              
+                                            <table     style="margin-left: 10px;"     >
+                                                
+                                                <tr  *ngFor=" let sucursal of marca.sucursales "  >
+                                                   <td>
+                                                      <div>    
+                                                           <table   style="margin-left: 10px;"    >
+                                                                <tr>
+                                                                    <td>{{sucursal.sucursal}}  </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                   <td>
+                                                                      <div  *ngIf=" sucursal.documentos && sucursal.documentos.length>0  "   > 
+                                                                              <table   style="margin-left: 20px;"    >                                                
+                                                                                  <tr  *ngFor=" let documento of sucursal.documentos   "  >
+                                                                                        <td>
+                                                                                            
+                                                                                                                                                                                
+                                                                                            <a   [routerLink]="[]" (click)="mostrarInstancia(documento.documentoId,documento.proyectoId,documento.regionId,sucursal.sucursalId,usuarioOID,documento.documento,sucursal.sucursal,documento.region,documento.cantidadDocumento,documento.cantidadInstancias, marca.marca, marca.ciudad)"   >{{documento.documento}} - {{documento.cantidadInstancias}} de {{documento.cantidadDocumento}} Instancias </a>
+                                                                                        
+                                                                                        </td> 
+                                                                                  </tr>
+                                                                                </table>
+                                                                            
+
+                                                                      </div>   
+
+
+                                                                   </td> 
+
+                                                                </tr>
+
+
+                                                           </table>
+            
+            
+             
+                                                      </div>
+                                                   </td>  
+            
+            
+                                                </tr>
+            
+            
+            
+                                            </table> 
+
+
+ 
+                                          </div>
+                                       </td>  
+
+
+                                    </tr>
+
+
+
+                                </table> 
+
+                            </div>
+
+
+
+
+
+                        </td>     
+                         
+                    </tr>
+               
+
+            
+
+            </table>
+
+            </td> 
+            </tr>    
+            </table>
+        
+        </div> 
+
+
+     
+
+
+
+        
+    </div>
+
+   
+   
+</div>
+
+
+
+<div  *ngIf="mostrandoInstancia"   >
+
+    <!-- <a   style="font-size:1.1em;margin-bottom:10px;    color: #007ad9;
+    text-decoration: none; font-weight: 400;"  id="quitar"  [routerLink]="" (click)="backToDocumentList()" >Regresar a documentos</a>-->
+
+
+    <app-list-documento-instancias
+
+    [varDocumentoId]="currDocumentoId"
+    [varProyectoId]="currProyectoId"
+    [varRegionId]="currRegionId" 
+    [varSucursalId]="currSucursalId"
+    [varUsuarioOID]="currUsuarioOID"
+    [varDocumento]="currDocumento"
+    [varSucursal]="currSucursal"
+    [varRegion]="currRegion"
+    [varNumDocumentos]="currNumDocumentos"
+    [varNumInstancias]="currNumInstancias"
+    [varEmpresa] = "currEmpresa"
+    [varMarca] = "currMarca"
+
+    ></app-list-documento-instancias>
+
+</div>
+
+
+
+
+
+
+

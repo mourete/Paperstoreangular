@@ -1,0 +1,41 @@
+
+
+<div   >
+ 
+
+    <div     >
+
+        <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
+            <h3>SELECCIONE EL HUESPED A TRABAJAR  </h3>  
+        </div>
+
+        <div  *ngIf="listaHuespedes"     >
+            <p-table   (onRowSelect)="huespedChanged()"      [value]="listaHuespedes"    [paginator]="false"    selectionMode="single" [(selection)]="selectedHuesped"    >
+                <ng-template pTemplate="header" let-columns>
+                    <tr>                       
+                            <th style="width: 100px;"  >Huesped ID</th>
+                            <th style="width: 120px;"  >NombreHuesped</th>
+                                                   
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-huesped>
+                    <tr  [pSelectableRow]="huesped" >                        
+                        <td>{{huesped.huespedId }}</td>    
+                        <td>{{huesped.nombreHuesped}}</td>     
+                        
+                    </tr>
+                </ng-template>
+
+            
+            </p-table>        
+        </div> 
+        
+    </div>
+
+   
+   
+</div>
+
+ 
+
+

@@ -1,0 +1,28 @@
+
+              <div     >
+                <table  border="0"  cellpadding="2"  cellspacing="2"  >
+
+                  <tr>
+                    <td>Clave</td>
+                    <td>
+                       <input type="text" pInputText   size="10"     [(ngModel)]="seccion.clave"   /> 
+                   </td>
+                 </tr>                      
+                               
+                      <tr>
+                        <td>Nombre</td>
+                        <td>
+                           <input type="text" pInputText   size="50"   [(ngModel)]="seccion.nombre"   /> 
+                       </td>
+                     </tr>       
+                                                              
+                </table>                
+              </div>
+              
+
+                <div style="margin-top:20px;"  >                
+               
+                <button pButton style="margin:3px;" type="button" label="Guardar" (click)="guadarSeccion()"></button>
+                <button pButton style="margin:3px;" type="button" label="Cancelar" (click)="cancelar()"></button>
+              </div>
+

@@ -1,0 +1,338 @@
+
+
+ <p-messages [value]="msgs"   [escape]=true  ></p-messages>
+
+ <div    *ngIf="proyecto"    >
+
+  <div>
+    
+    <table  border="0"   cellpadding="1"  cellspacing="1"      >
+        <tr     >
+            <td  style="vertical-align: top;"  >
+
+
+   <table  border="0"   cellpadding="1"  cellspacing="1"      >
+
+    <tr     >
+        <td>Clave</td>
+        <td>
+           <input type="text" pInputText     [(ngModel)]="proyecto.clave"   /> 
+       </td>
+    </tr>       
+
+
+    <tr     >
+        <td>Nombre</td>
+        <td>
+           <input type="text" pInputText     [(ngModel)]="proyecto.nombre"   /> 
+       </td>
+    </tr>           
+ 
+                
+    <tr   *ngIf="selectedEmpresa"  >
+        <td>Empresa</td>
+        <td>
+          <p-dropdown    (onChange)="empresaChanged(2)"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedEmpresa"   [options]="empresas"  optionLabel="nombre"></p-dropdown>
+       </td>
+     </tr>    
+   
+     <tr   *ngIf="selectedMarca"  >
+        <td>Marca</td>
+        <td>
+          <p-dropdown    (onChange)="marcaChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedMarca"   [options]="marcas"  optionLabel="nombre"></p-dropdown>
+       </td>
+     </tr>   
+
+     <tr     >
+        <td>Descripción</td>
+        <td>
+            <textarea  [rows]="5" [cols]="40"   pInputTextarea [(ngModel)]="proyecto.descripcion"></textarea>
+          
+       </td>
+    </tr>      
+
+
+     
+
+      
+    </table>    
+    
+            </td>
+
+       
+        <td style="width: 55px;" > </td>
+
+        <td  style="vertical-align: top;"  >
+
+            <table  border="0"   cellpadding="1"  cellspacing="1"      >
+ 
+                
+                <tr     >
+                   <td>Fecha Inicial</td>
+                   <td>
+                      <p-calendar   [(ngModel)]="proyecto.fechaIniDate"  dateFormat="dd/mm/yy"    showIcon="true" showButtonBar="true"></p-calendar>
+                      
+                   </td>
+               </tr>
+               <tr     >
+                   <td>Fecha Final</td>
+                   <td>
+                       <p-calendar   [(ngModel)]="proyecto.fechaFinDate"  dateFormat="dd/mm/yy"    showIcon="true" showButtonBar="true"></p-calendar>
+                       
+                   </td>
+               </tr>
+               <tr     >
+                   <td>Dias Vigencia</td>
+                   <td>
+                    <p-inputNumber [(ngModel)]="proyecto.diasVigencia"  [showButtons]="true"    [min]="0" [max]="100"></p-inputNumber>
+                    
+                     
+                   </td>
+               </tr>
+               <tr     >
+                   <td>Cantidad de documentos</td>
+                   <td>
+                    <p-inputNumber [(ngModel)]="proyecto.cantidadDocumento"  [showButtons]="true"    [min]="0" [max]="100"></p-inputNumber> 
+                      
+                   </td>
+               </tr>
+          
+           
+
+               </table>    
+
+
+        </td>
+      </tr>
+    </table>        
+
+
+   
+
+ </div>
+ <div style="padding:20px;"  >
+      <h2>CAPTURA DE REGIONES</h2>
+</div>
+
+
+ <div    >
+    <table  cellpadding='1'   >
+        <tr   >
+           
+           <td  style="vertical-align: top;background-color: rgba(163, 75, 75, 0.377);"  >
+           
+               <p-table  #dtProyectoRegionTable    [style]="{width:'550px' , height:'350px'  , background:'#f6f6f6'   }"    [paginator]="true" [rows]="5"   [value]="proyectoRegiones"     selectionMode="multiple"  [(selection)]="selectedProyectoRegionesLeft"    dataKey="regionId"       >
+   
+                 <ng-template pTemplate="header" >
+                   <tr>
+                           <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox>  </th>
+                           <th     >Clave</th>
+                           <th   style="width: 200px;"    >Nombre</th>
+                           <th     >Calle</th>
+                           <th     >Numero</th>
+                                                                                           
+                   </tr>
+                   <tr>
+                    <th  ></th>
+                    <th  ></th>
+                    <th  >
+                      <input size="10"  pInputText type="text" (input)="dtProyectoRegionTable.filter($event.target.value, 'nombre' , 'contains')">
+                   </th> 
+                   <th  ></th>
+                    <th  ></th>
+                   </tr>
+               </ng-template>
+   
+           
+                 <ng-template pTemplate="body" let-prLeft    let-rowIndex="rowIndex"   >
+                     <tr  [pSelectableRow]="prLeft"      >        
+                      <td>
+                        <p-tableCheckbox [value]="prLeft"></p-tableCheckbox>
+                    </td>   
+                         <td     >{{prLeft.clave}} </td>  
+                         <td     >{{prLeft.nombre}} </td>   
+                         <td     >{{prLeft.calle}} </td>   
+                         <td     >{{prLeft.numero}} </td>                                                        
+                     </tr>
+                 </ng-template>     
+             </p-table>
+  
+          </td>
+  
+          <td  style="vertical-align: top;" >
+  
+              <table>
+                  
+                  <tr><td><button pButton style="margin:3px;" icon="pi pi-arrow-right"  type="icon"   (click)="addRegion()"></button></td></tr>
+                  <tr><td><button pButton style="margin:3px;" icon="pi pi-arrow-left"  type="icon"  (click)="removeRegion()"></button></td></tr>
+              </table>
+  
+  
+          </td>
+  
+  
+          <td style="vertical-align: top;background-color:  rgba(163, 75, 75, 0.377)"   >
+           
+           <p-table   #dtProyectoRegionTable2   [style]="{width:'550px' , height:'350px' , background:'#f6f6f6'  }"    [paginator]="true" [rows]="5"   [value]="proyectoRegionesSelected"     selectionMode="multiple"  [(selection)]="selectedProyectoRegionesRight"    dataKey="regionId"      >
+  
+             <ng-template pTemplate="header" >
+               <tr>
+                       <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox>  </th>
+                       <th     >Clave</th>
+                       <th  style="width: 200px;"   >Nombre</th>
+                       <th     >Calle</th>
+                       <th     >Numero</th>
+                                                                                       
+               </tr>
+               <tr>
+                <th  ></th>
+                <th  ></th>
+                <th  >
+                  <input size="10"  pInputText type="text" (input)="dtProyectoRegionTable2.filter($event.target.value, 'nombre' , 'contains')">
+               </th> 
+               <th  ></th>
+                <th  ></th>
+               </tr>
+           </ng-template>
+  
+       
+             <ng-template pTemplate="body" let-prRight    let-rowIndex="rowIndex"   >
+                 <tr  [pSelectableRow]="prRight"      >         
+                  <td>
+                    <p-tableCheckbox [value]="prRight"></p-tableCheckbox>
+                </td> 
+                     <td     >{{prRight.clave}} </td>  
+                     <td     >{{prRight.nombre}} </td>   
+                     <td     >{{prRight.calle}} </td>   
+                     <td     >{{prRight.numero}} </td>                                                        
+                 </tr>
+             </ng-template>     
+         </p-table>
+  
+         </td>
+  
+  
+          </tr>          
+          </table>
+  
+  
+  
+  
+      </div>
+  
+
+
+
+      <div style="padding:20px;"  >
+        <h2>CAPTURA DE DOCUMENTOS</h2>
+  </div>
+  
+  
+   <div    >
+      <table  cellpadding='1'   >
+          <tr   >
+             
+             <td  style="vertical-align: top;background-color: rgba(163, 75, 75, 0.377);"  >
+             
+                 <p-table  #dtProyectoDocumentoTable    [style]="{width:'550px' , height:'350px'  , background:'#f6f6f6'   }"    [paginator]="true" [rows]="5"   [value]="proyectoDocumentos"     selectionMode="multiple"  [(selection)]="selectedProyectoDocumentosLeft"    dataKey="documentoId"       >
+     
+                   <ng-template pTemplate="header" >
+                     <tr>
+                             <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox>  </th>
+                             <th     >Clave</th>
+                             <th   style="width: 200px;"    >Nombre</th>
+                          
+                                                                                             
+                     </tr>
+                     <tr>
+                        <th  ></th>
+                        <th  ></th>
+                        <th  >
+                          <input size="10"  pInputText type="text" (input)="dtProyectoDocumentoTable.filter($event.target.value, 'nombre' , 'contains')">
+                       </th> 
+                       </tr>
+                 </ng-template>
+     
+             
+                   <ng-template pTemplate="body" let-pdLeft    let-rowIndex="rowIndex"   >
+                       <tr  [pSelectableRow]="pdLeft"      >        
+                        <td>
+                          <p-tableCheckbox [value]="pdLeft"></p-tableCheckbox>
+                      </td>   
+                           <td     >{{pdLeft.clave}} </td>  
+                           <td     >{{pdLeft.nombre}} </td>   
+                                                                        
+                       </tr>
+                      
+                   </ng-template>     
+               </p-table>
+    
+            </td>
+    
+            <td  style="vertical-align: top;" >
+    
+                <table>
+                    
+                    <tr><td><button pButton style="margin:3px;" icon="pi pi-arrow-right"  type="icon"   (click)="addDocumento()"></button></td></tr>
+                    <tr><td><button pButton style="margin:3px;" icon="pi pi-arrow-left"  type="icon"  (click)="removeDocumento()"></button></td></tr>
+                </table>
+    
+    
+            </td>
+    
+    
+            <td style="vertical-align: top;background-color:  rgba(163, 75, 75, 0.377)"   >
+             
+             <p-table   #dtProyectoDocumentoTable   [style]="{width:'550px' , height:'350px' , background:'#f6f6f6'  }"    [paginator]="true" [rows]="5"   [value]="proyectoDocumentosSelected"     selectionMode="multiple"  [(selection)]="selectedProyectoDocumentosRight"    dataKey="documentoId"      >
+    
+               <ng-template pTemplate="header" >
+                 <tr>
+                         <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox>  </th>
+                         <th     >Clave</th>
+                         <th  style="width: 200px;"   >Nombre</th>
+                        
+                                                                                         
+                 </tr>
+                 <tr>
+                    <th  ></th>
+                    <th  ></th>
+                    <th  >
+                      <input size="10"  pInputText type="text" (input)="dtProyectoDocumentoTable.filter($event.target.value, 'nombre' , 'contains')">
+                   </th> 
+                   </tr>
+             </ng-template>
+    
+         
+               <ng-template pTemplate="body" let-pdRight    let-rowIndex="rowIndex"   >
+                   <tr  [pSelectableRow]="pdRight"      >         
+                    <td>
+                      <p-tableCheckbox [value]="pdRight"></p-tableCheckbox>
+                  </td> 
+                       <td     >{{pdRight.clave}} </td>  
+                       <td     >{{pdRight.nombre}} </td>   
+                                                                      
+                   </tr>
+               </ng-template>     
+           </p-table>
+    
+           </td>
+    
+    
+            </tr>          
+            </table>
+    
+    
+    
+    
+        </div>
+    
+
+
+    
+   <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guadarProyecto()"></button>
+   
+   <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
+  
+</div>
+
+

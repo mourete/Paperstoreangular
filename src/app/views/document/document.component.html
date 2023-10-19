@@ -1,0 +1,49 @@
+
+              <div     >
+
+
+                <p-messages [value]="msgs"   [escape]=true  ></p-messages>
+
+                <table  border="0" >
+          
+                      <tr>
+                         <td >Clave </td>
+                         <td>
+                            <input type="text" pInputText   [(ngModel)]="documento.clave"   /> 
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>Nombre</td>
+                        <td>
+                           <input type="text" pInputText     [(ngModel)]="documento.nombre"   /> 
+                       </td>
+                     </tr>       
+                     
+                     <tr>
+                        <td>Estatus</td>
+                        <td>
+                            <p-dropdown  [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="check"   [options]="lstStatusProyecto"  optionLabel="nombre"></p-dropdown>
+                       </td>
+                     </tr>          
+                     
+                     <tr>
+                        <td>Observaciones</td>
+                        <td>
+                           <textarea pInputTextarea   [rows]="5" [cols]="30"   [(ngModel)]="documento.observaciones"   ></textarea> 
+                       </td>
+                     </tr>       
+                      
+
+                    
+                   
+                    </table>                
+
+                   
+
+              </div>
+              <div  >
+               
+                <button pButton type="button" label="Guardar" (click)="guadarDocumento()"></button>
+                <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
+            </div>

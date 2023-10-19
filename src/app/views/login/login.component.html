@@ -1,0 +1,58 @@
+
+
+<header>
+  <h6>Ver. 1.09 </h6>
+  <nav class="navbar navbar-expand-md   sticky-top">
+       <img     src="assets/img/logo.png"  >
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      </div>  
+    </nav>
+   
+    <hr  color="#00000"  >
+
+</header>
+
+ 
+
+ <div   style="padding: 4px;"       >
+
+   <h5>CONTROL DE ACCESO </h5>
+
+
+   <div>
+        <p-messages [value]="msgs"   [escape]=true  ></p-messages>
+   </div>
+
+   <table cellpadding="2"    style="padding:15px;"   border="0" >
+   
+    
+                       
+    <tr    style="padding:15px;"   >
+       <td>Usuario:</td>
+       <td>
+          <input type="text" pInputText     [(ngModel)]="userName"   /> 
+      </td>
+    </tr>   
+                     
+    <tr      style="padding:15px;"   >
+        <td>Contraseña:</td>
+        <td>
+           <input type="password" pInputText     [(ngModel)]="password"   /> 
+       </td>
+     </tr>       
+
+
+
+      
+</table>                
+
+      
+
+ </div>
+ <div style="padding:20px;"  >
+    
+   <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Aceptar" (click)="login()"></button>
+   
+   <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
+  
+</div>

@@ -4,27 +4,27 @@
 
 
 <div   >
- 
+
 
 
 
     <div     >
 
         <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
-            <h3>SUCURSALES </h3>  
+            <h3>SUCURSALES </h3>
         </div>
 
 
         <div     >
             <table  border="0"   cellpadding="1"  cellspacing="1"      >
-     
-  
-                         
+
+
+
              <tr     >
                  <td>Empresa</td>
                  <td>Marca</td>
-              </tr>    
-            
+              </tr>
+
               <tr     >
                  <td>
                     <p-dropdown    (onChange)="empresaChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedEmpresa"   [options]="empresas"  optionLabel="nombre"></p-dropdown>
@@ -32,12 +32,12 @@
                  <td>
                    <p-dropdown    (onChange)="marcaChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedMarca"   [options]="marcas"  optionLabel="nombre"></p-dropdown>
                 </td>
-              </tr>   
-    
-             </table>    
-             
-    
-         
+              </tr>
+
+             </table>
+
+
+
              <div  style="margin-top: 30px;" >
 
 
@@ -45,33 +45,33 @@
 
         <p-toolbar>
             <div class="ui-toolbar-group-left">
-                <button pButton type="button"  (click)="agregarSucursal()"    label="Agregar sucursal" icon="pi pi-plus"></button>                 
-            </div>                      
+                <button pButton type="button"  (click)="agregarSucursal()"    label="Agregar sucursal" icon="pi pi-plus"></button>
+            </div>
         </p-toolbar>
-     
+
         <div     >
 
 
 
             <div    >
 
-                
-    
+
+
                 <p-toolbar>
                     <div   *ngIf="selectedSucursal"   class="ui-toolbar-group-left">
-                        <button pButton type="button"  (click)="modificarSucursal()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>  
-                               
-                    </div>                      
+                        <button pButton type="button"  (click)="modificarSucursal()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>
+
+                    </div>
                 </p-toolbar>
-     
-            </div>    
+
+            </div>
 
 
             <p-table #dtSucursales  (onRowSelect)="sucursalChanged()"      [value]="sucursales"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedSucursal"  dataKey="sucursalId"  >
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-                           
-                           <th style="width: 50px;"  >Id</th>
+
+                          <!--  <th style="width: 50px;"  >Id</th> se quita id -->
                             <th style="width: 150px;"  >Nombre</th>
                             <th style="width: 200px;"  >Calle</th>
                             <th style="width: 120px;"  >Empresa</th>
@@ -80,17 +80,17 @@
                             <th style="width: 120px;"  >Estado</th>
                             <th style="width: 120px;"  >Correo</th>
                             <th style="width: 120px;"  >Responsable</th>
- 
-                             
-                       
+
+
+
                     </tr>
                     <tr>
-                         
-                            
-                        <th  >
+
+
+                       <!--  <th  >
                             <input size="2"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'sucursalId' , 'contains')">
-                         </th>     
-                         
+                         </th> se quita id-->
+
                          <th>
                             <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombre' , 'contains')">
                          </th>
@@ -100,65 +100,65 @@
                          </th>
 
                          <th>
-                            <input size="15"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombreEmpresa' , 'contains')">
+                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombreEmpresa' , 'contains')">
                          </th>
 
                          <th>
-                            <input size="15"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombreMarca' , 'contains')">
+                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombreMarca' , 'contains')">
                          </th>
 
-                        
+
                          <th  >
-                            <input size="15"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'ciudad' , 'contains')">
-                         </th>   
+                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'ciudad' , 'contains')">
+                         </th>
                          <th  >
-                            <input size="15"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'estado' , 'contains')">
-                         </th> 
-                        
+                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'estado' , 'contains')">
+                         </th>
+
                          <th  >
-                           
-                         </th> 
-                        
+
+                         </th>
+
                          <th  >
                             <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'responsable' , 'contains')">
                          </th>
-                                                
+
 
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-sucursal>
                     <tr  [pSelectableRow]="sucursal" >
-                          
 
-                        <td>{{sucursal.sucursalId}}</td>  
-                        <td>{{sucursal.nombre}}</td>     
-                        <td>{{sucursal.calle}}</td> 
-                        <td>{{sucursal.nombreEmpresa}}</td> 
+
+                        <!-- <td>{{sucursal.sucursalId}}</td>  se quita id-->
+                        <td>{{sucursal.nombre}}</td>
+                        <td>{{sucursal.calle}}</td>
+                        <td>{{sucursal.nombreEmpresa}}</td>
                         <td>{{sucursal.nombreMarca}}</td>
                         <td>{{sucursal.ciudad}}</td>
-                        <td>{{sucursal.estado}}</td>     
+                        <td>{{sucursal.estado}}</td>
                         <td>{{sucursal.mail}}</td>
-                        <td>{{sucursal.responsable}}</td>  
-                        
+                        <td>{{sucursal.responsable}}</td>
+
                     </tr>
                 </ng-template>
 
-            
+
 
             </p-table>
-        
-        </div> 
 
-
-     
+        </div>
 
 
 
-        
+
+
+
+
     </div>
 
-   
-   
+
+
 </div>
 
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

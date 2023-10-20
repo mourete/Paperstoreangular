@@ -8,133 +8,133 @@
     <tr     >
         <td align="center">Clave </td>
         <td>
-           <input type="text" formControlName="clave" pInputText    style="width:20%;"  [(ngModel)]="marca.clave"  mask="AAAAAAAAAA"  [showMaskTyped]="true" /> 
+           <input type="text" formControlName="clave" pInputText    style="width:20%;"  [(ngModel)]="marca.clave"  mask="AAAAAAAAAA"  [showMaskTyped]="true" />
            <div *ngIf="f.clave.errors?.required">
             Clave es requerido
           </div>
        </td>
-    </tr>       
+    </tr>
 
 
     <tr     >
         <td align="center">Nombre</td>
         <td>
-           <input type="text" pInputText formControlName="nombre" style="width:80%;"   [(ngModel)]="marca.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" />
+           <input type="text" pInputText formControlName="nombre" style="width:80%;"   [(ngModel)]="marca.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+" />
            <div *ngIf="f.nombre.errors?.required">
             Nombre es requerido
           </div>
           <div *ngIf="f.nombre.errors?.pattern">
             Nombre solo acepta letras
-          </div> 
+          </div>
        </td>
-    </tr>           
- 
-                
+    </tr>
+
+
     <tr   *ngIf="selectedEmpresa"  >
         <td align="center">Empresa</td>
         <td>
           <p-dropdown    (onChange)="empresaChanged()"  formControlName="empresa"  [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedEmpresa"   [options]="empresas"  optionLabel="nombre"></p-dropdown>
        </td>
-     </tr>    
+     </tr>
 
 
      <tr     >
         <td align="center">Calle</td>
         <td>
-           <input type="text" pInputText   style="width:80%;" formControlName="calle"  [(ngModel)]="marca.calle"   /> 
+           <input type="text" pInputText   style="width:80%;" formControlName="calle"  [(ngModel)]="marca.calle"   />
        </td>
-    </tr>     
+    </tr>
 
     <tr     >
         <td align="center">Número</td>
         <td>
-           <input type="text" pInputText  style="width:10%;"  formControlName="numero" [(ngModel)]="marca.numero"   /> 
+           <input type="text" pInputText  style="width:10%;"  formControlName="numero" [(ngModel)]="marca.numero"   />
        </td>
-    </tr>      
+    </tr>
 
 
     <tr     >
         <td align="center">Entre calles</td>
         <td>
-           <input type="text" pInputText   style="width:80%;"  formControlName="entreCalle"  [(ngModel)]="marca.entreCalle"   /> 
+           <input type="text" pInputText   style="width:80%;"  formControlName="entreCalle"  [(ngModel)]="marca.entreCalle"   />
        </td>
-    </tr>        
+    </tr>
 
 
     <tr     >
         <td align="center">Colonia</td>
         <td>
-           <input type="text" pInputText  style="width:80%;"  formControlName="colonia" [(ngModel)]="marca.colonia"   /> 
+           <input type="text" pInputText  style="width:80%;"  formControlName="colonia" [(ngModel)]="marca.colonia"   />
        </td>
-    </tr>          
+    </tr>
 
 
     <tr     >
         <td align="center">CP</td>
         <td>
-           <input type="text" pInputText  style="width:10%;"  formControlName="cp" [(ngModel)]="marca.cp"   /> 
+           <input type="text" pInputText  style="width:10%;"  formControlName="cp" [(ngModel)]="marca.cp"   />
        </td>
-    </tr>          
-    
+    </tr>
+
     <tr     >
         <td align="center">Encargado</td>
         <td>
-           <input type="text" pInputText  style="width:80%;"  formControlName="encargado" [(ngModel)]="marca.encargado"   /> 
+           <input type="text" pInputText  style="width:80%;"  formControlName="encargado" [(ngModel)]="marca.encargado"   />
        </td>
-    </tr>            
+    </tr>
 
 
     <tr     >
         <td align="center">E-Mail resp</td>
         <td>
-           <input type="text" pInputText   style="width:80%;"  formControlName="mail" [(ngModel)]="marca.mail"   /> 
+           <input type="text" pInputText   style="width:80%;"  formControlName="mail" [(ngModel)]="marca.mail"   />
        </td>
-    </tr>        
+    </tr>
 
-      
+
      <tr     >
         <td align="center">Activo</td>
         <td>
-            <p-inputSwitch [(ngModel)]="marca.flagActivo"   formControlName="flagActivo" ></p-inputSwitch>  
+            <p-inputSwitch [(ngModel)]="marca.flagActivo"   formControlName="flagActivo" ></p-inputSwitch>
        </td>
-    </tr>           
+    </tr>
 
     <tr    >
       <td align="center">Estado</td>
       <td>
          <p-dropdown    (onChange)="estadoChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"  formControlName="estadosForm"  [(ngModel)]="selectedEstado"   [options]="estados"  optionLabel="nombre"></p-dropdown>
      </td>
-   </tr>   
+   </tr>
 
    <tr    >
       <td align="center">Ciudad</td>
       <td>
-         <p-dropdown     [showTransitionOptions]="'0ms'" formControlName="ciudadesForm" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedCiudad"   [options]="ciudades"  optionLabel="nombre"></p-dropdown>                           
+         <p-dropdown     [showTransitionOptions]="'0ms'" formControlName="ciudadesForm" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedCiudad"   [options]="ciudades"  optionLabel="nombre"></p-dropdown>
      </td>
-   </tr> 
-            
-   
+   </tr>
 
 
 
-      
-    </table>                
+
+
+
+    </table>
     <div style="padding:20px;"  >
 
       <button pButton style="margin:3px;" icon="pi pi-check" label="Guardar" type="submit" [disabled]="!profileMarca.valid"></button>
 
       <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
-    
+
     </div>
-      
+
 
  </div>
 </form>
  <!-- <div style="padding:20px;"  >
-    
+
    <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guadarMarca()"></button>
-   
+
    <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
-  
+
 </div>-->
 

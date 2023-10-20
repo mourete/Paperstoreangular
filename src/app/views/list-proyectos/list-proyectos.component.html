@@ -7,32 +7,32 @@
     .ui-dialog .ui-dialog-content {
         height: 100%;
     }
-    
+
     </style>
-    
-    
-    
+
+
+
     <div   >
-     
-    
-    
-    
+
+
+
+
         <div     >
-    
+
             <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
-                <h3>PROYECTOS </h3>  
+                <h3>PROYECTOS </h3>
             </div>
 
 
             <table  border="0"   cellpadding="1"  cellspacing="1"      >
-     
-  
-                         
+
+
+
                 <tr     >
                     <td>Empresa</td>
                     <td>Marca</td>
-                 </tr>    
-               
+                 </tr>
+
                  <tr     >
                     <td>
                        <p-dropdown    (onChange)="empresaChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedEmpresa"   [options]="empresas"  optionLabel="nombre"></p-dropdown>
@@ -40,47 +40,47 @@
                     <td>
                       <p-dropdown    (onChange)="marcaChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedMarca"   [options]="marcas"  optionLabel="nombre"></p-dropdown>
                    </td>
-                 </tr>   
-       
-                </table>    
-                
-       
-            
+                 </tr>
+
+                </table>
+
+
+
                 <div  style="margin-top: 30px;" >
 
 
 
-    
+
             <p-toolbar>
                 <div class="ui-toolbar-group-left">
-                    <button pButton type="button"  (click)="agregarProyecto()"    label="Agregar proyecto" icon="pi pi-plus"></button>                 
-               
-                </div>                      
+                    <button pButton type="button"  (click)="agregarProyecto()"    label="Agregar proyecto" icon="pi pi-plus"></button>
+
+                </div>
             </p-toolbar>
-         
+
             <div     >
-    
-    
-    
+
+
+
                 <div    >
-    
-                    
-        
+
+
+
                     <p-toolbar>
                         <div   *ngIf="selectedProyecto"   class="ui-toolbar-group-left">
-                            <button pButton type="button"  (click)="modificarProyecto()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>  
-                            <button pButton type="button"  (click)="confirmDeleteProyecto()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>                   
-                        </div>                      
+                            <button pButton type="button"  (click)="modificarProyecto()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>
+                            <button pButton type="button"  (click)="confirmDeleteProyecto()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>
+                        </div>
                     </p-toolbar>
-         
-                </div>    
-    
-    
+
+                </div>
+
+
                 <p-table #dtProyectos   (onRowSelect)="proyectoChanged()"      [value]="proyectos"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedProyecto"  dataKey="proyectoId"  >
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                               <!-- <th style="width: 100px;"  >Acciones</th>-->
-                               <th style="width: 100px;"  >Id</th>
+                               <!-- <th style="width: 100px;"  >Id</th> se quita id-->
                                 <th style="width: 100px;"  >Clave</th>
                                 <th style="width: 300px;"  >Descripción</th>
                                 <th style="width: 120px;"  >Nombre</th>
@@ -88,61 +88,61 @@
                                 <th style="width: 120px;"  >Fech.Fin</th>
                                 <th style="width: 120px;"  >Dias Vigencia</th>
                                 <th style="width: 120px;"  >Cant. Docs.</th>
-                              
+
                                 <th style="width: 120px;"  >Marca</th>
-                                                                 
+
                         </tr>
 
                         <tr>
-                         
-                            
-                            <th  >
+
+
+                            <!-- <th  >
                                 <input size="7"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'proyectoId' , 'contains')">
-                             </th>     
-                             
+                             </th> se quita id-->
+
                              <th>
                                 <input size="7"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'clave' , 'contains')">
                              </th>
-    
+
                              <th>
                                 <input size="28"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'descripcion' , 'contains')">
                              </th>
-    
+
                              <th  >
                                 <input size="10"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'nombre' , 'contains')">
-                             </th>   
+                             </th>
                              <th  >
                                 <input size="10"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'fechaIni' , 'contains')">
-                             </th>   
+                             </th>
                              <th  >
                                 <input size="10"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'fechaFin' , 'contains')">
-                             </th> 
+                             </th>
                              <th  >
                                 <input size="10"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'diasVigencia' , 'contains')">
-                             </th> 
+                             </th>
                              <th  >
                                 <input size="10"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'cantidadDocumentos' , 'contains')">
-                             </th> 
-                           
+                             </th>
+
                              <th  >
                                 <input size="10"  pInputText type="text" (input)="dtProyectos.filter($event.target.value, 'marca' , 'contains')">
                              </th>
-                                                    
-    
+
+
                         </tr>
-                        
+
                     </ng-template>
                     <ng-template pTemplate="body" let-proyecto>
                         <tr  [pSelectableRow]="proyecto" >
                            <!-- <td   >
-                                <div  > 
+                                <div  >
                                 <p-menu #menuProyecto popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsProyecto"></p-menu>
                                 <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'22px' , 'height':'22px'  }"  pButton icon="pi pi-list"   (click)="menuProyecto.toggle($event);onClickMenuProyecto(proyecto);"></button>
-                                </div> 
-                            </td>  -->  
-    
-                         
-                            <td style="width: 100px;"  >{{proyecto.proyectoId}}</td>
+                                </div>
+                            </td>  -->
+
+
+                            <!-- <td style="width: 100px;"  >{{proyecto.proyectoId}}</td> se quita id-->
                              <td style="width: 100px;"  >{{proyecto.clave}}</td>
                              <td style="width: 300px;"  >{{proyecto.descripcion}}</td>
                              <td style="width: 120px;"  >{{proyecto.nombre}}</td>
@@ -150,35 +150,34 @@
                              <td style="width: 120px;"  >{{proyecto.fechaFin}}</td>
                              <td style="width: 120px;"  >{{proyecto.diasVigencia}}</td>
                              <td style="width: 120px;"  >{{proyecto.cantidadDocumentos}}</td>
-                          
+
                              <td style="width: 120px;"  >{{proyecto.marca}}</td>
-                            
+
                         </tr>
                     </ng-template>
-    
-                
-    
+
+
+
                 </p-table>
-            
-            </div> 
-    
-    
-         
-    
-    
-    
-            
+
+            </div>
+
+
+
+
+
+
+
         </div>
-    
-       
-       
+
+
+
     </div>
-    
+
     <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-    
+
     <p-contextMenu #cmProyectos popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsProyecto"></p-contextMenu>
-    
-    
-    
-    
-    
+
+
+
+

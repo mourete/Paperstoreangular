@@ -9,14 +9,14 @@
                       <tr>
                          <td >Clave </td>
                          <td>
-                            <input type="text" pInputText   [(ngModel)]="documento.clave" maxlength="10" placeholder="__________"  />
+                            <input type="text" pInputText   [(ngModel)]="documento.clave" maxlength="10" placeholder="__________" />
                         </td>
                       </tr>
 
                       <tr>
                         <td>Nombre</td>
                         <td>
-                           <input type="text" pInputText     [(ngModel)]="documento.nombre"   />
+                           <input type="text" pInputText     [(ngModel)]="documento.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+" />
                        </td>
                      </tr>
 

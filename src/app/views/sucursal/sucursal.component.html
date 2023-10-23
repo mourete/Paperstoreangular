@@ -23,7 +23,7 @@
                     <tr     >
                         <td>Nombre</td>
                         <td>
-                           <input type="text" pInputText formControlName="nombre"    [(ngModel)]="sucursal.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+" />
+                           <input type="text" pInputText formControlName="nombre"    [(ngModel)]="sucursal.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+" />
                            <div *ngIf="f.nombre.errors?.required">
                             Nombre es requerido
                           </div>

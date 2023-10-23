@@ -8,6 +8,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {Message} from 'primeng/api';
 import { Usuario } from 'src/app/model/usuario';
 
+
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html',
@@ -18,24 +19,28 @@ import { Usuario } from 'src/app/model/usuario';
           padding: 0;
           list-style-type: none;
           display: inline-block;
-          vertical-align: middle;          
+          vertical-align: middle;
           align-items: center;
       }
 
     `]
 })
+
+
 export class DocumentComponent implements OnInit {
 
   lstStatusProyecto: StatusProyecto[];
-  documento: Documento; 
+  documento: Documento;
   check : object;
   msgs: Message[] = [];
   usuario : Usuario;
   usuarioOID:string;
 
-  constructor(private statusProjectoService : StatusProjectoService , 
+
+  constructor(private statusProjectoService : StatusProjectoService ,
               public config: DynamicDialogConfig , public ref: DynamicDialogRef ,
-              private documentService : DocumentService   ) { }
+              private documentService : DocumentService
+                ) { }
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
@@ -43,25 +48,25 @@ export class DocumentComponent implements OnInit {
        this.documento=new Documento();
        this.getAllStatusProyect();
       if( this.config.data.documentoId>0   ){
-            this.getDocumento(this.config.data.documentoId);            
-      }else{       
+            this.getDocumento(this.config.data.documentoId);
+      }else{
         this.documento=new Documento();
         this.documento.statusId =1;
         this.documento.activa=1;
       }
-          
+
 
   }
 
 
 
-  
+
 
   public getDocumento( documentoId : number ){
-    this.documentService.getByDocumentoId ( documentoId, this.usuarioOID ).subscribe( 
+    this.documentService.getByDocumentoId ( documentoId, this.usuarioOID ).subscribe(
       (data)=>{
-         this.documento=data;   
-         
+         this.documento=data;
+
          console.log("EdgarLeal");
 
          if(this.lstStatusProyecto != null)
@@ -72,18 +77,18 @@ export class DocumentComponent implements OnInit {
             this.check = this.lstStatusProyecto[index];
 
           }
-           
+
          });
         // console.log(this.lstStatusProyecto);
 
       }
-     );  
+     );
   }
 
 
 
   public getAllStatusProyect(){
-    this.statusProjectoService.getAll().subscribe( 
+    this.statusProjectoService.getAll().subscribe(
       (data)=>{
 
          this.lstStatusProyecto=data;
@@ -101,11 +106,11 @@ public guadarDocumento() {
 
   this.msgs=[];
   if( this.documento.clave  ==null || this.documento.clave=="" ){
-    this.msgs.push({severity:'error', detail: "Se requiere capturar la clave del documento"  , summary:'Validation failed'}); 
+    this.msgs.push({severity:'error', detail: "Se requiere capturar la clave del documento"  , summary:'Validation failed'});
   }
 
   if( this.documento.nombre  ==null || this.documento.nombre=="" ){
-    this.msgs.push({severity:'error', detail: "Se requiere capturar el nombre del documento"  , summary:'Validation failed'}); 
+    this.msgs.push({severity:'error', detail: "Se requiere capturar el nombre del documento"  , summary:'Validation failed'});
   }
 
  if( this.msgs.length>0  ){
@@ -116,8 +121,8 @@ public guadarDocumento() {
   this.documento.statusId = this.check["statusProyectoId"];
 
   this.documentService.guardarDocumento ( this.documento , this.usuarioOID).subscribe((data)=>{
-      console.log(data);         
-      this.ref.close(this.documento );   
+      console.log(data);
+      this.ref.close(this.documento );
 
       //aqui debe actualizar.
   });
@@ -127,7 +132,7 @@ public guadarDocumento() {
 
 public cancelar(){
   this.ref.close();
-}  
+}
 
 
 

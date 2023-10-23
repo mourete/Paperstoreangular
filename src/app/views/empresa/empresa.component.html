@@ -20,7 +20,7 @@
 
            <tr>
                <td>Nombre</td>
-               <td><input type="text" formControlName="nombre" pInputText  size="25"   [(ngModel)]="empresa.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+" required />
+               <td><input type="text" formControlName="nombre" pInputText  size="25"   [(ngModel)]="empresa.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+" required />
                 <div *ngIf="nombre.errors?.required">
                   Nombre es requerido
                 </div>

@@ -8,7 +8,7 @@
     <tr>
       <td>Clave</td>
       <td>
-        <input type="text" pInputText [(ngModel)]="catalogo.clave" maxlength="10" placeholder="__________" />
+        <input #claveInput type="text" pInputText [(ngModel)]="catalogo.clave" maxlength="10" placeholder="__________" (input)="convertirAMayusculas()" required />
       </td>
     </tr>
     <tr>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Empresa } from 'src/app/model/empresa';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
@@ -15,12 +15,16 @@ import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms'
   templateUrl: './empresa.component.html',
   styleUrls: ['./empresa.component.scss']
 })
+
 export class EmpresaComponent implements OnInit {
+
+  @ViewChild('claveInput') claveInput: ElementRef;
 
   empresa:Empresa;
   activa:boolean;
   usuarioSession:Usuario;
   msgs: Message[] = [];
+
 
 
   profileForm = this.fb.group({
@@ -41,6 +45,7 @@ export class EmpresaComponent implements OnInit {
 
 
     get clave() { return this.profileForm.get('clave'); }
+
 
 
   ngOnInit(): void {
@@ -152,6 +157,12 @@ onSubmit() {
   this. guardarEmpresa();
 
 }
+
+convertirAMayusculas() {
+  const claveValue: string = this.profileForm.get('clave').value;
+  this.profileForm.get('clave').setValue(claveValue.toUpperCase());
+}
+
 
 
 

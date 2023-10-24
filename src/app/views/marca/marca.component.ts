@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import {SelectItem} from 'primeng/api';
 import {Message} from 'primeng/api';
- 
+
 import { EmpresaService } from 'src/app/service/empresa.service';
 import { MarcaService } from 'src/app/service/marca.service';
 import { Marca } from 'src/app/model/marca';
@@ -21,7 +21,7 @@ import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms'
 import { EstadoService } from 'src/app/service/estado.service';
 
 
- 
+
 
 
 @Component({
@@ -31,6 +31,8 @@ import { EstadoService } from 'src/app/service/estado.service';
 })
 export class MarcaComponent implements OnInit {
 
+  @ViewChild('claveInput') claveInput: ElementRef;
+  
   marca:Marca;
   empresas:Empresa[];
   msgs: Message[] = [];
@@ -74,23 +76,23 @@ export class MarcaComponent implements OnInit {
 
 
 
-   
-    if( this.config.data.marcaId >0   ){       
-           this.getMarcaByMarcaId(  this.config.data.marcaId );      
-    }else{       
+
+    if( this.config.data.marcaId >0   ){
+           this.getMarcaByMarcaId(  this.config.data.marcaId );
+    }else{
        this.marca=new Marca();
        this.marca.usuarioCreated=this.usuarioSession.usuarioOID;
        this.marca.empresaId=0;
        this.marca.activo=1;
        this.marca.flagActivo=true;
-    
+
     }
 
     this.getAllEstados();
-  
+
     this.getEmpresasByUsuarioOID();
- 
-    
+
+
 
 
 
@@ -103,12 +105,12 @@ export class MarcaComponent implements OnInit {
     this.estadoService.getAllEstados (this.usuarioOID ).subscribe(
       (data)=>{
 
-        this.estados=data;  
-        
+        this.estados=data;
+
         this.getCiudadesByEstado(this.estados[0].estadoId,  this.usuarioSession.usuarioOID);
      }
     );
-  
+
   }
 
 
@@ -117,7 +119,7 @@ export class MarcaComponent implements OnInit {
 
     this.marcaService.getByMarcaId ( marcaId, this.usuarioOID ).subscribe(
       (data)=>{
-        this.marca =data;  
+        this.marca =data;
         if( this.marca.activo==1 ){
             this.marca.flagActivo=true;
         }else{
@@ -125,24 +127,24 @@ export class MarcaComponent implements OnInit {
         }
 
         this.getEmpresasByUsuarioOID();
-         
+
      }
     );
-  
+
   }
-  
+
 
 
 
   public getEmpresasByUsuarioOID(){
     this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
-        this.empresas=data;        
+        this.empresas=data;
         if( this.empresas!=null && this.empresas.length>0 ){
-          
+
           if( this.marca!=null && this.marca.empresaId<=0 ){
             this.selectedEmpresa=this.empresas[0];
-            
+
           }else{
              if( this.marca!=null ){
 
@@ -151,18 +153,18 @@ export class MarcaComponent implements OnInit {
                     this.selectedEmpresa=this.empresas[i];
                     break;
                   }
-               }              
+               }
 
              }
 
 
 
-          } 
+          }
         }
 
      }
     );
-  
+
   }
 
 
@@ -181,33 +183,33 @@ export class MarcaComponent implements OnInit {
     if(  this.marca.nombre ==null ||this.marca.nombre =="" ){
       this.msgs.push({severity:'error', detail: "Se requiere capturar el nombre de la marca "  , summary:'Validation failed'});
       return;
-    }    
-  
+    }
+
 
     if(  this.selectedEmpresa ==null   ){
       this.msgs.push({severity:'error', detail: "Se requiere seleccionar la empresa para la marca "  , summary:'Validation failed'});
       return;
-    }   
+    }
 
-  
+
     if( this.selectedEmpresa!=null ){
        this.marca.empresaId=this.selectedEmpresa.empresaId;
     }
 
- 
+
     if( this.marca.flagActivo ){
        this.marca.activo=1;
     }else{
       this.marca.activo=0;
     }
 
-    
+
     this.marcaService.guardarMarca(  this.marca, this.usuarioOID ).subscribe(
       (data)=>{
-        this.marca=data;     
-        this.ref.close(this.marca);          
+        this.marca=data;
+        this.ref.close(this.marca);
       }
-  
+
     );
 
 
@@ -227,12 +229,12 @@ export class MarcaComponent implements OnInit {
   onSubmit() {
 
     console.warn(this.profileMarca.value);
-  
+
     console.warn(this.marca);
-  
-  
+
+
     this. guadarMarca();
-  
+
   }
 
 
@@ -245,7 +247,7 @@ export class MarcaComponent implements OnInit {
     if(this.selectedEstado==null || this.selectedEstado.estadoId<=0  ){
       return;
     }
-   
+
     this.getCiudadesByEstado(this.selectedEstado.estadoId,this.usuarioSession.usuarioOID);
 
 
@@ -256,47 +258,39 @@ export class MarcaComponent implements OnInit {
     console.log("Entro aqui");
     this.ciudadService.getCiudadesByEstado ( estadoId , usuarioOID ).subscribe(
       (data)=>{
-        this.ciudades=data; 
-        
+        this.ciudades=data;
+
         var  ciudadTmp:Ciudad;
 
         ciudadTmp=this.ciudades[0];
 
         this.selectedCiudad=ciudadTmp;
-        
+
        /* if( this.selectedCiudad.ciudadId >0  && this.ciudades!=null && this.ciudades.length>0 ){
           console.log("Entro aqui 2");
           var  ciudadTmp:Ciudad;
             for(  var i=0;i<this.ciudades.length;i++ ){
                   ciudadTmp=this.ciudades[i];
                   if( ciudadTmp.ciudadId==this.sucursal.ciudadId ){
-                      
+
                       this.selectedCiudad=ciudadTmp;
                       break;
                   }
 
             }
-        
+
 
         } */
 
 
      }
     );
-  
+
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
+  convertirAMayusculas() {
+    const claveValue: string = this.marca.clave;
+    this.marca.clave = claveValue.toUpperCase();
+  }
 
 }

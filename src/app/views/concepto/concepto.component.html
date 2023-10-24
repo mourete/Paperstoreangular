@@ -15,7 +15,7 @@
                  <tr>
                   <td>Clave</td>
                   <td>
-                     <textarea pInputTextarea   [rows]="1" [cols]="35"   [(ngModel)]="concepto.clave"  formControlName="clave"  ></textarea> 
+                     <textarea pInputTextarea   [rows]="1" [cols]="35"   [(ngModel)]="concepto.clave"  formControlName="clave"  [readonly]="concepto.conceptoOID!=null"  ></textarea> 
                  </td>
                </tr>      
 

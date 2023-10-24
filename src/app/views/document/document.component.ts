@@ -61,6 +61,12 @@ export class DocumentComponent implements OnInit {
     private documentService: DocumentService,
     private fb: FormBuilder
   ) {}
+  
+  get clave() { return this.profileRegion.get('clave'); }
+  get nombre() { return this.profileRegion.get('nombre'); }
+
+
+
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
@@ -138,6 +144,17 @@ export class DocumentComponent implements OnInit {
 
   public cancelar() {
     this.ref.close();
+  }
+
+  onSubmit() {
+
+    console.warn(this.profileRegion.value);
+
+    console.warn(this.documento);
+
+
+    this.guadarDocumento();
+
   }
 
   convertirAMayusculas() {

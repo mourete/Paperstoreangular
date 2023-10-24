@@ -1,6 +1,7 @@
-<div>
+
   <p-messages [value]="msgs" [escape]="true"></p-messages>
-  <form [formGroup]="profileRegion">
+  <form [formGroup]="profileRegion" (ngSubmit)="onSubmit()">
+    <div *ngIf="documento">
   <table border="0">
     <tr>
       <td>Clave</td>
@@ -8,14 +9,16 @@
         <input
           #claveInput
           type="text"
+          [(ngModel)]="documento.clave"
           formControlName="clave"
           pInputText
-          [(ngModel)]="documento.clave"
-          maxlength="10"
+          size="25"
+          mask="AAAAAAAAAA"
           (input)="convertirAMayusculas()"
           placeholder="__________"
           required
         />
+        <div *ngIf="clave.errors?.required">Clave es requerido</div>
       </td>
     </tr>
 
@@ -24,10 +27,15 @@
       <td>
         <input
           type="text"
+          formControlName="nombre"
           pInputText
+          size="25"
           [(ngModel)]="documento.nombre"
           pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
+          required
         />
+        <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
+          <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>
       </td>
     </tr>
     <tr>
@@ -54,8 +62,8 @@
       </td>
     </tr>
   </table>
-</form>
-</div>
+
+
 <div>
   <button
     pButton
@@ -72,3 +80,5 @@
     (click)="cancelar()"
   ></button>
 </div>
+</div>
+</form>

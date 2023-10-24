@@ -5,6 +5,8 @@ import { DialogService } from 'primeng/dynamicdialog'
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import { Usuario } from 'src/app/model/usuario';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Message } from 'primeng';
 
 
 @Component({
@@ -23,21 +25,35 @@ export class ListaComponent implements OnInit {
   selectedLista : Lista;
   listaFiltrada:Lista[];
   usuarioSession:Usuario;
+  msgs: Message[] = [];
 
+  profileForm = this.fb.group({
+    clave: ['',  Validators.required],
+    nombre: ['', Validators.required]
 
+  });
 
   constructor(private listaService : ListaService ,
               public config: DynamicDialogConfig ,
-              public ref: DynamicDialogRef
+              public ref: DynamicDialogRef,
+              private fb: FormBuilder
               ) { }
 
+
+    get clave() { return this.profileForm.get('clave'); }
+    get nombre() { return this.profileForm.get('nombre'); }
+
+
+
+
   ngOnInit(): void {
+
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+
     if( this.config.data.lista != null  ){
       if( this.config.data.lista.listaOID!=null   ){
         this.listaAccion="MODIFICANDO LISTA";
          this.getListaByOID(this.config.data.lista.listaOID);
-
       }
     }else{
         this.catalogo=new Lista();
@@ -56,6 +72,7 @@ export class ListaComponent implements OnInit {
       (data)=>{
           console.log(data);
           console.log("Soy yo leal");
+
           this.catalogo =data;
           if(this.catalogo.filtro == 1)
             this.filtro = true ;
@@ -147,6 +164,17 @@ export class ListaComponent implements OnInit {
  public cancelarLista(){
   this.ref.close(null);
  }
+
+ onSubmit() {
+
+  console.warn(this.profileForm.value);
+
+  console.warn(this.catalogo);
+
+
+  this.guardarLista();
+
+}
 
  convertirAMayusculas() {
   const claveValue: string = this.catalogo.clave;

@@ -6,8 +6,6 @@ import {SelectItem} from 'primeng/api';
 import {Message} from 'primeng/api';
 import {EmpresaService} from 'src/app/service/empresa.service' ;
 import { Usuario } from 'src/app/model/usuario';
-
-
 import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms';
 
 @Component({
@@ -34,8 +32,10 @@ export class EmpresaComponent implements OnInit {
     email: ['', Validators.required]
   });
 
-  constructor( private empresaService : EmpresaService ,
-    public config: DynamicDialogConfig , public ref: DynamicDialogRef, private fb: FormBuilder  ) { }
+  constructor(private empresaService : EmpresaService ,
+              public config: DynamicDialogConfig ,
+              public ref: DynamicDialogRef,
+              private fb: FormBuilder  ) { }
 
 
     get nombre() { return this.profileForm.get('nombre'); }
@@ -51,6 +51,7 @@ export class EmpresaComponent implements OnInit {
   ngOnInit(): void {
 
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    
     if( this.config.data.empresaId >0  ){
          this.getEmpresaById(  this.config.data.empresaId);
   }else{

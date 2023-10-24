@@ -1,68 +1,92 @@
+<p-messages [value]="msgs" [escape]="true"></p-messages>
 
-
- <p-messages [value]="msgs"   [escape]=true  ></p-messages>
-
-
-
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-
-        <div    *ngIf="empresa"    >
-          <table  border="0" >
-
-           <tr>
-             <td>Clave</td>
-             <td><input #claveInput type="text"  [(ngModel)]="empresa.clave" pInputText  size="25" formControlName="clave"  mask="AAAAAAAAAA" (input)="convertirAMayusculas()" [showMaskTyped]="true" required />
-              <div *ngIf="clave.errors?.required">
-                Clave es requerido
-              </div>
-            </td>
-          </tr>
-
-           <tr>
-               <td>Nombre</td>
-               <td><input type="text" formControlName="nombre" pInputText  size="25"   [(ngModel)]="empresa.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+" required />
-                <div *ngIf="nombre.errors?.required">
-                  Nombre es requerido
-                </div>
-                <div *ngIf="nombre.errors?.pattern">
-                  Nombre solo acepta letras
-                </div>
-          </td>
-           </tr>
-
-
-
-
-        <tr      >
-          <td>Correo electrónico</td>
-          <td><input type="text" pInputText  size="25"  [(ngModel)]="empresa.email" formControlName="email" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required/>
-            <div *ngIf="email.errors?.required">
-              Correo es requerido
-            </div>
-            <div *ngIf="email.errors?.pattern">
-             Correo invalido
-            </div>
-          </td>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="empresa">
+    <table border="0">
+      <tr>
+        <td>Clave</td>
+        <td>
+          <input
+            #claveInput
+            type="text"
+            [(ngModel)]="empresa.clave"
+            pInputText
+            size="25"
+            formControlName="clave"
+            mask="AAAAAAAAAA"
+            (input)="convertirAMayusculas()"
+            [showMaskTyped]="true"
+            required
+          />
+          <div *ngIf="clave.errors?.required">Clave es requerido</div>
+        </td>
       </tr>
-        <tr>
-          <td>Activo</td>
-          <td>
-            <p-inputSwitch [(ngModel)]="activa"  formControlName="activa"></p-inputSwitch>
-         </td>
-       </tr>
 
-      </table>
-        <div style="padding:20px;"  >
+      <tr>
+        <td>Nombre</td>
+        <td>
+          <input
+            type="text"
+            formControlName="nombre"
+            pInputText
+            size="25"
+            [(ngModel)]="empresa.nombre"
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
+            required
+          />
+          <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
+          <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras</div>
+        </td>
+      </tr>
 
-          <button pButton style="margin:3px;" icon="pi pi-check" label="Guardar" type="submit" [disabled]="!profileForm.valid"></button>
+      <tr>
+        <td>Correo electrónico</td>
+        <td>
+          <input
+            type="text"
+            pInputText
+            size="25"
+            [(ngModel)]="empresa.email"
+            formControlName="email"
+            pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
+            required
+          />
+          <div *ngIf="email.errors?.required">Correo es requerido</div>
+          <div *ngIf="email.errors?.pattern">Correo invalido</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Activo</td>
+        <td>
+          <p-inputSwitch
+            [(ngModel)]="activa"
+            formControlName="activa"
+          ></p-inputSwitch>
+        </td>
+      </tr>
+    </table>
+    <div style="padding: 20px">
+      <button
+        pButton
+        style="margin: 3px"
+        icon="pi pi-check"
+        label="Guardar"
+        type="submit"
+        [disabled]="!profileForm.valid"
+      ></button>
 
-          <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
-
-        </div>
-      </div>
-
-      </form>
- <!-- <div style="padding:20px;"  >
+      <button
+        pButton
+        style="margin: 3px"
+        icon="pi pi-times"
+        type="button"
+        label="Cancelar"
+        (click)="cancelar()"
+      ></button>
+    </div>
+  </div>
+</form>
+<!-- <div style="padding:20px;"  >
 
    <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarEmpresa()"></button>
 

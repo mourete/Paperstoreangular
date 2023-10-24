@@ -1,13 +1,4 @@
-
-
-
-
-
 <div   >
-
-
-
-
     <div     >
 
         <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
@@ -18,9 +9,7 @@
         <div     >
             <table  border="0"   cellpadding="1"  cellspacing="1"      >
 
-
-
-             <tr     >
+             <tr >
                  <td>Empresa</td>
                  <td>Marca</td>
               </tr>
@@ -35,12 +24,7 @@
               </tr>
 
              </table>
-
-
-
              <div  style="margin-top: 30px;" >
-
-
 
 
         <p-toolbar>
@@ -50,17 +34,11 @@
         </p-toolbar>
 
         <div     >
-
-
-
             <div    >
-
-
-
                 <p-toolbar>
                     <div   *ngIf="selectedSucursal"   class="ui-toolbar-group-left">
                         <button pButton type="button"  (click)="modificarSucursal()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>
-
+                        <button pButton type="button"  (click)="confirmDeleteLista()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>
                     </div>
                 </p-toolbar>
 

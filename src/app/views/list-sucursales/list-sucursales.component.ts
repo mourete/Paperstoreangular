@@ -44,14 +44,14 @@ export class ListSucursalesComponent implements OnInit {
     if( this.usuarioSession==null ){
       return;
     }
-    this.sucursalService.getSucursalesByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe( 
+    this.sucursalService.getSucursalesByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
          console.log( data );
          console.log("Soy yo");
-         this.sucursales=data;         
+         this.sucursales=data;
       }
      );
-  
+
   }
 
 
@@ -59,15 +59,15 @@ export class ListSucursalesComponent implements OnInit {
   public getEmpresasByUsuarioOID(){
     this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
-        //this.empresas=data; 
-        
+        //this.empresas=data;
+
         this.empresas = new Array(data.length+1);
         this.empresas[0] = {activo:0, empresaId:0,nombre:"Todas", encargado:"",
         email:"",
         notificaciones:0,
           usuarioCreated:"",
           direccion:"",
-        rfc:"",	  
+        rfc:"",
         activa:"",
         clave:""};
 
@@ -77,13 +77,13 @@ export class ListSucursalesComponent implements OnInit {
 
 
         if( this.empresas!=null && this.empresas.length>0 ){
-          this.selectedEmpresa=this.empresas[0];  
-          this.getMarcasByEmpresaYUsuario();         
+          this.selectedEmpresa=this.empresas[0];
+          this.getMarcasByEmpresaYUsuario();
         }
 
      }
     );
-  
+
   }
 
 
@@ -93,17 +93,17 @@ export class ListSucursalesComponent implements OnInit {
       return;
     }
 
-    this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe( 
+    this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe(
       (data)=>{
         /* console.log( data );
          this.marcas=data;   */
-         
+
          if(data != null )
          {
            this.marcas = new Array(data.length+1);
          }else
            this.marcas = new Array(1);
- 
+
         this.marcas[0] = {  marcaId:0,
          nombre:"Todas",
          clave:"",
@@ -123,10 +123,10 @@ export class ListSucursalesComponent implements OnInit {
          empresa:"",
          usuarioCreated:"",
          usuarioUpdated:"",
-     
+
          activoText:"",
          flagActivo:true};
-        
+
          if(data != null )
         data.forEach((element, index) => {
          this.marcas[++index] = element;
@@ -134,7 +134,7 @@ export class ListSucursalesComponent implements OnInit {
 
 
          if( this.marcas!=null && this.marcas.length>0 ){
-             this.selectedMarca=this.marcas[0];                 
+             this.selectedMarca=this.marcas[0];
              this.getSucursagetSucursalesByMarcaYEmpresalByID();
          }else{
             this.selectedMarca=null;
@@ -144,7 +144,7 @@ export class ListSucursalesComponent implements OnInit {
 
       }
      );
-  
+
   }
 
 
@@ -161,9 +161,9 @@ export class ListSucursalesComponent implements OnInit {
           marcaTmpId=this.selectedMarca.marcaId;
         }
 
-        this.sucursalService.getSucursagetSucursalesByMarcaYEmpresalByID  ( marcaTmpId , this.selectedEmpresa.empresaId ,      this.usuarioSession.usuarioOID   ) .subscribe( 
+        this.sucursalService.getSucursagetSucursalesByMarcaYEmpresalByID  ( marcaTmpId , this.selectedEmpresa.empresaId ,      this.usuarioSession.usuarioOID   ) .subscribe(
           (data)=>{
-             
+
              console.log( data );
              console.log("Edgar Leal");
              console.log(this.empresas);
@@ -172,9 +172,9 @@ export class ListSucursalesComponent implements OnInit {
 
 
 
-             this.sucursales=data;  
+             this.sucursales=data;
 
-            
+
 
              this.sucursales.forEach((element, index) => {
 
@@ -195,15 +195,15 @@ export class ListSucursalesComponent implements OnInit {
                 if(element.empresaId == eleEmpresa.empresaId){
 
                   this.sucursales[index].nombreEmpresa = eleEmpresa.nombre;
-                  
+
                 }
 
               });
 
-              
-                
+
+
              });
-             
+
             // console.log();
 
           }
@@ -221,12 +221,12 @@ export class ListSucursalesComponent implements OnInit {
 
     let ref= this.dialogService.open( SucursalComponent , {
       header: 'Sucursal',
-      width: '55%',        
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+      width: '55%',
+      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { regionId:0  }
   });
 
-  ref.onClose.subscribe(( usr : Usuario  ) => {     
+  ref.onClose.subscribe(( usr : Usuario  ) => {
     if (usr!=null  ) {
       this.getEmpresasByUsuarioOID();
     }
@@ -244,13 +244,13 @@ export class ListSucursalesComponent implements OnInit {
 
     let ref= this.dialogService.open( SucursalComponent , {
       header: 'Sucursal',
-      width: '55%',        
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+      width: '55%',
+      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { sucursalId : this.selectedSucursal.sucursalId  }
   });
 
 
-  ref.onClose.subscribe(( usr : Usuario  ) => {     
+  ref.onClose.subscribe(( usr : Usuario  ) => {
     if (usr!=null  ) {
       this.getEmpresasByUsuarioOID();
     }
@@ -268,7 +268,7 @@ export class ListSucursalesComponent implements OnInit {
          this.getSucursagetSucursalesByMarcaYEmpresalByID();
   }
 
- 
+
 
   public confirmDeleteSucursal(){
 
@@ -281,22 +281,21 @@ export class ListSucursalesComponent implements OnInit {
 
   }
 
-
-  public deleteSucursal() {  
+  public deleteSucursal() {
     if( this.selectedSucursal==null  ){
       return;
     }
-    
+
     this.selectedSucursal.usuarioOID = this.usuarioSession.usuarioOID ;
-    
-    this.sucursalService.eliminaSucursal( this.selectedSucursal, this.usuarioOID ).subscribe((data)=>{  
-     
-      //this.getEmpresasByUsuarioOID();
+
+    this.sucursalService.eliminaSucursal( this.selectedSucursal, this.usuarioOID ).subscribe((data)=>{
+
+      this.getEmpresasByUsuarioOID();
         this.selectedSucursal=null ;
-           
+
     });
     this.sucursales.splice(this.sucursales.indexOf(this.selectedSucursal),1);
-   
+
   }
 
   public sucursalChanged(){
@@ -306,6 +305,14 @@ export class ListSucursalesComponent implements OnInit {
 
   public onClickMenuSucursal(suc:Sucursal){
 
+  }
+  public confirmDeleteLista() {
+    this.confirmationService.confirm({
+        message: 'Está seguro que desea eliminar la lista ?',
+        accept: () => {
+           this.deleteSucursal();
+        }
+    });
   }
 
 

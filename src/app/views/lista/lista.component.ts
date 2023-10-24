@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { ListaService } from 'src/app/service/lista.service';
 import { Lista } from 'src/app/model/lista';
 import { DialogService } from 'primeng/dynamicdialog'
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import { Usuario } from 'src/app/model/usuario';
+
 
 @Component({
   selector: 'app-lista',
@@ -14,7 +15,7 @@ import { Usuario } from 'src/app/model/usuario';
 
 export class ListaComponent implements OnInit {
 
-
+  @ViewChild('claveInput') claveInput: ElementRef;
   catalogo:Lista;
   listaAccion:string;
   filtro : boolean = false;
@@ -22,9 +23,13 @@ export class ListaComponent implements OnInit {
   selectedLista : Lista;
   listaFiltrada:Lista[];
   usuarioSession:Usuario;
-  
 
-  constructor(private listaService : ListaService , public config: DynamicDialogConfig , public ref: DynamicDialogRef    ) { }
+
+
+  constructor(private listaService : ListaService ,
+              public config: DynamicDialogConfig ,
+              public ref: DynamicDialogRef
+              ) { }
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
@@ -32,15 +37,13 @@ export class ListaComponent implements OnInit {
       if( this.config.data.lista.listaOID!=null   ){
         this.listaAccion="MODIFICANDO LISTA";
          this.getListaByOID(this.config.data.lista.listaOID);
-        
-      } 
-    }else{       
+
+      }
+    }else{
         this.catalogo=new Lista();
         this.listaAccion="AGREGANDO LISTA";
         this.catalogo.tipoListaId=1;
     }
-
-
 
   }
 
@@ -48,29 +51,29 @@ export class ListaComponent implements OnInit {
 
   public getListaByOID( listaOID : string ){
     this.catalogo=null;
-    
-    this.listaService.getListaByListaOID( listaOID , this.usuarioSession.usuarioOID).subscribe( 
+
+    this.listaService.getListaByListaOID( listaOID , this.usuarioSession.usuarioOID).subscribe(
       (data)=>{
           console.log(data);
-          console.log("Soy yo leal"); 
-          this.catalogo =data;         
+          console.log("Soy yo leal");
+          this.catalogo =data;
           if(this.catalogo.filtro == 1)
             this.filtro = true ;
 
           if(this.catalogo.filtrada == 1){
             this.filtrada = true ;
 
-            this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe( 
+            this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe(
               (data)=>{
                   //console.log(data);
                   this.listaFiltrada = data;
 
                   this.listaFiltrada.forEach((element) => {
-                    
+
                     if( this.catalogo.listaFiltroOID == element.listaOID)
                         this.selectedLista = element;
                   });
-                  
+
               });
 
           }
@@ -78,14 +81,14 @@ export class ListaComponent implements OnInit {
 
 
       }
-     ); 
-  
+     );
+
   }
 
 
   public clickFiltro(e) {
     console.log(e.checked);
- 
+
     if(e.checked){
    //  this.conceptoFiltro(e.checked);
     }
@@ -94,10 +97,10 @@ export class ListaComponent implements OnInit {
 
   public clickFiltrada(e) {
     console.log(e.checked);
- 
+
     if(e.checked){
 
-      this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe( 
+      this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe(
         (data)=>{
            // console.log(data);
             this.listaFiltrada = data;
@@ -109,13 +112,13 @@ export class ListaComponent implements OnInit {
 
 
 
-  public guardarLista(){   
+  public guardarLista(){
 
     console.log("Ando aqui");
 
 
     console.log(this.filtro);
-    
+
     if(this.filtro){
       this.catalogo.filtro = 1;
     }else{
@@ -135,17 +138,20 @@ export class ListaComponent implements OnInit {
     }
 
     this.listaService.guardarLista ( this.catalogo,this.usuarioSession.usuarioOID ).subscribe((data)=>{
-      console.log(data);   
-      this.ref.close(this.catalogo);         
-    }); 
+      console.log(data);
+      this.ref.close(this.catalogo);
+    });
  }
 
 
  public cancelarLista(){
-  this.ref.close(null);   
+  this.ref.close(null);
  }
 
-
+ convertirAMayusculas() {
+  const claveValue: string = this.catalogo.clave;
+  this.catalogo.clave = claveValue.toUpperCase();
+}
 
 
 }

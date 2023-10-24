@@ -1,63 +1,66 @@
-<div   *ngIf="catalogo!=null  "  style="font-family:Arial, Helvetica, sans-serif;"   >
+<div *ngIf="catalogo!=null  " style="font-family:Arial, Helvetica, sans-serif;">
 
-    <div style="font-family:Arial, Helvetica, sans-serif;" >
-        <h3>{{listaAccion}} </h3>  
-    </div>
+  <div style="font-family:Arial, Helvetica, sans-serif;">
+    <h3>{{listaAccion}} </h3>
+  </div>
 
-    <table cellpadding="2"  cellspacing="2"   border="0" >                                    
-        <tr    >
-           <td>Clave</td>
-           <td>
-            <input type="text" pInputText     [(ngModel)]="catalogo.clave"   /> 
-           </td>
-         </tr>   
-         <tr    >
-            <td>Nombre del catálogo</td>
-            <td>
-             <input type="text" pInputText   size="50"   [(ngModel)]="catalogo.nombre"   /> 
-            </td>
-          </tr>
-          
-          
-          <tr    >
-            <td>Filtro</td>
-            <td>
-              <p-inputSwitch [(ngModel)]="filtro" (onChange)="clickFiltro($event)" ></p-inputSwitch>
-            </td>
-          </tr>
+  <table cellpadding="2" cellspacing="2" border="0">
+    <tr>
+      <td>Clave</td>
+      <td>
+        <input #claveInput type="text" pInputText [(ngModel)]="catalogo.clave" maxlength="10" placeholder="__________" (input)="convertirAMayusculas()" required />
+      </td>
+    </tr>
+    <tr>
+      <td>Nombre del catálogo</td>
+      <td>
+        <input type="text" pInputText size="50" [(ngModel)]="catalogo.nombre"/>
+      </td>
+    </tr>
 
 
-          <tr>
-            <td>Filtrada</td>
-            <td>
-              <p-inputSwitch [(ngModel)]="filtrada" (onChange)="clickFiltrada($event)" ></p-inputSwitch>
-            </td>
-          </tr>
-          
-          <tr  *ngIf="filtrada"   >
-            <td>Lista</td>
-            <td>
-              <p-dropdown      [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedLista"   [options]="listaFiltrada"  optionLabel="nombre"></p-dropdown>
-           </td>
-          </tr>
+    <tr>
+      <td>Filtro</td>
+      <td>
+        <p-inputSwitch [(ngModel)]="filtro" (onChange)="clickFiltro($event)"></p-inputSwitch>
+      </td>
+    </tr>
 
 
-          <tr  >
-            <td colspan="2"  >
-            <div style="margin-top:10px ;"  >
-             
-                <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarLista()"></button>
-                
-                <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelarLista()"></button>
-               
-            </div>
-            </td>
+    <tr>
+      <td>Filtrada</td>
+      <td>
+        <p-inputSwitch [(ngModel)]="filtrada" (onChange)="clickFiltrada($event)"></p-inputSwitch>
+      </td>
+    </tr>
 
-          </tr>  
+    <tr *ngIf="filtrada">
+      <td>Lista</td>
+      <td>
+        <p-dropdown [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [(ngModel)]="selectedLista"
+                    [options]="listaFiltrada" optionLabel="nombre"></p-dropdown>
+      </td>
+    </tr>
 
-        
-    </table>         
-    
 
-</div>    
+    <tr>
+      <td colspan="2">
+        <div style="margin-top:10px ;">
+
+          <button pButton style="margin:3px;" icon="pi pi-check" type="button" label="Guardar"
+                  (click)="guardarLista()"></button>
+
+          <button pButton style="margin:3px;" icon="pi pi-times" type="button" label="Cancelar"
+                  (click)="cancelarLista()"></button>
+
+        </div>
+      </td>
+
+    </tr>
+
+
+  </table>
+
+
+</div>
 

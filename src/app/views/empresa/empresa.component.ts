@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Empresa } from 'src/app/model/empresa';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
@@ -7,6 +7,7 @@ import {Message} from 'primeng/api';
 import {EmpresaService} from 'src/app/service/empresa.service' ;
 import { Usuario } from 'src/app/model/usuario';
 
+
 import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms';
 
 @Component({
@@ -14,12 +15,16 @@ import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms'
   templateUrl: './empresa.component.html',
   styleUrls: ['./empresa.component.scss']
 })
+
 export class EmpresaComponent implements OnInit {
+
+  @ViewChild('claveInput') claveInput: ElementRef;
 
   empresa:Empresa;
   activa:boolean;
   usuarioSession:Usuario;
   msgs: Message[] = [];
+
 
 
   profileForm = this.fb.group({
@@ -29,7 +34,7 @@ export class EmpresaComponent implements OnInit {
     email: ['', Validators.required]
   });
 
-  constructor( private empresaService : EmpresaService , 
+  constructor( private empresaService : EmpresaService ,
     public config: DynamicDialogConfig , public ref: DynamicDialogRef, private fb: FormBuilder  ) { }
 
 
@@ -42,12 +47,13 @@ export class EmpresaComponent implements OnInit {
     get clave() { return this.profileForm.get('clave'); }
 
 
+
   ngOnInit(): void {
 
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
-    if( this.config.data.empresaId >0  ){       
-         this.getEmpresaById(  this.config.data.empresaId);      
-  }else{       
+    if( this.config.data.empresaId >0  ){
+         this.getEmpresaById(  this.config.data.empresaId);
+  }else{
      this.empresa=new Empresa();
      this.empresa.usuarioCreated=this.usuarioSession.usuarioOID;
       this.activa = true;
@@ -61,8 +67,8 @@ export class EmpresaComponent implements OnInit {
 
         this.empresaService.getByEmpresaId( empresaId , this.usuarioSession.usuarioOID ).subscribe(
           (data)=>{
-           
-            this.empresa=data;   
+
+            this.empresa=data;
             if( this.empresa!=null ) {
                if( this.empresa.activo==1 ){
                  this.activa=true;
@@ -70,7 +76,7 @@ export class EmpresaComponent implements OnInit {
                  this.activa=false;
                }
 
-            }        
+            }
          }
         );
 
@@ -79,7 +85,7 @@ export class EmpresaComponent implements OnInit {
 
 public guardarEmpresa(){
 
- 
+
   this.msgs=[];
   if(  this.empresa.nombre ==null ||this.empresa.nombre=="" ){
     this.msgs.push({severity:'error', detail: "Se requiere capturar el nombre de la empresa"  , summary:'Validation failed'});
@@ -88,7 +94,7 @@ public guardarEmpresa(){
 
   if(  this.empresa.clave ==null ||this.empresa.clave=="" ){
     this.msgs.push({severity:'error', detail: "Se requiere capturar la clave"  , summary:'Validation failed'});
-    return; 
+    return;
   }
 
   let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
@@ -111,8 +117,8 @@ public guardarEmpresa(){
 
   this.empresaService.guardarEmpresa(  this.empresa , this.usuarioSession.usuarioOID).subscribe(
     (data)=>{
-     // this.empresa=data;     
-      this.ref.close(this.empresa);          
+     // this.empresa=data;
+      this.ref.close(this.empresa);
     }
 
   );
@@ -122,7 +128,7 @@ public guardarEmpresa(){
 
 public cancelar(){
   this.ref.close();
-}  
+}
 
 
 
@@ -151,6 +157,12 @@ onSubmit() {
   this. guardarEmpresa();
 
 }
+
+convertirAMayusculas() {
+  const claveValue: string = this.profileForm.get('clave').value;
+  this.profileForm.get('clave').setValue(claveValue.toUpperCase());
+}
+
 
 
 

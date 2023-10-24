@@ -8,7 +8,7 @@
     <tr     >
         <td align="center">Clave </td>
         <td>
-           <input type="text" formControlName="clave" pInputText    style="width:20%;"  [(ngModel)]="marca.clave"  mask="AAAAAAAAAA"  [showMaskTyped]="true" />
+           <input #claveInput type="text" formControlName="clave" pInputText    style="width:20%;"  [(ngModel)]="marca.clave"  mask="AAAAAAAAAA"  (input)="convertirAMayusculas()" [showMaskTyped]="true" required/>
            <div *ngIf="f.clave.errors?.required">
             Clave es requerido
           </div>

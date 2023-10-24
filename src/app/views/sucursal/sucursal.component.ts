@@ -1,5 +1,5 @@
 import {Message} from 'primeng/api';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Empresa } from 'src/app/model/empresa';
 import { Marca } from 'src/app/model/marca';
@@ -22,6 +22,7 @@ import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms'
 })
 export class SucursalComponent implements OnInit {
 
+  @ViewChild('claveInput') claveInput: ElementRef;
   usuarioSession:Usuario;
   sucursal:Sucursal;
   selectedEmpresa:Empresa;
@@ -68,40 +69,40 @@ export class SucursalComponent implements OnInit {
   get f() { return this.profileSucursal.controls; }
 
   ngOnInit(): void {
-    this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));   
+    this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
 
-    
-   
-    if( this.config.data.sucursalId >0   ){    
-        
-          this.getSucursalById(  this.config.data.sucursalId );  
+
+
+    if( this.config.data.sucursalId >0   ){
+
+          this.getSucursalById(  this.config.data.sucursalId );
           this.ciudad = true;
- 
-    }else{       
+
+    }else{
        this.sucursal=new Sucursal();
        this.sucursal.usuarioOID=this.usuarioSession.usuarioOID;
        this.sucursal.marcaId=0;
        this.sucursal.empresaId=0;
-       this.sucursal.activo=1;      
+       this.sucursal.activo=1;
        this.sucursal.flagActivo=true;
        this.auxEdit = false;
        this.getEmpresasByUsuarioOID(this.auxEdit);
 
        this.estadoService.getAllEstados (  this.usuarioSession.usuarioOID ).subscribe(
         (data)=>{
-  
-          this.estados=data;  
+
+          this.estados=data;
 
           this.getCiudadesByEstado(this.estados[0].estadoId, this.usuarioSession.usuarioOID);
        }
       );
-    
+
     }
 
     //this.getAllEstados( this.ciudad);
 
 
-    
+
 
 
 
@@ -119,13 +120,13 @@ export class SucursalComponent implements OnInit {
 
     this.sucursalService.getSucursalByID(  sucId ,  this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
-        this.sucursal=data; 
+        this.sucursal=data;
 
 
         this.estadoService.getAllEstados (  this.usuarioSession.usuarioOID ).subscribe(
           (data)=>{
-    
-            this.estados=data;  
+
+            this.estados=data;
 
             var estadoTmp:Estado;
             if(  this.sucursal.estadoId>0 ){
@@ -138,18 +139,18 @@ export class SucursalComponent implements OnInit {
                               break
                         }
 
-                      
+
                     }
 
-                } 
+                }
 
             }
-            
+
             /*if(!check)
               this.getCiudadesByEstado(this.estados[0].estadoId);*/
          }
         );
-        
+
 
 
         if( this.sucursal.activo==1 ){
@@ -158,14 +159,14 @@ export class SucursalComponent implements OnInit {
             this.sucursal.flagActivo=true;
         }
 
-      
+
 
       this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
         (data)=>{
           console.log("ENTRE2");
           this.empresas=data;
-          
-          
+
+
 
           if(  this.empresas!=null && this.empresas.length>0 ){
             var empresaTmp:Empresa;
@@ -176,19 +177,19 @@ export class SucursalComponent implements OnInit {
                     this.empresaChanged( this.sucursal.marcaId );
                     break;
                 }
-              
+
             }
 
 
          }
-  
+
        }
       );
 
-      
+
      }
     );
-  
+
   }
 
 
@@ -196,31 +197,31 @@ export class SucursalComponent implements OnInit {
     this.estadoService.getAllEstados (   ).subscribe(
       (data)=>{
 
-        this.estados=data;  
-        
+        this.estados=data;
+
         /*if(!check)
           this.getCiudadesByEstado(this.estados[0].estadoId);*/
     // }
  //   );
-  
+
   //}
 
 
   public getEmpresasByUsuarioOID(auxEdit : Boolean){
     this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
-        this.empresas=data;        
+        this.empresas=data;
         if( this.empresas!=null && this.empresas.length>0 ){
-          this.selectedEmpresa=this.empresas[0]; 
+          this.selectedEmpresa=this.empresas[0];
           if(!auxEdit){
-            this.getMarcasByEmpresaYUsuario(0);         
+            this.getMarcasByEmpresaYUsuario(0);
           }
-            
+
         }
 
      }
     );
-  
+
   }
 
 
@@ -230,56 +231,56 @@ export class SucursalComponent implements OnInit {
       return;
     }
 
-    this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe( 
+    this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe(
       (data)=>{
 
-         this.marcasAux = data;        
+         this.marcasAux = data;
 
          if(idMarca == 0){
-            
+
             if( this.marcasAux!=null && this.marcasAux.length>0 ){
-              this.selectedMarca=this.marcasAux[0];                             
+              this.selectedMarca=this.marcasAux[0];
             }
 
          }else{
 
-        
+
            const elementAux = this.marcasAux[0];
 
             for (let index = 0; index < this.marcasAux.length; index++) {
               const element = this.marcasAux[index];
               if(element.marcaId == idMarca){
-                 this.selectedMarca=element; 
+                 this.selectedMarca=element;
                 /* this.marcasAux[0] = element;
                  this.marcasAux[index] = elementAux;*/
               }
-                  
 
-              
+
+
             }
-          
+
            /*this.marcas.forEach((element, index) => {
 
               if(element.marcaId == idMarca)
-                  this.selectedMarca=element;   
+                  this.selectedMarca=element;
 
             });*/
 
          }
 
-         this.marcas=this.marcasAux; 
+         this.marcas=this.marcasAux;
 
 
       }
      );
-  
+
   }
 
 
 
   public guadarSucursal(){
 
-    
+
     this.msgs=[];
 
     if(  this.sucursal.clave ==null ||this.sucursal.clave=="" ){
@@ -290,21 +291,21 @@ export class SucursalComponent implements OnInit {
     if(  this.sucursal.nombre ==null ||this.sucursal.nombre =="" ){
       this.msgs.push({severity:'error', detail: "Se requiere capturar el nombre de la sucursal "  , summary:'Validation failed'});
       return;
-    }    
-  
+    }
+
     console.log(this.selectedMarca);
 
     if(  this.selectedMarca ==null || this.selectedMarca.marcaId<=0   ){
       this.msgs.push({severity:'error', detail: "Se requiere seleccionar la marca para la región "  , summary:'Validation failed'});
       return;
-    }   
- 
+    }
+
 
     this.sucursal.marcaId=this.selectedMarca.marcaId;
 
 
    if( this.selectedCiudad!=null && this.selectedCiudad.ciudadId>0 ){
-       this.sucursal.ciudadId=this.selectedCiudad.ciudadId;  
+       this.sucursal.ciudadId=this.selectedCiudad.ciudadId;
 
    }
 
@@ -321,22 +322,22 @@ export class SucursalComponent implements OnInit {
     }else{
        this.sucursal.activo=0;
     }
- 
+
 
     this.sucursalService.guardarSucursal(  this.sucursal, this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
-        this.sucursal=data;     
-        this.ref.close(this.sucursal);          
+        this.sucursal=data;
+        this.ref.close(this.sucursal);
       }
-  
+
     );
 
-   
+
 
   }
 
 
-  
+
   public cancelar(){
     this.ref.close();
   }
@@ -348,7 +349,7 @@ export class SucursalComponent implements OnInit {
     this.getMarcasByEmpresaYUsuario(idMarca);
   }
 
- 
+
 
 
 
@@ -356,7 +357,7 @@ export class SucursalComponent implements OnInit {
     if(this.selectedEstado==null || this.selectedEstado.estadoId<=0  ){
       return;
     }
-   
+
     this.getCiudadesByEstado(this.selectedEstado.estadoId, this.usuarioSession.usuarioOID);
 
 
@@ -366,12 +367,12 @@ export class SucursalComponent implements OnInit {
   onSubmit() {
 
   /*  console.warn(this.profileSucursal.value);
-  
+
     console.warn(this.sucursal);*/
-  
-  
+
+
     this. guadarSucursal();
-  
+
   }
 
 
@@ -379,8 +380,8 @@ export class SucursalComponent implements OnInit {
     console.log("Entro aqui Siempre");
     this.ciudadService.getCiudadesByEstado ( estadoId , usuarioOID ).subscribe(
       (data)=>{
-        this.ciudades=data; 
-        
+        this.ciudades=data;
+
         var  ciudadTmp:Ciudad;
         var aux = false;
 
@@ -400,33 +401,37 @@ export class SucursalComponent implements OnInit {
                 aux = true;
           }
 
-          
+
         });
 
         if(!aux)
           this.selectedCiudad=ciudadTmp;
 
-        
+
        /* if( this.selectedCiudad.ciudadId >0  && this.ciudades!=null && this.ciudades.length>0 ){
           console.log("Entro aqui 2");
           var  ciudadTmp:Ciudad;
             for(  var i=0;i<this.ciudades.length;i++ ){
                   ciudadTmp=this.ciudades[i];
                   if( ciudadTmp.ciudadId==this.sucursal.ciudadId ){
-                      
+
                       this.selectedCiudad=ciudadTmp;
                       break;
                   }
 
             }
-        
+
 
         } */
 
 
      }
     );
-  
+
+  }
+  convertirAMayusculas() {
+    const claveValue: string = this.sucursal.clave;
+    this.sucursal.clave = claveValue.toUpperCase();
   }
 
 

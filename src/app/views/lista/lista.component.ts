@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { ListaService } from 'src/app/service/lista.service';
 import { Lista } from 'src/app/model/lista';
 import { DialogService } from 'primeng/dynamicdialog'
@@ -15,7 +15,7 @@ import { Usuario } from 'src/app/model/usuario';
 
 export class ListaComponent implements OnInit {
 
-
+  @ViewChild('claveInput') claveInput: ElementRef;
   catalogo:Lista;
   listaAccion:string;
   filtro : boolean = false;
@@ -148,7 +148,10 @@ export class ListaComponent implements OnInit {
   this.ref.close(null);
  }
 
-
+ convertirAMayusculas() {
+  const claveValue: string = this.catalogo.clave;
+  this.catalogo.clave = claveValue.toUpperCase();
+}
 
 
 }

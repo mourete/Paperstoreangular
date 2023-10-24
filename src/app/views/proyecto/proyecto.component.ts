@@ -35,13 +35,10 @@ export class ProyectoComponent implements OnInit {
   proyecto: Proyecto;
   proyectoRegiones: ProyectoRegion[];
   proyectoRegionesSelected: ProyectoRegion[];
-
   selectedProyectoRegionesRight: ProyectoRegion[];
   selectedProyectoRegionesLeft: ProyectoRegion[];
-
   proyectoDocumentos: ProyectoDocumento[];
   proyectoDocumentosSelected: ProyectoDocumento[];
-
   selectedProyectoDocumentosRight: ProyectoDocumento[];
   selectedProyectoDocumentosLeft: ProyectoDocumento[];
 
@@ -65,6 +62,11 @@ export class ProyectoComponent implements OnInit {
   ) {}
 
   get f() { return this.formValidadores.controls; };
+  get clave() { return this.formValidadores.get('clave'); }
+  get nombre() { return this.formValidadores.get('nombre'); }
+
+
+
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
@@ -607,5 +609,15 @@ export class ProyectoComponent implements OnInit {
 
   public cancelar() {
     this.ref.close();
+  }
+  onSubmit() {
+
+    console.warn(this.formValidadores.value);
+
+    console.warn(this.proyecto);
+
+
+    this.guadarProyecto();
+
   }
 }

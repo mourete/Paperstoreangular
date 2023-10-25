@@ -18,11 +18,7 @@
 
         <div     >
 
-
-
             <div    >
-
-
 
                 <p-toolbar>
                     <div   *ngIf="selectedLista"   class="ui-toolbar-group-left">
@@ -34,7 +30,7 @@
 
             </div>
 
-            <p-table #dtListas (onRowSelect)="listaChanged()"      [value]="listas"    [paginator]="true" [rows]="5"  selectionMode="single" [(selection)]="selectedLista"  dataKey="listaOID"  >
+            <p-table #dtListas (onRowSelect)="listaChanged()"      [value]="listas"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedLista"  dataKey="listaOID"  >
                 <ng-template pTemplate="header" let-columns>
                     <tr>
 

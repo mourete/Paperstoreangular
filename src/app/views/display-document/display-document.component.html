@@ -186,10 +186,10 @@
 
               <td *ngIf="concepto.tipoConceptoId == 7">
                 <div *ngIf="concepto.opciones">
-                  <p-multiSelect
+                  <p-multiSelect size="70"
                     [options]="concepto.opciones"
                     [(ngModel)]="selectedOptions"
-                    [defaultLabel]="'Seleccionar opciones'"
+                    [defaultLabel]="'Seleccionar Opciones'"
                     [filter]="true"
                     name="groupname"
                     optionLabel="texto"

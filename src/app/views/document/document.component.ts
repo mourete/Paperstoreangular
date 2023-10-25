@@ -61,7 +61,7 @@ export class DocumentComponent implements OnInit {
     private documentService: DocumentService,
     private fb: FormBuilder
   ) {}
-  
+
   get clave() { return this.profileRegion.get('clave'); }
   get nombre() { return this.profileRegion.get('nombre'); }
 

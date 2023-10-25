@@ -11,7 +11,7 @@ import { RegionService } from 'src/app/service/region.service';
 import { Region } from 'src/app/model/region';
 import { RegionComponent } from '../region/region.component';
 import { MarcaComponent } from '../marca/marca.component';
- 
+
 
 @Component({
   selector: 'app-list-regiones',
@@ -24,7 +24,7 @@ export class ListRegionesComponent implements OnInit {
   usuarioSession:Usuario;
   usuarioOID :string;
   marcas:Marca[];
- 
+
   empresas:Empresa[];
   regiones:Region[];
   itemsRegion: MenuItem[];
@@ -44,13 +44,13 @@ export class ListRegionesComponent implements OnInit {
     if( this.usuarioSession==null ){
       return;
     }
-    this.regionService.getByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe( 
+    this.regionService.getByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
          console.log( data );
-         this.regiones=data;         
+         this.regiones=data;
       }
      );
-  
+
   }
 
 
@@ -60,13 +60,13 @@ export class ListRegionesComponent implements OnInit {
     let ref= this.dialogService.open( RegionComponent , {
       header: 'Región',
       width: '90%',
-      height : '80%',        
-    
-      contentStyle: {"max-height": "80%" , "height" : "80%"  } , 
+      height : '80%',
+
+      contentStyle: {"max-height": "80%" , "height" : "80%"  } ,
       data: { regionId:0  }
   });
 
-  ref.onClose.subscribe(( usr : Usuario  ) => {     
+  ref.onClose.subscribe(( usr : Usuario  ) => {
     if (usr!=null  ) {
       this.getRegionesByUsuarioOID();
     }
@@ -87,12 +87,12 @@ export class ListRegionesComponent implements OnInit {
 
     let ref= this.dialogService.open( RegionComponent , {
       header: 'Región',
-      width: '90%',        
-      contentStyle: {"max-height": "800px" , "height" : "550px;"  } , 
+      width: '90%',
+      contentStyle: {"max-height": "800px" , "height" : "550px;"  } ,
       data: { regionId : this.selectedRegion.regionId  }
   });
 
-  ref.onClose.subscribe(( usr : Usuario  ) => {     
+  ref.onClose.subscribe(( usr : Usuario  ) => {
     if (usr!=null  ) {
       this.getRegionesByUsuarioOID();
     }
@@ -103,7 +103,7 @@ export class ListRegionesComponent implements OnInit {
 
 
 
-  
+
 
 
   public confirmDeleteRegion(){
@@ -118,18 +118,18 @@ export class ListRegionesComponent implements OnInit {
   }
 
 
-  public deleteRegion() {  
+  public deleteRegion() {
     if( this.selectedRegion==null  ){
       return;
     }
-    
+
     this.selectedRegion.usuarioOID = this.usuarioSession.usuarioOID ;
-    
-    this.regionService.eliminaRegion( this.selectedRegion, this.usuarioOID ).subscribe((data)=>{  
+
+    this.regionService.eliminaRegion( this.selectedRegion, this.usuarioOID ).subscribe((data)=>{
       //  this.getMarcasByUsuarioOID();
       this.getRegionesByUsuarioOID();
         this.selectedRegion=null ;
-           
+
     });
   }
 

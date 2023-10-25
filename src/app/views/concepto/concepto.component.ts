@@ -16,7 +16,7 @@ import {SelectItem} from 'primeng/api';
 import {Message} from 'primeng/api';
 import { PerfilUsuario } from 'src/app/model/perfil-usuario';
 import { ConceptoAlertaPerfil } from 'src/app/model/concepto-alerta-perfil';
-import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms'; 
+import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/primeng';
 
@@ -26,7 +26,7 @@ import { DropdownModule } from 'primeng/primeng';
   styleUrls: ['./concepto.component.scss']
 })
 export class ConceptoComponent implements OnInit {
- 
+
   listas:Lista[];
   listasFiltra: ConceptoFiltra[];
   opciones:Opcion[];
@@ -53,7 +53,7 @@ export class ConceptoComponent implements OnInit {
    selectedOrder:number;
    usuario :Usuario;
    usuarioOID : string;
-  
+
    noEditable : boolean;
    filtro : boolean;
    valueFiltrada : String;
@@ -63,29 +63,29 @@ export class ConceptoComponent implements OnInit {
    diasAlertaAmarillo : number;
    alertaRojo : boolean;
    alertaAmarillo : boolean;
-   
+
 
    tiposConcepto: TipoConcepto[]=[
-    { tipoConceptoId: 1 ,  nombre: 'Texto' } , 
-    { tipoConceptoId:2 , nombre:'Entero' } , 
-    {tipoConceptoId:3,nombre:'Decimal'} , 
-    {tipoConceptoId:12,nombre:'Porcentaje'} , 
-    {tipoConceptoId:4,nombre:'Fecha'} , 
+    { tipoConceptoId: 1 ,  nombre: 'Texto' } ,
+    { tipoConceptoId:2 , nombre:'Entero' } ,
+    {tipoConceptoId:3,nombre:'Decimal'} ,
+    {tipoConceptoId:12,nombre:'Porcentaje'} ,
+    {tipoConceptoId:4,nombre:'Fecha'} ,
     {tipoConceptoId:5,nombre:'Hora'},
-    {tipoConceptoId:6,nombre:'Opcion Múltiple'} , 
-    {tipoConceptoId:7,nombre:'Selección múltiple'} , 
-    {tipoConceptoId:8,nombre:'Foto(PNG)/Archivo(PDF)'} , 
+    {tipoConceptoId:6,nombre:'Opcion Múltiple'} ,
+    {tipoConceptoId:7,nombre:'Selección múltiple'} ,
+    {tipoConceptoId:8,nombre:'Foto(PNG)/Archivo(PDF)'} ,
     {tipoConceptoId:9,nombre:'Personal'},
     {tipoConceptoId:10,nombre:'Instrucción'},
     {tipoConceptoId:11,nombre:'Mensajes'},
     {tipoConceptoId:13,nombre:'Vigencia'}
    ];
-     
+
 
 
    tiposLista: TipoLista[]=[
-    { tipoListaId:1 ,  nombre: 'Catálogo' } 
-    
+    { tipoListaId:1 ,  nombre: 'Catálogo' }
+
    ];
 
    msgs: Message[] = [];
@@ -95,7 +95,7 @@ export class ConceptoComponent implements OnInit {
     descripcion: ['', Validators.required],
     clave: ['',  Validators.required],
     requerido:[''],
-    habilitada: [''], 
+    habilitada: [''],
     noEditable: [''],
     textMaximo: [''],
     maximo: [''],
@@ -116,23 +116,25 @@ export class ConceptoComponent implements OnInit {
     conceptoFiltro: [''],
     filtro: [''],
     alertaRojo: [''],
-    alertaAmarillo: [''], 
+    alertaAmarillo: [''],
     listboxAmarillo:[''],
     listboxRojo:['']
-   
-  
+
+
 
   });
 
-  
-    
 
-  constructor(private conceptoService : ConceptoService ,  private fb: FormBuilder, 
-    public config: DynamicDialogConfig , public ref: DynamicDialogRef  , 
-    private listaService : ListaService ) { 
-    
 
-      }
+
+  constructor(private conceptoService : ConceptoService ,
+              private fb: FormBuilder,
+              public config: DynamicDialogConfig ,
+              public ref: DynamicDialogRef  ,
+              private listaService : ListaService ) {}
+
+
+  get clave() { return this.profileConcepto .get('clave'); }
 
    //get f() { return this.profileConcepto.controls; }
 
@@ -141,12 +143,12 @@ export class ConceptoComponent implements OnInit {
 
    }
 
-  ngOnInit(): void {        
+  ngOnInit(): void {
       this.usuario = JSON.parse(localStorage.getItem('usuario'));
       this.usuarioOID=this.usuario.usuarioOID;
       this.getAllListas();
       this.concepto=new Concepto();
-     
+
 
       this.habilitada=true;
       this.noEditable = false;
@@ -155,13 +157,13 @@ export class ConceptoComponent implements OnInit {
       if( this.config.data.concepto != null  ){
           if( this.config.data.concepto.conceptoOID!=null   ){
              this.getConceptoByOID(this.config.data.concepto.conceptoOID);
-                  
 
-          } 
-      }else{       
+
+          }
+      }else{
          this.concepto.orden=this.config.data.orden;
       }
-  
+
 
   }
 
@@ -177,7 +179,7 @@ private getTipoConcepto( idTipCon : number ) : TipoConcepto {
 
 
 public listaChanged (){
-  
+
    this.getOpcionesByLista( this.selectedLista.listaOID );
    this.conceptoFiltro(this.filtro);
 
@@ -186,7 +188,7 @@ public listaChanged (){
 
 public cancelar(){
    this.ref.close();
-}  
+}
 
 
 public clickFiltro(e) {
@@ -204,12 +206,12 @@ public clickFiltro(e) {
 
   if(this.selectedLista == null)
     return ;
-  
+
     this.concepto.listaOID = this.selectedLista.listaOID;
     //this.concepto.seccionOID ;
     this.concepto.seccionOID =  this.config.data.seccion.seccionOID;
-    
-   
+
+
   // this.config.data.seccion.seccionOID
   console.log("Filtro para la entrada de filtro");
 
@@ -230,28 +232,28 @@ public clickFiltro(e) {
       this.TextFiltrada = data.descripcionText;*/
 
 
-  
-         
+
+
     });
 
 
   }
 
- // 
+ //
 
 
 
  }
 
  onSubmit() {
-  
+
   console.warn(this.profileConcepto.value);
   this.guardarConcepto();
 
 }
 
 
-public guardarConcepto() { 
+public guardarConcepto() {
 
 
   this.msgs=[];
@@ -259,7 +261,7 @@ public guardarConcepto() {
     this.msgs.push({severity:'error', detail: "Se requiere capturar la descripción del concepto"  , summary:'Validation failed'});
     return;
   }
-  
+
   if(this.selectedLista == null &&  (  this.selectedTipoConcepto.tipoConceptoId==6 || this.selectedTipoConcepto.tipoConceptoId==7  ) ){
 
     this.msgs.push({severity:'error', detail: "Se requiere seleccionar el catalogo"  , summary:'Validation failed'});
@@ -272,13 +274,13 @@ public guardarConcepto() {
     return ;
   }
 
-  
+
   if(this.concepto.maximo != undefined && this.concepto.maximo == this.concepto.minimo && this.selectedTipoConcepto.tipoConceptoId == 2){
     this.msgs.push({severity:'error', detail: "El maximo y el minimo no pueden ser iguales"  , summary:'Validation failed'});
     return ;
   }
 
-  
+
   if(""+this.concepto.maximo !=""  && this.concepto.maximo == 0 && this.selectedTipoConcepto.tipoConceptoId == 1){
     this.msgs.push({severity:'error', detail: "La longitud no puede ser cero"  , summary:'Validation failed'});
     return ;
@@ -294,13 +296,13 @@ public guardarConcepto() {
     this.msgs.push({severity:'error', detail: "El minimo no puede ser menor que cero"  , summary:'Validation failed'});
     return ;
   }
-  
 
 
-  this.seccion=this.config.data.seccion; 
+
+  this.seccion=this.config.data.seccion;
   this.concepto.seccionOID=this.seccion.seccionOID;
   this.concepto.tipoConceptoId=this.selectedTipoConcepto.tipoConceptoId;
- 
+
   if(this.requerida){
     this.concepto.requerida=1;
   }else{
@@ -323,14 +325,14 @@ public guardarConcepto() {
 
    if(this.filtro){
       this.concepto.filtro=1;
-        // this.concepto.listaOID = this.valueFiltrada; 
-        
-    
+        // this.concepto.listaOID = this.valueFiltrada;
+
+
     }else{
       this.concepto.filtro=0;
-     // this.concepto.listaOID =""; 
+     // this.concepto.listaOID ="";
     }
-  
+
   this.concepto.visible=1;
   this.concepto.activa=1;
 
@@ -341,20 +343,20 @@ public guardarConcepto() {
     lcs.tipoListaOpcionId=this.selectedTipoLista.tipoListaId;
     lcs.tipoOrdenId=this.selectedOrder;
     lcs.filtro = this.concepto.filtro;
-    
+
     if(lcs.filtro == 1){
-      
-    
+
+
 
       lcs.conceptoFiltroOID = this.selectedListaFiltra.conceptoOID;
     }
-      
+
     this.concepto.listasConceptosSecciones=lcs;
-   
+
   }
   if( this.selectedTipoConcepto.tipoConceptoId==13)
   {
- 
+
      if(this.alertaAmarillo){
           this.concepto.alertaAmarillo=1;
       }else{
@@ -375,32 +377,32 @@ public guardarConcepto() {
 
       this.concepto.conceptoAlertaPerfilRojoConcat = sPerfilRojo;
       this.concepto.conceptoAlertaPerfilAmarilloConcat = sPerfilAmarillo;
-   
+
   }
 
   this.conceptoService.guardarConcepto ( this.concepto , this.usuarioOID).subscribe((data)=>{
-    
+
       if( data!=null ){
          this.concepto=data;
-         this.ref.close(this.concepto); 
+         this.ref.close(this.concepto);
       }else{
-        this.ref.close(null); 
+        this.ref.close(null);
       }
-           
-  }); 
+
+  });
 }
 
 
 public getConceptoByOID( conceptoOID : string ){
-  this.conceptoService.getConceptoByOID ( conceptoOID, this.usuarioOID ).subscribe( 
+  this.conceptoService.getConceptoByOID ( conceptoOID, this.usuarioOID ).subscribe(
     (data)=>{
-  
+
        this.concepto=data;
        this.soloParaEditar =  this.concepto.listaOID;
 
        this.getConceptoAlertaByPerfil();
-      
-       
+
+
        this.refreshConcepto();
     }
    );
@@ -410,10 +412,10 @@ public getConceptoByOID( conceptoOID : string ){
 
 public getOpcionesByLista( listaOID : string ){
   this.opciones=[];
-  this.listaService.getOpcionesByLista  ( listaOID, this.usuario.usuarioOID ).subscribe( 
+  this.listaService.getOpcionesByLista  ( listaOID, this.usuario.usuarioOID ).subscribe(
     (data)=>{
        this.opciones =data;
-       
+
     }
    );
 
@@ -421,8 +423,8 @@ public getOpcionesByLista( listaOID : string ){
 
 
 
-public refreshConcepto(){ 
-  
+public refreshConcepto(){
+
   this.selectedTipoConcepto=this.getTipoConcepto(this.concepto.tipoConceptoId );
   if( this.concepto.requerida==1 ){
     this.requerida=true;
@@ -443,7 +445,7 @@ public refreshConcepto(){
     this.noEditable=false;
   }
 
-  
+
   if(  this.selectedTipoConcepto.tipoConceptoId== 13){
     if( this.concepto.alertaAmarillo==1 ){
       this.alertaAmarillo=true;
@@ -455,16 +457,16 @@ public refreshConcepto(){
     }else{
       this.alertaRojo=false;
     }
-    
+
   }
 
   if(  this.selectedTipoConcepto.tipoConceptoId==6 ||  this.selectedTipoConcepto.tipoConceptoId==7 ){
-    this.selectedTipoLista=this.tiposLista[0];   
+    this.selectedTipoLista=this.tiposLista[0];
   }
- 
-  if(  this.concepto.listasConceptosSecciones!=null && this.concepto.listasConceptosSecciones.listaConceptoSeccionOID!=null && this.listas!= null ){      
+
+  if(  this.concepto.listasConceptosSecciones!=null && this.concepto.listasConceptosSecciones.listaConceptoSeccionOID!=null && this.listas!= null ){
     for( var idx=0; idx< this.listas.length;  idx++  ){
-       
+
       if( this.concepto.listasConceptosSecciones.listaOID ==this.listas[idx].listaOID ){
           this.selectedLista=this.listas[idx];
           this.getOpcionesByLista( this.selectedLista.listaOID );
@@ -485,12 +487,12 @@ public refreshConcepto(){
 
     this.concepto.listaOID = this.selectedLista.listaOID;
 
-    
+
     this.conceptoService.conceptoFiltro (this.concepto, this.usuarioOID ).subscribe((data)=>{
 
       this.listasFiltra = data.listConceptoFiltra;
 
-     
+
 
       this.listasFiltra.forEach(element => {
         if(element.conceptoOID == this.soloParaEditar){
@@ -498,17 +500,17 @@ public refreshConcepto(){
             this.selectedListaFiltra = element;
 
         }
-        
+
       });
 
       this.concepto.listaOID = aux;
-     
-    
-         
+
+
+
     });
 
 
-    
+
 
     }else{
     this.filtro=false;
@@ -521,20 +523,20 @@ console.log("tipoConceptoSeleccionado: " + this.selectedTipoConcepto.tipoConcept
   this.concepto=new Concepto();
   this.concepto.tipoConceptoId =  this.selectedTipoConcepto.tipoConceptoId;
   if(  this.selectedTipoConcepto.tipoConceptoId==6 ||  this.selectedTipoConcepto.tipoConceptoId==7 ){
-    this.selectedTipoLista=this.tiposLista[0];   
+    this.selectedTipoLista=this.tiposLista[0];
   }
   if(  this.selectedTipoConcepto.tipoConceptoId==13)
   {
-   
+
     this.getConceptoAlertaByPerfil();
   }
-  
+
   this.filtro = false;
 
 }
 
 
-public clonarConcepto( conOrig: Concepto ) : Concepto {     
+public clonarConcepto( conOrig: Concepto ) : Concepto {
   var conceptoTmp: Concepto;
    conceptoTmp=new Concepto();
    conceptoTmp.seccionOID=conOrig.seccionOID;
@@ -548,7 +550,7 @@ public clonarConcepto( conOrig: Concepto ) : Concepto {
    conceptoTmp.conceptoOID=conOrig.conceptoOID;
    conceptoTmp.maximo=conOrig.maximo;
    conceptoTmp.minimo=conOrig.minimo;
-   
+
 
   return conceptoTmp;
 }
@@ -556,9 +558,9 @@ public clonarConcepto( conOrig: Concepto ) : Concepto {
 
 
 public getAllListas(){
-  this.listaService.getAll(this.usuarioOID).subscribe( 
+  this.listaService.getAll(this.usuarioOID).subscribe(
     (data)=>{
-     
+
        this.listas=data;
        this.selectedLista = this.listas[0];
     }
@@ -568,36 +570,36 @@ public getAllListas(){
 
 public getConceptoAlertaByPerfil( ){
   var conceptoOID=null;
- 
+
   if( this.concepto==null || this.concepto.conceptoOID==null || this.concepto.conceptoOID==""){
     conceptoOID="*";
 
   }else{
     conceptoOID=this.concepto.conceptoOID;
   }
- 
+
   if(this.concepto.tipoConceptoId == 13)
   {
-    
-    this.conceptoService.getConceptoAlertaByPerfil({ conceptoOID, tipoAlerta: 1 }, this.usuarioOID).subscribe( 
+
+    this.conceptoService.getConceptoAlertaByPerfil({ conceptoOID, tipoAlerta: 1 }, this.usuarioOID).subscribe(
       (data)=>{
-        
-        this.conceptoAlertaPerfilAmarillo=data; 
-     
+
+        this.conceptoAlertaPerfilAmarillo=data;
+
         this.conceptoAlertaPerfilAmarilloSeleccion =this.initFlagsConceptoAlerta(this.conceptoAlertaPerfilAmarillo,this.conceptoAlertaPerfilAmarilloSeleccion);
-       
-         this.conceptoService.getConceptoAlertaByPerfil({ conceptoOID, tipoAlerta: 2 }, this.usuarioOID).subscribe( 
+
+         this.conceptoService.getConceptoAlertaByPerfil({ conceptoOID, tipoAlerta: 2 }, this.usuarioOID).subscribe(
           (data)=>{
-          
-            this.conceptoAlertaPerfilRojo=data;    
+
+            this.conceptoAlertaPerfilRojo=data;
             this.conceptoAlertaPerfilRojoSeleccion =this.initFlagsConceptoAlerta(this.conceptoAlertaPerfilRojo, this.conceptoAlertaPerfilRojoSeleccion);
 
-       
+
           }
-        );     
+        );
       }
     );
-   
+
   }
 }
 
@@ -609,32 +611,32 @@ public initFlagsConceptoAlerta(conceptoAlerta : ConceptoAlertaPerfil[] , concept
   }
   conceptoAlertaSeleccion = [];
   var pu:ConceptoAlertaPerfil;
-  
+
   for( var i=0;i< conceptoAlerta.length;i++ ){
       pu=conceptoAlerta[i];
       if(pu==null){
-          
+
         continue;
       }
       if(pu.seleccionado=="1"){
-        
+
         //pu.flagSeleccionado=true;
         conceptoAlertaSeleccion.push(pu);
-        //console.log( conceptoAlerta[i].flagSeleccionado); 
-          
+        //console.log( conceptoAlerta[i].flagSeleccionado);
+
       }else {
-        //console.log("SELECCIONADO 2"); 
+        //console.log("SELECCIONADO 2");
        // pu.flagSeleccionado=false;
-        //console.log( conceptoAlerta[i].flagSeleccionado); 
+        //console.log( conceptoAlerta[i].flagSeleccionado);
       }
-     
+
     }
         //console.log(conceptoAlertaSeleccion);
         return conceptoAlertaSeleccion;
   }
 
 
-  
+
   public getPerfilesConcat( varConceptoPerfil :  ConceptoAlertaPerfil[] ): string{
 
     if( this.concepto==null ){
@@ -643,30 +645,31 @@ public initFlagsConceptoAlerta(conceptoAlerta : ConceptoAlertaPerfil[] , concept
 
     var pu:ConceptoAlertaPerfil;
     var perfilesConcat:string=null;
-    
+
     if( varConceptoPerfil!=null && varConceptoPerfil.length>0  ){
-      
+
        for( var i=0;i< varConceptoPerfil.length; i++  ){
            pu=varConceptoPerfil[i];
            if(pu==null){
              continue;
            }
- 
+
             if( perfilesConcat==null ){
               perfilesConcat= "" + pu.perfilId  ;
            }else{
               perfilesConcat+= "|" +  pu.perfilId ;
            }
- 
- 
+
+
        }
     }
-
- 
-
      return perfilesConcat;
 
+  }
 
+  convertirAMayusculas() {
+    const claveValue: string = this.profileConcepto.get('clave').value;
+    this.profileConcepto.get('clave').setValue(claveValue.toUpperCase());
   }
 
 

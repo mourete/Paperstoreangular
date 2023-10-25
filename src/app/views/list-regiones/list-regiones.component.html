@@ -47,7 +47,7 @@
             </div>
 
 
-            <p-table #dtRegiones  (onRowSelect)="regionChanged()"      [value]="regiones"    [paginator]="true" [rows]="30"  selectionMode="single" [(selection)]="selectedRegion"  dataKey="regionId"  >
+            <p-table #dtRegiones  (onRowSelect)="regionChanged()"      [value]="regiones"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedRegion"  dataKey="regionId"  >
                 <ng-template pTemplate="header" let-columns>
                     <tr>
 

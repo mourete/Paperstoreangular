@@ -16,7 +16,7 @@ import { OpcionComponent } from '../opcion/opcion.component';
   providers: [DialogService,ConfirmationService]
 })
 export class ListasAdminComponent implements OnInit {
- 
+
   listaAccion:string;
   listas:Lista[];
   pantalla:number=1;
@@ -36,33 +36,33 @@ export class ListasAdminComponent implements OnInit {
   visible:boolean;
   enabled:boolean;
 
-  constructor(private listaService : ListaService ,  
+  constructor(private listaService : ListaService ,
     private confirmationService: ConfirmationService , public dialogService: DialogService   ) { }
 
   ngOnInit(): void {
-    this.usuario = JSON.parse(localStorage.getItem('usuario'));   
+    this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuario.usuarioOID;
-    
+
     this.getAllListas();
 
     this.cols = [
       { field: 'clave', header: 'Clave' },
       { field: 'nombre', header: 'Nombre' },
       { field: 'accion', header: 'Acción' }
-     
+
   ];
 
 
 
   this.itemsOpcion = [
-    {label: 'Editar opción', icon: 'pi pi-pencil', command: (event) => {         
+    {label: 'Editar opción', icon: 'pi pi-pencil', command: (event) => {
         this.editarOpcion();
     }},
     {separator: true},
     {label: 'Eliminar opción', icon: 'pi pi-trash', command:(event) =>{
           this.confirmDeleteOpcion();
-     }    
-    },               
+     }
+    },
     {separator: true},
     {label: 'Agregar opcion arriba', icon: 'pi pi-plus' , command:(event) =>{
         // this.agregarConcepto(1);
@@ -71,23 +71,23 @@ export class ListasAdminComponent implements OnInit {
     {label: 'Agregar opción abajo', icon: 'pi pi-plus' , command:(event) =>{
        // this.agregarConcepto(2);
     }
-    }      
-     
+    }
+
 ];
 
 
 this.itemsLista = [
-  {label: 'Editar Lista', icon: 'pi pi-pencil', command: (event) => {         
+  {label: 'Editar Lista', icon: 'pi pi-pencil', command: (event) => {
       this.editarLista();
   }},
   {separator: true},
   {label: 'Eliminar lista', icon: 'pi pi-trash', command:(event) =>{
         this.confirmDeleteLista();
-   }    
-  },               
+   }
+  },
   {separator: true}
-     
-   
+
+
 ];
 
 
@@ -99,27 +99,27 @@ this.itemsLista = [
 
 
   public getAllListas(){
-    this.listaService.getAll(this.usuarioOID).subscribe( 
+    this.listaService.getAll(this.usuarioOID).subscribe(
       (data)=>{
 
         console.log("Soy yo");
          console.log( data );
-         this.listas=data;         
+         this.listas=data;
       }
      );
-  
+
   }
 
 
 
   public getOpcionesByLista( listaOID : string , filtra : number){
     this.opciones=[];
-    this.listaService.getOpcionesByLista  ( listaOID, this.usuarioOID ).subscribe( 
+    this.listaService.getOpcionesByLista  ( listaOID, this.usuarioOID ).subscribe(
       (data)=>{
-       
+
          this.opciones =data;
-        
-         
+
+
       }
      );
 
@@ -127,14 +127,14 @@ this.itemsLista = [
       this.estaFiltrada = 1;
      }else
      this.estaFiltrada = 0;
-  
+
   }
 
 
   public listaChanged (){
 
     this.getOpcionesByLista( this.selectedLista.listaOID, this.selectedLista.filtrada );
-  }  
+  }
 
 
 
@@ -145,15 +145,15 @@ public agregarLista_old(){
      this.pantalla=2;
 }
 
-public guardarLista(){   
+public guardarLista(){
     this.listaService.guardarLista ( this.catalogo , this.usuarioOID).subscribe((data)=>{
-      console.log(data);   
+      console.log(data);
       this.pantalla=1;
-      this.catalogo=null;                
-    }); 
+      this.catalogo=null;
+    });
  }
 
-public cancelarLista(){  
+public cancelarLista(){
   this.pantalla=1;
   this.catalogo=null;
 }
@@ -170,39 +170,39 @@ public agregarOpcion_old(){
 
 
 public agregarOpcion(  ){
-         
+
   let ref= this.dialogService.open( OpcionComponent , {
       header: 'Agregar Opción',
       width: '70%',
       contentStyle: {"max-height": "550px", "overflow": "auto"} ,
       data: {  lista: this.selectedLista , opcion: null  }
-      
+
   });
 
- 
-  
-  ref.onClose.subscribe((opcTmp: Opcion ) => {     
-   
+
+
+  ref.onClose.subscribe((opcTmp: Opcion ) => {
+
       if( opcTmp!=null ){
-         //REFRESH OPCIN   
+         //REFRESH OPCIN
          this.getOpcionesByLista( this.selectedLista.listaOID, this.selectedLista.filtrada );
      }else {
         alert("No se agrego opcion ");
-     } 
-    
-  }); 
+     }
+
+  });
 
 
 }
 
 
-public cancelarOpcion(){  
+public cancelarOpcion(){
   this.pantalla=1;
   this.opcion=null;
 }
 
 
-public guardarOpcion(){   
+public guardarOpcion(){
 
   if(this.visible){
     this.opcion.visible=1;
@@ -217,39 +217,39 @@ public guardarOpcion(){
   }
 
   this.listaService.guardarOpcion ( this.opcion, this.usuarioOID ).subscribe((data)=>{
-    console.log(data);   
+    console.log(data);
     this.pantalla=1;
-    this.opcion=null;                
-  }); 
+    this.opcion=null;
+  });
 }
 
 
 public changeOptionOrder(flagOrder:number){
-   
+
    if( flagOrder==1 ){
         if( this.selectedOpcion.orden<=1 ){
             return;
         }
 
         this.selectedOpcion.orden-=1;
-          
+
     }else if( flagOrder==0 ) {
       if( this.selectedOpcion.orden>=this.opciones.length   ){
         return;
        }
        this.selectedOpcion.orden+=1;
-        
 
-    } 
 
-    
+    }
+
+
     this.listaService.guardarOpcion ( this.selectedOpcion , this.usuarioOID).subscribe((data)=>{
-      console.log(data);   
-      this.opcion=null;                
+      console.log(data);
+      this.opcion=null;
       this.getOpcionesByLista( this.selectedLista.listaOID, this.selectedLista.filtrada );
-    }); 
+    });
 
-    
+
 
 }
 
@@ -264,23 +264,23 @@ public editarOpcion(){
     width: '70%',
     contentStyle: {"max-height": "550px", "overflow": "auto"} ,
     data: {  lista: this.selectedLista , opcion: this.selectedOpcion  }
-    
+
 });
 
 
 
-ref2.onClose.subscribe((opcTmp: Opcion ) => {     
- 
+ref2.onClose.subscribe((opcTmp: Opcion ) => {
+
        // this.refreshSeccion(secTmp);
        if( opcTmp!=null ){
         this.getOpcionesByLista( this.selectedLista.listaOID , this.selectedLista.filtrada);
-       }  
- 
-}); 
+       }
+
+});
 
   /*
   this.opcionAccion="EDITANDO OPCION ";
-  this.opcion=this.selectedOpcion;  
+  this.opcion=this.selectedOpcion;
   this.pantalla=3;
 
   if(this.opcion.visible==1 ){
@@ -313,22 +313,22 @@ public editarLista_old(){
 
 
 public agregarLista(  ){
-         
+
   let ref= this.dialogService.open( ListaComponent , {
       header: 'Agregar Lista',
       width: '70%',
       contentStyle: {"max-height": "600px", "overflow": "auto", "min-height" : "500px"} ,
       data: {  lista: null  }
-      
+
   });
 
 
-  ref.onClose.subscribe((listaTmp: Lista ) => {     
+  ref.onClose.subscribe((listaTmp: Lista ) => {
     if (listaTmp) {
          // this.refreshSeccion(secTmp);
          this.getAllListas();
     }
-  }); 
+  });
 
 
 
@@ -339,15 +339,15 @@ public editarLista(){
   const ref= this.dialogService.open( ListaComponent , {
     header: 'Editar lista',
     width: '70%',
-    contentStyle: {"max-height": "600px", "overflow": "auto", "min-height" : "500px"} , 
+    contentStyle: {"max-height": "600px", "overflow": "auto", "min-height" : "500px"} ,
     data: {  lista: this.selectedLista  }
   });
 
-  
-  ref.onClose.subscribe(( ) => {     
- 
+
+  ref.onClose.subscribe(( ) => {
+
     this.getAllListas();
-  
+
   });
 
 }
@@ -364,30 +364,30 @@ public onClickMenuLista( lista:Lista ){
 }
 
 
-public deleteOpcion() {  
+public deleteOpcion() {
 
   if( this.selectedOpcion==null  ){
     return;
   }
 
   this.listaService.deleteOpcion( this.selectedOpcion , this.usuarioOID).subscribe((data)=>{
-      console.log(data);     
-      this.getOpcionesByLista( this.selectedLista.listaOID, this.selectedLista.filtrada );         
-  }); 
+      console.log(data);
+      this.getOpcionesByLista( this.selectedLista.listaOID, this.selectedLista.filtrada );
+  });
 }
 
 
-public deleteLista() {  
+public deleteLista() {
   if( this.selectedLista==null  ){
     return;
   }
 
   this.listaService.deleteLista( this.selectedLista, this.usuarioOID ).subscribe((data)=>{
-      //console.log(data);   
+      //console.log(data);
       this.getAllListas();
       this.selectedLista=null ;
-         
-  }); 
+
+  });
 }
 
 

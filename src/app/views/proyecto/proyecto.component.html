@@ -1,5 +1,6 @@
 <p-messages [value]="msgs" [escape]="true"></p-messages>
 
+<form [formGroup]="formValidadores" (ngSubmit)="onSubmit()">
 <div *ngIf="proyecto">
   <div>
     <form [formGroup]="formValidadores" >
@@ -13,12 +14,12 @@
                 <input
                   #claveInput
                   type="text"
-                  pInputText
                   [(ngModel)]="proyecto.clave"
+                  pInputText
                   formControlName="clave"
-                  maxlength="10"
-                  placeholder="__________"
+                  mask="AAAAAAAAAA"
                   (input)="convertirMayusculas($event)"
+                  [showMaskTyped]="true"
                 />
                 <div *ngIf="f.clave.errors?.required">Clave es requerido</div>
               </td>
@@ -27,7 +28,16 @@
             <tr>
               <td>Nombre</td>
               <td>
-                <input type="text" pInputText [(ngModel)]="proyecto.nombre" />
+                <input
+                  type="text"
+                  formControlName="nombre"
+                  pInputText
+                  [(ngModel)]="proyecto.nombre"
+                  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
+                  required
+                />
+                <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
+                <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>
               </td>
             </tr>
 
@@ -447,3 +457,4 @@
     (click)="cancelar()"
   ></button>
 </div>
+</form>

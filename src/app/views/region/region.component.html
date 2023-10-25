@@ -32,7 +32,7 @@
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
           />
           <div *ngIf="f.nombre.errors?.required">Nombre es requerido</div>
-          <div *ngIf="f.nombre.errors?.pattern">Nombre solo acepta letras</div>
+          <div *ngIf="f.nombre.errors?.pattern">Nombre solo acepta letras y números</div>
         </td>
       </tr>
 

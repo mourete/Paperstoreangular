@@ -143,6 +143,7 @@
             showButtonBar="true"
             [appendTo]="'body'"
           ></p-calendar>
+          <div *ngIf="profileConcepto.get('fechaMinima').hasError('dateError')">La Fecha Minima no debe ser mayor que Fecha Máxima</div>
         </td>
       </tr>
       <tr *ngIf="selectedTipoConcepto.tipoConceptoId == 4">
@@ -158,6 +159,7 @@
             showButtonBar="true"
             [appendTo]="'body'"
           ></p-calendar>
+          <div *ngIf="profileConcepto.get('fechaMaxima').hasError('dateError')">La Fecha Máxima debe ser mayor que Fecha Minima</div>
         </td>
       </tr>
       <tr *ngIf="selectedTipoConcepto.tipoConceptoId == 5">
@@ -234,6 +236,7 @@
             [(ngModel)]="selectedLista"
             [(options)]="listas"
             optionLabel="nombre"
+            [filter]="true"
           ></p-dropdown>
         </td>
       </tr>

@@ -107,6 +107,7 @@
             formControlName="maximo"
             [(ngModel)]="concepto.maximo"
           />
+          <div *ngIf="profileConcepto.get('maximo').hasError('maxError')">Este valor debe ser mayor que el mínimo</div>
         </td>
       </tr>
 

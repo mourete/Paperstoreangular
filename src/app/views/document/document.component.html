@@ -41,11 +41,12 @@
     <tr>
       <td>Estatus</td>
       <td>
+
         <p-dropdown
           [showTransitionOptions]="'0ms'"
           [hideTransitionOptions]="'0ms'"
-          [(ngModel)]="check"
-          [options]="lstStatusProyecto"
+          [(ngModel)]="selectedStatusProyecto"
+          [options]="statusProyectos"
           optionLabel="nombre"
         ></p-dropdown>
       </td>

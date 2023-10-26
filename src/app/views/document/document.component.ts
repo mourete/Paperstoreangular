@@ -28,9 +28,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class DocumentComponent implements OnInit {
   @ViewChild('claveInput') claveInput: ElementRef;
-  lstStatusProyecto: StatusProyecto[];
+  statusProyectos: StatusProyecto[];
   documento: Documento;
-  check: object;
+  selectedStatusProyecto: StatusProyecto;
   msgs: Message[] = [];
   usuario: Usuario;
   usuarioOID: string;
@@ -72,6 +72,7 @@ export class DocumentComponent implements OnInit {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuario.usuarioOID;
     this.documento = new Documento();
+
     this.getAllStatusProyect();
     if (this.config.data.documentoId > 0) {
       this.getDocumento(this.config.data.documentoId);
@@ -87,23 +88,25 @@ export class DocumentComponent implements OnInit {
       .getByDocumentoId(documentoId, this.usuarioOID)
       .subscribe((data) => {
         this.documento = data;
+        
 
-        console.log('EdgarLeal');
+    
 
-        if (this.lstStatusProyecto != null)
-          this.lstStatusProyecto.forEach((element, index) => {
+        if (this.statusProyectos != null)
+          this.statusProyectos.forEach((element, index) => {
             if (element.statusProyectoId == this.documento.statusId) {
-              this.check = this.lstStatusProyecto[index];
+              this.selectedStatusProyecto = element;
+              console.log(this.selectedStatusProyecto);
             }
           });
-        // console.log(this.lstStatusProyecto);
+        
       });
   }
 
   public getAllStatusProyect() {
     this.statusProjectoService.getAll().subscribe((data) => {
-      this.lstStatusProyecto = data;
-      this.check = this.lstStatusProyecto[0];
+      this.statusProyectos = data;
+      this.selectedStatusProyecto = this.statusProyectos[0];
     });
   }
 
@@ -130,7 +133,8 @@ export class DocumentComponent implements OnInit {
     }
 
     this.documento.activa = 1;
-    this.documento.statusId = this.check['statusProyectoId'];
+    this.documento.statusId = this.selectedStatusProyecto.statusProyectoId;
+    console.log("this.check.statusProyectoId" + this.selectedStatusProyecto.statusProyectoId);
 
     this.documentService
       .guardarDocumento(this.documento, this.usuarioOID)

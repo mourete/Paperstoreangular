@@ -58,7 +58,7 @@ public getDocumentosUsuarioList(marcaId: number , empresaId : number,  usuarioOI
 }
 
   public guardarDocumento(documento: Documento, usuarioOID:string ): Observable< Documento > {
-    let url:string = GlobalConstants.apiURL + "documentos/save"; 
+    let url:string = GlobalConstants.apiURL + "documentos/save/" + usuarioOID ; 
     return this.http.post<Documento>( url , JSON.stringify(documento), {headers: this.headers});    
 }  
 

@@ -45,7 +45,7 @@
             </div>
 
 
-            <p-table #dtSucursales  (onRowSelect)="sucursalChanged()"      [value]="sucursales"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedSucursal"  dataKey="sucursalId"  >
+            <p-table #dtSucursales  (onRowSelect)="sucursalChanged()"      [value]="sucursales"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedSucursal"  [contextMenu]="cmSucursales" dataKey="sucursalId"  >
                 <ng-template pTemplate="header" let-columns>
                     <tr>
 
@@ -105,7 +105,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-sucursal>
-                    <tr  [pSelectableRow]="sucursal" >
+                    <tr  [pSelectableRow]="sucursal" [pContextMenuRow]="sucursal" >
 
 
                         <!-- <td>{{sucursal.sucursalId}}</td>  se quita id-->

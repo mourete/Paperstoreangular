@@ -33,18 +33,44 @@ export class ListDocumentsComponent implements OnInit {
     this.usuarioOID=this.usuarioSession.usuarioOID;
      this.designing=false;
      this.getAllDocumentsActives();
+
+     this.itemsDocumento = [
+      {
+        label: 'Editar Documento',
+        icon: 'pi pi-pencil',
+        command: (event) => {
+          this.modificarDocumento();
+        },
+      },
+      { separator: true },
+      {
+        label: 'Eliminar Documento',
+        icon: 'pi pi-trash',
+        command: (event) => {
+          this.confirmDeleteDocumento();
+        },
+      },
+      { separator: true },
+      {
+        label: 'Diseñar Documento',
+        icon: 'pi pi-file',
+        command: (event) => {
+          this.designDocumento();
+        },
+      },
+    ];
   }
 
 
 
   public getAllDocumentsActives(){
-    this.documentService.getAllActives(this.usuarioOID).subscribe( 
+    this.documentService.getAllActives(this.usuarioOID).subscribe(
       (data)=>{
          console.log( data );
-         this.documentos=data;         
+         this.documentos=data;
       }
      );
-  
+
   }
 
 
@@ -52,13 +78,13 @@ export class ListDocumentsComponent implements OnInit {
 
     let ref= this.dialogService.open( DocumentComponent , {
         header: 'Documento',
-        width: '70%',        
-        contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+        width: '70%',
+        contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
         data: { documentoId:0  }
     });
 
-    ref.onClose.subscribe((doc: Documento ) => {  
-      console.log("Hola");   
+    ref.onClose.subscribe((doc: Documento ) => {
+      console.log("Hola");
       if (doc!=null  ) {
         this.getAllDocumentsActives();
       }
@@ -95,13 +121,13 @@ export class ListDocumentsComponent implements OnInit {
 
     let ref= this.dialogService.open( DocumentComponent , {
       header: 'Documento',
-      width: '70%',        
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+      width: '70%',
+      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { documentoId: this.selectedDocumento.documentoId  }
   });
 
 
-  ref.onClose.subscribe((doc: Documento ) => {  
+  ref.onClose.subscribe((doc: Documento ) => {
 
     if (doc!=null  ) {
       this.getAllDocumentsActives();
@@ -110,7 +136,7 @@ export class ListDocumentsComponent implements OnInit {
 
 
   }
- 
+
 
   public onClickMenuDocumento(documento:Documento){
 
@@ -119,23 +145,23 @@ export class ListDocumentsComponent implements OnInit {
 
 
 
-  public eliminarDocumento() {  
+  public eliminarDocumento() {
     if( this.selectedDocumento==null  ){
       return;
     }
-  
+
     this.documentService.deleteDocumento( this.selectedDocumento.documentoId , this.usuarioOID).subscribe((data)=>{
-        console.log(data);               
+        console.log(data);
         var result=data;
-        if(  result='0'  ){           
+        if(  result='0'  ){
            this.getAllDocumentsActives();
         }
 
 
-    }); 
+    });
   }
-  
-  
+
+
   public confirmDeleteDocumento() {
     this.confirmationService.confirm({
         message: 'Está seguro que desea eliminar el documento ?',

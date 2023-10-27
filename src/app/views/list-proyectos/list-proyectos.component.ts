@@ -24,7 +24,7 @@ export class ListProyectosComponent implements OnInit {
    itemsProyecto: MenuItem[];
    empresas:Empresa[];
    marcas:Marca[];
-  
+
   usuarioOID:string;
 
   selectedEmpresa:Empresa;
@@ -38,29 +38,48 @@ export class ListProyectosComponent implements OnInit {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID=this.usuarioSession.usuarioOID;
     this.getEmpresasByUsuarioOID();
+
+    this.itemsProyecto = [
+      {
+        label: 'Editar Proyecto',
+        icon: 'pi pi-pencil',
+        command: (event) => {
+          this.modificarProyecto();
+        },
+      },
+      { separator: true },
+      {
+        label: 'Eliminar Proyecto',
+        icon: 'pi pi-trash',
+        command: (event) => {
+          this.confirmDeleteProyecto();
+        },
+      },
+      { separator: true },
+    ];
   }
 
   public confirmDeleteProyecto() {
-  
+
     this.confirmationService.confirm({
         message: 'Está seguro que desea eliminar el proyecto ?',
         accept: () => {
            this.eliminarProyecto();
         }
-    }); 
+    });
   }
 
 
   public eliminarProyecto(   ){
 
     this.proyectoService.eliminarProyecto ( this.selectedProyecto ).subscribe((data)=>{
-     
+
       var proyectoDelete:String=data;
-       
-  
-  }); 
+
+
+  });
   this.proyectos.splice(this.proyectos.indexOf(this.selectedProyecto),1);
-     
+
 }
 
 
@@ -76,22 +95,22 @@ export class ListProyectosComponent implements OnInit {
         notificaciones:0,
           usuarioCreated:"",
           direccion:"",
-        rfc:"",	  
+        rfc:"",
         activa:"",
         clave:""};
 
         data.forEach((element, index) => {
           this.empresas[++index] = element;
         });
-       // this.empresas=data;        
+       // this.empresas=data;
         if( this.empresas!=null && this.empresas.length>0 ){
-          this.selectedEmpresa=this.empresas[0];  
-          this.getMarcasByEmpresaYUsuario();         
+          this.selectedEmpresa=this.empresas[0];
+          this.getMarcasByEmpresaYUsuario();
         }
 
      }
     );
-  
+
   }
 
 
@@ -101,15 +120,15 @@ export class ListProyectosComponent implements OnInit {
       return;
     }
 
-  
 
-    this.proyectoService.getByUsuario (  this.usuarioSession.usuarioOID ) .subscribe( 
+
+    this.proyectoService.getByUsuario (  this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
          console.log( data );
-         this.proyectos=data;         
+         this.proyectos=data;
       }
      );
-  
+
   }
 
 
@@ -118,15 +137,15 @@ export class ListProyectosComponent implements OnInit {
 
     let ref= this.dialogService.open( ProyectoComponent , {
       header: 'Proyecto',
-      width: '70%',        
-    
-      contentStyle: {"max-height": "550px" , "height" : "550px;"  } , 
+      width: '70%',
+
+      contentStyle: {"max-height": "550px" , "height" : "550px;"  } ,
       data: { proyectoId:0  }
   });
 
-  ref.onClose.subscribe(( proy : Proyecto  ) => {     
+  ref.onClose.subscribe(( proy : Proyecto  ) => {
     if (proy!=null  ) {
-      this.getEmpresasByUsuarioOID(); 
+      this.getEmpresasByUsuarioOID();
     }
   });
 
@@ -141,17 +160,17 @@ export class ListProyectosComponent implements OnInit {
 
     let ref= this.dialogService.open( ProyectoComponent , {
       header: 'Proyecto',
-      width: '70%',        
-      contentStyle: {"max-height": "550px" , "height" : "550px;"  } , 
+      width: '70%',
+      contentStyle: {"max-height": "550px" , "height" : "550px;"  } ,
       data: { proyectoId : this.selectedProyecto.proyectoId  }
   });
 
-  ref.onClose.subscribe(( proy : Proyecto  ) => {     
+  ref.onClose.subscribe(( proy : Proyecto  ) => {
     if (proy!=null  ) {
-      this.getEmpresasByUsuarioOID(); 
+      this.getEmpresasByUsuarioOID();
     }
   });
-  
+
 
   }
 
@@ -183,10 +202,10 @@ public getMarcasByEmpresaYUsuario(){
     return;
   }
 
-  this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe( 
+  this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe(
     (data)=>{
 
-       //this.marcas=data; 
+       //this.marcas=data;
         if(data != null )
         {
           this.marcas = new Array(data.length+1);
@@ -212,18 +231,18 @@ public getMarcasByEmpresaYUsuario(){
         empresa:"",
         usuarioCreated:"",
         usuarioUpdated:"",
-    
+
         activoText:"",
         flagActivo:true};
-       
+
         if(data != null )
        data.forEach((element, index) => {
         this.marcas[++index] = element;
        });
- 
+
 
        if( this.marcas!=null && this.marcas.length>0 ){
-         this.selectedMarca=this.marcas[0];                 
+         this.selectedMarca=this.marcas[0];
          this.getProyectosByEmpresaYMarca();
        }else{
          this.selectedMarca=null;
@@ -252,11 +271,11 @@ public getProyectosByEmpresaYMarca(){
     marcaTmpId=this.selectedMarca.marcaId;
  }
 
- this.proyectoService.getByEmpresaYMarca   ( this.usuarioSession.usuarioOID  , this.selectedEmpresa.empresaId ,  marcaTmpId  ) .subscribe( 
+ this.proyectoService.getByEmpresaYMarca   ( this.usuarioSession.usuarioOID  , this.selectedEmpresa.empresaId ,  marcaTmpId  ) .subscribe(
    (data)=>{
      console.log("Check");
       console.log( data );
-      this.proyectos=data;         
+      this.proyectos=data;
 
    }
   );

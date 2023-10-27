@@ -37,6 +37,24 @@ export class ListRegionesComponent implements OnInit {
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
     this.getRegionesByUsuarioOID();
+    this.itemsRegion = [
+      {
+        label: 'Editar Región',
+        icon: 'pi pi-pencil',
+        command: (event) => {
+          this.modificarRegion();
+        },
+      },
+      { separator: true },
+      {
+        label: 'Eliminar Region',
+        icon: 'pi pi-trash',
+        command: (event) => {
+          this.confirmDeleteRegion();
+        },
+      },
+      { separator: true },
+    ];
   }
 
 

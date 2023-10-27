@@ -54,6 +54,7 @@
         [rows]="10"
         selectionMode="single"
         [(selection)]="selectedEmpresa"
+        [contextMenu]="cmEmpresa"
         dataKey="empresaId"
       >
         <ng-template pTemplate="header" let-columns>
@@ -66,7 +67,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-empresa>
-          <tr [pSelectableRow]="empresa">
+          <tr [pSelectableRow]="empresa" [pContextMenuRow]="empresa">
             <!-- <td>{{ empresa.empresaId }}</td> Se quita el id-->
             <td>{{ empresa.clave }}</td>
             <td>{{ empresa.nombre }}</td>
@@ -85,7 +86,7 @@
 ></p-confirmDialog>
 
 <p-contextMenu
-  #cmEmpresas
+  #cmEmpresa
   popup="false"
   [style]="{ width: '250px' }"
   appendTo="body"

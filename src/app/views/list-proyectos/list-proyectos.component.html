@@ -76,7 +76,7 @@
                 </div>
 
 
-                <p-table #dtProyectos   (onRowSelect)="proyectoChanged()"      [value]="proyectos"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedProyecto"  dataKey="proyectoId"  >
+                <p-table #dtProyectos   (onRowSelect)="proyectoChanged()"      [value]="proyectos"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedProyecto"  [contextMenu]="cmProyectos" dataKey="proyectoId"  >
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                               <!-- <th style="width: 100px;"  >Acciones</th>-->
@@ -133,7 +133,7 @@
 
                     </ng-template>
                     <ng-template pTemplate="body" let-proyecto>
-                        <tr  [pSelectableRow]="proyecto" >
+                        <tr  [pSelectableRow]="proyecto" [pContextMenuRow]="proyecto">
                            <!-- <td   >
                                 <div  >
                                 <p-menu #menuProyecto popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsProyecto"></p-menu>

@@ -4,45 +4,45 @@
 
 
 <div   *ngIf="!desplegandoDocumento"    style="font-family:Arial, Helvetica, sans-serif; text-align: left; "  >
- 
 
-     
-   
+
+
+
 
 
     <div     >
-       
+
         <a   style="font-size:1.1em;margin-bottom:10px;    color: #007ad9;
     text-decoration: none; font-weight: 400;"  id="quitar"  [routerLink]="[]" (click)="backToDocumentList()" >Regresar a documentos</a>
-    
+
         <div style="font-family:Arial, Helvetica, sans-serif;" >
-            <h3>INSTANCIAS CREADAS PARA EL DOCUMENTO </h3>  
+            <h3>INSTANCIAS CREADAS PARA EL DOCUMENTO </h3>
             <div>
             <table cellpadding="2"  cellspacing="2"  >
-                  <tr> 
+                  <tr>
                        <td  style="font-weight: bold;"  >DOCUMENTO:</td>
                        <td    >{{documentoId}} - {{documento}}</td>
                   </tr>
 
-                  <tr>  
+                  <tr>
                     <td   style="font-weight: bold;"   >SUCURSAL:</td>
                     <td>{{sucursalId}} - {{sucursal}}</td>
                  </tr>
-                
-                 <tr> 
+
+                 <tr>
                     <td   style="font-weight: bold;"   >MARCA:</td>
                     <td> {{marcaName}}</td>
                  </tr>
-                 <tr> 
+                 <tr>
                     <td   style="font-weight: bold;"   >REGION:</td>
                     <td>{{regionId}} - {{region}}</td>
                  </tr>
-                 <tr> 
+                 <tr>
                     <td   style="font-weight: bold;"   >PROYECTO:</td>
                     <td>{{proyectoId}} - {{proyecto}} </td>
                  </tr>
-                 
-                 <tr> 
+
+                 <tr>
                     <td   style="font-weight: bold;"   >NÚMERO DE INSTANCIAS RESTANTES:</td>
                     <td>{{numDocumentos - numInstancias}}</td>
                  </tr>
@@ -54,34 +54,34 @@
 
         <p-toolbar>
             <div    *ngIf="numDocumentos>0"   class="ui-toolbar-group-left">
-                <button    *ngIf="numDocumentos>numInstancias"      pButton type="button"  (click)="agregarDocumentoInstancia()"    label="Agregar Instancia" icon="pi pi-plus"></button>                 
-            </div>                      
+                <button    *ngIf="numDocumentos>numInstancias"      pButton type="button"  (click)="agregarDocumentoInstancia()"    label="Agregar Instancia" icon="pi pi-plus"></button>
+            </div>
         </p-toolbar>
-     
+
         <div  *ngIf="documentos"     >
 
 
 
             <div    >
 
-                
-    
+
+
                 <p-toolbar>
                     <div   *ngIf="selectedDocumento"   class="ui-toolbar-group-left">
-                        <button pButton type="button"  (click)="modificarDocumento()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>  
-                        <button pButton type="button"  (click)="confirmDeleteDocumento()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>  
-                        <button pButton type="button"  (click)="clickEditarDocInstancia()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-file"></button>  
-                 
-                    </div>                      
+                        <button pButton type="button"  (click)="modificarDocumento()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>
+                        <button pButton type="button"  (click)="confirmDeleteDocumento()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>
+                        <button pButton type="button"  (click)="clickEditarDocInstancia()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-file"></button>
+
+                    </div>
                 </p-toolbar>
-     
-            </div>    
+
+            </div>
 
 
-            <p-table #dtDocInsta  (onRowSelect)="documentoChanged()"     [value]="documentos"    [paginator]="true" [rows]="15"  selectionMode="single" [(selection)]="selectedDocumento"    >
+            <p-table #dtDocInsta  (onRowSelect)="documentoChanged()"     [value]="documentos"    [paginator]="true" [rows]="15"  selectionMode="single" [(selection)]="selectedDocumento" [contextMenu]="cmDocumentos"   >
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-                       
+
                             <!-- <th style="width: 100px;"  >Acciones</th>-->
                             <th style="width: 180px;">Diseño</th>
                             <th style="width: 120px;"  >Fecha</th>
@@ -91,72 +91,72 @@
                             <th>Estatus</th>
                             <th>Alerta</th>
 
-                          
-                       
+
+
                     </tr>
                     <tr>
                         <th   ></th>
                          <th   ></th>
                          <th  >
                              <input size="20"  pInputText type="text" (input)="dtDocInsta.filter($event.target.value, 'nombre' , 'contains')">
-                          </th>  
-                         
+                          </th>
+
                           <th   ></th>
                           <th   ></th>
                           <th   ></th>
                           <th   >
 
                             <input size="20"  pInputText type="text" (input)="dtDocInsta.filter($event.target.value, 'tipoAlerta' , 'contains')">
-                     
+
                           </th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-documento>
-                    <tr  [pSelectableRow]="documento" >
+                    <tr  [pSelectableRow]="documento" [pContextMenuRow]="documento" >
                        <!--  <td   >
-                            <div  > 
+                            <div  >
                             <p-menu #menuDocumento popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsDocumento"></p-menu>
                             <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'22px' , 'height':'22px'  }"  pButton icon="pi pi-list"   (click)="menuDocumento.toggle($event);onClickMenuDocumento(documento);"></button>
-                            </div> 
-                        </td>   --> 
+                            </div>
+                        </td>   -->
                         <td>
-                                            
+
                             <div>
                              <!-- <input type="image" (change)="selectFile($event,documento.documentoInstanciaOID,null,null, documento.documento,null)" accept="image/*,.pdf"/>
                               <a href="{{documento.documentoInstanciaOID}}" target="_blank"><img *ngIf="conceptoInstancia.valorUrl && conceptoInstancia.valorUrl?.indexOf('.png') > -1"    src="assets/img/pdf.png"  width="50" height="50" ></a>
                              -->
-                             <img   src={{documento.imagePath}} width="100" height="100"></div></td>  
-                      
-                   
-                        <td  >{{documento.fechaCreacion}}  </td>  
-                        <td >{{documento.nombre}}</td>     
-                        <td >{{documento.documentoInstanciaOID}}</td> 
-                        <td >{{documento.observaciones}}</td>                        
+                             <img   src={{documento.imagePath}} width="100" height="100"></div></td>
+
+
+                        <td  >{{documento.fechaCreacion}}  </td>
+                        <td >{{documento.nombre}}</td>
+                        <td >{{documento.documentoInstanciaOID}}</td>
+                        <td >{{documento.observaciones}}</td>
                         <td >{{documento.statusNombre}} </td>
                         <td  *ngIf="documento.tipoAlerta == 2"><img  src="assets/img/alertaRojaConSigno.png"  width="30" height="30"> {{documento.alerta}}</td>
                         <td *ngIf="documento.tipoAlerta == 1"><img  src="assets/img/alertaNaranja.png"  width="30" height="30" > {{documento.alerta}}</td>
                         <td  *ngIf="documento.tipoAlerta == 0"><img  src="assets/img/alertaVerde.png"  width="30" height="30" > {{documento.alerta}}</td>
                         <td  *ngIf="documento.tipoAlerta == -1"><img  src="assets/img/alertaAmarillo.png"  width="30" height="30" > {{documento.alerta}}</td>
 
-                    </tr>       
+                    </tr>
                 </ng-template>
 
-            
+
 
             </p-table>
-        
-        </div> 
 
-
-     
+        </div>
 
 
 
-        
+
+
+
+
     </div>
 
-   
-   
+
+
 </div>
 
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
@@ -170,20 +170,19 @@
     text-decoration: none; font-weight: 400;"  id="quitar"  [routerLink]="[]" (click)="backToInstanciasList()" >Regresar a instancias</a>
 
 <app-display-document-instancia
- 
-[varDocumentoInstanciaOID]="currDocumentoInstanciaOID" 
-[varSeccionOID]="currSeccionOID" 
-[varDocumentoId]="currDocumentoId" 
-[varUsuarioOID]="currUsuarioOID" 
-[varNombreInstancia]="currNombre" 
-[varSucursal]="sucursal" 
-[varRegion]="region" 
-[varAlerta]="alerta" 
-[varTipoAlerta]="tipoAlerta" 
+
+[varDocumentoInstanciaOID]="currDocumentoInstanciaOID"
+[varSeccionOID]="currSeccionOID"
+[varDocumentoId]="currDocumentoId"
+[varUsuarioOID]="currUsuarioOID"
+[varNombreInstancia]="currNombre"
+[varSucursal]="sucursal"
+[varRegion]="region"
+[varAlerta]="alerta"
+[varTipoAlerta]="tipoAlerta"
 
 ></app-display-document-instancia>
 
 </div>
 
 
- 

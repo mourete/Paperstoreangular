@@ -29,7 +29,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   documentos:DocumentoInstancia[];
   selectedDocumento:DocumentoInstancia;
   usuario : Usuario;
-  documentoId : number; 
+  documentoId : number;
   proyectoId:number;
   regionId:number;
   sucursalId:number;
@@ -41,18 +41,11 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   proyecto:string;
   tipoAlerta:number;
   image:string;
-
-
   marcaName : string;
   empresaName : string;
   //apiURLImagen :string;
-
-
   numDocumentos:number;
   numInstancias:number;
-
-
-
   currDocumentoInstanciaOID:string;
   currSeccionOID:string;
   currDocumentoId:number;
@@ -78,14 +71,14 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   @Input() public varNumDocumentos:number;
   @Input() public varNumInstancias:number;
   @Input() public varEmpresa:string;
-  @Input() public varMarca:string; 
+  @Input() public varMarca:string;
   @Input() public varTipoAlerta:number;
   @Input() public varAlerta:string;
-  @Input() public varImage:string; 
+  @Input() public varImage:string;
 
 
   constructor(public principal : PrincipalComponent,  public documentoInstanciaService: DocumentoInstanciaService , private confirmationService: ConfirmationService ,
-    public dialogService: DialogService    ,     private actRoute: ActivatedRoute , private router: Router , private seccionService : SeccionService  ) { 
+    public dialogService: DialogService    ,     private actRoute: ActivatedRoute , private router: Router , private seccionService : SeccionService  ) {
        this.documentoId=this.actRoute.snapshot.params.documentoId;
        this.proyectoId=this.actRoute.snapshot.params.proyectoId;
        this.sucursalId=this.actRoute.snapshot.params.sucursalId;
@@ -95,7 +88,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
        this.sucursal=this.actRoute.snapshot.params.sucursal;
        this.region=this.actRoute.snapshot.params.region;
        this.proyecto=this.actRoute.snapshot.params.proyecto;
-      
+
        this.numDocumentos= Number( this.actRoute.snapshot.params.numDocumentos );
        this.numInstancias= Number( this.actRoute.snapshot.params.numInstancias );
        this.desplegandoDocumento=false;
@@ -105,8 +98,33 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.image = this.usuario.infoHuesped.pathImagenWeb;
+    this. itemsDocumento = [
+      {
+        label: 'Editar Documento',
+        icon: 'pi pi-pencil',
+        command: (event) => {
+          this.modificarDocumento();
+        },
+      },
+      { separator: true },
+      {
+        label: 'Eliminar Documento',
+        icon: 'pi pi-trash',
+        command: (event) => {
+          this.confirmDeleteDocumento();
+        },
+      },
+      {
+        label: 'Contestar Instancia',
+        icon: 'pi pi-file',
+        command: (event) => {
+          this.clickEditarDocInstancia();
+        },
+      },
+      { separator: true },
+    ];
     if( this.documentoId == undefined || this.documentoId<=0  ){
- 
+
        this.documentoId=this.varDocumentoId;
        this.proyectoId=this.varProyectoId;
        this.proyecto=this.varProyecto;
@@ -124,8 +142,6 @@ export class ListDocumentoInstanciasComponent implements OnInit {
        this.tipoAlerta = this.varTipoAlerta;
        this.image = this.varImage;
       // this.apiURLImagen =   GlobalConstants.apiURLImage;
-
-
     }
 
 
@@ -135,7 +151,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     localStorage.setItem( GlobalConstants.CURRENT_PROYECTO_ID    ,  S   )
      */
 
-     
+
   }
 
 
@@ -144,45 +160,45 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     this.desplegandoDocumento = !this.desplegandoDocumento;
 
     this.getByDocIdSucProyReg();
-    
+
   }
 
   public backToDocumentList(){
 
     console.log("Hola");
 
-    //var currentTemplate="instancias";    
-        
+    //var currentTemplate="instancias";
+
     console.log("Hola aqui ando");
 
     this.principal.setCurrentComponent(ListDocumentoUsuariosComponent);
 
-    
+
 
 
   }
 
   public getByDocIdSucProyReg(){
-    
-    this.documentoInstanciaService.getByDocIdSucProyReg(this.documentoId, this.sucursalId , this.proyectoId , this.regionId, this.usuarioOID  ).subscribe( 
+
+    this.documentoInstanciaService.getByDocIdSucProyReg(this.documentoId, this.sucursalId , this.proyectoId , this.regionId, this.usuarioOID  ).subscribe(
       (data)=>{
          console.log( data );
-         this.documentos=data;         
+         this.documentos=data;
       }
      );
-  
+
   }
 
   public eliminarDocumento(   ){
 
     this.documentoInstanciaService.eliminarDocumentoInstancia ( this.selectedDocumento, this.usuarioOID ).subscribe((data)=>{
-     
+
       var instanciaDelete:String=data;
-       
-  
-  }); 
+
+
+  });
   this.documentos.splice(this.documentos.indexOf(this.selectedDocumento),1);
-     
+
 }
 
 
@@ -193,13 +209,13 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     //alert("Region:" + this.regionId )
     let ref= this.dialogService.open( DocumentoInstanciaComponent , {
         header: 'Documento',
-        width: '70%',        
-        contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
-        data: { documentoId:this.documentoId , 
-                usuarioOID : AppStore.usuarioOIDActual , 
+        width: '70%',
+        contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
+        data: { documentoId:this.documentoId ,
+                usuarioOID : AppStore.usuarioOIDActual ,
                 proyectoId : this.proyectoId ,
                 proyecto: this.proyecto ,
-                regionId : this.regionId , 
+                regionId : this.regionId ,
                 sucursalId : this.sucursalId,
                 alerta:this.alerta,
                 tipoAlerta : this.tipoAlerta,
@@ -207,41 +223,41 @@ export class ListDocumentoInstanciasComponent implements OnInit {
                 update : 0  }
     });
 
-    
-    ref.onClose.subscribe((doc: DocumentoInstancia ) => {  
-      
-      
+
+    ref.onClose.subscribe((doc: DocumentoInstancia ) => {
+
+
 
       if (doc!=null  ) {
-          
+
          if( doc!=null && doc.documentoInstanciaOID!=null ){
             this.seccionService.getPrimeraSeccion( this.documentoId , this.usuarioOID).subscribe(
-                
+
               (data)=>{
 
-                console.log("entre datos de primera seccion"); 
+                console.log("entre datos de primera seccion");
 
                 console.log( data );
 
-                var  seccion:Seccion=data;      
-                  
+                var  seccion:Seccion=data;
+
                 if( seccion!=null ){
                   //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
-               
-                  this.displayDocumentoInstancia( doc.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , doc.nombre,doc.alerta,doc.tipoAlerta, doc.imagePath );      
 
-                }    
+                  this.displayDocumentoInstancia( doc.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , doc.nombre,doc.alerta,doc.tipoAlerta, doc.imagePath );
+
+                }
 
              }
 
 
             );
-        
+
          }
-       
+
       }
     });
-    
+
 
 
   }
@@ -253,7 +269,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
       return;
     }
 
-    this.seccionService.getPrimeraSeccion(this.documentoId, this.usuarioOID  ).subscribe( 
+    this.seccionService.getPrimeraSeccion(this.documentoId, this.usuarioOID  ).subscribe(
       (data)=>{
          console.log( data );
          let secTmp=data;
@@ -261,12 +277,12 @@ export class ListDocumentoInstanciasComponent implements OnInit {
            return;
          }
 
-         this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , secTmp.seccionOID , this.documentoId , this.usuarioOID  , this.selectedDocumento.nombre, this.selectedDocumento.alerta, this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath);      
+         this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , secTmp.seccionOID , this.documentoId , this.usuarioOID  , this.selectedDocumento.nombre, this.selectedDocumento.alerta, this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath);
       }
      );
 
 
-     
+
 
   }
 
@@ -279,38 +295,38 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     this.currDocumentoInstanciaOID=docInstOID;
     this.currSeccionOID=secOID;
     this.currDocumentoId=docId;
-    this.currUsuarioOID=usrOID; 
+    this.currUsuarioOID=usrOID;
     this.currNombre =   nombreCurr;
     this.currAlerta=alerta;
-    this.curtipoAlerta=tipoAlerta; 
+    this.curtipoAlerta=tipoAlerta;
     this.currImage =   imagePath;
     console.log( this.currImage );
   }
 
 
   public modificarDocumento(){
-    
-   
+
+
     if( this.selectedDocumento==null   ){
         return;
     }
 
      let ref= this.dialogService.open( DocumentoInstanciaComponent , {
       header: 'Editar Documento',
-      width: '90%',        
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+      width: '90%',
+      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { documento: this.selectedDocumento, update : 1   }
   });
 
 
-  ref.onClose.subscribe(( ) => { 
+  ref.onClose.subscribe(( ) => {
    //if (emp!=null  ) {
-        
+
         this.getByDocIdSucProyReg();
     //}
   });
 
-   
+
   }
 
 
@@ -321,16 +337,16 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
 
   public confirmDeleteDocumento() {
-  
+
     this.confirmationService.confirm({
         message: 'Está seguro que desea eliminar el documento ?',
         accept: () => {
            this.eliminarDocumento();
         }
-    }); 
+    });
   }
 
- 
+
   public onClickMenuDocumento(documentoInstancia:DocumentoInstancia){
 
   }

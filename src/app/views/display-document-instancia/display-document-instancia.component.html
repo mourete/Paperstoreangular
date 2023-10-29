@@ -145,7 +145,7 @@
                   <td *ngIf="conceptoInstancia.tipoConceptoId==6">
                     <p-dropdown [(ngModel)]="conceptoInstancia.selected" [showTransitionOptions]="'0ms'"
                                 [hideTransitionOptions]="'0ms'" (onChange)="listaChanged(conceptoInstancia)"
-                                [options]="conceptoInstancia.opcionesInstancia" dataKey="opcionOID"
+                                [options]="conceptoInstancia.opcionesInstancia" dataKey="opcionOID" filter="true"
                                 optionLabel="texto"></p-dropdown>
                   </td>
 
@@ -173,9 +173,13 @@
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==7">
                     <div *ngIf="conceptoInstancia.opcionesInstancia">
-                      <p-multiSelect [options]="conceptoInstancia.opcionesInstancia"
-                                     [(ngModel)]="conceptoInstancia.selectedValues" optionLabel="texto"
-                                     optionValue="opcionOID"></p-multiSelect>
+                      <p-multiSelect
+                        [options]="conceptoInstancia.opcionesInstancia"
+                        [(ngModel)]="conceptoInstancia.selectedValues"
+                        optionLabel="texto"
+                        [style]="{'width': '175px', 'height': '35px'}"
+                        optionValue="opcionOID">
+                      </p-multiSelect>
                     </div>
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==8">

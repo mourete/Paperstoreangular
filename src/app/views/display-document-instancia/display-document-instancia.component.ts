@@ -662,18 +662,17 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     });
   }
 
-  public modifyDocumentInstance(documento: DocumentoInstancia) :DocumentoInstancia {
-    documento.seccionesInstancia.forEach(seccion => {
+  public modifyDocumentInstance(documento: DocumentoInstancia): DocumentoInstancia {
+    const modifiedDocumento: DocumentoInstancia = structuredClone(documento);
+    modifiedDocumento.seccionesInstancia.forEach(seccion => {
       seccion.conceptosInstancia.forEach(concepto => {
         if (concepto.tipoConceptoId === GlobalConstants.CONCEPTO_TIPO_SELECCION_MULTIPLE) {
-          let selectedOids = concepto.opcionesInstancia
-            .filter(opcion => opcion.seleccionado === 1)
-            .map(opcion => opcion.opcionOID);
+          let selectedOids = concepto.selectedValues.map(opcion => opcion.opcionOID);
           concepto.selectedValues = selectedOids;
         }
       });
     });
-    return documento;
+    return modifiedDocumento;
   }
 
 

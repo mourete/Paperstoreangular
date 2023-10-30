@@ -663,11 +663,10 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   }
 
   public modifyDocumentInstance(documento: DocumentoInstancia): DocumentoInstancia {
-    const modifiedDocumento: DocumentoInstancia =  JSON.parse(JSON.stringify(documento));
+    const modifiedDocumento: DocumentoInstancia = structuredClone(documento);
     modifiedDocumento.seccionesInstancia.forEach(seccion => {
       seccion.conceptosInstancia.forEach(concepto => {
         if (concepto.tipoConceptoId === GlobalConstants.CONCEPTO_TIPO_SELECCION_MULTIPLE) {
-          // @ts-ignore
           let selectedOids = concepto.selectedValues.map(opcion => opcion.opcionOID);
           concepto.selectedValues = selectedOids;
         }

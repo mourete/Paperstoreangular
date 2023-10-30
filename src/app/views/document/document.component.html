@@ -1,6 +1,6 @@
 
   <p-messages [value]="msgs" [escape]="true"></p-messages>
-  <form [formGroup]="profileDocument" (ngSubmit)="onSubmit()">
+  <form [formGroup]="profileRegion" (ngSubmit)="onSubmit()">
     <div *ngIf="documento">
   <table border="0">
     <tr>
@@ -9,7 +9,7 @@
         <input
           #claveInput
           type="text"
-
+          [(ngModel)]="documento.clave"
           formControlName="clave"
           pInputText
           size="25"
@@ -30,7 +30,7 @@
           formControlName="nombre"
           pInputText
           size="25"
-
+          [(ngModel)]="documento.nombre"
           pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
           required
         />
@@ -44,11 +44,9 @@
         <p-dropdown
           [showTransitionOptions]="'0ms'"
           [hideTransitionOptions]="'0ms'"
-          formControlName="estatus"
+          [(ngModel)]="check"
           [options]="lstStatusProyecto"
-          dataKey="statusProyectoId"
           optionLabel="nombre"
-          optionValue="nombre"
         ></p-dropdown>
       </td>
     </tr>
@@ -59,7 +57,7 @@
           pInputTextarea
           [rows]="5"
           [cols]="25"
-          formControlName="observaciones"
+          [(ngModel)]="documento.observaciones"
         ></textarea>
       </td>
     </tr>
@@ -71,7 +69,7 @@
     pButton
     type="button"
     label="Guardar"
-    (click)="guardarDocumento()"
+    (click)="guadarDocumento()"
   ></button>
   <button
     pButton

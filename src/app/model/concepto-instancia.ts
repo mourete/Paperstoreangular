@@ -26,7 +26,7 @@ export class ConceptoInstancia {
     opcionesInstancia: OpcionInstancia[];
     valueAsDate:Date;
     selected:OpcionInstancia;
-    selectedValues: string[];
+    selectedValues: OpcionInstancia[] | string[];
     tipoAlerta: number;
     nombreFile:string;
 

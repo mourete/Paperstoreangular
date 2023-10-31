@@ -1,211 +1,234 @@
+<style>
 
-     
-    <style>
+  .ui-dialog {
+    width: auto !important;
+  }
 
-    .ui-dialog {
-        width: auto !important;
-    }
-    .custom-file-label::after {
-  content: none; /* Elimina el contenido predeterminado */
-}
- 
-/* En tu archivo de estilos CSS o en el archivo de estilos de tu componente */
-/* Utiliza un selector específico para el botón de carga */
-.p-fileupload-buttonbar .p-fileupload-upload {
-  display: none;
-}
+  .custom-file-label::after {
+    content: none; /* Elimina el contenido predeterminado */
+  }
+
+  /* En tu archivo de estilos CSS o en el archivo de estilos de tu componente */
+  /* Utiliza un selector específico para el botón de carga */
+  .p-fileupload-buttonbar .p-fileupload-upload {
+    display: none;
+  }
 </style>
 
 
-    <div style="font-family:Arial, Helvetica, sans-serif; text-align: left; " >
-      
-        <p-blockUI [blocked]="blockedDocument"></p-blockUI>
-     
-            <h3>CONTESTAR INSTANCIA DE DOCUMENTO </h3>  
+<div style="font-family:Arial, Helvetica, sans-serif; text-align: left; ">
 
- 
-            <table cellppading="5"   style="margin-bottom: 10px;"  *ngIf=" documentoInstancia  "  >
-               
-                <td>
-                    <tr> 
-                        <td  style="font-weight: bold;"  >DOCUMENTO:</td>
-                        <td    >{{documentoInstancia.nombre}}</td>
-                        <td>{{documentoInstancia.documento}}</td>
-                    </tr>
+  <p-blockUI [blocked]="blockedDocument"></p-blockUI>
 
-                    <tr> 
-                        <td  style="font-weight: bold;"  >DOCUMENTO INSTANCIA:</td>
-                        <td    >{{nombreInstancia}}</td>
-                    </tr>
+  <h3>CONTESTAR INSTANCIA DE DOCUMENTO </h3>
 
-                    <tr> 
-                        <td  style="font-weight: bold;"  >SUCURSAL:</td>
-                        <td    >{{sucursal}}</td>
-                    </tr>
 
-                    <tr> 
-                        <td  style="font-weight: bold;"  >REGION:</td>
-                        <td    >{{region}}</td>
-                    </tr>
-                    <tr> 
-                        <td  style="font-weight: bold;"  >ALERTA:</td>
-                     
-                            
-                            
-                           
-                        
-                            <td  *ngIf="documentoInstancia.tipoAlerta == 2"><img  src="assets/img/alertaRojaConSigno.png"  width="30" height="30"> {{documentoInstancia.alerta}}</td>
-                            <td *ngIf="documentoInstancia.tipoAlerta == 1"><img  src="assets/img/alertaNaranja.png"  width="30" height="30" > {{documentoInstancia.alerta}}</td>
-                            <td  *ngIf="documentoInstancia.tipoAlerta == 0"><img  src="assets/img/alertaVerde.png"  width="30" height="30" > {{documentoInstancia.alerta}}</td>
-                            <td  *ngIf="documentoInstancia.tipoAlerta == -1"><img  src="assets/img/alertaAmarillo.png"  width="30" height="30" > {{documentoInstancia.alerta}}</td>
-    
-                       
-                    </tr>
-                </td>
-                   <td *ngIf="documentoInstancia.imagePath!=''" ><img   src={{documentoInstancia.imagePath}} width="200" height="200"></td>
-          </table>
+  <table cellppading="5" style="margin-bottom: 10px;" *ngIf=" documentoInstancia  ">
 
-             
- 
+    <td>
+      <tr>
+    <td style="font-weight: bold;">DOCUMENTO:</td>
+    <td>{{documentoInstancia.nombre}}</td>
+    <td>{{documentoInstancia.documento}}</td>
+    </tr>
+
+    <tr>
+      <td style="font-weight: bold;">DOCUMENTO INSTANCIA:</td>
+      <td>{{nombreInstancia}}</td>
+    </tr>
+
+    <tr>
+      <td style="font-weight: bold;">SUCURSAL:</td>
+      <td>{{sucursal}}</td>
+    </tr>
+
+    <tr>
+      <td style="font-weight: bold;">REGION:</td>
+      <td>{{region}}</td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">ALERTA:</td>
+
+
+      <td *ngIf="documentoInstancia.tipoAlerta == 2"><img src="assets/img/alertaRojaConSigno.png" width="30"
+                                                          height="30"> {{documentoInstancia.alerta}}</td>
+      <td *ngIf="documentoInstancia.tipoAlerta == 1"><img src="assets/img/alertaNaranja.png" width="30"
+                                                          height="30"> {{documentoInstancia.alerta}}</td>
+      <td *ngIf="documentoInstancia.tipoAlerta == 0"><img src="assets/img/alertaVerde.png" width="30"
+                                                          height="30"> {{documentoInstancia.alerta}}</td>
+      <td *ngIf="documentoInstancia.tipoAlerta == -1"><img src="assets/img/alertaAmarillo.png" width="30"
+                                                           height="30"> {{documentoInstancia.alerta}}</td>
+
+
+    </tr>
+    </td>
+    <td *ngIf="documentoInstancia.imagePath!=''"><img src={{documentoInstancia.imagePath}} width="200" height="200">
+    </td>
+  </table>
+
+
+</div>
+
+
+<div style="text-align: left;" *ngIf="documentoInstancia">
+
+  <p-messages [value]="msgs" [escape]=false></p-messages>
+
+
+  <p-toolbar>
+    <div class="ui-toolbar-group-left">
+      <button pButton type="button" (click)="guardarSeccion(null);" label="Guardar sección" icon="pi pi-plus"></button>
+
     </div>
-    
-     
-    <div  style="text-align: left;"  *ngIf="documentoInstancia"   >
-
-        <p-messages [value]="msgs"   [escape]=false  ></p-messages>
-        
-
-        <p-toolbar>
-            <div class="ui-toolbar-group-left">
-                <button pButton type="button"    (click)="guardarSeccion(null);"     label="Guardar sección" icon="pi pi-plus" ></button>
-                 
-            </div>
-            
-          
-        </p-toolbar>
-
-        <div   *ngIf="seccionesInstancias"   style="margin: 0px;"   >
-            <p-panel   *ngFor="let seccion of seccionesInstancias; index as indexSec "    [collapsed]="seccion.seccionOID!=seccionInstancia.seccionOID"   [toggleable]="true"    (onAfterToggle)="cambiarSeccion($event ,  seccion);"   > 
-        
-    
-                <p-header>
-                    <div class="ui-helper-clearfix">
-                        <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">{{indexSec+1}}.{{seccion.nombre}}</span>
-                                                   
-                    </div>
-    
-                </p-header>
-    
-    
-                  <div   *ngIf="seccion.seccionOID==seccionInstancia.seccionOID"   >
-
-                    <!-- inicio despliegue seccion -->
 
 
-                    <div   *ngIf="seccionInstancia"    >
-            
-                        <p-header>
-        
-                            <div class="ui-helper-clearfix">
-                                <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">{{seccionInstancia.orden}}. {{seccionInstancia.nombre}} </span>                                                       
-                            </div>
-            
-                        </p-header>
-            
-            
-                          <div   *ngIf="seccionInstancia.conceptosInstancia"     >
-        
-        
-                            <p-table     [value]="seccionInstancia.conceptosInstancia"        selectionMode="single"    dataKey="conceptoOID"  >
-                            
-                                <ng-template pTemplate="body" let-conceptoInstancia    let-rowIndex="rowIndex"   >
-                                    <tr  [pSelectableRow]="conceptoInstancia"      >
-            
-              
-                                        <td  style="width: 50px;"  >{{rowIndex+1}}</td>
-                                        <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 2" colspan="2"><img  src="assets/img/alertaRojaConSigno.png"  width="30" height="30" > {{conceptoInstancia.descripcion}}</td>
-                                        <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 1" colspan="2"><img  src="assets/img/alertaNaranja.png"  width="30" height="30" > {{conceptoInstancia.descripcion}} </td>
-                                        <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 0" colspan="2"><img  src="assets/img/alertaVerde.png"  width="30" height="30" > {{conceptoInstancia.descripcion}} </td>
-                                        <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == -1" colspan="2"><img  src="assets/img/alertaAmarillo.png"  width="30" height="30" > {{conceptoInstancia.descripcion}} </td>
-                           
-                                       <td *ngIf="conceptoInstancia.tipoConceptoId!=13"  colspan="2"> {{conceptoInstancia.descripcion}}   </td> 
-                                       
-                                        <td  *ngIf="conceptoInstancia.tipoConceptoId==6"  >
-                                            <p-dropdown   [(ngModel)]="conceptoInstancia.selected"  [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" (onChange)="listaChanged(conceptoInstancia)"    [options]="conceptoInstancia.opcionesInstancia"    dataKey="opcionOID"   optionLabel="texto"></p-dropdown>
-                                        </td>  
-                                               
-                                        <td  *ngIf="conceptoInstancia.tipoConceptoId==2 || conceptoInstancia.tipoConceptoId==3 || conceptoInstancia.tipoConceptoId==12 "  >
-                                             <input type="text" pInputText   [(ngModel)]="conceptoInstancia.valor"  /> 
-                                        </td>
+  </p-toolbar>
 
-                                      
-                                        <td  *ngIf="conceptoInstancia.tipoConceptoId==1">
-                                            <input type="text"  pInputText   [(ngModel)]="conceptoInstancia.valor"  maxlength="{{conceptoInstancia.maximo}}"/> 
-                                       </td>
-                                        <td  *ngIf="conceptoInstancia.tipoConceptoId==4"   >
-                                            <p-calendar  [(ngModel)]="conceptoInstancia.valueAsDate"  dateFormat="dd/mm/yy"   showIcon="false" showButtonBar="true" ></p-calendar>
-                                       </td>                           
-                                       <td  *ngIf="conceptoInstancia.tipoConceptoId==13"   >
-                                        <p-calendar   [(ngModel)]="conceptoInstancia.valueAsDate"  dateFormat="dd/mm/yy"    showIcon="false" showButtonBar="true" ></p-calendar>
-                                   </td>   
-                                       <td  *ngIf="conceptoInstancia.tipoConceptoId==5"   >
-                                        <p-calendar    [(ngModel)]="conceptoInstancia.valueAsDate"   timeOnly="true"   showIcon="true" showTime="true" hourFormat="12" [disabled] ="true"></p-calendar>
-                                        </td>        
-                                        <td  *ngIf="conceptoInstancia.tipoConceptoId==7"   >
-                                            <div   *ngIf="conceptoInstancia.opcionesInstancia"     >
-                                                <div   *ngFor="let opcionInstancia of conceptoInstancia.opcionesInstancia"   style="margin: 5px;"  >
-                                                      <p-checkbox  value="{{opcionInstancia.opcionOID}}"    [(ngModel)]="conceptoInstancia.selectedValues"     name="{{conceptoInstancia.conceptoOID}}"   label="{{opcionInstancia.texto}}"  ></p-checkbox>                                   
-                                                 </div>
-                                            </div>
-                                                                   
-                                             
-                                             
-                                        </td>    
-                                                            
-                                        <td  *ngIf="conceptoInstancia.tipoConceptoId==8">
-                                            
-                                            <div *ngIf="conceptoInstancia.valor ">
-                                                <input type="file" (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"  #fileInput style="display: none;">
-                                                <button (click)="fileInput.click()" >Seleccionar archivo</button>
-                                                <button (click)="clearFile($event,conceptoInstancia)">Eliminar archivo</button>
-                                                <p *ngIf="conceptoInstancia.nombreFile">{{conceptoInstancia.nombreFile}}<p>
-                                                                                                                               
-                                               
-                                                <a *ngIf="conceptoInstancia.valor?.indexOf('.pdf') > -1"   href="{{conceptoInstancia.valor}}" target="_blank"><img   src="assets/img/pdf.png"  width="50" height="50" ></a>
-                                                <a *ngIf="conceptoInstancia.valor?.indexOf('.pdf') == -1"  href="{{conceptoInstancia.valor}}"  target="conceptoInstancia.valor"><img   src="assets/img/img.png"   width="50" height="50"> </a>
-                                                  
-                                            </div>
+  <div *ngIf="seccionesInstancias" style="margin: 0px;">
+    <p-panel *ngFor="let seccion of seccionesInstancias; index as indexSec "
+             [collapsed]="seccion.seccionOID!=seccionInstancia.seccionOID" [toggleable]="true"
+             (onAfterToggle)="cambiarSeccion($event ,  seccion);">
 
-                                            <div *ngIf="!conceptoInstancia.valor ">
-                                               
-                                                <input type="file" (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"  #fileInput style="display: none;">
-                                                <button (click)="fileInput.click()" >Seleccionar archivo</button>
-                                               
-                                            </div>
 
-                                            
-                                        </td>   
-                
-                                    </tr>
-                                </ng-template>     
-                            </p-table>                    
-            
-            
-                          </div>  
-                  
-                </div>
-    
-    
-    
-                  
-    
-                     <!--fin despliegue seccion -->
-    
-                  </div>  
-            </p-panel>
+      <p-header>
+        <div class="ui-helper-clearfix">
+          <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">{{indexSec + 1}}
+            .{{seccion.nombre}}</span>
+
         </div>
-    
-    
-    </div>
-    
-    
+
+      </p-header>
+
+
+      <div *ngIf="seccion.seccionOID==seccionInstancia.seccionOID">
+
+        <!-- inicio despliegue seccion -->
+
+
+        <div *ngIf="seccionInstancia">
+
+          <p-header>
+
+            <div class="ui-helper-clearfix">
+              <span class="ui-panel-title"
+                    style="font-size:16px;display:inline-block;margin-top:2px">{{seccionInstancia.orden}}
+                . {{seccionInstancia.nombre}} </span>
+            </div>
+
+          </p-header>
+
+
+          <div *ngIf="seccionInstancia.conceptosInstancia">
+
+
+            <p-table [value]="seccionInstancia.conceptosInstancia" selectionMode="single" dataKey="conceptoOID">
+
+              <ng-template pTemplate="body" let-conceptoInstancia let-rowIndex="rowIndex">
+                <tr [pSelectableRow]="conceptoInstancia">
+
+
+                  <td style="width: 50px;">{{rowIndex + 1}}</td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 2" colspan="2"><img
+                    src="assets/img/alertaRojaConSigno.png" width="30" height="30"> {{conceptoInstancia.descripcion}}
+                  </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 1" colspan="2"><img
+                    src="assets/img/alertaNaranja.png" width="30" height="30"> {{conceptoInstancia.descripcion}} </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 0" colspan="2"><img
+                    src="assets/img/alertaVerde.png" width="30" height="30"> {{conceptoInstancia.descripcion}} </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == -1" colspan="2">
+                    <img src="assets/img/alertaAmarillo.png" width="30" height="30"> {{conceptoInstancia.descripcion}}
+                  </td>
+
+                  <td *ngIf="conceptoInstancia.tipoConceptoId!=13"
+                      colspan="2"> {{conceptoInstancia.descripcion}}   </td>
+
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==6">
+                    <p-dropdown [(ngModel)]="conceptoInstancia.selected" [showTransitionOptions]="'0ms'"
+                                [hideTransitionOptions]="'0ms'" (onChange)="listaChanged(conceptoInstancia)"
+                                [options]="conceptoInstancia.opcionesInstancia" dataKey="opcionOID" filter="true"
+                                optionLabel="texto"></p-dropdown>
+                  </td>
+
+                  <td
+                    *ngIf="conceptoInstancia.tipoConceptoId==2 || conceptoInstancia.tipoConceptoId==3 || conceptoInstancia.tipoConceptoId==12 ">
+                    <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor"/>
+                  </td>
+
+
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==1">
+                    <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor"
+                           maxlength="{{conceptoInstancia.maximo}}"/>
+                  </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==4">
+                    <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" dateFormat="dd/mm/yy" showIcon="false"
+                                showButtonBar="true"></p-calendar>
+                  </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13">
+                    <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" dateFormat="dd/mm/yy" showIcon="false"
+                                showButtonBar="true"></p-calendar>
+                  </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==5">
+                    <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" timeOnly="true" showIcon="true"
+                                showTime="true" hourFormat="12" [disabled]="true"></p-calendar>
+                  </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==7">
+                    <div *ngIf="conceptoInstancia.opcionesInstancia">
+                      <p-multiSelect
+                        [options]="conceptoInstancia.opcionesInstancia"
+                        [(ngModel)]="conceptoInstancia.selectedValues"
+                        optionLabel="texto"
+                        [style]="{'width': '175px', 'height': '35px'}"
+                        optionValue="opcionOID">
+                      </p-multiSelect>
+                    </div>
+                  </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==8">
+
+                    <div *ngIf="conceptoInstancia.valor ">
+                      <input type="file"
+                             (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"
+                             #fileInput style="display: none;">
+                      <button (click)="fileInput.click()">Seleccionar archivo</button>
+                      <button (click)="clearFile($event,conceptoInstancia)">Eliminar archivo</button>
+                      <p *ngIf="conceptoInstancia.nombreFile">{{conceptoInstancia.nombreFile}}
+                      <p>
+
+
+                        <a *ngIf="conceptoInstancia.valor?.indexOf('.pdf') > -1" href="{{conceptoInstancia.valor}}"
+                           target="_blank"><img src="assets/img/pdf.png" width="50" height="50"></a>
+                        <a *ngIf="conceptoInstancia.valor?.indexOf('.pdf') == -1" href="{{conceptoInstancia.valor}}"
+                           target="conceptoInstancia.valor"><img src="assets/img/img.png" width="50" height="50"> </a>
+
+                    </div>
+
+                    <div *ngIf="!conceptoInstancia.valor ">
+
+                      <input type="file"
+                             (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"
+                             #fileInput style="display: none;">
+                      <button (click)="fileInput.click()">Seleccionar archivo</button>
+
+                    </div>
+
+
+                  </td>
+
+                </tr>
+              </ng-template>
+            </p-table>
+
+
+          </div>
+
+        </div>
+
+
+        <!--fin despliegue seccion -->
+
+      </div>
+    </p-panel>
+  </div>
+
+
+</div>
+

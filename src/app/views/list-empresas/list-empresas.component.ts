@@ -26,7 +26,27 @@ export class ListEmpresasComponent implements OnInit {
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.getEmpresasByUsuarioOID();
+
+    this.itemsEmpresa = [
+      {
+        label: 'Editar Lista',
+        icon: 'pi pi-pencil',
+        command: (event) => {
+          this.modificarEmpresa();
+        },
+      },
+      { separator: true },
+      {
+        label: 'Eliminar Lista',
+        icon: 'pi pi-trash',
+        command: (event) => {
+          this.confirmDeleteEmpresa();
+        },
+      },
+      { separator: true },
+    ];
   }
+
 
 
 
@@ -35,29 +55,29 @@ export class ListEmpresasComponent implements OnInit {
       return;
     }
     console.log(this.usuario.usuarioOID);
-    this.empresaService.getByUsuarioOID(  this.usuario.usuarioOID ) .subscribe( 
+    this.empresaService.getByUsuarioOID(  this.usuario.usuarioOID ) .subscribe(
       (data)=>{
          console.log( data );
-         this.empresas=data;         
+         this.empresas=data;
       }
      );
-  
+
   }
-  
+
 
   public agregarEmpresa(){
 
     let ref= this.dialogService.open( EmpresaComponent , {
       header: 'Empresa',
-      width: '70%',        
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+      width: '70%',
+      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { empresaId:0  }
   });
 
-  ref.onClose.subscribe(( emp : Empresa  ) => { 
+  ref.onClose.subscribe(( emp : Empresa  ) => {
     console.log("Entro aqui 2");
     if (emp!=null  ) {
-        
+
         this.getEmpresasByUsuarioOID();
     }
   });
@@ -76,15 +96,15 @@ export class ListEmpresasComponent implements OnInit {
 
   let ref= this.dialogService.open( EmpresaComponent , {
     header: 'Empresa',
-    width: '70%',        
-    contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+    width: '70%',
+    contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
     data: { empresaId: this.selectedEmpresa.empresaId  }
   });
 
 
-  ref.onClose.subscribe(( emp : Empresa  ) => { 
+  ref.onClose.subscribe(( emp : Empresa  ) => {
     if (emp!=null  ) {
-        
+
         this.getEmpresasByUsuarioOID();
     }
   });
@@ -105,18 +125,18 @@ export class ListEmpresasComponent implements OnInit {
   }
 
 
-  public deleteEmpresa() {  
+  public deleteEmpresa() {
     if( this.selectedEmpresa==null  ){
       return;
     }
-    
+
     this.selectedEmpresa.usuarioOID = this.usuario.usuarioOID ;
-    
-    this.empresaService.eliminaEmpresa( this.selectedEmpresa ).subscribe((data)=>{  
+
+    this.empresaService.eliminaEmpresa( this.selectedEmpresa ).subscribe((data)=>{
       //  this.getMarcasByUsuarioOID();
       this.getEmpresasByUsuarioOID();
         this.selectedEmpresa=null ;
-           
+
     });
   }
 

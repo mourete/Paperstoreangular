@@ -37,6 +37,24 @@ export class ListSucursalesComponent implements OnInit {
     this.usuarioOID=this.usuarioSession.usuarioOID;
    // this.getSucursalesByUsuarioOID();
     this.getEmpresasByUsuarioOID();
+    this.itemsSucursal = [
+      {
+        label: 'Editar Sucursal',
+        icon: 'pi pi-pencil',
+        command: (event) => {
+          this.modificarSucursal();
+        },
+      },
+      { separator: true },
+      {
+        label: 'Eliminar Sucursal',
+        icon: 'pi pi-trash',
+        command: (event) => {
+          this.confirmDeleteLista();
+        },
+      },
+      { separator: true },
+    ];
   }
 
 

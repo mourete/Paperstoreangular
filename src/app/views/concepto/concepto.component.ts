@@ -24,6 +24,7 @@ import {
 } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/primeng';
+import { validarFecha } from 'src/app/utils/forms';
 
 @Component({
   selector: 'app-concepto',
@@ -152,6 +153,13 @@ export class ConceptoComponent implements OnInit {
     });
     this.profileConcepto.get('minimo').valueChanges.subscribe(() => {
       this.checkInput();
+    });
+
+    this.profileConcepto.get('fechaMinima').valueChanges.subscribe(() => {
+      this.revisarFechaMin();
+    });
+    this.profileConcepto.get('fechaMaxima').valueChanges.subscribe(() => {
+      this.revisarFechaMax();
     });
 
     if (this.config.data.concepto != null) {
@@ -665,6 +673,33 @@ export class ConceptoComponent implements OnInit {
       } else {
         this.profileConcepto.get('maximo').setErrors(null);
       }
+    }
+  }
+
+  revisarFechaMin() {
+    const fechaMin = this.profileConcepto.get('fechaMinima').value;
+    const fechaMax = this.profileConcepto.get('fechaMaxima').value;
+    if (
+      fechaMin !== undefined &&
+      fechaMax !== undefined &&
+      !validarFecha(fechaMin, fechaMax)
+    ) {
+      this.profileConcepto.get('fechaMinima').setErrors({ dateError: true });
+    } else {
+      this.profileConcepto.get('fechaMinima').setErrors(null);
+    }
+  }
+  revisarFechaMax() {
+    const fechaMin = this.profileConcepto.get('fechaMinima').value;
+    const fechaMax = this.profileConcepto.get('fechaMaxima').value;
+    if (
+      fechaMin !== undefined &&
+      fechaMax !== undefined &&
+      !validarFecha(fechaMin, fechaMax)
+    ) {
+      this.profileConcepto.get('fechaMaxima').setErrors({ dateError: true });
+    } else {
+      this.profileConcepto.get('fechaMaxima').setErrors(null);
     }
   }
 }

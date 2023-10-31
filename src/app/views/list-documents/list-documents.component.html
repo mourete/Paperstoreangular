@@ -40,7 +40,7 @@
             </div>
 
 
-            <p-table #dtDoc  (onRowSelect)="documentoChanged()"      [value]="documentos"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedDocumento"  dataKey="documentoId"  >
+            <p-table #dtDoc  (onRowSelect)="documentoChanged()"      [value]="documentos"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedDocumento" [contextMenu]="cmDocumentos" dataKey="documentoId"  >
                 <ng-template pTemplate="header" let-columns>
                     <tr>
 
@@ -76,7 +76,7 @@
 
                 </ng-template>
                 <ng-template pTemplate="body" let-documento>
-                    <tr  [pSelectableRow]="documento" >
+                    <tr  [pSelectableRow]="documento" [pContextMenuRow]="documento" >
                        <!--  <td   >
                             <div  >
                             <p-menu #menuDocumento popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsDocumento"></p-menu>

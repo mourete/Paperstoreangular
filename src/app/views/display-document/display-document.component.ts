@@ -30,6 +30,7 @@ export class DisplayDocumentComponent implements OnInit {
   usuarioOID: string;
   usuario: Usuario;
   selectedOptions: any[] = [];
+ 
 
   items: MenuItem[];
   itemsConcepto: MenuItem[];

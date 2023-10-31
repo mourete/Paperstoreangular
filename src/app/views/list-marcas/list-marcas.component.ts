@@ -14,7 +14,7 @@ import { MarcaComponent } from '../marca/marca.component';
 @Component({
   selector: 'app-list-marcas',
   templateUrl: './list-marcas.component.html',
-  styleUrls: ['./list-marcas.component.scss'] , 
+  styleUrls: ['./list-marcas.component.scss'] ,
   providers: [DialogService, ConfirmationService]
 })
 export class ListMarcasComponent implements OnInit {
@@ -33,21 +33,40 @@ export class ListMarcasComponent implements OnInit {
       this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
       this.usuarioOID = this.usuarioSession.usuarioOID;
       this.getMarcasByUsuarioOID();
+      
+      this.itemsMarca = [
+        {
+          label: 'Editar Marca',
+          icon: 'pi pi-pencil',
+          command: (event) => {
+            this.modificarMarca();
+          },
+        },
+        { separator: true },
+        {
+          label: 'Eliminar Marca',
+          icon: 'pi pi-trash',
+          command: (event) => {
+            this.confirmDeleteMarca();
+          },
+        },
+        { separator: true },
+      ];
     }
-  
-  
-  
+
+
+
     public getMarcasByUsuarioOID(){
       if( this.usuarioSession==null ){
         return;
       }
-      this.marcaService.getByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe( 
+      this.marcaService.getByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe(
         (data)=>{
            console.log( data );
-           this.marcas=data;         
+           this.marcas=data;
         }
        );
-    
+
     }
 
 
@@ -59,46 +78,46 @@ export class ListMarcasComponent implements OnInit {
 
       let ref= this.dialogService.open( MarcaComponent , {
         header: 'Marca',
-        width: '70%',        
-        contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+        width: '70%',
+        contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
         data: { marcaId:0  }
     });
-  
-    ref.onClose.subscribe(( usr : Usuario  ) => {  
-      this.getMarcasByUsuarioOID(); 
+
+    ref.onClose.subscribe(( usr : Usuario  ) => {
+      this.getMarcasByUsuarioOID();
 
       if (usr!=null  ) {
-          
+
       }
     });
-  
-  
-  
+
+
+
     }
-  
-  
+
+
     public modificarMarca(){
       if( this.selectedMarca==null   ){
           return;
       }
-  
+
       let ref= this.dialogService.open( MarcaComponent , {
         header: 'Marca',
-        width: '70%',        
-        contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+        width: '70%',
+        contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
         data: { marcaId : this.selectedMarca.marcaId  }
     });
 
-    ref.onClose.subscribe(( usr : Usuario  ) => {  
-      this.getMarcasByUsuarioOID(); 
-         
+    ref.onClose.subscribe(( usr : Usuario  ) => {
+      this.getMarcasByUsuarioOID();
+
       if (usr!=null  ) {
-          
+
       }
     });
-  
+
     }
-  
+
 
 
 
@@ -113,17 +132,17 @@ export class ListMarcasComponent implements OnInit {
   }
 
 
-  public deleteMarca() {  
+  public deleteMarca() {
     if( this.selectedMarca==null  ){
       return;
     }
-    
+
     this.selectedMarca.usuarioOID = this.usuarioSession.usuarioOID ;
-    
-    this.marcaService.eliminarMarca( this.selectedMarca, this.usuarioOID ).subscribe((data)=>{  
+
+    this.marcaService.eliminarMarca( this.selectedMarca, this.usuarioOID ).subscribe((data)=>{
         this.getMarcasByUsuarioOID();
         this.selectedMarca=null ;
-           
+
     });
   }
 

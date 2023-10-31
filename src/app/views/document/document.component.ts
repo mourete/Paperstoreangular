@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { StatusProjectoService } from '../../service/status-projecto.service';
-import { StatusProyecto } from '../../model/status-proyecto';
-import { Documento } from '../../model/documento';
-import { DocumentService } from '../../service/document.service';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Message } from 'primeng/api';
-import { Usuario } from 'src/app/model/usuario';
-import { FormBuilder, Validators } from '@angular/forms';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {StatusProjectoService} from '../../service/status-projecto.service';
+import {StatusProyecto} from '../../model/status-proyecto';
+import {Documento} from '../../model/documento';
+import {DocumentService} from '../../service/document.service';
+import {DynamicDialogRef} from 'primeng/dynamicdialog';
+import {DynamicDialogConfig} from 'primeng/dynamicdialog';
+import {Message} from 'primeng/api';
+import {Usuario} from 'src/app/model/usuario';
+import {FormBuilder, Validators, FormGroup, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-document',
@@ -34,13 +34,7 @@ export class DocumentComponent implements OnInit {
   msgs: Message[] = [];
   usuario: Usuario;
   usuarioOID: string;
-
-  profileRegion = this.fb.group({
-    clave: ['', Validators.required],
-    nombre: ['', Validators.required],
-    estatus: [''],
-    observaciones: [''],
-  });
+  profileDocument: FormGroup;
 
   public convertToUpperCase(input: HTMLInputElement, val: string) {
     // Save caret position
@@ -59,19 +53,36 @@ export class DocumentComponent implements OnInit {
     public config: DynamicDialogConfig,
     public ref: DynamicDialogRef,
     private documentService: DocumentService,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+  ) {
+    this.profileDocument = this.fb.group({
+      clave: new FormControl(''),
+      nombre: new FormControl(''),
+      statusProyectoForm: new FormControl(''),
+      observaciones: new FormControl('')
+    });
+  }
 
-  get clave() { return this.profileRegion.get('clave'); }
-  get nombre() { return this.profileRegion.get('nombre'); }
+  get clave() {
+    return this.profileDocument.get('clave');
+  }
 
+  get nombre() {
+    return this.profileDocument.get('nombre');
+  }
 
+  get estatus() {
+    return this.profileDocument.get('estatus');
+  }
+
+  get observaciones() {
+    return this.profileDocument.get('observaciones');
+  }
 
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuario.usuarioOID;
-    this.documento = new Documento();
 
     this.getAllStatusProyect();
     if (this.config.data.documentoId > 0) {
@@ -88,18 +99,24 @@ export class DocumentComponent implements OnInit {
       .getByDocumentoId(documentoId, this.usuarioOID)
       .subscribe((data) => {
         this.documento = data;
-        
 
-    
+        console.log('EdgarLeal');
 
-        if (this.statusProyectos != null)
+        this.profileDocument.patchValue({
+          clave: this.documento.clave,
+          nombre: this.documento.nombre,
+          estatus: this.documento.statusId,
+          observaciones: this.documento.observaciones
+        });
+
+        if (this.statusProyectos != null) {
           this.statusProyectos.forEach((element, index) => {
             if (element.statusProyectoId == this.documento.statusId) {
-              this.selectedStatusProyecto = element;
-              console.log(this.selectedStatusProyecto);
+              this.selectedStatusProyecto = this.statusProyectos[index];
             }
           });
-        
+        }
+        // console.log(this.lstStatusProyecto);
       });
   }
 
@@ -110,7 +127,7 @@ export class DocumentComponent implements OnInit {
     });
   }
 
-  public guadarDocumento() {
+  public guardarDocumento() {
     this.msgs = [];
     if (this.documento.clave == null || this.documento.clave == '') {
       this.msgs.push({
@@ -131,10 +148,12 @@ export class DocumentComponent implements OnInit {
     if (this.msgs.length > 0) {
       return;
     }
-
+    this.documento.nombre = this.nombre.value;
+    this.documento.clave = this.clave.value;
+    this.documento.observaciones = this.observaciones.value;
+    this.documento.estatus = this.selectedStatusProyecto.nombre;
     this.documento.activa = 1;
     this.documento.statusId = this.selectedStatusProyecto.statusProyectoId;
-    console.log("this.check.statusProyectoId" + this.selectedStatusProyecto.statusProyectoId);
 
     this.documentService
       .guardarDocumento(this.documento, this.usuarioOID)
@@ -152,17 +171,17 @@ export class DocumentComponent implements OnInit {
 
   onSubmit() {
 
-    console.warn(this.profileRegion.value);
+    console.warn(this.profileDocument.value);
 
     console.warn(this.documento);
 
 
-    this.guadarDocumento();
+    this.guardarDocumento();
 
   }
 
   convertirAMayusculas() {
-    const claveValue: string = this.profileRegion.get('clave').value;
-    this.profileRegion.get('clave').setValue(claveValue.toUpperCase());
+    const claveValue: string = this.profileDocument.get('clave').value;
+    this.profileDocument.get('clave').setValue(claveValue.toUpperCase());
   }
 }

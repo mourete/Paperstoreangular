@@ -1,293 +1,436 @@
+<div>
+  <div *ngIf="pantalla == 1">
+    <div style="font-family: Arial, Helvetica, sans-serif; margin: 20px">
+      <h3>ADMINISTRACION DE LISTAS</h3>
+    </div>
 
-<div   >
+    <p-toolbar>
+      <div class="ui-toolbar-group-left">
+        <button
+          pButton
+          type="button"
+          (click)="agregarLista()"
+          label="Agregar lista"
+          icon="pi pi-plus"
+        ></button>
+      </div>
+    </p-toolbar>
 
-
-
-
-    <div   *ngIf="pantalla==1"    >
-
-        <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
-            <h3>ADMINISTRACION DE LISTAS </h3>
-        </div>
-
+    <div>
+      <div>
         <p-toolbar>
-            <div class="ui-toolbar-group-left">
-                <button pButton type="button"  (click)="agregarLista()"    label="Agregar lista" icon="pi pi-plus"></button>
-            </div>
+          <div *ngIf="selectedLista" class="ui-toolbar-group-left">
+            <button
+              pButton
+              type="button"
+              (click)="editarLista()"
+              [style]="{
+                'vertical-align': 'middle',
+                width: '25px',
+                height: '25px',
+                'margin-right': '4px'
+              }"
+              icon="pi pi-pencil"
+            ></button>
+            <button
+              pButton
+              type="button"
+              (click)="confirmDeleteLista()"
+              [style]="{
+                'vertical-align': 'middle',
+                width: '25px',
+                height: '25px',
+                'margin-right': '4px'
+              }"
+              icon="pi pi-trash"
+            ></button>
+          </div>
         </p-toolbar>
+      </div>
 
-        <div     >
+      <p-table
+        #dtListas
+        (onRowSelect)="listaChanged()"
+        [value]="listas"
+        [paginator]="true"
+        [rows]="10"
+        selectionMode="single"
+        [(selection)]="selectedLista"
+        [contextMenu]="cmLista" 
+        dataKey="listaOID"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <!--  <th style="width: 100px;"  >Acciones</th> -->
+            <th style="width: 120px">Clave</th>
+            <th>Nombre</th>
+            <th>Filtro</th>
+            <th>Filtrada</th>
+            <th>Lista</th>
+          </tr>
 
-            <div    >
+          <tr>
+            <th>
+              <input
+                size="10"
+                pInputText
+                type="text"
+                (input)="
+                  dtListas.filter($event.target.value, 'clave', 'contains')
+                "
+              />
+            </th>
 
-                <p-toolbar>
-                    <div   *ngIf="selectedLista"   class="ui-toolbar-group-left">
-
-                        <button pButton type="button"  (click)="editarLista()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>
-                        <button pButton type="button"  (click)="confirmDeleteLista()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>
-                    </div>
-                </p-toolbar>
-
-            </div>
-
-            <p-table #dtListas (onRowSelect)="listaChanged()"      [value]="listas"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedLista"  dataKey="listaOID"  >
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-
-                           <!--  <th style="width: 100px;"  >Acciones</th> -->
-                            <th style="width: 120px;"  >Clave</th>
-                            <th>Nombre</th>
-                            <th>Filtro</th>
-                            <th>Filtrada</th>
-                            <th>Lista</th>
-
-                    </tr>
-
-                    <tr>
-
-
-                        <th  >
-                            <input size="10"  pInputText type="text" (input)="dtListas.filter($event.target.value, 'clave' , 'contains')">
-                         </th>
-
-                         <th style="width: 70px;text-align: left; " >
-                            <input size="16"  pInputText type="text" (input)="dtListas.filter($event.target.value, 'nombre' , 'contains')">
-                         </th>
-                         <th style="width: 120px;text-align: left;" >
-                            <input size="30"  pInputText type="text" (input)="dtListas.filter($event.target.value, 'filtro' , 'contains')">
-                         </th>
-                         <th style="width: 120px;text-align: left;" >
-                            <input size="30"  pInputText type="text" (input)="dtListas.filter($event.target.value, 'filtrada' , 'contains')">
-                         </th>
-                         <th style="width: 120px;text-align: left;" >
-                            <input size="30"  pInputText type="text" (input)="dtListas.filter($event.target.value, 'nombreLista' , 'contains')">
-                         </th>
-
-
-
-                    </tr>
-
-                </ng-template>
-                <ng-template pTemplate="body" let-lista>
-                    <tr  [pSelectableRow]="lista" >
-                        <!-- <td   >
+            <th style="width: 70px; text-align: left">
+              <input
+                size="16"
+                pInputText
+                type="text"
+                (input)="
+                  dtListas.filter($event.target.value, 'nombre', 'contains')
+                "
+              />
+            </th>
+            <th style="width: 120px; text-align: left">
+              <input
+                size="30"
+                pInputText
+                type="text"
+                (input)="
+                  dtListas.filter($event.target.value, 'filtro', 'contains')
+                "
+              />
+            </th>
+            <th style="width: 120px; text-align: left">
+              <input
+                size="30"
+                pInputText
+                type="text"
+                (input)="
+                  dtListas.filter($event.target.value, 'filtrada', 'contains')
+                "
+              />
+            </th>
+            <th style="width: 120px; text-align: left">
+              <input
+                size="30"
+                pInputText
+                type="text"
+                (input)="
+                  dtListas.filter(
+                    $event.target.value,
+                    'nombreLista',
+                    'contains'
+                  )
+                "
+              />
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-lista>
+          <tr [pSelectableRow]="lista" [pContextMenuRow]="lista">
+            <!-- <td   >
                             <div  >
                             <p-menu #menuLista popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsLista"></p-menu>
                             <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'22px' , 'height':'22px'  }"  pButton icon="pi pi-list"   (click)="menuLista.toggle($event);onClickMenuLista(lista);"></button>
                             </div>
                         </td>    -->
 
-                        <td>{{lista.clave}}</td>
-                        <td>{{lista.nombre}}</td>
-                        <td>{{lista.filtro == 0? 'No' : 'Si' }}</td>
-                        <td>{{lista.filtrada == 0? 'No' : 'Si'}}</td>
-                        <td>{{lista.nombreLista}}</td>
-
-                    </tr>
-                </ng-template>
-
-
-
-            </p-table>
-
-        </div>
-
-
-        <div>
-
-            <h3>OPCIONES DE LA LISTA SELECCIONADA</h3>
-
-            <p-toolbar>
-                <div class="ui-toolbar-group-left">
-                    <button pButton type="button"  (click)="agregarOpcion()"    [style]="{ 'vertical-align':'middle' , 'width':'23px' , 'height':'23px' , 'margin-right' : '4px'  }"    icon="pi pi-plus"></button>
-
-                    <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'23px' , 'height':'23px' , 'margin-right' : '4px'  }"  pButton icon="pi pi-arrow-up"      (click)="changeOptionOrder(1);"    ></button>
-                    <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'23px' , 'height':'23px' , 'margin-right' : '4px'  }"  pButton icon="pi pi-arrow-down"    (click)="changeOptionOrder(0);"      ></button>
-
-
-                </div>
-            </p-toolbar>
-
-
-            <p-table  #dtOpciones   [value]="opciones"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedOpcion"   [contextMenu]="cmOpciones"    [(contextMenuSelection)]="selectedOpcion"   dataKey="opcionOID"  >
-                <ng-template pTemplate="header" >
-                    <tr>
-
-                            <th style="width: 70px;" >Orden</th>
-                            <th style="width: 120px;" >Clave</th>
-                            <th style="width: 350px;" >Texto</th>
-                            <th>Valor</th>
-                            <th *ngIf="estaFiltrada == 1">Filtro</th>
-
-
-                    </tr>
-
-
-                    <tr>
-
-                        <th style="width: 70px;" ></th>
-                        <th  >
-                            <input size="10"  pInputText type="text" (input)="dtOpciones.filter($event.target.value, 'clave' , 'contains')">
-                         </th>
-
-                         <th style="width: 70px;text-align: left; " >
-                            <input size="16"  pInputText type="text" (input)="dtOpciones.filter($event.target.value, 'texto' , 'contains')">
-                         </th>
-                         <th style="width: 120px;text-align: left;" >
-                            <input size="30"  pInputText type="text" (input)="dtOpciones.filter($event.target.value, 'valor' , 'contains')">
-                         </th>
-
-                         <th *ngIf="estaFiltrada == 1" style="width: 120px;text-align: left;" >
-                            <input size="30"  pInputText type="text" (input)="dtOpciones.filter($event.target.value, 'opcionesNombre' , 'contains')">
-                         </th>
-
-
-                    </tr>
-
-
-                </ng-template>
-                <ng-template pTemplate="body" let-opcion>
-                    <tr  [pSelectableRow]="opcion"    [pContextMenuRow]="opcion"  >
-                        <td>{{opcion.orden}}</td>
-                        <td>{{opcion.clave}}</td>
-                        <td>{{opcion.texto}}</td>
-                        <td>{{opcion.valor}}</td>
-                        <td *ngIf="estaFiltrada == 1">{{opcion.opcionesNombre}}</td>
-                    </tr>
-                </ng-template>
-
-
-
-            </p-table>
-
-        </div>
-
-
-
-
+            <td>{{ lista.clave }}</td>
+            <td>{{ lista.nombre }}</td>
+            <td>{{ lista.filtro == 0 ? "No" : "Si" }}</td>
+            <td>{{ lista.filtrada == 0 ? "No" : "Si" }}</td>
+            <td>{{ lista.nombreLista }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
 
-    <div   *ngIf="pantalla==2  && catalogo!=null  "  style="font-family:Arial, Helvetica, sans-serif;"   >
+    <div>
+      <h3>OPCIONES DE LA LISTA SELECCIONADA</h3>
 
-        <div style="font-family:Arial, Helvetica, sans-serif;" >
-            <h3>{{listaAccion}} </h3>
+      <p-toolbar>
+        <div class="ui-toolbar-group-left">
+          <button
+            pButton
+            type="button"
+            (click)="agregarOpcion()"
+            [style]="{
+              'vertical-align': 'middle',
+              width: '23px',
+              height: '23px',
+              'margin-right': '4px'
+            }"
+            icon="pi pi-plus"
+          ></button>
+
+          <button
+            type="button"
+            [style]="{
+              'vertical-align': 'middle',
+              width: '23px',
+              height: '23px',
+              'margin-right': '4px'
+            }"
+            pButton
+            icon="pi pi-arrow-up"
+            (click)="changeOptionOrder(1)"
+          ></button>
+          <button
+            type="button"
+            [style]="{
+              'vertical-align': 'middle',
+              width: '23px',
+              height: '23px',
+              'margin-right': '4px'
+            }"
+            pButton
+            icon="pi pi-arrow-down"
+            (click)="changeOptionOrder(0)"
+          ></button>
         </div>
+      </p-toolbar>
 
-        <table cellpadding="2"  cellspacing="2"   border="0" >
-            <tr    >
-               <td>Clave</td>
-               <td>
-                <input type="text" pInputText     [(ngModel)]="catalogo.clave"   />
-               </td>
-             </tr>
-             <tr    >
-                <td>Nombre del catálogo</td>
-                <td>
-                 <input type="text" pInputText   size="50"   [(ngModel)]="catalogo.nombre"   />
-                </td>
-              </tr>
+      <p-table
+        #dtOpciones
+        [value]="opciones"
+        [paginator]="true"
+        [rows]="10"
+        selectionMode="single"
+        [(selection)]="selectedOpcion"
+        [contextMenu]="cmOpciones"
+        [(contextMenuSelection)]="selectedOpcion"
+        dataKey="opcionOID"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 70px">Orden</th>
+            <th style="width: 120px">Clave</th>
+            <th style="width: 350px">Texto</th>
+            <th>Valor</th>
+            <th *ngIf="estaFiltrada == 1">Filtro</th>
+          </tr>
 
-              <tr  >
-                <td colspan="2"  >
-                <div style="margin-top:10px ;"  >
+          <tr>
+            <th style="width: 70px"></th>
+            <th>
+              <input
+                size="10"
+                pInputText
+                type="text"
+                (input)="
+                  dtOpciones.filter($event.target.value, 'clave', 'contains')
+                "
+              />
+            </th>
 
-                    <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarLista()"></button>
+            <th style="width: 70px; text-align: left">
+              <input
+                size="16"
+                pInputText
+                type="text"
+                (input)="
+                  dtOpciones.filter($event.target.value, 'texto', 'contains')
+                "
+              />
+            </th>
+            <th style="width: 120px; text-align: left">
+              <input
+                size="30"
+                pInputText
+                type="text"
+                (input)="
+                  dtOpciones.filter($event.target.value, 'valor', 'contains')
+                "
+              />
+            </th>
 
-                    <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelarLista()"></button>
+            <th
+              *ngIf="estaFiltrada == 1"
+              style="width: 120px; text-align: left"
+            >
+              <input
+                size="30"
+                pInputText
+                type="text"
+                (input)="
+                  dtOpciones.filter(
+                    $event.target.value,
+                    'opcionesNombre',
+                    'contains'
+                  )
+                "
+              />
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-opcion>
+          <tr [pSelectableRow]="opcion" [pContextMenuRow]="opcion">
+            <td>{{ opcion.orden }}</td>
+            <td>{{ opcion.clave }}</td>
+            <td>{{ opcion.texto }}</td>
+            <td>{{ opcion.valor }}</td>
+            <td *ngIf="estaFiltrada == 1">{{ opcion.opcionesNombre }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
 
-                </div>
-                </td>
-
-              </tr>
-
-
-        </table>
-
-
+  <div
+    *ngIf="pantalla == 2 && catalogo != null"
+    style="font-family: Arial, Helvetica, sans-serif"
+  >
+    <div style="font-family: Arial, Helvetica, sans-serif">
+      <h3>{{ listaAccion }}</h3>
     </div>
 
+    <table cellpadding="2" cellspacing="2" border="0">
+      <tr>
+        <td>Clave</td>
+        <td>
+          <input type="text" pInputText [(ngModel)]="catalogo.clave" />
+        </td>
+      </tr>
+      <tr>
+        <td>Nombre del catálogo</td>
+        <td>
+          <input
+            type="text"
+            pInputText
+            size="50"
+            [(ngModel)]="catalogo.nombre"
+          />
+        </td>
+      </tr>
 
+      <tr>
+        <td colspan="2">
+          <div style="margin-top: 10px">
+            <button
+              pButton
+              style="margin: 3px"
+              icon="pi pi-check"
+              type="button"
+              label="Guardar"
+              (click)="guardarLista()"
+            ></button>
 
+            <button
+              pButton
+              style="margin: 3px"
+              icon="pi pi-times"
+              type="button"
+              label="Cancelar"
+              (click)="cancelarLista()"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-    <div   *ngIf="pantalla==3  && opcion!=null  "  style="font-family:Arial, Helvetica, sans-serif;"   >
-
-        <div style="font-family:Arial, Helvetica, sans-serif;" >
-            <h3>{{opcionAccion}} </h3>
-        </div>
-
-        <table cellpadding="2"  cellspacing="2"   border="0" >
-            <tr    >
-               <td>Clave</td>
-               <td>
-                <input type="text" pInputText   size="30"     [(ngModel)]="opcion.clave"   />
-               </td>
-             </tr>
-             <tr    >
-                <td>Texto</td>
-                <td>
-                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.texto"   />
-                </td>
-              </tr>
-
-              <tr    >
-                <td>Valor</td>
-                <td>
-                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.valor"   />
-                </td>
-              </tr>
-
-              <tr    >
-                <td>Tag</td>
-                <td>
-                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.tag"   />
-                </td>
-              </tr>
-
-              <tr>
-                <td>Visible</td>
-                <td>
-                  <p-inputSwitch [(ngModel)]="visible"></p-inputSwitch>
-               </td>
-             </tr>
-
-             <tr>
-              <td>Enabled</td>
-              <td>
-                <p-inputSwitch [(ngModel)]="enabled"></p-inputSwitch>
-             </td>
-           </tr>
-
-
-           <tr    >
-            <td>Orden</td>
-            <td>
-               <input type="text" pInputText     [(ngModel)]="opcion.orden"   />
-           </td>
-           </tr>
-
-              <tr  >
-                <td colspan="2"  >
-                <div style="margin-top:10px ;"  >
-
-                    <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarOpcion()"></button>
-
-                    <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelarOpcion()"></button>
-
-                </div>
-                </td>
-
-              </tr>
-
-
-        </table>
-
-
+  <div
+    *ngIf="pantalla == 3 && opcion != null"
+    style="font-family: Arial, Helvetica, sans-serif"
+  >
+    <div style="font-family: Arial, Helvetica, sans-serif">
+      <h3>{{ opcionAccion }}</h3>
     </div>
 
+    <table cellpadding="2" cellspacing="2" border="0">
+      <tr>
+        <td>Clave</td>
+        <td>
+          <input type="text" pInputText size="30" [(ngModel)]="opcion.clave" />
+        </td>
+      </tr>
+      <tr>
+        <td>Texto</td>
+        <td>
+          <input type="text" pInputText size="30" [(ngModel)]="opcion.texto" />
+        </td>
+      </tr>
 
+      <tr>
+        <td>Valor</td>
+        <td>
+          <input type="text" pInputText size="30" [(ngModel)]="opcion.valor" />
+        </td>
+      </tr>
+
+      <tr>
+        <td>Tag</td>
+        <td>
+          <input type="text" pInputText size="30" [(ngModel)]="opcion.tag" />
+        </td>
+      </tr>
+
+      <tr>
+        <td>Visible</td>
+        <td>
+          <p-inputSwitch [(ngModel)]="visible"></p-inputSwitch>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Enabled</td>
+        <td>
+          <p-inputSwitch [(ngModel)]="enabled"></p-inputSwitch>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Orden</td>
+        <td>
+          <input type="text" pInputText [(ngModel)]="opcion.orden" />
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <div style="margin-top: 10px">
+            <button
+              pButton
+              style="margin: 3px"
+              icon="pi pi-check"
+              type="button"
+              label="Guardar"
+              (click)="guardarOpcion()"
+            ></button>
+
+            <button
+              pButton
+              style="margin: 3px"
+              icon="pi pi-times"
+              type="button"
+              label="Cancelar"
+              (click)="cancelarOpcion()"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
 
-<p-contextMenu #cmOpciones popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsOpcion"></p-contextMenu>
+<p-contextMenu
+  #cmOpciones
+  popup="false"
+  [style]="{ width: '250px' }"
+  appendTo="body"
+  [model]="itemsOpcion"
+></p-contextMenu>
 
+<p-contextMenu
+  #cmLista
+  popup="false"
+  [style]="{ width: '250px' }"
+  appendTo="body"
+  [model]="itemsLista"
+></p-contextMenu>

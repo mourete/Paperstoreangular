@@ -30,6 +30,7 @@
         <p-toolbar>
             <div class="ui-toolbar-group-left">
                 <button pButton type="button"  (click)="agregarSucursal()"    label="Agregar sucursal" icon="pi pi-plus"></button>
+             
             </div>
         </p-toolbar>
 
@@ -51,11 +52,8 @@
 
                           <!--  <th style="width: 50px;"  >Id</th> se quita id -->
                             <th style="width: 150px;"  >Nombre</th>
-                            <th style="width: 200px;"  >Calle</th>
                             <th style="width: 120px;"  >Empresa</th>
                             <th style="width: 120px;"  >Marca</th>
-                            <th style="width: 120px;"  >Ciudad</th>
-                            <th style="width: 120px;"  >Estado</th>
                             <th style="width: 120px;"  >Correo</th>
                             <th style="width: 120px;"  >Responsable</th>
 
@@ -73,9 +71,7 @@
                             <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombre' , 'contains')">
                          </th>
 
-                         <th>
-                            <input size="25"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'calle' , 'contains')">
-                         </th>
+                        
 
                          <th>
                             <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombreEmpresa' , 'contains')">
@@ -86,14 +82,7 @@
                          </th>
 
 
-                         <th  >
-                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'ciudad' , 'contains')">
-                         </th>
-                         <th  >
-                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'estado' , 'contains')">
-                         </th>
-
-                         <th  >
+                                       <th  >
 
                          </th>
 
@@ -110,11 +99,10 @@
 
                         <!-- <td>{{sucursal.sucursalId}}</td>  se quita id-->
                         <td>{{sucursal.nombre}}</td>
-                        <td>{{sucursal.calle}}</td>
+                     
                         <td>{{sucursal.nombreEmpresa}}</td>
                         <td>{{sucursal.nombreMarca}}</td>
-                        <td>{{sucursal.ciudad}}</td>
-                        <td>{{sucursal.estado}}</td>
+                    
                         <td>{{sucursal.mail}}</td>
                         <td>{{sucursal.responsable}}</td>
 

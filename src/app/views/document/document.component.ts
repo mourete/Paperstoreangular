@@ -28,9 +28,9 @@ import {FormBuilder, Validators, FormGroup, FormControl} from '@angular/forms';
 })
 export class DocumentComponent implements OnInit {
   @ViewChild('claveInput') claveInput: ElementRef;
-  lstStatusProyecto: StatusProyecto[];
+  statusProyectos: StatusProyecto[];
   documento: Documento;
-  check: object;
+  selectedStatusProyecto: StatusProyecto;
   msgs: Message[] = [];
   usuario: Usuario;
   usuarioOID: string;
@@ -58,7 +58,7 @@ export class DocumentComponent implements OnInit {
     this.profileDocument = this.fb.group({
       clave: new FormControl(''),
       nombre: new FormControl(''),
-      estatus: new FormControl(''),
+      statusProyectoForm: new FormControl(''),
       observaciones: new FormControl('')
     });
   }
@@ -109,10 +109,10 @@ export class DocumentComponent implements OnInit {
           observaciones: this.documento.observaciones
         });
 
-        if (this.lstStatusProyecto != null) {
-          this.lstStatusProyecto.forEach((element, index) => {
+        if (this.statusProyectos != null) {
+          this.statusProyectos.forEach((element, index) => {
             if (element.statusProyectoId == this.documento.statusId) {
-              this.check = this.lstStatusProyecto[index];
+              this.selectedStatusProyecto = this.statusProyectos[index];
             }
           });
         }
@@ -122,8 +122,8 @@ export class DocumentComponent implements OnInit {
 
   public getAllStatusProyect() {
     this.statusProjectoService.getAll().subscribe((data) => {
-      this.lstStatusProyecto = data;
-      this.check = this.lstStatusProyecto[0];
+      this.statusProyectos = data;
+      this.selectedStatusProyecto = this.statusProyectos[0];
     });
   }
 
@@ -151,9 +151,9 @@ export class DocumentComponent implements OnInit {
     this.documento.nombre = this.nombre.value;
     this.documento.clave = this.clave.value;
     this.documento.observaciones = this.observaciones.value;
-    this.documento.estatus = this.estatus.value.nombre ;
+    this.documento.estatus = this.selectedStatusProyecto.nombre;
     this.documento.activa = 1;
-    this.documento.statusId = this.check['statusProyectoId'];
+    this.documento.statusId = this.selectedStatusProyecto.statusProyectoId;
 
     this.documentService
       .guardarDocumento(this.documento, this.usuarioOID)

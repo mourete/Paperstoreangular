@@ -71,10 +71,17 @@ export class ListProyectosComponent implements OnInit {
 
 
   public eliminarProyecto(   ){
+    if( this.selectedProyecto==null  ){
+      return;
+    }
 
-    this.proyectoService.eliminarProyecto ( this.selectedProyecto ).subscribe((data)=>{
+    this.selectedProyecto.usuarioOID = this.usuarioSession.usuarioOID;
 
-      var proyectoDelete:String=data;
+    this.proyectoService.eliminarProyecto ( this.selectedProyecto, this.usuarioOID ).subscribe((data)=>{
+
+      this.getEmpresasByUsuarioOID();
+      this.selectedProyecto=null ;
+
 
 
   });

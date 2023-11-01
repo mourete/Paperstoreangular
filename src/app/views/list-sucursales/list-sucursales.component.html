@@ -30,7 +30,7 @@
         <p-toolbar>
             <div class="ui-toolbar-group-left">
                 <button pButton type="button"  (click)="agregarSucursal()"    label="Agregar sucursal" icon="pi pi-plus"></button>
-             
+
             </div>
         </p-toolbar>
 
@@ -39,7 +39,7 @@
                 <p-toolbar>
                     <div   *ngIf="selectedSucursal"   class="ui-toolbar-group-left">
                         <button pButton type="button"  (click)="modificarSucursal()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-pencil"></button>
-                        <button pButton type="button"  (click)="confirmDeleteLista()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>
+                        <button pButton type="button"  (click)="confirmDeleteSucursal()"    [style]="{ 'vertical-align':'middle' , 'width':'25px' , 'height':'25px' , 'margin-right' : '4px'  }"    icon="pi pi-trash"></button>
                     </div>
                 </p-toolbar>
 
@@ -71,7 +71,7 @@
                             <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombre' , 'contains')">
                          </th>
 
-                        
+
 
                          <th>
                             <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombreEmpresa' , 'contains')">
@@ -99,10 +99,10 @@
 
                         <!-- <td>{{sucursal.sucursalId}}</td>  se quita id-->
                         <td>{{sucursal.nombre}}</td>
-                     
+
                         <td>{{sucursal.nombreEmpresa}}</td>
                         <td>{{sucursal.nombreMarca}}</td>
-                    
+
                         <td>{{sucursal.mail}}</td>
                         <td>{{sucursal.responsable}}</td>
 

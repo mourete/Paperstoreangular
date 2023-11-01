@@ -19,6 +19,7 @@ export class ListEmpresasComponent implements OnInit {
   empresas:Empresa[];
   selectedEmpresa: Empresa;
   usuario:Usuario;
+  usuarioOID :string;
 
   constructor( public empresaService: EmpresaService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService   ) { }
@@ -132,7 +133,7 @@ export class ListEmpresasComponent implements OnInit {
 
     this.selectedEmpresa.usuarioOID = this.usuario.usuarioOID ;
 
-    this.empresaService.eliminaEmpresa( this.selectedEmpresa ).subscribe((data)=>{
+    this.empresaService.eliminaEmpresa( this.selectedEmpresa, this.usuarioOID ).subscribe((data)=>{
       //  this.getMarcasByUsuarioOID();
       this.getEmpresasByUsuarioOID();
         this.selectedEmpresa=null ;

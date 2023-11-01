@@ -36,6 +36,7 @@ export class ListRegionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.usuarioOID=this.usuarioSession.usuarioOID;
     this.getRegionesByUsuarioOID();
     this.itemsRegion = [
       {

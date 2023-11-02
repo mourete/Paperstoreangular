@@ -45,3 +45,8 @@ export class GlobalConstants {
 
 
 }
+
+export class readonly{
+    0 = true;
+    1 = false;
+}

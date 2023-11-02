@@ -9,7 +9,7 @@ import {ConfirmationService} from 'primeng/api';
 import {SeccionInstancia} from 'src/app/model/seccion-instancia';
 import {Message} from 'primeng/api';
 import {MessageService} from 'primeng/api';
-import {GlobalConstants, readOnly} from 'src/app/model/global-constants';
+import {GlobalConstants} from 'src/app/model/global-constants';
 import {DatePipe} from '@angular/common';
 import {OpcionInstancia} from 'src/app/model/opcion-instancia';
 import {ConceptoInstancia} from 'src/app/model/concepto-instancia';
@@ -144,6 +144,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   @Input() public varSeccionOID: string;
   @Input() public varDocumentoId: number;
   @Input() public varUsuarioOID: string;
+  @Input() public varReadOnly: string;
   @Input() public varNombreInstancia: string;
   @Input() public varSucursal: string;
 
@@ -151,6 +152,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   @Input() public varAlerta: string;
   @Input() public varTipoAlerta: number;
   @Input() public varImage: string;
+ 
 
 
   constructor(
@@ -232,7 +234,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuario.usuarioOID;
     this.apiURLImagen = this.usuario.infoHuesped.pathImagenWeb;
-    this.readOnly = readOnly.get(0);
+    this.readOnly = false;
     var elem = document.getElementById('quitar');
 
 

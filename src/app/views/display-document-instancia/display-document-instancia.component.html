@@ -175,7 +175,7 @@
                                 showTime="true" hourFormat="12" [disabled]="true"  [disabled]="readOnly"></p-calendar>
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==7">
-                    <div *ngIf="conceptoInstancia.opcionesInstancia">
+                    <!--<div *ngIf="conceptoInstancia.opcionesInstancia">-->
                       <p-multiSelect
                         [options]="conceptoInstancia.opcionesInstancia"
                         [(ngModel)]="conceptoInstancia.selectedValues"
@@ -185,7 +185,7 @@
                         [readonly]="readOnly"
 >
                       </p-multiSelect>
-                    </div>
+                    <!--</div>-->
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==8">
 

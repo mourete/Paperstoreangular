@@ -34,6 +34,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   regionId:number;
   sucursalId:number;
   usuarioOID:string;
+  readOnly:string;
   documento:string;
   sucursal:string;
   region:string;
@@ -50,6 +51,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   currSeccionOID:string;
   currDocumentoId:number;
   currUsuarioOID:string;
+  currReadOnly:string;
   currNombre: string;
   curtipoAlerta:number;
   currAlerta:string;
@@ -244,7 +246,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
                 if( seccion!=null ){
                   //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
 
-                  this.displayDocumentoInstancia( doc.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , doc.nombre,doc.alerta,doc.tipoAlerta, doc.imagePath );
+                  this.displayDocumentoInstancia( doc.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.readOnly, doc.nombre,doc.alerta,doc.tipoAlerta, doc.imagePath );
 
                 }
 
@@ -277,7 +279,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
            return;
          }
 
-         this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , secTmp.seccionOID , this.documentoId , this.usuarioOID  , this.selectedDocumento.nombre, this.selectedDocumento.alerta, this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath);
+         this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , secTmp.seccionOID , this.documentoId , this.usuarioOID, this.readOnly   , this.selectedDocumento.nombre, this.selectedDocumento.alerta, this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath);
       }
      );
 
@@ -290,12 +292,13 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   /**
    * displayDocumentoInstancia
    */
-  public displayDocumentoInstancia(docInstOID:string,secOID:string,docId:number,usrOID:string, nombreCurr:string, alerta:string, tipoAlerta:number, imagePath:string) {
+  public displayDocumentoInstancia(docInstOID:string,secOID:string,docId:number,usrOID:string,usrReadOnly:string, nombreCurr:string, alerta:string, tipoAlerta:number, imagePath:string) {
     this.desplegandoDocumento=true;
     this.currDocumentoInstanciaOID=docInstOID;
     this.currSeccionOID=secOID;
     this.currDocumentoId=docId;
     this.currUsuarioOID=usrOID;
+    this.currReadOnly=usrReadOnly;
     this.currNombre =   nombreCurr;
     this.currAlerta=alerta;
     this.curtipoAlerta=tipoAlerta;

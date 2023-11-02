@@ -34,6 +34,7 @@ export class ListDocumentoUsuariosComponent implements OnInit {
   public currRegionId: number;
   public currSucursalId:number;
   public currUsuarioOID:string;
+
   public currDocumento:string;
   public currSucursal:string;
   public currRegion:string;
@@ -263,7 +264,7 @@ export class ListDocumentoUsuariosComponent implements OnInit {
   }
 
   public mostrarInstancia(docId:number , proyId:number , regId: number 
-    , sucId:number, usrOID:string , doc: string , suc:string, reg:string , cantDoc :number , cantInst:number,  cantMarca: string, cantEmpresa: string , proyecto : string
+    , sucId:number,usrOID:string , doc: string , suc:string, reg:string , cantDoc :number , cantInst:number,  cantMarca: string, cantEmpresa: string , proyecto : string
 ){
 
 this.currDocumentoId=docId;
@@ -272,6 +273,7 @@ this.currProyecto=proyecto;
 this.currRegionId=regId;
 this.currSucursalId=sucId;
 this.currUsuarioOID=usrOID;
+
 this.currDocumento=doc;
 this.currSucursal=suc;
 this.currRegion=reg;

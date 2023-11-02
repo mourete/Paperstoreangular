@@ -76,29 +76,29 @@
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th style="width: 100px;"  >Instancia</th>
-                        <th style="width: 100px;"  >Empresa</th>
-                           <th style="width: 100px;"  >MarcaId</th>
+                         <!--<th style="width: 100px;"  >Empresa</th>-->
+                            <!--<th style="width: 100px;"  >MarcaId</th>-->
                             <th style="width: 100px;"  >Marca</th>
                             <th style="width: 100px;"  >Sucursal</th>
-                             <th style="width: 120px;"  >ProyectoId</th>
-                            <th style="width: 120px;"  >Proyecto</th>
+                            <!-- <th style="width: 120px;"  >ProyectoId</th>-->
+                            <!-- <th style="width: 120px;"  >Proyecto</th>-->
                           
-                            <th style="width: 120px;"  >DocumentoId</th>
+                            <!-- <th style="width: 120px;"  >DocumentoId</th>-->
                             <th style="width: 120px;"  >Documento</th>
-                            <th style="width: 180px;"  >Cantidad Documento</th>
+                            <!-- <th style="width: 180px;"  >Cantidad Documento</th>-->
                             <th style="width: 180px;"  >Cantidad Instancia</th>
                             <th style="width: 120px;"  >Responsable</th>         
                        
                     </tr>
                     <tr>
                         <th  ></th>  
-                        <th  >
+                        <!--  <th  >
                             <input style="width: 80px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'empresa' , 'contains')">
                         </th>     
-                         
-                       <th  >
+                         -->
+                         <!--<th  >
                             <input style="width: 80px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'marcaId' , 'contains')">
-                         </th>     
+                         </th>     -->
                          
                          <th>
                             <input  style="width: 80px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'marca' , 'contains')">
@@ -107,23 +107,23 @@
                          <th>
                             <input  style="width: 80px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'sucursal' , 'contains')">
                          </th>
-                         <th  >
+                        <!--   <th  >
                             <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'proyectoId' , 'contains')">
-                         </th> 
-                         <th  >
+                         </th> -->
+                           <!--<th  >
                             <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'proyecto' , 'contains')">
-                         </th> 
+                         </th>  -->
                          
-                         <th  >
+                         <!--  <th  >
                             <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'documentoId' , 'contains')">
-                         </th>   
+                         </th>   -->
                          <th  >
                             <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'documento' , 'contains')">
                          </th>   
                         
-                         <th  >
+                          <!-- <th  >
                             <input style="width: 160px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'cantidadDocumento' , 'contains')">
-                         </th>
+                         </th>-->
                          <th  >
                             <input style="width: 160px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'cantidadInstancia' , 'contains')">
                          </th>
@@ -138,21 +138,21 @@
                     <tr  [pSelectableRow]="selectedDocumentoUsuario" >
                         <td>
                         <a   [routerLink]="[]" (click)="mostrarInstancia(documentoUsuarioList.documentoId,documentoUsuarioList.proyectoId,documentoUsuarioList.regionId
-                        , documentoUsuarioList.sucursalId, usuarioOID ,documentoUsuarioList.documento ,
+                        , documentoUsuarioList.sucursalId, usuarioOID,documentoUsuarioList.documento ,
                         documentoUsuarioList.sucursal, documentoUsuarioList.region , documentoUsuarioList.cantidadDocumento ,
                         documentoUsuarioList.cantidadInstancia,  documentoUsuarioList.marca, documentoUsuarioList.empresa , documentoUsuarioList.proyecto                       
                         )" >
-                             {{documentoUsuarioList.documento}}</a>
+                             {{documentoUsuarioList.proyecto}}</a>
                         </td>                                                                
-                        <td>{{documentoUsuarioList.empresa}}</td>    
-                        <td>{{documentoUsuarioList.marcaId}}</td>  
+                        <!--<td>{{documentoUsuarioList.empresa}}</td>   --> 
+                        <!--<td>{{documentoUsuarioList.marcaId}}</td>  -->
                         <td>{{documentoUsuarioList.marca}}</td>     
                         <td>{{documentoUsuarioList.sucursal}}</td> 
-                        <td>{{documentoUsuarioList.proyectoId}}</td>     
-                        <td>{{documentoUsuarioList.proyecto}}</td>
-                        <td>{{documentoUsuarioList.documentoId}}</td> 
+                        <!--<td>{{documentoUsuarioList.proyectoId}}</td>  -->   
+                        <!--<td>{{documentoUsuarioList.proyecto}}</td>-->   
+                        <!--<td>{{documentoUsuarioList.documentoId}}</td> -->
                         <td>{{documentoUsuarioList.documento}}</td>
-                        <td>{{documentoUsuarioList.cantidadDocumento}}</td> 
+                        <!--<td>{{documentoUsuarioList.cantidadDocumento}}</td> -->
                         <td>{{documentoUsuarioList.cantidadInstancia}}</td> 
                         <td>{{documentoUsuarioList.responsable}}</td>
 
@@ -194,6 +194,7 @@
     [varRegionId]="currRegionId" 
     [varSucursalId]="currSucursalId"
     [varUsuarioOID]="currUsuarioOID"
+
     [varDocumento]="currDocumento"
     [varSucursal]="currSucursal"
     [varRegion]="currRegion"

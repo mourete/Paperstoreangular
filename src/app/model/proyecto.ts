@@ -1,11 +1,12 @@
 export class Proyecto {
 
     proyectoId:number;
+    usuarioOID:string;
 	clave:string;
 	descripcion:string;
 	nombre:string;
     fechaIniDate:Date;
-	fechaFinDate:Date;	
+	fechaFinDate:Date;
 	fechaIniText:string;
 	fechaFinText:string;
 	activo:number;

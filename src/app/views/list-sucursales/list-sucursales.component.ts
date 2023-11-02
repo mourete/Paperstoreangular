@@ -50,7 +50,7 @@ export class ListSucursalesComponent implements OnInit {
         label: 'Eliminar Sucursal',
         icon: 'pi pi-trash',
         command: (event) => {
-          this.confirmDeleteLista();
+          this.confirmDeleteSucursal();
         },
       },
       { separator: true },
@@ -288,6 +288,8 @@ export class ListSucursalesComponent implements OnInit {
 
 
 
+
+
   public confirmDeleteSucursal(){
 
     this.confirmationService.confirm({
@@ -324,14 +326,7 @@ export class ListSucursalesComponent implements OnInit {
   public onClickMenuSucursal(suc:Sucursal){
 
   }
-  public confirmDeleteLista() {
-    this.confirmationService.confirm({
-        message: 'Está seguro que desea eliminar la lista ?',
-        accept: () => {
-           this.deleteSucursal();
-        }
-    });
-  }
+
 
 
 

@@ -8,12 +8,13 @@
           <input
             #claveInput
             type="text"
-            formControlName="clave"
+            [(ngModel)]="documento.clave"
             pInputText
             size="25"
+            formControlName="clave"
             mask="AAAAAAAAAA"
             (input)="convertirAMayusculas()"
-            placeholder="__________"
+            [showMaskTyped]="true"
             required
           />
           <div *ngIf="clave.errors?.required">Clave es requerido</div>
@@ -28,15 +29,16 @@
             formControlName="nombre"
             pInputText
             size="25"
+            [(ngModel)]="documento.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
             required
           />
           <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
-          <div *ngIf="nombre.errors?.pattern">
-            Nombre solo acepta letras y números
-          </div>
+          <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>
         </td>
       </tr>
+
+
       <tr>
         <td>Estatus</td>
 
@@ -48,7 +50,7 @@
           [(ngModel)]="selectedStatusProyecto"
           [options]="statusProyectos"
           optionLabel="nombre"
-          [filter]="true"
+          
 
         ></p-dropdown>
       </td>

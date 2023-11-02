@@ -136,22 +136,24 @@
           dataKey="conceptoOID"
         >
           <ng-template pTemplate="body" let-concepto let-rowIndex="rowIndex">
-            <tr [pSelectableRow]="concepto" [pContextMenuRow]="concepto">
+            <tr [pSelectableRow]="concepto" [pContextMenuRow]="concepto" >
               <td style="width: 50px">{{ rowIndex + 1 }}</td>
-              <td style="width: 160px">{{ concepto.clave }}</td>
-              <td *ngIf="concepto.tipoConceptoId != 10">
+              <td style="width: 150px">{{ concepto.clave }}</td>
+              <td *ngIf="concepto.tipoConceptoId != 10"  style="width: 300px">
                 {{ concepto.descripcion }}
               </td>
-              <td *ngIf="concepto.tipoConceptoId == 10" colspan="2">
+              <td *ngIf="concepto.tipoConceptoId == 10" colspan="2" >
                 {{ concepto.descripcion }}
               </td>
-              <td *ngIf="concepto.tipoConceptoId == 6">
+              <td *ngIf="concepto.tipoConceptoId == 6" >
                 <p-dropdown
                   [showTransitionOptions]="'0ms'"
                   [hideTransitionOptions]="'0ms'"
                   [(ngModel)]="selectedOption"
                   [options]="concepto.opciones"
                   optionLabel="texto"
+                  [style]="{'width': '700px', 'height': '35px'}"
+                  filter="true"
                 ></p-dropdown>
               </td>
               <td
@@ -162,7 +164,7 @@
                   concepto.tipoConceptoId == 12
                 "
               >
-                <input type="text" pInputText />
+                <input type="text" pInputText [style]="{'width': '700px', 'height': '35px'}"/>
               </td>
 
               <td
@@ -170,10 +172,10 @@
                   concepto.tipoConceptoId == 4 || concepto.tipoConceptoId == 13
                 "
               >
-                <p-calendar showIcon="true" showButtonBar="true"></p-calendar>
+                <p-calendar showIcon="true" showButtonBar="true" ></p-calendar>
               </td>
               <td *ngIf="concepto.tipoConceptoId == 8">
-                <input type="file" />
+                <input type="file" [style]="{'width': '700px', 'height': '35px'}"/>
               </td>
               <td *ngIf="concepto.tipoConceptoId == 5">
                 <p-calendar
@@ -184,7 +186,7 @@
                 ></p-calendar>
               </td>
 
-              <td *ngIf="concepto.tipoConceptoId == 7">
+              <td *ngIf="concepto.tipoConceptoId == 7" >
                 <div *ngIf="concepto.opciones">
                   <p-multiSelect size="70"
                     [options]="concepto.opciones"
@@ -193,7 +195,7 @@
                     [filter]="true"
                     name="groupname"
                     optionLabel="texto"
-                    [style]="{'width': '175px', 'height': '35px'}"
+                    [style]="{'width': '700px', 'height': '35px'}"
                   ></p-multiSelect>
                 </div>
               </td>

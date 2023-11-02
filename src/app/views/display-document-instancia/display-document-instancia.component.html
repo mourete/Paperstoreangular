@@ -93,7 +93,7 @@
       <p-header>
         <div class="ui-helper-clearfix">
           <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">{{indexSec + 1}}
-            .{{seccion.nombre}}</span>
+            .{{seccion.nombre}} </span>
 
         </div>
 
@@ -118,7 +118,7 @@
           </p-header>
 
 
-          <div *ngIf="seccionInstancia.conceptosInstancia">
+          <div *ngIf="seccionInstancia.conceptosInstancia" >
 
 
             <p-table [value]="seccionInstancia.conceptosInstancia" selectionMode="single" dataKey="conceptoOID">
@@ -140,19 +140,20 @@
                   </td>
 
                   <td *ngIf="conceptoInstancia.tipoConceptoId!=13"
-                      colspan="2"> {{conceptoInstancia.descripcion}}   </td>
+                      colspan="2" style="width: 400px;"> {{conceptoInstancia.descripcion}}   </td>
 
                   <td *ngIf="conceptoInstancia.tipoConceptoId==6">
                     <p-dropdown [(ngModel)]="conceptoInstancia.selected" [showTransitionOptions]="'0ms'"
                                 [hideTransitionOptions]="'0ms'" (onChange)="listaChanged(conceptoInstancia)"
                                 [options]="conceptoInstancia.opcionesInstancia" dataKey="opcionOID" filter="true"
                                 optionLabel="texto" [readonly]="readOnly"
-                                [style]="{'width': '400px', 'height': '35px'}"></p-dropdown>
+                                [style]="{'width': '800px', 'height': '35px'}"></p-dropdown>
                   </td>
 
                   <td
                     *ngIf="conceptoInstancia.tipoConceptoId==2 || conceptoInstancia.tipoConceptoId==3 || conceptoInstancia.tipoConceptoId==12 ">
                     <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor" [readonly]="readOnly"
+                    [style]="{'width': '800px', 'height': '35px'}"
                     />
                   </td>
 
@@ -160,6 +161,7 @@
                   <td *ngIf="conceptoInstancia.tipoConceptoId==1">
                     <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor"
                            maxlength="{{conceptoInstancia.maximo}}" [readonly]="readOnly"
+                           [style]="{'width': '800px', 'height': '35px'}"
                            />
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==4">
@@ -168,7 +170,7 @@
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==13">
                     <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" dateFormat="dd/mm/yy" showIcon="false"
-                                showButtonBar="true"  [disabled]="readOnly" ></p-calendar>
+                                showButtonBar="true"  [disabled]="readOnly"  ></p-calendar>
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==5">
                     <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" timeOnly="true" showIcon="true"
@@ -180,7 +182,7 @@
                         [options]="conceptoInstancia.opcionesInstancia"
                         [(ngModel)]="conceptoInstancia.selectedValues"
                         optionLabel="texto"
-                        [style]="{'width': '400px', 'height': '35px'}"
+                        [style]="{'width': '800px', 'height': '35px'}"
                         optionValue="opcionOID"
                         [readonly]="readOnly"
 >

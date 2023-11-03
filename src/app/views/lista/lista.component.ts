@@ -71,7 +71,7 @@ export class ListaComponent implements OnInit {
     this.listaService.getListaByListaOID( listaOID , this.usuarioSession.usuarioOID).subscribe(
       (data)=>{
           console.log(data);
-          console.log("Soy yo leal");
+          // console.log("Soy yo leal");
 
           this.catalogo =data;
           if(this.catalogo.filtro == 1)
@@ -131,7 +131,7 @@ export class ListaComponent implements OnInit {
 
   public guardarLista(){
 
-    console.log("Ando aqui");
+    // console.log("Ando aqui");
 
 
     console.log(this.filtro);

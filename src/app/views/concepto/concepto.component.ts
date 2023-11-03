@@ -205,7 +205,7 @@ export class ConceptoComponent implements OnInit {
     this.concepto.seccionOID = this.config.data.seccion.seccionOID;
 
     // this.config.data.seccion.seccionOID
-    console.log('Filtro para la entrada de filtro');
+    // console.log('Filtro para la entrada de filtro');
 
     console.log(this.selectedLista.filtro);
     if (type && this.selectedLista.filtro == 1) {

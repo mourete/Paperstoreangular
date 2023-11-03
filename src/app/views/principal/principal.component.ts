@@ -48,18 +48,18 @@ export class PrincipalComponent implements OnInit {
   ngOnInit(): void {
      this.currentTemplate="";
      this.usuario = JSON.parse(localStorage.getItem('usuario'));
-     
+
      this.items = [
       {
           label: 'File',
           items: [{
-                  label: 'New', 
+                  label: 'New',
                   icon: 'pi pi-fw pi-plus',
                   items: [
-                      {label: 'Project'  , command: (event) => {         
+                      {label: 'Project'  , command: (event) => {
                         this.listasAdmin();
-                         }},      
-                      {label: 'Other' , command: (event) => {         
+                         }},
+                      {label: 'Other' , command: (event) => {
                         this.documentosAdmin();
                          }          }
                   ]
@@ -97,7 +97,7 @@ export class PrincipalComponent implements OnInit {
 
 
   public selectCurrentTemplate( menu: Modulo ){
- 
+
 
     let menuId = menu.objetoId;
 
@@ -123,45 +123,45 @@ export class PrincipalComponent implements OnInit {
      }else if(  menuId==GlobalConstants.MENU_MARCAS ){
         // this.currentTemplate="marcas";
         this.componentClass=ListMarcasComponent
-        this.setCurrentComponent ( this.componentClass );        
+        this.setCurrentComponent ( this.componentClass );
 
      }else if( menuId==GlobalConstants.MENU_REGIONES ){
         //this.currentTemplate="regiones";
         this.componentClass=ListRegionesComponent;
-        this.setCurrentComponent ( this.componentClass );        
+        this.setCurrentComponent ( this.componentClass );
 
      }else if( menuId==GlobalConstants.MENU_SUCURSALES ){
         this.componentClass=ListSucursalesComponent;
-        this.setCurrentComponent ( this.componentClass );  
+        this.setCurrentComponent ( this.componentClass );
 
      }else if( menuId==GlobalConstants.MENU_INSTANCIAS   ){
-        this.currentTemplate="instancias";    
+        this.currentTemplate="instancias";
         this.componentClass=DocumentosUsuarioComponent;
         this.setCurrentComponent ( this.componentClass );
-  
+
       }else if( menuId==GlobalConstants.MENU_LISTA_DOCUMENTO_USUARIOS   ){
         this.componentClass=ListDocumentoUsuariosComponent;
-        this.setCurrentComponent ( this.componentClass );   
- 
+        this.setCurrentComponent ( this.componentClass );
 
-     }else if( menuId==GlobalConstants.MENU_PROYECTOS  ){ 
+
+     }else if( menuId==GlobalConstants.MENU_PROYECTOS  ){
        this.componentClass=ListProyectosComponent;
-       this.setCurrentComponent ( this.componentClass );     
-         
-      }else if( menuId==GlobalConstants.MENU_STORECHECK  ){ 
+       this.setCurrentComponent ( this.componentClass );
+
+      }else if( menuId==GlobalConstants.MENU_STORECHECK  ){
         this.componentClass=StoreCheckComponent;
-        this.setCurrentComponent ( this.componentClass );     
-     
-        
+        this.setCurrentComponent ( this.componentClass );
+
+
     }else if(menuId==GlobalConstants.MENU_DASHBOARD){
       this.componentClass=DashboardComponent;
-      this.setCurrentComponent ( this.componentClass );     
+      this.setCurrentComponent ( this.componentClass );
      }else{
 
       this.currentTemplate="";
      }
 
-    
+
      console.log(menuId);
   }
 
@@ -185,26 +185,26 @@ export class PrincipalComponent implements OnInit {
       }
 
       var modulo:Modulo =this.mapModulos.get("1");
-      
-      let menuItemsTmp:MenuItem[]=null;
-      let mapItemsMenuByParent= new Map<string, MenuItem>(); 
-      this.rawModulos.forEach( modulo => {          
 
-        
+      let menuItemsTmp:MenuItem[]=null;
+      let mapItemsMenuByParent= new Map<string, MenuItem>();
+      this.rawModulos.forEach( modulo => {
+
+
         var menuItem :MenuItem ={
-          label: modulo.nombre ,         
+          label: modulo.nombre ,
           command: null ,
           items : menuItemsTmp
        }
 
       // console.log( modulo);
-       
+
        if( modulo.objetoId!=null && modulo.objetoId!="" ){
 
        // console.log("entre aqui");
 
 
-        menuItem.command=(event) => {         
+        menuItem.command=(event) => {
                 this.selectCurrentTemplate( modulo );
            }
 
@@ -214,12 +214,12 @@ export class PrincipalComponent implements OnInit {
 
 
           if(  modulo.moduloPadreId<=0 ){
-              
-              
+
+
               this.items.push ( menuItem );
 
 
-                 mapItemsMenuByParent.set(  String( modulo.moduloId )  ,   menuItem    );   
+                 mapItemsMenuByParent.set(  String( modulo.moduloId )  ,   menuItem    );
 
           }else{
 
@@ -227,22 +227,22 @@ export class PrincipalComponent implements OnInit {
                if(  menuItemParent!=null  ){
                     if( menuItemParent.items==null || menuItemParent.items.length<=0 ){
                        menuItemParent.items=[];
-                       
+
                        menuItemParent.items[ 0 ]=menuItem;
-                       
-                      
+
+
                     }else{
-                      
+
                       menuItemParent.items[  menuItemParent.items.length++ ]=menuItem;
                       // menuItemParent.items.push( [menuItem]  );
 
-                    }  
+                    }
 
 
                }
 
 
-              mapItemsMenuByParent.set(  String( modulo.moduloId )  ,   menuItem    );   
+              mapItemsMenuByParent.set(  String( modulo.moduloId )  ,   menuItem    );
 
 
 
@@ -250,37 +250,37 @@ export class PrincipalComponent implements OnInit {
 
           }
 
-          
 
 
 
-      });    
 
-        
+      });
+
+
   }
 
 
   public getRawModulosByUserOID(userOID:string){
     this.accountService.getModulosByUserOID( userOID ).subscribe(
-   
+
       (data)=>{
-        
-        this.rawModulos = data;      
-  
+
+        this.rawModulos = data;
+
         if( this.rawModulos==null || this.rawModulos.length<=0  ){
             return;
         }
-  
-        this.setArbolModulos(); 
+
+        this.setArbolModulos();
         this.armaMenu();
         this.setUserDefaultOption();
         //this.setUserDefaultOption();
-  
+
      }
-  
-   
+
+
     );
-  
+
   }
 
 
@@ -288,19 +288,19 @@ export class PrincipalComponent implements OnInit {
   public setUserDefaultOption(){
 
     this.accountService.getModuloPredeterminado( this.usuario.usuarioOID ).subscribe(
-   
+
       (data)=>{
-        console.log("Modulo predeterminado");
+        // console.log("Modulo predeterminado");
         console.log( data );
-        let moduloTmp:Modulo=data;        
+        let moduloTmp:Modulo=data;
         if( moduloTmp!=null  && moduloTmp.objetoId!=null ){
           this.selectCurrentTemplate( moduloTmp );
-        } 
+        }
      }
-  
-   
+
+
     );
-  
+
 
 
   }
@@ -312,26 +312,26 @@ export class PrincipalComponent implements OnInit {
     }
 
     this.mapModulos= new Map<string,Modulo>();
-    this.rawModulos.forEach(element => {          
-          this.mapModulos.set( String( element.moduloId ) , element   );  
-    });    
+    this.rawModulos.forEach(element => {
+          this.mapModulos.set( String( element.moduloId ) , element   );
+    });
 
- 
-     
+
+
   }
 
 
  public logOff (   ){
 
- 
-  this.usuarioLog = JSON.parse(localStorage.getItem('usuarioLog'));   
+
+  this.usuarioLog = JSON.parse(localStorage.getItem('usuarioLog'));
   if( this.usuarioLog==null ){
     return;
   }
 
- 
+
     this.accountService.logOff(  this.usuarioLog.usuariosLogOID , this.usuarioLog.ip  ).subscribe(
-    
+
       (data)=>{
         console.log( data );
         localStorage.removeItem('usuario');
@@ -341,9 +341,9 @@ export class PrincipalComponent implements OnInit {
 
     }
 
-  
+
     );
-        
+
 
  }
 

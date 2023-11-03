@@ -100,7 +100,7 @@ export class DocumentComponent implements OnInit {
       .subscribe((data) => {
         this.documento = data;
 
-        console.log('EdgarLeal');
+        //console.log('EdgarLeal');
 
         this.profileDocument.patchValue({
           clave: this.documento.clave,

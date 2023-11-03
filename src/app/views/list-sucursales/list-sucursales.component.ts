@@ -65,7 +65,7 @@ export class ListSucursalesComponent implements OnInit {
     this.sucursalService.getSucursalesByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
          console.log( data );
-         console.log("Soy yo");
+        //  console.log("Soy yo");
          this.sucursales=data;
       }
      );
@@ -183,7 +183,7 @@ export class ListSucursalesComponent implements OnInit {
           (data)=>{
 
              console.log( data );
-             console.log("Edgar Leal");
+            //  console.log("Edgar Leal");
              console.log(this.empresas);
              console.log(this.marcas);
 

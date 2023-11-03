@@ -167,11 +167,11 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
   public backToDocumentList(){
 
-    console.log("Hola");
+    // console.log("Hola");
 
     //var currentTemplate="instancias";
 
-    console.log("Hola aqui ando");
+    // console.log("Hola aqui ando");
 
     this.principal.setCurrentComponent(ListDocumentoUsuariosComponent);
 
@@ -237,7 +237,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
               (data)=>{
 
-                console.log("entre datos de primera seccion");
+                // console.log("entre datos de primera seccion");
 
                 console.log( data );
 

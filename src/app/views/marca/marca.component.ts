@@ -32,7 +32,7 @@ import { EstadoService } from 'src/app/service/estado.service';
 export class MarcaComponent implements OnInit {
 
   @ViewChild('claveInput') claveInput: ElementRef;
-  
+
   marca:Marca;
   empresas:Empresa[];
   msgs: Message[] = [];
@@ -255,7 +255,7 @@ export class MarcaComponent implements OnInit {
 
 
   public getCiudadesByEstado( estadoId: number , usuarioOID:string ){
-    console.log("Entro aqui");
+    // console.log("Entro aqui");
     this.ciudadService.getCiudadesByEstado ( estadoId , usuarioOID ).subscribe(
       (data)=>{
         this.ciudades=data;

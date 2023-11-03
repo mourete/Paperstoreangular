@@ -84,7 +84,7 @@ export class ListDocumentsComponent implements OnInit {
     });
 
     ref.onClose.subscribe((doc: Documento ) => {
-      console.log("Hola");
+      // console.log("Hola");
       if (doc!=null  ) {
         this.getAllDocumentsActives();
       }
@@ -101,7 +101,7 @@ export class ListDocumentsComponent implements OnInit {
 
 
   public designDocumento(){
-    console.log("Aqndo aqui");
+    // console.log("Aqndo aqui");
     console.log(this.selectedDocumento);
      //this.router.navigate(["/displayDocument/" + this.selectedDocumento.documentoId   ]);
      this.designing=true;

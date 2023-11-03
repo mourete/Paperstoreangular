@@ -50,7 +50,7 @@ export class RegionComponent implements OnInit {
     empresa:['',  Validators.required],
     marca: ['',  Validators.required]
   });
-  
+
   convertirMayuscula = convertirAMayusculas(this.profileRegion.get('clave'));
 
   constructor( public regionService:RegionService ,  public empresaService:EmpresaService ,  private fb: FormBuilder , public marcaService:MarcaService ,     public config: DynamicDialogConfig , public ref: DynamicDialogRef ) { }
@@ -147,7 +147,7 @@ export class RegionComponent implements OnInit {
               this.empresas=data;
               if( this.empresas!=null && this.empresas.length>0 ){
                 this.selectedEmpresa=this.empresas[0];
-                console.log("Marcos");
+                // console.log("Marcos");
 
                 if( this.region.empresaId>0 ){
                   if(  this.empresas!=null && this.empresas.length>0 ){

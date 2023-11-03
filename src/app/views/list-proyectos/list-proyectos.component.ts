@@ -280,7 +280,7 @@ public getProyectosByEmpresaYMarca(){
 
  this.proyectoService.getByEmpresaYMarca   ( this.usuarioSession.usuarioOID  , this.selectedEmpresa.empresaId ,  marcaTmpId  ) .subscribe(
    (data)=>{
-     console.log("Check");
+    //  console.log("Check");
       console.log( data );
       this.proyectos=data;
 

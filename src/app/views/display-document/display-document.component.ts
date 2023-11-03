@@ -30,7 +30,7 @@ export class DisplayDocumentComponent implements OnInit {
   usuarioOID: string;
   usuario: Usuario;
   selectedOptions: any[] = [];
- 
+
 
   items: MenuItem[];
   itemsConcepto: MenuItem[];
@@ -411,7 +411,7 @@ export class DisplayDocumentComponent implements OnInit {
 
     let orden: number = this.concepto.orden;
 
-    console.log('Inicial');
+  //  console.log('Inicial');
     console.log(orden);
 
     if (flagOrder == 1) {
@@ -427,7 +427,7 @@ export class DisplayDocumentComponent implements OnInit {
       orden = orden + 1;
     }
 
-    console.log('Final');
+    // console.log('Final');
     console.log(orden);
 
     this.conceptoService

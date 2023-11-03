@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentoInstancia } from 'src/app/model/documento-instancia';
-import { DocumentoInstanciaService } from  'src/app/service/documento-instancia.service'; 
+import { DocumentoInstanciaService } from  'src/app/service/documento-instancia.service';
 import { ActivatedRoute } from '@angular/router';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
@@ -30,8 +30,8 @@ export class DocumentoInstanciaComponent implements OnInit {
 
   constructor( private documentoInstanciaService : DocumentoInstanciaService ,
     private actRoute: ActivatedRoute ,  public ref: DynamicDialogRef ,
-    public config: DynamicDialogConfig 
-   
+    public config: DynamicDialogConfig
+
  ) {
 
   }
@@ -40,9 +40,9 @@ export class DocumentoInstanciaComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if( this.config.data != null  && this.config.data.update>0){  
+    if( this.config.data != null  && this.config.data.update>0){
 
-      console.log("Ando aqui " + this.config.data.documento.documentoID);
+      console.log(this.config.data.documento.documentoID);
       console.log(this.config.data.documento);
 
       this.documentoId=this.config.data.documento.documentoId;
@@ -67,7 +67,7 @@ export class DocumentoInstanciaComponent implements OnInit {
 
       this.documentoInstancia.nombre = */
 
-      
+
 
 
     }else{
@@ -77,7 +77,7 @@ export class DocumentoInstanciaComponent implements OnInit {
       this.proyectoId=this.config.data.proyectoId;
       this.regionId=this.config.data.regionId;
       this.sucursalId=this.config.data.sucursalId;
- 
+
 
       this.documentoInstancia=new DocumentoInstancia();
       this.documentoInstancia.usuarioOID=this.usuarioOID;
@@ -91,7 +91,7 @@ export class DocumentoInstanciaComponent implements OnInit {
       this.documentoInstancia.alerta=this.alerta;
       this.documentoInstancia.tipoAlerta=this.tipoAlerta;
       this.documentoInstancia.imagePath=this.image;
-     
+
       1
 
 
@@ -101,7 +101,7 @@ export class DocumentoInstanciaComponent implements OnInit {
     if(segments.length>0){
    // Tomar el último segmento como el nombre del archivo
          const nombreArchivo = segments[segments.length - 1];
-         this.selectedFileName= nombreArchivo; 
+         this.selectedFileName= nombreArchivo;
     }else this.selectedFileName= "Seleccionar archivo..";
 
 
@@ -110,13 +110,12 @@ export class DocumentoInstanciaComponent implements OnInit {
 public guadarDocumentoInstancia(   ){
 
   this.documentoInstanciaService.guardarDocumentoInstancia ( this.documentoInstancia , this.usuarioOID).subscribe((data)=>{
-    console.log(data);   
-    console.log("bien");     
+    console.log(data);
+    // console.log("bien");
     this.documentoInstancia=data;
-    this.ref.close(this.documentoInstancia );   
+    this.ref.close(this.documentoInstancia );
 
-}); 
-
+});
 
 
 }
@@ -127,7 +126,7 @@ public guadarDocumentoInstancia(   ){
 
 public cancelar(){
   this.ref.close();
-}  
+}
 
 clearFile(event, documentoInstancia){
   this.selectedFileName ='';
@@ -159,14 +158,14 @@ console.log("selectFile" + this.documentoInstancia.documentoInstanciaOID);
 
 upload( documentoInstanciaOID, documentoId ) {
 
-    
+
   let currentFile = this.selectedFiles.item(0);
   console.log("upload doc" + currentFile);
   this.documentoInstanciaService.upload(currentFile, documentoId, documentoInstanciaOID,  "*", "*", "*",this.usuarioOID).subscribe(
-    
+
     event => {
-      
-      
+
+
       console.log(event['url']);
 
       this.documentoInstancia.imagePath = event['url'];
@@ -175,7 +174,7 @@ upload( documentoInstanciaOID, documentoId ) {
 
     },
     err => {
-      console.log('Could not upload the file!');
+      // console.log('Could not upload the file!');
       currentFile = undefined;
 
     });
@@ -191,4 +190,3 @@ upload( documentoInstanciaOID, documentoId ) {
 
 
 }
- 

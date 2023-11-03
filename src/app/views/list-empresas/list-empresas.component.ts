@@ -76,7 +76,7 @@ export class ListEmpresasComponent implements OnInit {
   });
 
   ref.onClose.subscribe(( emp : Empresa  ) => {
-    console.log("Entro aqui 2");
+    // console.log("Entro aqui 2");
     if (emp!=null  ) {
 
         this.getEmpresasByUsuarioOID();

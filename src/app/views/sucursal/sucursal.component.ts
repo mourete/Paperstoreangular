@@ -116,7 +116,7 @@ export class SucursalComponent implements OnInit {
 
 
   public getSucursalById(sucId:number  ){
-    console.log("ENTRE");
+    // console.log("ENTRE");
 
     this.sucursalService.getSucursalByID(  sucId ,  this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
@@ -163,7 +163,7 @@ export class SucursalComponent implements OnInit {
 
       this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
         (data)=>{
-          console.log("ENTRE2");
+          // console.log("ENTRE2");
           this.empresas=data;
 
 
@@ -377,7 +377,7 @@ export class SucursalComponent implements OnInit {
 
 
   public getCiudadesByEstado( estadoId: number , usuarioOID:string ){
-    console.log("Entro aqui Siempre");
+    // console.log("Entro aqui Siempre");
     this.ciudadService.getCiudadesByEstado ( estadoId , usuarioOID ).subscribe(
       (data)=>{
         this.ciudades=data;

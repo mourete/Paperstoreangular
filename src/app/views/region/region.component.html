@@ -16,6 +16,7 @@
             (input)="(convertirMayuscula)"
             [showMaskTyped]="true"
             required
+            [style]="{ width: '500px' }"
           />
           <div *ngIf="f.clave.errors?.required">Clave es requerido</div>
         </td>
@@ -30,6 +31,7 @@
             formControlName="nombre"
             [(ngModel)]="region.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
+            [style]="{ width: '500px' }"
           />
           <div *ngIf="f.nombre.errors?.required">Nombre es requerido</div>
           <div *ngIf="f.nombre.errors?.pattern">Nombre solo acepta letras y números</div>
@@ -47,6 +49,7 @@
             [(ngModel)]="selectedEmpresa"
             [options]="empresas"
             optionLabel="nombre"
+            [style]="{ width: '500px' }"
           ></p-dropdown>
         </td>
       </tr>
@@ -62,6 +65,7 @@
             [(ngModel)]="selectedMarca"
             [options]="marcas"
             optionLabel="nombre"
+            [style]="{ width: '500px' }"
           ></p-dropdown>
         </td>
       </tr>

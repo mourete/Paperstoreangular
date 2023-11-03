@@ -1,7 +1,7 @@
 <p-messages [value]="msgs" [escape]="true"></p-messages>
 <form [formGroup]="profileMarca" (ngSubmit)="onSubmit()">
   <div *ngIf="marca">
-    <table border="0" cellpadding="1" cellspacing="1" style="width: 80%">
+    <table border="0" cellpadding="1" cellspacing="1" >
       <tr>
         <td align="center">Clave</td>
         <td>
@@ -10,12 +10,13 @@
             type="text"
             formControlName="clave"
             pInputText
-            style="width: 20%"
+            style="width: 400px"
             [(ngModel)]="marca.clave"
             mask="AAAAAAAAAA"
             (input)="convertirAMayusculas()"
             [showMaskTyped]="true"
             required
+
           />
           <div *ngIf="f.clave.errors?.required">Clave es requerido</div>
         </td>
@@ -28,7 +29,7 @@
             type="text"
             pInputText
             formControlName="nombre"
-            style="width: 80%"
+            style="width: 400px"
             [(ngModel)]="marca.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
           />
@@ -50,6 +51,8 @@
             [(ngModel)]="selectedEmpresa"
             [options]="empresas"
             optionLabel="nombre"
+            [style]="{ width: '400px' }"
+            filter="true"
           ></p-dropdown>
         </td>
       </tr>
@@ -60,7 +63,7 @@
           <input
             type="text"
             pInputText
-            style="width: 80%"
+            style="width: 400px"
             formControlName="calle"
             [(ngModel)]="marca.calle"
           />
@@ -73,7 +76,7 @@
           <input
             type="text"
             pInputText
-            style="width: 10%"
+            style="width: 400px"
             formControlName="numero"
             [(ngModel)]="marca.numero"
           />
@@ -86,7 +89,7 @@
           <input
             type="text"
             pInputText
-            style="width: 80%"
+            style="width: 400px"
             formControlName="entreCalle"
             [(ngModel)]="marca.entreCalle"
           />
@@ -99,7 +102,7 @@
           <input
             type="text"
             pInputText
-            style="width: 80%"
+            style="width: 400px"
             formControlName="colonia"
             [(ngModel)]="marca.colonia"
           />
@@ -112,7 +115,7 @@
           <input
             type="text"
             pInputText
-            style="width: 10%"
+            style="width: 400px"
             formControlName="cp"
             [(ngModel)]="marca.cp"
           />
@@ -125,7 +128,7 @@
           <input
             type="text"
             pInputText
-            style="width: 80%"
+            style="width: 400px"
             formControlName="encargado"
             [(ngModel)]="marca.encargado"
           />
@@ -138,7 +141,7 @@
           <input
             type="text"
             pInputText
-            style="width: 80%"
+            style="width: 400px"
             formControlName="mail"
             [(ngModel)]="marca.mail"
           />
@@ -167,6 +170,7 @@
             [options]="estados"
             optionLabel="nombre"
             filter="true"
+            [style]="{ width: '400px' }"
           ></p-dropdown>
         </td>
       </tr>
@@ -182,6 +186,7 @@
             [options]="ciudades"
             optionLabel="nombre"
             filter="true"
+            [style]="{ width: '400px' }"
           ></p-dropdown>
         </td>
       </tr>

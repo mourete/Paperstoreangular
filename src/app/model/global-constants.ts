@@ -41,12 +41,9 @@ export class GlobalConstants {
    public static MENU_PROYECTOS="PROYECTOS";
    public static MENU_DASHBOARD = "DASHBOARD_OPERATIVO";
    public static MENU_STORECHECK = "STORECHECK";
-
-
-
 }
 
-export class readonly{
-    0 = true;
-    1 = false;
-}
+export const readOnly: Map<number, boolean> = new Map([
+  [0, true],
+  [1, false]
+])

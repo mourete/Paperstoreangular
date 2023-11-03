@@ -28,6 +28,7 @@ public  currProyectoId: number;
 public currRegionId: number;
 public currSucursalId:number;
 public currUsuarioOID:string;
+
 public currDocumento:string;
  public currSucursal:string;
 public currRegion:string;
@@ -86,6 +87,7 @@ public currEmpresa:string;
        this.currRegionId=regId;
       this.currSucursalId=sucId;
       this.currUsuarioOID=usrOID;
+   
       this.currDocumento=doc;
        this.currSucursal=suc;
       this.currRegion=reg;

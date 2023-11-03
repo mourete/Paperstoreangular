@@ -26,5 +26,5 @@ export class Usuario {
 	perfilId:number;
 
 	infoHuesped: InfoHuesped;
-	
+	readOnly: string;
 }

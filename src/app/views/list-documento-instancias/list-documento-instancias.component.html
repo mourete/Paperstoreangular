@@ -1,4 +1,4 @@
-
+    
 
 
 
@@ -86,7 +86,7 @@
                             <th style="width: 180px;">Diseño</th>
                             <th style="width: 120px;"  >Fecha</th>
                             <th >Nombre</th>
-                            <th>Instancia</th>
+                          <!-- <th>Instancia</th>--> 
                             <th>Observaciones</th>
                             <th>Estatus</th>
                             <th>Alerta</th>
@@ -101,7 +101,7 @@
                              <input size="20"  pInputText type="text" (input)="dtDocInsta.filter($event.target.value, 'nombre' , 'contains')">
                           </th>
 
-                          <th   ></th>
+                            <!--<th   ></th>-->
                           <th   ></th>
                           <th   ></th>
                           <th   >
@@ -130,7 +130,7 @@
 
                         <td  >{{documento.fechaCreacion}}  </td>
                         <td >{{documento.nombre}}</td>
-                        <td >{{documento.documentoInstanciaOID}}</td>
+                          <!--<td >{{documento.documentoInstanciaOID}}</td>-->
                         <td >{{documento.observaciones}}</td>
                         <td >{{documento.statusNombre}} </td>
                         <td  *ngIf="documento.tipoAlerta == 2"><img  src="assets/img/alertaRojaConSigno.png"  width="30" height="30"> {{documento.alerta}}</td>
@@ -175,11 +175,13 @@
 [varSeccionOID]="currSeccionOID"
 [varDocumentoId]="currDocumentoId"
 [varUsuarioOID]="currUsuarioOID"
+[varReadOnly]="currReadOnly"
 [varNombreInstancia]="currNombre"
 [varSucursal]="sucursal"
 [varRegion]="region"
 [varAlerta]="alerta"
 [varTipoAlerta]="tipoAlerta"
+
 
 ></app-display-document-instancia>
 

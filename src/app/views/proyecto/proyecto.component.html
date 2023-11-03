@@ -20,6 +20,7 @@
                   mask="AAAAAAAAAA"
                   (input)="convertirMayusculas($event)"
                   [showMaskTyped]="true"
+                  style="width: 400px"
                 />
                 <div *ngIf="f.clave.errors?.required">Clave es requerido</div>
               </td>
@@ -35,6 +36,7 @@
                   [(ngModel)]="proyecto.nombre"
                   pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
                   required
+                  style="width: 400px"
                 />
                 <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
                 <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>
@@ -51,6 +53,7 @@
                   [(ngModel)]="selectedEmpresa"
                   [options]="empresas"
                   optionLabel="nombre"
+                  [style]="{ width: '400px' }"
                 ></p-dropdown>
               </td>
             </tr>
@@ -65,6 +68,7 @@
                   [(ngModel)]="selectedMarca"
                   [options]="marcas"
                   optionLabel="nombre"
+                  [style]="{ width: '400px' }"
                 ></p-dropdown>
               </td>
             </tr>
@@ -77,6 +81,7 @@
                   [cols]="40"
                   pInputTextarea
                   [(ngModel)]="proyecto.descripcion"
+                  style="width: 400px"
                 ></textarea>
               </td>
             </tr>
@@ -95,6 +100,7 @@
                   dateFormat="dd/mm/yy"
                   showIcon="true"
                   showButtonBar="true"
+                
                 ></p-calendar>
               </td>
             </tr>

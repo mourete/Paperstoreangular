@@ -1,38 +1,38 @@
 
               <div     >
                 <table  border="0" >
-                               
+
                       <tr>
                         <td>Nombre</td>
                         <td>
-                           <input type="text" pInputText     [(ngModel)]="documentoInstancia.nombre"   /> 
+                           <input type="text" pInputText     [(ngModel)]="documentoInstancia.nombre"   style="width: 400px"/>
                        </td>
-                     </tr>       
-                     
-                     
+                     </tr>
+
+
                      <tr>
                         <td>Observaciones</td>
                         <td>
-                           <textarea pInputTextarea   [rows]="5" [cols]="30"   [(ngModel)]="documentoInstancia.observaciones"   ></textarea> 
+                           <textarea pInputTextarea   [rows]="5" [cols]="30"   [(ngModel)]="documentoInstancia.observaciones" style="width: 400px"  ></textarea>
                        </td>
-                     </tr> 
+                     </tr>
                      <tr>
                       <td>Imagen</td>
-                      <td> 
+                      <td>
                         <div *ngIf="documentoInstancia.imagePath && !documentoInstancia.imagePath.includes('NoImagen.png')">
                           <input type="file" (change)="selectFile($event,documentoInstancia.documentoInstanciaOID,documentoInstancia.documento)"  #fileInput style="display: none;">
                           <button (click)="fileInput.click()" >Seleccionar archivo</button>
                           <button (click)="clearFile($event, documentoInstancia)">Eliminar archivo</button>
                           <p *ngIf="selectedFileName">{{selectedFileName}}<p>
-                                                                                                         
-                         
+
+
                           <a *ngIf="documentoInstancia.imagePath?.indexOf('.pdf') > -1"   href="{{selectedFileName}}" target="_blank"><img   src="assets/img/pdf.png"  width="50" height="50" ></a>
                           <a *ngIf="documentoInstancia.imagePath?.indexOf('.pdf') == -1"  href="{{documentoInstancia.imagePath}}"  target="selectedFileName"> <img   src={{documentoInstancia.imagePath}} width="100" height="100"> </a>
-                            
+
                       </div>
 
                       <div *ngIf="!documentoInstancia.imagePath || documentoInstancia.imagePath.includes('NoImagen.png')">
-                         
+
                           <input type="file" (change)="selectFile($event,documentoInstancia.documentoInstanciaOID,documentoInstancia.documento)" #fileInput style="display: none;">
                           <button (click)="fileInput.click()" >Seleccionar archivo</button>
                           <img   src="assets/img/NoImagen.png" width="100" height="100">
@@ -41,13 +41,13 @@
 
 
                      </td>
-                   </tr>       
-                                                            
-                </table>                
-                
+                   </tr>
+
+                </table>
+
               </div>
               <div  >
-               
+
                 <button pButton type="button" label="Guardar" (click)="guadarDocumentoInstancia()"></button>
                 <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
             </div>

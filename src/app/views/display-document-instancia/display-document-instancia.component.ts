@@ -471,6 +471,10 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     if (this.documentoInstancia == null) {
       return false;
     } else {
+      console.log("readOnly");
+      console.log(this.documentoInstancia.readOnly);
+           
+      if (this.documentoInstancia.readOnly==1) this.readOnly = true;
       if (this.documentoInstancia.imagePath != null) {
         this.documentoInstancia.imagePath = this.usuario.infoHuesped.pathImagenWeb + this.documentoInstancia.imagePath;
       } else {
@@ -685,7 +689,9 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
       (data) => {
 
         this.documentoInstancia = data;
-
+        console.log("readOnly");
+        console.log(this.usuarioOID);
+        console.log(this.documentoInstancia.readOnly);
         if (this.documentoInstancia != null) {
           if (this.documentoInstancia.seccionesInstancia != null && this.documentoInstancia.seccionesInstancia.length > 0) {
             this.seccionInstancia = this.documentoInstancia.seccionesInstancia[0];

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 
 import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Message} from 'primeng/api';
@@ -22,7 +22,7 @@ import {EstadoService} from 'src/app/service/estado.service';
   templateUrl: './marca.component.html',
   styleUrls: ['./marca.component.scss'],
 })
-export class MarcaComponent implements OnInit {
+export class MarcaComponent implements OnInit, AfterViewInit {
   @ViewChild('claveInput') claveInput: ElementRef;
   marca: Marca;
   empresas: Empresa[];
@@ -78,8 +78,14 @@ export class MarcaComponent implements OnInit {
       this.marca.activo = 1;
       this.marca.flagActivo = true;
     }
-    this.getAllEstados();
+
     this.getEmpresasByUsuarioOID();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.getAllEstados();
+    }, 0);
   }
 
   public getAllEstados() {
@@ -177,10 +183,6 @@ export class MarcaComponent implements OnInit {
   }
 
   onSubmit() {
-    console.warn(this.profileMarca.value);
-
-    console.warn(this.marca);
-
     this.guadarMarca();
   }
 

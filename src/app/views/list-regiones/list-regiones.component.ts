@@ -102,7 +102,7 @@ export class ListRegionesComponent implements OnInit {
     }
 
     console.log(this.selectedRegion);
-    console.log("Edgarleal");
+    //console.log("Edgarleal");
 
     let ref= this.dialogService.open( RegionComponent , {
       header: 'Región',

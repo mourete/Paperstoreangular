@@ -33,7 +33,7 @@ export class ListMarcasComponent implements OnInit {
       this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
       this.usuarioOID = this.usuarioSession.usuarioOID;
       this.getMarcasByUsuarioOID();
-      
+
       this.itemsMarca = [
         {
           label: 'Editar Marca',

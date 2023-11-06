@@ -24,8 +24,8 @@ export class ListUsuariosComponent implements OnInit {
     public dialogService: DialogService  ) { }
 
   ngOnInit(): void {
-    this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));   
-    
+    this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+
     this.getUsuariosByUsuarioConsulta();
 
   }
@@ -36,30 +36,30 @@ export class ListUsuariosComponent implements OnInit {
     if( this.usuarioSession==null ){
       return;
     }
-    this.usuariosService.getUsuariosByUsuarioConsulta(this.usuarioSession.usuarioOID,this.usuarioSession.usuarioOID,) .subscribe( 
+    this.usuariosService.getUsuariosByUsuarioConsulta(this.usuarioSession.usuarioOID,this.usuarioSession.usuarioOID,) .subscribe(
       (data)=>{
          console.log( data );
-         this.usuarios=data;         
+         this.usuarios=data;
       }
      );
-  
-  } 
 
-  
+  }
+
+
 
 
   public agregarUsuario(){
 
     let ref= this.dialogService.open( UsuarioComponent , {
       header: 'Usuario',
-      width: '70%',        
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+      width: '70%',
+      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { usuarioId:null  }
   });
 
-  ref.onClose.subscribe(( usr : Usuario  ) => {     
+  ref.onClose.subscribe(( usr : Usuario  ) => {
     if (usr!=null  ) {
-          
+
     }
   });
 
@@ -75,16 +75,16 @@ export class ListUsuariosComponent implements OnInit {
 
     let ref= this.dialogService.open( UsuarioComponent , {
       header: 'Usuario',
-      width: '70%',        
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+      width: '70%',
+      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { usuarioOID : this.selectedUsuario.usuarioOID  }
   });
 
 
-  ref.onClose.subscribe((  ) => { 
-    console.log("Entro aqui 2");
+  ref.onClose.subscribe((  ) => {
+    // console.log("Entro aqui 2");
    // if (emp!=null  ) {
-        
+
       this.getUsuariosByUsuarioConsulta();
    // }
   });
@@ -92,7 +92,7 @@ export class ListUsuariosComponent implements OnInit {
   }
 
 
-  
+
 
   public configurarMarcas(){
     if( this.selectedUsuario==null   ){
@@ -101,12 +101,12 @@ export class ListUsuariosComponent implements OnInit {
 
     let ref= this.dialogService.open( UsuarioMarcasComponent , {
       header: 'Usuario',
-      width: '70%',        
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } , 
+      width: '70%',
+      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { usuarioOID : this.selectedUsuario.usuarioOID  }
   });
 
-  }  
+  }
 
 
 

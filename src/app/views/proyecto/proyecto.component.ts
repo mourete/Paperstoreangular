@@ -74,7 +74,7 @@ export class ProyectoComponent implements OnInit {
 
     if (this.config.data.proyectoId > 0) {
       this.getProyectoById(this.config.data.proyectoId);
-      console.log('Ando aqui ');
+      // console.log('Ando aqui ');
     } else {
       this.proyecto = new Proyecto();
       this.proyecto.usuarioCreated = this.usuarioSession.usuarioOID;
@@ -141,7 +141,7 @@ export class ProyectoComponent implements OnInit {
                 empresaTmp = this.empresas[i];
                 if (empresaTmp.empresaId == this.proyecto.empresaId) {
                   this.selectedEmpresa = empresaTmp;
-                  console.log('Entro aqui');
+                  // console.log('Entro aqui');
                   this.empresaChanged(id);
                   break;
                 }
@@ -150,7 +150,7 @@ export class ProyectoComponent implements OnInit {
           } else {
             //this.getRegionesByMarca(1);
 
-            console.log('Ando aqui en creacion ');
+            // console.log('Ando aqui en creacion ');
           }
 
           this.getMarcasByEmpresaYUsuario(id);
@@ -159,7 +159,7 @@ export class ProyectoComponent implements OnInit {
   }
 
   public empresaChanged(id: number) {
-    console.log('Ando entrando aqui');
+    // console.log('Ando entrando aqui');
     this.getMarcasByEmpresaYUsuario(id);
   }
 
@@ -185,14 +185,14 @@ export class ProyectoComponent implements OnInit {
               }
             });
           } else {
-            console.log('Emtre aqui 22');
+            // console.log('Emtre aqui 22');
             this.selectedMarca = this.marcas[0];
           }
 
           this.getRegionesByMarca(id);
         } else {
           this.selectedMarca = null;
-          console.log('No debo entrar aqui');
+          // console.log('No debo entrar aqui');
         }
       });
   }
@@ -203,7 +203,7 @@ export class ProyectoComponent implements OnInit {
       return;
     }
 
-    console.log('Ando aqui en regiones');
+    // console.log('Ando aqui en regiones');
 
     console.log(this.selectedMarca.marcaId);
     console.log(this.proyecto.marcaId);
@@ -268,7 +268,7 @@ export class ProyectoComponent implements OnInit {
   }
 
   public displayRegiones(proyRegionesTraido: ProyectoRegion[]) {
-    console.log('Ando aqui en display');
+    // console.log('Ando aqui en display');
     this.proyectoRegiones = [];
     this.proyectoRegionesSelected = [];
 

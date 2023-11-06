@@ -22,6 +22,7 @@
             (input)="convertirAMayusculas()"
             [showMaskTyped]="true"
             required
+            style="width: 400px"
           />
           <div *ngIf="clave.errors?.required">Clave es requerido</div>
         </td>
@@ -38,6 +39,7 @@
             [(ngModel)]="catalogo.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
             required
+            style="width: 400px"
           />
           <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
           <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>

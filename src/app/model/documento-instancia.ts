@@ -22,5 +22,6 @@ export class DocumentoInstancia {
    regionId:number;
    sucursalId:number;
    tipoAlerta: number;
+   readOnly: number;
 
 }

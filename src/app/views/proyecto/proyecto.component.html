@@ -14,7 +14,6 @@
                 <input
                   #claveInput
                   type="text"
-                  [(ngModel)]="proyecto.clave"
                   pInputText
                   formControlName="clave"
                   mask="AAAAAAAAAA"
@@ -33,7 +32,6 @@
                   type="text"
                   formControlName="nombre"
                   pInputText
-                  [(ngModel)]="proyecto.nombre"
                   pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
                   required
                   style="width: 400px"
@@ -81,8 +79,8 @@
                   [rows]="5"
                   [cols]="40"
                   pInputTextarea
-                  [(ngModel)]="proyecto.descripcion"
                   style="width: 400px"
+                  formControlName="descripcion"
                 ></textarea>
               </td>
             </tr>
@@ -121,7 +119,7 @@
               <td>Dias Vigencia</td>
               <td>
                 <p-inputNumber
-                  [(ngModel)]="proyecto.diasVigencia"
+                  formControlName="diasVigencia"
                   [showButtons]="true"
                   [min]="0"
                   [max]="100"
@@ -132,7 +130,7 @@
               <td>Cantidad de documentos</td>
               <td>
                 <p-inputNumber
-                  [(ngModel)]="proyecto.cantidadDocumento"
+                  formControlName="cantidadDocumento"
                   [showButtons]="true"
                   [min]="0"
                   [max]="100"
@@ -453,7 +451,7 @@
     icon="pi pi-check"
     type="button"
     label="Guardar"
-    (click)="guadarProyecto()"
+    (click)="guardarProyecto()"
   ></button>
 
   <button

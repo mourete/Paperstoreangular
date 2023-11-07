@@ -42,9 +42,6 @@ export class ProyectoComponent implements OnInit {
   formValidadores: FormGroup;
 
 
-  convertirMayusculas(event: any) {
-    this.proyecto.clave = event.target.value.toUpperCase();
-  };
 
   constructor(
     private datePipe: DatePipe,
@@ -69,6 +66,9 @@ export class ProyectoComponent implements OnInit {
       nombre: ['', Validators.required],
       fechaInicio: ['', Validators.required],
       fechaFin: ['', Validators.required],
+      descripcion: [''],
+      diasVigencia: [''],
+      cantidadDocumento: ['']
     }, { validators: this.validarFechas });
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuarioSession.usuarioOID;
@@ -125,7 +125,12 @@ export class ProyectoComponent implements OnInit {
         this.getDocumentos();
         this.formValidadores.patchValue({
           fechaInicio: this.proyecto.fechaIniDate,
-          fechaFin: this.proyecto.fechaFinDate
+          fechaFin: this.proyecto.fechaFinDate,
+          clave: this.proyecto.clave,
+          nombre: this.proyecto.nombre,
+          descripcion: this.proyecto.descripcion,
+          diasVigencia: this.proyecto.diasVigencia,
+          cantidadDocumento: this.proyecto.cantidadDocumento,
         });
       });
   }
@@ -301,13 +306,19 @@ export class ProyectoComponent implements OnInit {
     this.getRegionesByMarca(1);
   }
 
-  public guadarProyecto() {
+  public guardarProyecto() {
     this.msgs = [];
+    this.proyecto = {
+      ...this.proyecto,
+      clave: this.formValidadores.get('clave').value || this.proyecto.clave,
+      nombre: this.formValidadores.get('nombre').value || this.proyecto.nombre,
+      descripcion: this.formValidadores.get('descripcion').value || this.proyecto.descripcion,
+      fechaIniDate: this.formValidadores.get('fechaInicio').value || this.proyecto.fechaIniDate,
+      fechaFinDate: this.formValidadores.get('fechaFin').value || this.proyecto.fechaFinDate,
+      diasVigencia: this.formValidadores.get('diasVigencia').value || this.proyecto.diasVigencia,
+      cantidadDocumento: this.formValidadores.get('cantidadDocumento').value || this.proyecto.cantidadDocumento,
+    }
 
-    this.proyecto.clave = this.formValidadores.get('clave').value || this.proyecto.clave;
-    this.proyecto.nombre = this.formValidadores.get('nombre').value || this.proyecto.nombre;
-    this.proyecto.fechaIniDate = this.formValidadores.get('fechaInicio').value || this.proyecto.fechaIniDate;
-    this.proyecto.fechaFinDate = this.formValidadores.get('fechaFin').value || this.proyecto.fechaFinDate;
     if (this.proyecto.clave == null || this.proyecto.clave == '') {
       this.msgs.push({
         severity: 'error',
@@ -613,6 +624,10 @@ export class ProyectoComponent implements OnInit {
     this.ref.close();
   }
   onSubmit() {
-    this.guadarProyecto();
+    this.guardarProyecto();
+  }
+
+  convertirMayusculas($event: Event) {
+    this.formValidadores.controls.clave.setValue(($event.target as HTMLInputElement).value.toUpperCase());
   }
 }

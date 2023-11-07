@@ -154,9 +154,9 @@ export class ProyectoComponent implements OnInit {
         if (this.empresas != null && this.empresas.length > 0) {
           this.selectedEmpresa = this.empresas[0];
           if (this.proyecto.empresaId > 0) {
-            if (this.empresas != null && this.empresas.length > 0) {
-              var empresaTmp: Empresa;
-              for (var i = 0; i < this.empresas.length; i++) {
+            if (this.empresas.length > 0) {
+              let empresaTmp: Empresa;
+              for (let i = 0; i < this.empresas.length; i++) {
                 empresaTmp = this.empresas[i];
                 if (empresaTmp.empresaId == this.proyecto.empresaId) {
                   this.selectedEmpresa = empresaTmp;

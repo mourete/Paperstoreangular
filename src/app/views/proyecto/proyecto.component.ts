@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
-import { SelectItem } from 'primeng/api';
 import { Message } from 'primeng/api';
 import { Usuario } from 'src/app/model/usuario';
 import { EmpresaService } from 'src/app/service/empresa.service';
@@ -14,8 +13,7 @@ import { Proyecto } from 'src/app/model/proyecto';
 import { DatePipe } from '@angular/common';
 import { ProyectoRegion } from 'src/app/model/proyecto-region';
 import { ProyectoDocumento } from 'src/app/model/proyecto-documento';
-import { convertirAMayusculas } from 'src/app/utils/forms';
-import { FormBuilder, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-proyecto',
@@ -41,11 +39,8 @@ export class ProyectoComponent implements OnInit {
   proyectoDocumentosSelected: ProyectoDocumento[];
   selectedProyectoDocumentosRight: ProyectoDocumento[];
   selectedProyectoDocumentosLeft: ProyectoDocumento[];
+  formValidadores: FormGroup;
 
-  formValidadores = this.fb.group({
-    clave: ['', Validators.required],
-    nombre: ['', Validators.required],
-  });
 
   convertirMayusculas(event: any) {
     this.proyecto.clave = event.target.value.toUpperCase();
@@ -69,12 +64,17 @@ export class ProyectoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.formValidadores = this.fb.group({
+      clave: ['', Validators.required],
+      nombre: ['', Validators.required],
+      fechaInicio: ['', Validators.required],
+      fechaFin: ['', Validators.required],
+    }, { validators: this.validarFechas });
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuarioSession.usuarioOID;
 
     if (this.config.data.proyectoId > 0) {
       this.getProyectoById(this.config.data.proyectoId);
-      // console.log('Ando aqui ');
     } else {
       this.proyecto = new Proyecto();
       this.proyecto.usuarioCreated = this.usuarioSession.usuarioOID;
@@ -85,6 +85,17 @@ export class ProyectoComponent implements OnInit {
       this.proyecto.activo = 1;
       this.proyecto.flagActivo = true;
     }
+  }
+
+  validarFechas(control: AbstractControl): { [key: string]: boolean } | null {
+    const fechaIni = new Date(control.value.fechaInicio);
+    const fechaFin = new Date(control.value.fechaFin);
+
+    if (fechaIni > fechaFin) {
+      return { fechasInvalidas: true };
+    }
+
+    return null;
   }
 
   public getProyectoById(proyectoId: number) {
@@ -123,7 +134,6 @@ export class ProyectoComponent implements OnInit {
       parseInt(parts[1]) - 1,
       parseInt(parts[0])
     );
-    console.log(mydate.toDateString());
     return mydate;
   }
 
@@ -141,7 +151,6 @@ export class ProyectoComponent implements OnInit {
                 empresaTmp = this.empresas[i];
                 if (empresaTmp.empresaId == this.proyecto.empresaId) {
                   this.selectedEmpresa = empresaTmp;
-                  // console.log('Entro aqui');
                   this.empresaChanged(id);
                   break;
                 }
@@ -150,7 +159,6 @@ export class ProyectoComponent implements OnInit {
           } else {
             //this.getRegionesByMarca(1);
 
-            // console.log('Ando aqui en creacion ');
           }
 
           this.getMarcasByEmpresaYUsuario(id);
@@ -159,7 +167,6 @@ export class ProyectoComponent implements OnInit {
   }
 
   public empresaChanged(id: number) {
-    // console.log('Ando entrando aqui');
     this.getMarcasByEmpresaYUsuario(id);
   }
 
@@ -179,20 +186,17 @@ export class ProyectoComponent implements OnInit {
         if (this.marcas != null && this.marcas.length > 0) {
           if (id == 1) {
             this.marcas.forEach((element, index) => {
-              //console.log(element);
               if (this.proyecto.marcaId == element.marcaId) {
                 this.selectedMarca = element;
               }
             });
           } else {
-            // console.log('Emtre aqui 22');
             this.selectedMarca = this.marcas[0];
           }
 
           this.getRegionesByMarca(id);
         } else {
           this.selectedMarca = null;
-          // console.log('No debo entrar aqui');
         }
       });
   }
@@ -202,14 +206,6 @@ export class ProyectoComponent implements OnInit {
     if (this.proyecto == null) {
       return;
     }
-
-    // console.log('Ando aqui en regiones');
-
-    console.log(this.selectedMarca.marcaId);
-    console.log(this.proyecto.marcaId);
-
-    console.log(this.proyecto.proyectoId);
-
     if (id == 1) {
       marcaId = this.selectedMarca.marcaId;
     } else marcaId = this.proyecto.marcaId;
@@ -268,7 +264,6 @@ export class ProyectoComponent implements OnInit {
   }
 
   public displayRegiones(proyRegionesTraido: ProyectoRegion[]) {
-    // console.log('Ando aqui en display');
     this.proyectoRegiones = [];
     this.proyectoRegionesSelected = [];
 
@@ -429,7 +424,6 @@ export class ProyectoComponent implements OnInit {
     this.marcaService
       .getByUsuarioOID(this.usuarioSession.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
         this.marcas = data;
 
         if (this.marcas != null && this.marcas.length > 0) {
@@ -611,13 +605,6 @@ export class ProyectoComponent implements OnInit {
     this.ref.close();
   }
   onSubmit() {
-
-    console.warn(this.formValidadores.value);
-
-    console.warn(this.proyecto);
-
-
     this.guadarProyecto();
-
   }
 }

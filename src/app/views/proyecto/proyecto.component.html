@@ -54,6 +54,7 @@
                   [options]="empresas"
                   optionLabel="nombre"
                   [style]="{ width: '400px' }"
+                  filter="true"
                 ></p-dropdown>
               </td>
             </tr>
@@ -96,23 +97,24 @@
               <td>Fecha Inicial</td>
               <td>
                 <p-calendar
-                  [(ngModel)]="proyecto.fechaIniDate"
                   dateFormat="dd/mm/yy"
                   showIcon="true"
                   showButtonBar="true"
-                
+                  formControlName="fechaInicio"
                 ></p-calendar>
+                <div *ngIf="formValidadores.errors?.fechasInvalidas">La fecha inicial no puede ser mayor a la fecha final</div>
               </td>
             </tr>
             <tr>
               <td>Fecha Final</td>
               <td>
                 <p-calendar
-                  [(ngModel)]="proyecto.fechaFinDate"
                   dateFormat="dd/mm/yy"
                   showIcon="true"
                   showButtonBar="true"
+                  formControlName="fechaFin"
                 ></p-calendar>
+                <div *ngIf="formValidadores.errors?.fechasInvalidas">La fecha final no puede ser menor a la fecha Inicial</div>
               </td>
             </tr>
             <tr>

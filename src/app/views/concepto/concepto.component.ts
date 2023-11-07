@@ -16,12 +16,7 @@ import { SelectItem } from 'primeng/api';
 import { Message } from 'primeng/api';
 import { PerfilUsuario } from 'src/app/model/perfil-usuario';
 import { ConceptoAlertaPerfil } from 'src/app/model/concepto-alerta-perfil';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder,} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/primeng';
 import { validarFecha } from 'src/app/utils/forms';

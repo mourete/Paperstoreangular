@@ -123,6 +123,10 @@ export class ProyectoComponent implements OnInit {
 
         this.getEmpresasByUsuarioOID(1);
         this.getDocumentos();
+        this.formValidadores.patchValue({
+          fechaInicio: this.proyecto.fechaIniDate,
+          fechaFin: this.proyecto.fechaFinDate
+        });
       });
   }
 
@@ -300,6 +304,10 @@ export class ProyectoComponent implements OnInit {
   public guadarProyecto() {
     this.msgs = [];
 
+    this.proyecto.clave = this.formValidadores.get('clave').value || this.proyecto.clave;
+    this.proyecto.nombre = this.formValidadores.get('nombre').value || this.proyecto.nombre;
+    this.proyecto.fechaIniDate = this.formValidadores.get('fechaInicio').value || this.proyecto.fechaIniDate;
+    this.proyecto.fechaFinDate = this.formValidadores.get('fechaFin').value || this.proyecto.fechaFinDate;
     if (this.proyecto.clave == null || this.proyecto.clave == '') {
       this.msgs.push({
         severity: 'error',

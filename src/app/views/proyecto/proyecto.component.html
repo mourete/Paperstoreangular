@@ -61,7 +61,7 @@
               <td>Marca</td>
               <td>
                 <p-dropdown
-                  (onChange)="marcaChanged()"
+                  (onChange)="marcaChanged($event)"
                   [showTransitionOptions]="'0ms'"
                   [hideTransitionOptions]="'0ms'"
                   [(ngModel)]="selectedMarca"

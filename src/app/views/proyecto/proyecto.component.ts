@@ -66,6 +66,8 @@ export class ProyectoComponent implements OnInit {
       fechaInicio: ['', Validators.required],
       fechaFin: ['', Validators.required],
       descripcion: [''],
+      empresa: [''],
+      marca: [''],
       diasVigencia: [''],
       cantidadDocumento: ['']
     }, { validators: this.validarFechas });
@@ -160,6 +162,7 @@ export class ProyectoComponent implements OnInit {
           }
 
           this.getMarcasByEmpresaYUsuario(id);
+          this.formValidadores.patchValue({empresa: this.selectedEmpresa});
         },
         error: (err) => {
           console.error('Error fetching empresas:', err);
@@ -198,6 +201,9 @@ export class ProyectoComponent implements OnInit {
         }
         this.selectedMarca = this.marcas.find(marca => marca.marcaId === this.proyecto.marcaId) || this.marcas[0];
         this.getRegionesByMarca(id);
+        this.formValidadores.patchValue({
+          marca: this.selectedMarca
+        });
       },
       error: (err) => {
         console.error('Error fetching marcas:', err);
@@ -313,6 +319,8 @@ export class ProyectoComponent implements OnInit {
       fechaFinDate: this.formValidadores.get('fechaFin').value || this.proyecto.fechaFinDate,
       diasVigencia: this.formValidadores.get('diasVigencia').value || this.proyecto.diasVigencia,
       cantidadDocumento: this.formValidadores.get('cantidadDocumento').value || this.proyecto.cantidadDocumento,
+      empresaId: this.formValidadores.get('empresa').value.empresaId || this.proyecto.empresaId,
+      marcaId: this.formValidadores.get('marca').value.marcaId || this.proyecto.marcaId
     }
 
     if (this.proyecto.clave == null || this.proyecto.clave == '') {
@@ -332,8 +340,6 @@ export class ProyectoComponent implements OnInit {
       });
       return;
     }
-    this.proyecto.empresaId = this.selectedEmpresa.empresaId;
-    this.proyecto.marcaId = this.selectedMarca.marcaId;
 
     if (this.proyecto.flagActivo) {
       this.proyecto.activo = 1;

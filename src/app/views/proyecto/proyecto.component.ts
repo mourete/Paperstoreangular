@@ -1,18 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
-import { Message } from 'primeng/api';
-import { Usuario } from 'src/app/model/usuario';
-import { EmpresaService } from 'src/app/service/empresa.service';
-import { MarcaService } from 'src/app/service/marca.service';
-import { ProyectoService } from 'src/app/service/proyecto.service';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Empresa } from 'src/app/model/empresa';
-import { Marca } from 'src/app/model/marca';
-import { Proyecto } from 'src/app/model/proyecto';
-import { DatePipe } from '@angular/common';
-import { ProyectoRegion } from 'src/app/model/proyecto-region';
-import { ProyectoDocumento } from 'src/app/model/proyecto-documento';
+import {Message} from 'primeng/api';
+import {Usuario} from 'src/app/model/usuario';
+import {EmpresaService} from 'src/app/service/empresa.service';
+import {MarcaService} from 'src/app/service/marca.service';
+import {ProyectoService} from 'src/app/service/proyecto.service';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {Empresa} from 'src/app/model/empresa';
+import {Marca} from 'src/app/model/marca';
+import {Proyecto} from 'src/app/model/proyecto';
+import {DatePipe} from '@angular/common';
+import {ProyectoRegion} from 'src/app/model/proyecto-region';
+import {ProyectoDocumento} from 'src/app/model/proyecto-documento';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -81,7 +80,7 @@ export class ProyectoComponent implements OnInit {
       this.proyecto.marcaId = 0;
       this.proyecto.proyectoId = 0;
       this.getMarcasByUsuarioOID();
-      this.getEmpresasByUsuarioOID(1);
+      this.getEmpresasByUsuarioOID();
       this.proyecto.activo = 1;
       this.proyecto.flagActivo = true;
     }
@@ -121,7 +120,7 @@ export class ProyectoComponent implements OnInit {
           );
         }
 
-        this.getEmpresasByUsuarioOID(1);
+        this.getEmpresasByUsuarioOID(this.proyecto.empresaId);
         this.getDocumentos();
         this.formValidadores.patchValue({
           fechaInicio: this.proyecto.fechaIniDate,
@@ -146,91 +145,87 @@ export class ProyectoComponent implements OnInit {
     return mydate;
   }
 
-  public getEmpresasByUsuarioOID(id: number) {
-    this.empresaService
-      .getByUsuarioOID(this.usuarioSession.usuarioOID)
-      .subscribe((data) => {
-        this.empresas = data;
-        if (this.empresas != null && this.empresas.length > 0) {
-          this.selectedEmpresa = this.empresas[0];
-          if (this.proyecto.empresaId > 0) {
-            if (this.empresas.length > 0) {
-              let empresaTmp: Empresa;
-              for (let i = 0; i < this.empresas.length; i++) {
-                empresaTmp = this.empresas[i];
-                if (empresaTmp.empresaId == this.proyecto.empresaId) {
-                  this.selectedEmpresa = empresaTmp;
-                  this.empresaChanged(id);
-                  break;
-                }
-              }
-            }
-          } else {
-            //this.getRegionesByMarca(1);
+  public getEmpresasByUsuarioOID(id?: number): void {
+    this.empresaService.getByUsuarioOID(this.usuarioSession.usuarioOID)
+      .subscribe({
+        next: (empresas) => {
+          this.empresas = empresas;
+          if (!this.empresas?.length) return;
 
+          this.selectedEmpresa = this.empresas[0];
+          const proyectoEmpresa = this.empresas.find(empresa => empresa.empresaId === this.proyecto.empresaId);
+          if (proyectoEmpresa) {
+            this.selectedEmpresa = proyectoEmpresa;
+            this.empresaChanged(id);
           }
 
           this.getMarcasByEmpresaYUsuario(id);
+        },
+        error: (err) => {
+          console.error('Error fetching empresas:', err);
+          // Handle the error appropriately here
         }
       });
   }
 
-  public empresaChanged(id: number) {
-    this.getMarcasByEmpresaYUsuario(id);
+  public empresaChanged(id?: number) {
+    const empresaId = id || this.selectedEmpresa.empresaId;
+    this.getMarcasByEmpresaYUsuario(empresaId);
   }
 
-  public getMarcasByEmpresaYUsuario(id: number) {
-    if (this.usuarioSession == null || this.selectedEmpresa == null) {
+  empresaEventChanged(event: {value: Empresa}) {
+    const newSelectedEmpresa: Empresa = event.value;
+    if (newSelectedEmpresa && this.selectedEmpresa.empresaId !== newSelectedEmpresa.empresaId) {
+      this.selectedEmpresa = newSelectedEmpresa;
+      this.empresaChanged()
+    }
+  }
+
+  public getMarcasByEmpresaYUsuario(id?: number): void {
+    if (!this.usuarioSession || !this.selectedEmpresa) {
       return;
     }
 
-    this.marcaService
-      .getMarcasByEmpresaYUsuario(
-        this.usuarioSession.usuarioOID,
-        this.selectedEmpresa.empresaId
-      )
-      .subscribe((data) => {
-        this.marcas = data;
-
-        if (this.marcas != null && this.marcas.length > 0) {
-          if (id == 1) {
-            this.marcas.forEach((element, index) => {
-              if (this.proyecto.marcaId == element.marcaId) {
-                this.selectedMarca = element;
-              }
-            });
-          } else {
-            this.selectedMarca = this.marcas[0];
-          }
-
-          this.getRegionesByMarca(id);
-        } else {
+    this.marcaService.getMarcasByEmpresaYUsuario(
+      this.usuarioSession.usuarioOID,
+      id
+    ).subscribe({
+      next: (marcas) => {
+        this.marcas = marcas;
+        if (!this.marcas?.length) {
           this.selectedMarca = null;
+          return;
         }
-      });
+        this.selectedMarca = this.marcas.find(marca => marca.marcaId === this.proyecto.marcaId) || this.marcas[0];
+        this.getRegionesByMarca(id);
+      },
+      error: (err) => {
+        console.error('Error fetching marcas:', err);
+        // Handle the error appropriately here
+        this.selectedMarca = null;
+      }
+    });
   }
 
-  public getRegionesByMarca(id: number) {
-    let marcaId;
-    if (this.proyecto == null) {
+  public getRegionesByMarca(id?: number): void {
+    if (!this.proyecto || !this.selectedMarca) {
       return;
     }
-    if (id == 1) {
-      marcaId = this.selectedMarca.marcaId;
-    } else marcaId = this.proyecto.marcaId;
-
-    var regProyectos: ProyectoRegion[] = null;
-    this.proyectoService
-      .getProyectoRegionesByMarca(
+    const marcaId = id === 1 ? this.selectedMarca.marcaId : this.proyecto.marcaId;
+    this.proyectoService.getProyectoRegionesByMarca(
         this.proyecto.proyectoId,
-        this.selectedMarca.marcaId,
+        marcaId,
         this.usuarioSession.usuarioOID
-      )
-      .subscribe((data) => {
-        regProyectos = data;
-        this.displayRegiones(regProyectos);
-      });
+    ).subscribe({
+          next: (data) => {
+            this.displayRegiones(data);
+          },
+          error: (err) => {
+            console.error('Error fetching proyecto regiones:', err);
+          }
+        });
   }
+
 
   public getDocumentos() {
     if (this.proyecto == null || this.proyecto.marcaId <= 0) {
@@ -298,12 +293,13 @@ export class ProyectoComponent implements OnInit {
     }
   }
 
-  public validarCampos(): boolean {
-    return false;
-  }
-
-  public marcaChanged() {
-    this.getRegionesByMarca(1);
+  public marcaChanged(event: {value: Marca}) {
+    const newSelectedMarca: Marca = event.value;
+    if (newSelectedMarca && this.selectedMarca.marcaId !== newSelectedMarca.marcaId) {
+      this.selectedMarca = newSelectedMarca;
+      this.proyecto.marcaId = newSelectedMarca.marcaId;
+      this.getRegionesByMarca();
+    }
   }
 
   public guardarProyecto() {
@@ -336,23 +332,8 @@ export class ProyectoComponent implements OnInit {
       });
       return;
     }
-
-    if (this.selectedEmpresa == null) {
-      this.msgs.push({
-        severity: 'error',
-        detail: 'Se requiere seleccionar la empresa para el poryecto ',
-        summary: 'Validation failed',
-      });
-      return;
-    }
-
-    if (this.selectedEmpresa != null) {
-      this.proyecto.empresaId = this.selectedEmpresa.empresaId;
-    }
-
-    if (this.selectedMarca != null) {
-      this.proyecto.marcaId = this.selectedMarca.marcaId;
-    }
+    this.proyecto.empresaId = this.selectedEmpresa.empresaId;
+    this.proyecto.marcaId = this.selectedMarca.marcaId;
 
     if (this.proyecto.flagActivo) {
       this.proyecto.activo = 1;
@@ -361,27 +342,25 @@ export class ProyectoComponent implements OnInit {
     }
 
     if (this.proyecto.fechaIniDate != null) {
-      let dateAsString = this.datePipe.transform(
-        this.proyecto.fechaIniDate,
-        'dd/MM/yyyy'
+      this.proyecto.fechaIniText = this.datePipe.transform(
+          this.proyecto.fechaIniDate,
+          'dd/MM/yyyy'
       );
-      this.proyecto.fechaIniText = dateAsString;
     }
 
     if (this.proyecto.fechaFinDate != null) {
-      let dateAsString = this.datePipe.transform(
-        this.proyecto.fechaFinDate,
-        'dd/MM/yyyy'
+      this.proyecto.fechaFinText = this.datePipe.transform(
+          this.proyecto.fechaFinDate,
+          'dd/MM/yyyy'
       );
-      this.proyecto.fechaFinText = dateAsString;
     }
 
     if (
       this.proyectoRegionesSelected != null &&
       this.proyectoRegionesSelected.length > 0
     ) {
-      var regionesConcat: string = null;
-      for (var i = 0; i < this.proyectoRegionesSelected.length; i++) {
+      let regionesConcat: string = null;
+      for (let i = 0; i < this.proyectoRegionesSelected.length; i++) {
         if (regionesConcat == null) {
           regionesConcat = '' + this.proyectoRegionesSelected[i].regionId;
         } else {

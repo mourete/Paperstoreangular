@@ -45,7 +45,7 @@
               <td>Empresa</td>
               <td>
                 <p-dropdown
-                  (onChange)="empresaChanged(selectedEmpresa.empresaId)"
+                  (onChange)="empresaEventChanged($event)"
                   [showTransitionOptions]="'0ms'"
                   [hideTransitionOptions]="'0ms'"
                   [(ngModel)]="selectedEmpresa"

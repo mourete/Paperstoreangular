@@ -76,7 +76,7 @@
 
                 </ng-template>
                 <ng-template pTemplate="body" let-documento>
-                    <tr  [pSelectableRow]="documento" [pContextMenuRow]="documento" >
+                    <tr  [pSelectableRow]="documento" [pContextMenuRow]="documento" (contextmenu)="onRightClick($event,documento )">
                        <!--  <td   >
                             <div  >
                             <p-menu #menuDocumento popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsDocumento"></p-menu>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {ConfirmationService} from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog'
@@ -8,7 +8,7 @@ import { Marca } from 'src/app/model/marca';
 import { Usuario } from 'src/app/model/usuario';
 import { MarcaService } from 'src/app/service/marca.service';
 import { MarcaComponent } from '../marca/marca.component';
-
+import { ContextMenu } from 'primeng/contextmenu';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { MarcaComponent } from '../marca/marca.component';
   providers: [DialogService, ConfirmationService]
 })
 export class ListMarcasComponent implements OnInit {
-
+  @ViewChild('cmMarcas') cmMarcas: ContextMenu;
   usuarioSession:Usuario;
   marcas:Marca[];
   selectedMarca:Marca;
@@ -117,6 +117,13 @@ export class ListMarcasComponent implements OnInit {
     });
 
     }
+
+  onRightClick(event: MouseEvent, marca: any) {
+    this.selectedMarca = marca; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+    this.cmMarcas.show(event);   // Muestra el menú contextual.
+    event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
+    event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
+  }
 
 
 

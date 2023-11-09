@@ -84,6 +84,7 @@ export class ProyectoComponent implements OnInit {
       this.getEmpresasByUsuarioOID(1);
       this.proyecto.activo = 1;
       this.proyecto.flagActivo = true;
+      
     }
   }
 

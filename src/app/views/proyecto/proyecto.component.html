@@ -14,7 +14,6 @@
                 <input
                   #claveInput
                   type="text"
-                  [(ngModel)]="proyecto.clave"
                   pInputText
                   formControlName="clave"
                   mask="AAAAAAAAAA"
@@ -33,7 +32,6 @@
                   type="text"
                   formControlName="nombre"
                   pInputText
-                  [(ngModel)]="proyecto.nombre"
                   pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
                   required
                   style="width: 400px"
@@ -47,13 +45,14 @@
               <td>Empresa</td>
               <td>
                 <p-dropdown
-                  (onChange)="empresaChanged(2)"
+                  (onChange)="empresaEventChanged($event)"
                   [showTransitionOptions]="'0ms'"
                   [hideTransitionOptions]="'0ms'"
-                  [(ngModel)]="selectedEmpresa"
+                  formControlName="empresa"
                   [options]="empresas"
                   optionLabel="nombre"
                   [style]="{ width: '400px' }"
+                  filter="true"
                 ></p-dropdown>
               </td>
             </tr>
@@ -62,10 +61,10 @@
               <td>Marca</td>
               <td>
                 <p-dropdown
-                  (onChange)="marcaChanged()"
+                  (onChange)="marcaChanged($event)"
                   [showTransitionOptions]="'0ms'"
                   [hideTransitionOptions]="'0ms'"
-                  [(ngModel)]="selectedMarca"
+                  formControlName="marca"
                   [options]="marcas"
                   optionLabel="nombre"
                   [style]="{ width: '400px' }"
@@ -80,8 +79,8 @@
                   [rows]="5"
                   [cols]="40"
                   pInputTextarea
-                  [(ngModel)]="proyecto.descripcion"
                   style="width: 400px"
+                  formControlName="descripcion"
                 ></textarea>
               </td>
             </tr>
@@ -96,30 +95,31 @@
               <td>Fecha Inicial</td>
               <td>
                 <p-calendar
-                  [(ngModel)]="proyecto.fechaIniDate"
                   dateFormat="dd/mm/yy"
                   showIcon="true"
                   showButtonBar="true"
-                
+                  formControlName="fechaInicio"
                 ></p-calendar>
+                <div *ngIf="formValidadores.errors?.fechasInvalidas">La fecha inicial no puede ser mayor a la fecha final</div>
               </td>
             </tr>
             <tr>
               <td>Fecha Final</td>
               <td>
                 <p-calendar
-                  [(ngModel)]="proyecto.fechaFinDate"
                   dateFormat="dd/mm/yy"
                   showIcon="true"
                   showButtonBar="true"
+                  formControlName="fechaFin"
                 ></p-calendar>
+                <div *ngIf="formValidadores.errors?.fechasInvalidas">La fecha final no puede ser menor a la fecha Inicial</div>
               </td>
             </tr>
             <tr>
               <td>Dias Vigencia</td>
               <td>
                 <p-inputNumber
-                  [(ngModel)]="proyecto.diasVigencia"
+                  formControlName="diasVigencia"
                   [showButtons]="true"
                   [min]="0"
                   [max]="100"
@@ -130,7 +130,7 @@
               <td>Cantidad de documentos</td>
               <td>
                 <p-inputNumber
-                  [(ngModel)]="proyecto.cantidadDocumento"
+                  formControlName="cantidadDocumento"
                   [showButtons]="true"
                   [min]="0"
                   [max]="100"
@@ -451,7 +451,7 @@
     icon="pi pi-check"
     type="button"
     label="Guardar"
-    (click)="guadarProyecto()"
+    (click)="guardarProyecto()"
   ></button>
 
   <button

@@ -46,71 +46,54 @@
             </div>
 
 
-            <p-table #dtSucursales  (onRowSelect)="sucursalChanged()"      [value]="sucursales"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedSucursal"  [contextMenu]="cmSucursales" dataKey="sucursalId"  >
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
+          <p-table #dtSucursales (onRowSelect)="sucursalChanged()" [value]="sucursales" [paginator]="true" [rows]="10"
+                   selectionMode="single" [(selection)]="selectedSucursal" [contextMenu]="cmSucursales"
+                   dataKey="sucursalId">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <!--  <th style="width: 50px;"  >Id</th> se quita id -->
+                <th style="width: 150px;">Nombre</th>
+                <th style="width: 120px;">Empresa</th>
+                <th style="width: 120px;">Marca</th>
+                <th style="width: 120px;">Correo</th>
+                <th style="width: 120px;">Responsable</th>
+              </tr>
+              <tr>
+                <!--  <th  >
+                     <input size="2"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'sucursalId' , 'contains')">
+                  </th> se quita id-->
+                <th>
+                  <input size="10" pInputText type="text"
+                         (input)="dtSucursales.filter($event.target.value, 'nombre' , 'contains')">
+                </th>
 
-                          <!--  <th style="width: 50px;"  >Id</th> se quita id -->
-                            <th style="width: 150px;"  >Nombre</th>
-                            <th style="width: 120px;"  >Empresa</th>
-                            <th style="width: 120px;"  >Marca</th>
-                            <th style="width: 120px;"  >Correo</th>
-                            <th style="width: 120px;"  >Responsable</th>
+                <th>
+                  <input size="10" pInputText type="text"
+                         (input)="dtSucursales.filter($event.target.value, 'nombreEmpresa' , 'contains')">
+                </th>
+                <th>
+                  <input size="10" pInputText type="text"
+                         (input)="dtSucursales.filter($event.target.value, 'nombreMarca' , 'contains')">
+                </th>
+                <th>
+                </th>
+                <th>
+                  <input size="10" pInputText type="text"
+                         (input)="dtSucursales.filter($event.target.value, 'responsable' , 'contains')">
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-sucursal>
+              <tr [pSelectableRow]="sucursal" [pContextMenuRow]="sucursal" (contextmenu)="onRightClick($event, sucursal)">
+                <!-- <td>{{sucursal.sucursalId}}</td>  se quita id-->
+                <td>{{sucursal.nombre}}</td>
+                <td>{{sucursal.nombreEmpresa}}</td>
+                <td>{{sucursal.nombreMarca}}</td>
 
-
-
-                    </tr>
-                    <tr>
-
-
-                       <!--  <th  >
-                            <input size="2"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'sucursalId' , 'contains')">
-                         </th> se quita id-->
-
-                         <th>
-                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombre' , 'contains')">
-                         </th>
-
-
-
-                         <th>
-                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombreEmpresa' , 'contains')">
-                         </th>
-
-                         <th>
-                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'nombreMarca' , 'contains')">
-                         </th>
-
-
-                                       <th  >
-
-                         </th>
-
-                         <th  >
-                            <input size="10"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'responsable' , 'contains')">
-                         </th>
-
-
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-sucursal>
-                    <tr  [pSelectableRow]="sucursal" [pContextMenuRow]="sucursal" >
-
-
-                        <!-- <td>{{sucursal.sucursalId}}</td>  se quita id-->
-                        <td>{{sucursal.nombre}}</td>
-
-                        <td>{{sucursal.nombreEmpresa}}</td>
-                        <td>{{sucursal.nombreMarca}}</td>
-
-                        <td>{{sucursal.mail}}</td>
-                        <td>{{sucursal.responsable}}</td>
-
-                    </tr>
-                </ng-template>
-
-
-
+                <td>{{sucursal.mail}}</td>
+                <td>{{sucursal.responsable}}</td>
+              </tr>
+            </ng-template>
             </p-table>
 
         </div>

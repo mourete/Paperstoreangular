@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {ConfirmationService} from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog'
@@ -11,7 +11,7 @@ import { RegionService } from 'src/app/service/region.service';
 import { Region } from 'src/app/model/region';
 import { RegionComponent } from '../region/region.component';
 import { MarcaComponent } from '../marca/marca.component';
-
+import { ContextMenu } from 'primeng/contextmenu';
 
 @Component({
   selector: 'app-list-regiones',
@@ -20,7 +20,7 @@ import { MarcaComponent } from '../marca/marca.component';
   providers: [DialogService, ConfirmationService]
 })
 export class ListRegionesComponent implements OnInit {
-
+@ViewChild('cmRegiones') cmRegiones: ContextMenu;
   usuarioSession:Usuario;
   usuarioOID :string;
   marcas:Marca[];
@@ -119,11 +119,12 @@ export class ListRegionesComponent implements OnInit {
 
   }
 
-
-
-
-
-
+  onRightClick(event: MouseEvent, region: any) {
+    this.selectedRegion = region; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+    this.cmRegiones.show(event);   // Muestra el menú contextual.
+    event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
+    event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
+  }
 
   public confirmDeleteRegion(){
 

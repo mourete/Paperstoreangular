@@ -56,7 +56,7 @@
         [rows]="10"
         selectionMode="single"
         [(selection)]="selectedLista"
-        [contextMenu]="cmLista" 
+        [contextMenu]="cmLista"
         dataKey="listaOID"
       >
         <ng-template pTemplate="header" let-columns>
@@ -128,7 +128,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-lista>
-          <tr [pSelectableRow]="lista" [pContextMenuRow]="lista">
+          <tr [pSelectableRow]="lista" [pContextMenuRow]="lista" (contextmenu)="onRightClick($event,lista)">
             <!-- <td   >
                             <div  >
                             <p-menu #menuLista popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsLista"></p-menu>
@@ -265,7 +265,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-opcion>
-          <tr [pSelectableRow]="opcion" [pContextMenuRow]="opcion">
+          <tr [pSelectableRow]="opcion" [pContextMenuRow]="opcion" >
             <td>{{ opcion.orden }}</td>
             <td>{{ opcion.clave }}</td>
             <td>{{ opcion.texto }}</td>

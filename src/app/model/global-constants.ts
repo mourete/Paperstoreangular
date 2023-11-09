@@ -1,7 +1,7 @@
 export class GlobalConstants {
    // public static apiURL: string = "http://paperstoredigital.net:8085/";
-   // public static apiURL: string = "http://3.21.151.73:8085/";
-   public static apiURL: string = "http://localhost:8085/";
+    public static apiURL: string = "http://3.21.151.73:8085/";
+   //public static apiURL: string = "http://localhost:8085/";
 
     public static CONCEPTO_TIPO_TEXTO : number = 1;
     public static CONCEPTO_TIPO_ENTERO : number = 2;
@@ -16,6 +16,7 @@ export class GlobalConstants {
     public static CONCEPTO_TIPO_INSTRUCCION :number=10;
     public static CONCEPTO_TIPO_MENSAJE :number=11;
     public static CONCEPTO_TIPO_VIGENCIA :number=13;
+
 
 
 

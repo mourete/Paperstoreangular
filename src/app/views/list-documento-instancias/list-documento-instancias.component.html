@@ -1,4 +1,4 @@
-    
+
 
 
 
@@ -86,7 +86,7 @@
                             <th style="width: 180px;">Diseño</th>
                             <th style="width: 120px;"  >Fecha</th>
                             <th >Nombre</th>
-                          <!-- <th>Instancia</th>--> 
+                          <!-- <th>Instancia</th>-->
                             <th>Observaciones</th>
                             <th>Estatus</th>
                             <th>Alerta</th>
@@ -112,7 +112,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-documento>
-                    <tr  [pSelectableRow]="documento" [pContextMenuRow]="documento" >
+                    <tr  [pSelectableRow]="documento" [pContextMenuRow]="documento" (contextmenu)="onRightClick($event,documento )">
                        <!--  <td   >
                             <div  >
                             <p-menu #menuDocumento popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsDocumento"></p-menu>

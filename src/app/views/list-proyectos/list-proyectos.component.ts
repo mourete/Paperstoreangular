@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Empresa } from 'src/app/model/empresa';
@@ -9,6 +9,7 @@ import { EmpresaService } from 'src/app/service/empresa.service';
 import { MarcaService } from 'src/app/service/marca.service';
 import { ProyectoService } from 'src/app/service/proyecto.service';
 import { ProyectoComponent } from '../proyecto/proyecto.component';
+import {ContextMenu} from "primeng/contextmenu";
 
 @Component({
   selector: 'app-list-proyectos',
@@ -17,7 +18,7 @@ import { ProyectoComponent } from '../proyecto/proyecto.component';
   providers: [DialogService, ConfirmationService]
 })
 export class ListProyectosComponent implements OnInit {
-
+  @ViewChild('cmProyectos') cmProyectos: ContextMenu;
    usuarioSession:Usuario;
    proyectos:Proyecto[];
    selectedProyecto:Proyecto;
@@ -58,6 +59,14 @@ export class ListProyectosComponent implements OnInit {
       { separator: true },
     ];
   }
+
+  onRightClick(event: MouseEvent, proyectos: any) {
+    this.selectedProyecto =proyectos; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+    this.cmProyectos.show(event);   // Muestra el menú contextual.
+    event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
+    event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
+  }
+
 
   public confirmDeleteProyecto() {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListaService } from 'src/app/service/lista.service';
 import { Lista } from 'src/app/model/lista';
 import { Opcion } from 'src/app/model/opcion';
@@ -8,6 +8,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
 import { ListaComponent } from '../lista/lista.component';
 import { OpcionComponent } from '../opcion/opcion.component';
+import { ContextMenu } from 'primeng/contextmenu';
 
 @Component({
   selector: 'app-listas-admin',
@@ -16,6 +17,8 @@ import { OpcionComponent } from '../opcion/opcion.component';
   providers: [DialogService, ConfirmationService],
 })
 export class ListasAdminComponent implements OnInit {
+
+  @ViewChild('cmLista') cmLista: ContextMenu;
   listaAccion: string;
   listas: Lista[];
   pantalla: number = 1;
@@ -332,6 +335,13 @@ export class ListasAdminComponent implements OnInit {
 
   public onClickMenuLista(lista: Lista) {
     this.selectedLista = lista;
+  }
+
+  onRightClick(event: MouseEvent, lista: any) {
+    this.selectedLista = lista; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+    this.cmLista.show(event);   // Muestra el menú contextual.
+    event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
+    event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
   }
 
   public deleteOpcion() {

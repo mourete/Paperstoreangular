@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import { DocumentoInstanciaService } from 'src/app/service/documento-instancia.service';
 import { DocumentoInstancia } from 'src/app/model/documento-instancia'
 import {MenuItem} from 'primeng/api';
@@ -15,6 +15,7 @@ import { GlobalConstants } from 'src/app/model/global-constants';
 import {PrincipalComponent } from 'src/app/views/principal/principal.component';
 import { ListDocumentoUsuariosComponent } from '../list-documento-usuarios/list-documento-usuarios.component';
 import { Usuario } from 'src/app/model/usuario';
+import {ContextMenu} from "primeng/contextmenu";
 
 
 @Component({
@@ -24,7 +25,7 @@ import { Usuario } from 'src/app/model/usuario';
   providers: [DialogService, ConfirmationService]
 })
 export class ListDocumentoInstanciasComponent implements OnInit {
-
+  @ViewChild('cmDocumentos') cmDocumentos: ContextMenu;
   itemsDocumento: MenuItem[];
   documentos:DocumentoInstancia[];
   selectedDocumento:DocumentoInstancia;
@@ -335,6 +336,13 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
   public documentoChanged(){
 
+  }
+
+  onRightClick(event: MouseEvent, documentos: any) {
+    this.selectedDocumento = documentos; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+    this.cmDocumentos.show(event);   // Muestra el menú contextual.
+    event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
+    event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Empresa } from 'src/app/model/empresa';
 import {MenuItem} from 'primeng/api';
 import {ConfirmationService} from 'primeng/api';
@@ -6,6 +6,7 @@ import { DialogService } from 'primeng/dynamicdialog'
 import { EmpresaService } from 'src/app/service/empresa.service';
 import { Usuario } from 'src/app/model/usuario';
 import { EmpresaComponent } from 'src/app/views/empresa/empresa.component';
+import { ContextMenu } from 'primeng/contextmenu';
 
 @Component({
   selector: 'app-list-empresas',
@@ -14,7 +15,7 @@ import { EmpresaComponent } from 'src/app/views/empresa/empresa.component';
   providers: [DialogService, ConfirmationService]
 })
 export class ListEmpresasComponent implements OnInit {
-
+@ViewChild('cmEmpresa') cmEmpresa: ContextMenu;
   itemsEmpresa: MenuItem[];
   empresas:Empresa[];
   selectedEmpresa: Empresa;
@@ -111,6 +112,13 @@ export class ListEmpresasComponent implements OnInit {
   });
 
 
+  }
+
+  onRightClick(event: MouseEvent, empresa: any) {
+    this.selectedEmpresa = empresa; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+    this.cmEmpresa.show(event);   // Muestra el menú contextual.
+    event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
+    event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
   }
 
 

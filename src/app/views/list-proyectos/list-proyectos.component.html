@@ -133,7 +133,7 @@
 
                     </ng-template>
                     <ng-template pTemplate="body" let-proyecto>
-                        <tr  [pSelectableRow]="proyecto" [pContextMenuRow]="proyecto">
+                        <tr  [pSelectableRow]="proyecto" [pContextMenuRow]="proyecto" (contextmenu)="onRightClick($event,proyecto )">
                            <!-- <td   >
                                 <div  >
                                 <p-menu #menuProyecto popup="false"    [style]="{   'width':'250px'  }"    appendTo="body"   [model]="itemsProyecto"></p-menu>

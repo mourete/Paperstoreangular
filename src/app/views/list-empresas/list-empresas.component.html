@@ -44,7 +44,7 @@
               }"
               icon="pi pi-trash"
             ></button>
-            
+
           </div>
         </p-toolbar>
       </div>
@@ -69,7 +69,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-empresa>
-          <tr [pSelectableRow]="empresa" [pContextMenuRow]="empresa">
+          <tr [pSelectableRow]="empresa" [pContextMenuRow]="empresa" (contextmenu)="onRightClick($event,empresa )">
             <!-- <td>{{ empresa.empresaId }}</td> Se quita el id-->
             <td>{{ empresa.clave }}</td>
             <td>{{ empresa.nombre }}</td>

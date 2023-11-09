@@ -72,7 +72,7 @@
                      </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-region>
-                    <tr  [pSelectableRow]="region" [pContextMenuRow]="region">
+                    <tr  [pSelectableRow]="region" [pContextMenuRow]="region" (contextmenu)="onRightClick($event,region )">
 
 
                         <!-- <td>{{region.regionId}}</td> Se quita el id-->

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Empresa } from 'src/app/model/empresa';
@@ -9,7 +9,7 @@ import { EmpresaService } from 'src/app/service/empresa.service';
 import { MarcaService } from 'src/app/service/marca.service';
 import { SucursalService } from 'src/app/service/sucursal.service';
 import { SucursalComponent } from '../sucursal/sucursal.component';
-import { UsuarioMarcasComponent } from '../usuario-marcas/usuario-marcas.component';
+import { ContextMenu } from 'primeng/contextmenu';
 
 @Component({
   selector: 'app-list-sucursales',
@@ -18,6 +18,7 @@ import { UsuarioMarcasComponent } from '../usuario-marcas/usuario-marcas.compone
   providers: [DialogService, ConfirmationService]
 })
 export class ListSucursalesComponent implements OnInit {
+  @ViewChild('cmSucursales') cmSucursales: ContextMenu;
 
   usuarioSession:Usuario;
   usuarioOID :string;
@@ -286,6 +287,12 @@ export class ListSucursalesComponent implements OnInit {
          this.getSucursagetSucursalesByMarcaYEmpresalByID();
   }
 
+  onRightClick(event: MouseEvent, sucursal: any) {
+    this.selectedSucursal = sucursal; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+    this.cmSucursales.show(event);   // Muestra el menú contextual.
+    event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
+    event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
+  }
 
 
 

@@ -78,14 +78,17 @@ export class MarcaComponent implements OnInit, AfterViewInit {
       this.marca.activo = 1;
       this.marca.flagActivo = true;
     }
-
     this.getEmpresasByUsuarioOID();
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.getAllEstados();
-    }, 0);
+      this.profileMarca.patchValue({
+        estadosForm: this.selectedEstado,
+        ciudadesForm: this.selectedCiudad,
+      })
+    }, 1000);
   }
 
   public getAllEstados() {
@@ -132,7 +135,7 @@ export class MarcaComponent implements OnInit, AfterViewInit {
       });
   }
 
-  public guadarMarca() {
+  public guardarMarca() {
     this.msgs = [];
 
     if (this.marca.clave == null || this.marca.clave == '') {
@@ -169,11 +172,11 @@ export class MarcaComponent implements OnInit, AfterViewInit {
     } else {
       this.marca.activo = 0;
     }
-    this.marca.ciudadId = this.selectedCiudad.ciudadId;
+    this.marca.ciudadId = this.profileMarca.value.ciudadesForm?.ciudadId || this.marca.ciudadId;
     this.marcaService
-      .guardarMarca(this.marca, this.usuarioOID)
+      .guardarMarca(this.marca, this.usuarioSession.usuarioOID)
       .subscribe((data) => {
-        this.marca = data;
+        // this.marca = data;
         this.ref.close(this.marca);
       });
   }
@@ -183,12 +186,14 @@ export class MarcaComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    this.guadarMarca();
+    this.guardarMarca();
   }
 
   public empresaChanged() {}
 
   public estadoChanged() {
+    this.marca.estado = this.profileMarca.value.estadosForm.nombre;
+    this.selectedEstado = this.profileMarca.value.estadosForm;
     if (this.selectedEstado == null || this.selectedEstado.estadoId <= 0) {
       return;
     }

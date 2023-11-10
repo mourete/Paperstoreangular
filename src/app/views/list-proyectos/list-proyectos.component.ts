@@ -140,7 +140,6 @@ export class ListProyectosComponent implements OnInit {
 
     this.proyectoService.getByUsuario (  this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
-         console.log( data );
          this.proyectos=data;
       }
      );
@@ -289,10 +288,7 @@ public getProyectosByEmpresaYMarca(){
 
  this.proyectoService.getByEmpresaYMarca   ( this.usuarioSession.usuarioOID  , this.selectedEmpresa.empresaId ,  marcaTmpId  ) .subscribe(
    (data)=>{
-    //  console.log("Check");
-      console.log( data );
       this.proyectos=data;
-
    }
   );
 

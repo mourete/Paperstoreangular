@@ -14,7 +14,7 @@ import { SucursalRegion } from 'src/app/model/sucursal-region';
 
 
 import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms';
-import { convertirAMayusculas } from 'src/app/utils/forms';
+
 
 
 
@@ -51,7 +51,10 @@ export class RegionComponent implements OnInit {
     marca: ['',  Validators.required]
   });
 
-  convertirMayuscula = convertirAMayusculas(this.profileRegion.get('clave'));
+  convertirAMayusculas() {
+    const claveValue: string = this.profileRegion.get('clave').value;
+    this.profileRegion.get('clave').setValue(claveValue.toUpperCase());
+  }
 
   constructor( public regionService:RegionService ,  public empresaService:EmpresaService ,  private fb: FormBuilder , public marcaService:MarcaService ,     public config: DynamicDialogConfig , public ref: DynamicDialogRef ) { }
 

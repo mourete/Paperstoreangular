@@ -116,6 +116,14 @@ export class DisplayDocumentComponent implements OnInit {
       },
       { separator: true },
       {
+        label: 'Agregar concepto',
+        icon: 'pi pi-plus',
+        command: (event) => {
+          this.agregarConcepto(0);
+        },
+      },
+      { separator: true },
+      {
         label: 'Agregar concepto arriba',
         icon: 'pi pi-plus',
         command: (event) => {
@@ -129,6 +137,20 @@ export class DisplayDocumentComponent implements OnInit {
           this.agregarConcepto(2);
         },
       },
+      {
+        label: 'Subirlo',
+        icon: 'pi pi-arrow-up',
+        command: (event) => {
+          this.changeConceptoOrder(1)
+        }
+      },
+      {
+        label: 'Bajarlo',
+        icon: 'pi pi-arrow-down',
+        command: (event) => {
+          this.changeConceptoOrder(0)
+        }
+      }
     ];
   }
 

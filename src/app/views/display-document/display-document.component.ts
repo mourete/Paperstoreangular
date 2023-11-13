@@ -220,10 +220,9 @@ export class DisplayDocumentComponent implements OnInit {
 
     if (this.seccion.conceptos == null || this.seccion.conceptos.length <= 0) {
       this.seccion.conceptos = [];
-      this.seccion.conceptos[0] = concep;
+      this.seccion.conceptos.push(concep);
     } else {
-      let orden = concep.orden;
-      this.seccion.conceptos.splice(orden - 1, 0, concep);
+      this.seccion.conceptos.unshift(concep);
     }
   }
 

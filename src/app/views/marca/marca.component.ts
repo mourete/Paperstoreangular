@@ -59,7 +59,8 @@ export class MarcaComponent implements OnInit, AfterViewInit {
     public marcaService: MarcaService,
     public config: DynamicDialogConfig,
     public ref: DynamicDialogRef
-  ) {}
+  ) {
+  }
 
   get f() {
     return this.profileMarca.controls;
@@ -84,18 +85,15 @@ export class MarcaComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.getAllEstados();
-      this.profileMarca.patchValue({
-        estadosForm: this.selectedEstado,
-        ciudadesForm: this.selectedCiudad,
-      })
-    }, 1000);
+    }, 100);
   }
 
   public getAllEstados() {
     this.estadoService.getAllEstados(this.usuarioOID).subscribe((data) => {
       this.estados = data;
-      const estado = this.estados.find((item) => item.nombre == this.marca.estado);
+      const estado = this.estados.find((item) => item.estadoId == this.marca.estadoId);
       this.selectedEstado = estado;
+      this.profileMarca.patchValue({estadosForm: this.selectedEstado});
       this.getCiudadesByEstado(
         estado.estadoId,
         this.usuarioSession.usuarioOID
@@ -189,7 +187,8 @@ export class MarcaComponent implements OnInit, AfterViewInit {
     this.guardarMarca();
   }
 
-  public empresaChanged() {}
+  public empresaChanged() {
+  }
 
   public estadoChanged() {
     this.marca.estado = this.profileMarca.value.estadosForm.nombre;
@@ -212,7 +211,9 @@ export class MarcaComponent implements OnInit, AfterViewInit {
         this.selectedCiudad = this.ciudades.find((item) => {
           return item.ciudadId == this.marca.ciudadId;
         });
-
+        this.profileMarca.patchValue({
+          ciudadesForm: this.selectedCiudad,
+        })
       });
   }
 

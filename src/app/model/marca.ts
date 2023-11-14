@@ -17,15 +17,16 @@ export class Marca {
       mail:string;
       ciudadId:number;
       estado:string;
+      estadoId?: number;
       ciudad:string;
       empresa:string;
       usuarioCreated:string;
       usuarioUpdated:string;
-      
-  
+
+
       activoText:string;
       flagActivo:boolean;
       usuarioOID? : String;
-   
+
 
 }

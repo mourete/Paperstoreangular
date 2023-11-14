@@ -78,13 +78,20 @@ export class ProyectoComponent implements OnInit {
       this.getProyectoById(this.config.data.proyectoId);
     } else {
       this.proyecto = new Proyecto();
+
       this.proyecto.usuarioCreated = this.usuarioSession.usuarioOID;
-      this.proyecto.marcaId = 0;
       this.proyecto.proyectoId = 0;
-      this.getMarcasByUsuarioOID();
+
+      this.proyecto.marcaId = 0;
+      this.proyecto.empresaId = 0;
+      this.getDocumentos();
       this.getEmpresasByUsuarioOID();
+      this.getMarcasByUsuarioOID();
+
+
       this.proyecto.activo = 1;
       this.proyecto.flagActivo = true;
+
     }
   }
 
@@ -234,9 +241,9 @@ export class ProyectoComponent implements OnInit {
 
 
   public getDocumentos() {
-    if (this.proyecto == null || this.proyecto.marcaId <= 0) {
-      return;
-    }
+    // if (this.proyecto == null || this.proyecto.marcaId <= 0) {
+    //   return;
+    // }
 
     var docProyectos: ProyectoDocumento[] = null;
     this.proyectoService
@@ -246,7 +253,10 @@ export class ProyectoComponent implements OnInit {
       )
       .subscribe((data) => {
         docProyectos = data;
+        console.log('proyecto console')
+        console.log(data)
         this.displayDocumentos(docProyectos);
+
       });
   }
 

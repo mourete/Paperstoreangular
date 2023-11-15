@@ -45,10 +45,11 @@
               <td>Empresa</td>
               <td>
                 <p-dropdown
-                  (onChange)="empresaEventChanged($event)"
+                  (onChange)="empresaEventChanged()"
                   [showTransitionOptions]="'0ms'"
                   [hideTransitionOptions]="'0ms'"
                   formControlName="empresa"
+                  [(ngModel)]="selectedEmpresa"
                   [options]="empresas"
                   optionLabel="nombre"
                   [style]="{ width: '400px' }"
@@ -61,10 +62,11 @@
               <td>Marca</td>
               <td>
                 <p-dropdown
-                  (onChange)="marcaChanged($event)"
+                  (onChange)="marcaChanged()"
                   [showTransitionOptions]="'0ms'"
                   [hideTransitionOptions]="'0ms'"
                   formControlName="marca"
+                  [(ngModel)]="selectedMarca"
                   [options]="marcas"
                   optionLabel="nombre"
                   [style]="{ width: '400px' }"

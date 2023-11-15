@@ -78,17 +78,13 @@ export class ProyectoComponent implements OnInit {
       this.getProyectoById(this.config.data.proyectoId);
     } else {
       this.proyecto = new Proyecto();
-
       this.proyecto.usuarioCreated = this.usuarioSession.usuarioOID;
       this.proyecto.proyectoId = 0;
-
       this.proyecto.marcaId = 0;
       this.proyecto.empresaId = 0;
       this.getDocumentos();
       this.getEmpresasByUsuarioOID();
       this.getMarcasByUsuarioOID();
-
-
       this.proyecto.activo = 1;
       this.proyecto.flagActivo = true;
 
@@ -188,6 +184,13 @@ export class ProyectoComponent implements OnInit {
     if (newSelectedEmpresa && this.selectedEmpresa.empresaId !== newSelectedEmpresa.empresaId) {
       this.selectedEmpresa = newSelectedEmpresa;
       this.empresaChanged()
+      setTimeout(() => {
+        if (this.marcas.length > 0) {
+          let primeraMarca = this.marcas[0];
+          // Llama al método marcaChanged con la primera marca
+          this.marcaChanged({ value: primeraMarca }, true);
+        }
+      }, 500);
     }
   }
 
@@ -225,18 +228,22 @@ export class ProyectoComponent implements OnInit {
       return;
     }
     const marcaId = id === 1 ? this.selectedMarca.marcaId : this.proyecto.marcaId;
+    this.setRegiones(marcaId);
+  }
+
+  setRegiones(marcaId: number): void {
     this.proyectoService.getProyectoRegionesByMarca(
-        this.proyecto.proyectoId,
-        marcaId,
-        this.usuarioSession.usuarioOID
+      this.proyecto.proyectoId,
+      marcaId,
+      this.usuarioSession.usuarioOID
     ).subscribe({
-          next: (data) => {
-            this.displayRegiones(data);
-          },
-          error: (err) => {
-            console.error('Error fetching proyecto regiones:', err);
-          }
-        });
+      next: (data) => {
+        this.displayRegiones(data);
+      },
+      error: (err) => {
+        console.error('Error fetching proyecto regiones:', err);
+      }
+    });
   }
 
 
@@ -294,8 +301,8 @@ export class ProyectoComponent implements OnInit {
       return;
     }
 
-    var regProy: ProyectoRegion;
-    for (var i = 0; i < proyRegionesTraido.length; i++) {
+    let regProy: ProyectoRegion;
+    for (let i = 0; i < proyRegionesTraido.length; i++) {
       regProy = proyRegionesTraido[i];
       if (regProy == null) {
         continue;
@@ -309,12 +316,16 @@ export class ProyectoComponent implements OnInit {
     }
   }
 
-  public marcaChanged(event: {value: Marca}) {
+  public marcaChanged(event: { value: Marca }, isFirstTime: boolean = false) {
     const newSelectedMarca: Marca = event.value;
-    if (newSelectedMarca && this.selectedMarca.marcaId !== newSelectedMarca.marcaId) {
-      this.selectedMarca = newSelectedMarca;
-      this.proyecto.marcaId = newSelectedMarca.marcaId;
-      this.getRegionesByMarca();
+    if (isFirstTime) {
+      this.setRegiones(newSelectedMarca.marcaId);
+    } else {
+      if (newSelectedMarca && this.selectedMarca.marcaId !== newSelectedMarca.marcaId) {
+        this.selectedMarca = newSelectedMarca;
+        this.proyecto.marcaId = newSelectedMarca.marcaId;
+        this.setRegiones(newSelectedMarca.marcaId);
+      }
     }
   }
 

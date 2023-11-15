@@ -165,10 +165,10 @@ export class ProyectoComponent implements OnInit {
           const proyectoEmpresa = this.empresas.find(empresa => empresa.empresaId === this.proyecto.empresaId);
           if (proyectoEmpresa) {
             this.selectedEmpresa = proyectoEmpresa;
-            this.empresaChanged(id);
+            this.empresaChanged();
           }
 
-          this.getMarcasByEmpresaYUsuario(id);
+          this.getMarcasByEmpresaYUsuario();
           this.formValidadores.patchValue({empresa: this.selectedEmpresa});
         },
         error: (err) => {
@@ -178,27 +178,30 @@ export class ProyectoComponent implements OnInit {
       });
   }
 
-  public empresaChanged(id?: number) {
-    const empresaId = id || this.selectedEmpresa.empresaId;
-    this.getMarcasByEmpresaYUsuario(empresaId);
+  public empresaChanged() {
+
+    this.getMarcasByEmpresaYUsuario();
   }
 
-  empresaEventChanged(event: {value: Empresa}) {
-    const newSelectedEmpresa: Empresa = event.value;
-    if (newSelectedEmpresa && this.selectedEmpresa.empresaId !== newSelectedEmpresa.empresaId) {
-      this.selectedEmpresa = newSelectedEmpresa;
-      this.empresaChanged()
-    }
+  empresaEventChanged() {
+    // const newSelectedEmpresa: Empresa = event.value;
+    // if (newSelectedEmpresa && this.selectedEmpresa.empresaId !== newSelectedEmpresa.empresaId) {
+    //   this.selectedEmpresa = newSelectedEmpresa;
+    //   this.empresaChanged()
+    // }
+
+    this.getMarcasByEmpresaYUsuario()
+
   }
 
-  public getMarcasByEmpresaYUsuario(id?: number): void {
+  public getMarcasByEmpresaYUsuario(): void {
     if (!this.usuarioSession || !this.selectedEmpresa) {
       return;
     }
 
     this.marcaService.getMarcasByEmpresaYUsuario(
       this.usuarioSession.usuarioOID,
-      id
+      this.selectedEmpresa.empresaId
     ).subscribe({
       next: (marcas) => {
         this.marcas = marcas;
@@ -207,7 +210,7 @@ export class ProyectoComponent implements OnInit {
           return;
         }
         this.selectedMarca = this.marcas.find(marca => marca.marcaId === this.proyecto.marcaId) || this.marcas[0];
-        this.getRegionesByMarca(id);
+        this.getRegionesByMarca();
         this.formValidadores.patchValue({
           marca: this.selectedMarca
         });
@@ -220,14 +223,14 @@ export class ProyectoComponent implements OnInit {
     });
   }
 
-  public getRegionesByMarca(id?: number): void {
+  public getRegionesByMarca(): void {
     if (!this.proyecto || !this.selectedMarca) {
       return;
     }
-    const marcaId = id === 1 ? this.selectedMarca.marcaId : this.proyecto.marcaId;
+
     this.proyectoService.getProyectoRegionesByMarca(
         this.proyecto.proyectoId,
-        marcaId,
+        this.selectedMarca.marcaId,
         this.usuarioSession.usuarioOID
     ).subscribe({
           next: (data) => {
@@ -309,14 +312,15 @@ export class ProyectoComponent implements OnInit {
     }
   }
 
-  public marcaChanged(event: {value: Marca}) {
-    const newSelectedMarca: Marca = event.value;
-    if (newSelectedMarca && this.selectedMarca.marcaId !== newSelectedMarca.marcaId) {
-      this.selectedMarca = newSelectedMarca;
-      this.proyecto.marcaId = newSelectedMarca.marcaId;
+  public marcaChanged() {
+    if (this.selectedMarca==null) {
+      return;
+
+    }
+
       this.getRegionesByMarca();
     }
-  }
+
 
   public guardarProyecto() {
     this.msgs = [];

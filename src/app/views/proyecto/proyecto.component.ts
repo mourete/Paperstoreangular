@@ -78,13 +78,17 @@ export class ProyectoComponent implements OnInit {
       this.getProyectoById(this.config.data.proyectoId);
     } else {
       this.proyecto = new Proyecto();
+
       this.proyecto.usuarioCreated = this.usuarioSession.usuarioOID;
       this.proyecto.proyectoId = 0;
+
       this.proyecto.marcaId = 0;
       this.proyecto.empresaId = 0;
       this.getDocumentos();
       this.getEmpresasByUsuarioOID();
       this.getMarcasByUsuarioOID();
+
+
       this.proyecto.activo = 1;
       this.proyecto.flagActivo = true;
 
@@ -161,10 +165,10 @@ export class ProyectoComponent implements OnInit {
           const proyectoEmpresa = this.empresas.find(empresa => empresa.empresaId === this.proyecto.empresaId);
           if (proyectoEmpresa) {
             this.selectedEmpresa = proyectoEmpresa;
-            this.empresaChanged(id);
+            this.empresaChanged();
           }
 
-          this.getMarcasByEmpresaYUsuario(id);
+          this.getMarcasByEmpresaYUsuario();
           this.formValidadores.patchValue({empresa: this.selectedEmpresa});
         },
         error: (err) => {
@@ -174,34 +178,30 @@ export class ProyectoComponent implements OnInit {
       });
   }
 
-  public empresaChanged(id?: number) {
-    const empresaId = id || this.selectedEmpresa.empresaId;
-    this.getMarcasByEmpresaYUsuario(empresaId);
+  public empresaChanged() {
+
+    this.getMarcasByEmpresaYUsuario();
   }
 
-  empresaEventChanged(event: {value: Empresa}) {
-    const newSelectedEmpresa: Empresa = event.value;
-    if (newSelectedEmpresa && this.selectedEmpresa.empresaId !== newSelectedEmpresa.empresaId) {
-      this.selectedEmpresa = newSelectedEmpresa;
-      this.empresaChanged()
-      setTimeout(() => {
-        if (this.marcas.length > 0) {
-          let primeraMarca = this.marcas[0];
-          // Llama al método marcaChanged con la primera marca
-          this.marcaChanged({ value: primeraMarca }, true);
-        }
-      }, 500);
-    }
+  empresaEventChanged() {
+    // const newSelectedEmpresa: Empresa = event.value;
+    // if (newSelectedEmpresa && this.selectedEmpresa.empresaId !== newSelectedEmpresa.empresaId) {
+    //   this.selectedEmpresa = newSelectedEmpresa;
+    //   this.empresaChanged()
+    // }
+
+    this.getMarcasByEmpresaYUsuario()
+
   }
 
-  public getMarcasByEmpresaYUsuario(id?: number): void {
+  public getMarcasByEmpresaYUsuario(): void {
     if (!this.usuarioSession || !this.selectedEmpresa) {
       return;
     }
 
     this.marcaService.getMarcasByEmpresaYUsuario(
       this.usuarioSession.usuarioOID,
-      id
+      this.selectedEmpresa.empresaId
     ).subscribe({
       next: (marcas) => {
         this.marcas = marcas;
@@ -210,7 +210,7 @@ export class ProyectoComponent implements OnInit {
           return;
         }
         this.selectedMarca = this.marcas.find(marca => marca.marcaId === this.proyecto.marcaId) || this.marcas[0];
-        this.getRegionesByMarca(id);
+        this.getRegionesByMarca();
         this.formValidadores.patchValue({
           marca: this.selectedMarca
         });
@@ -223,27 +223,23 @@ export class ProyectoComponent implements OnInit {
     });
   }
 
-  public getRegionesByMarca(id?: number): void {
+  public getRegionesByMarca(): void {
     if (!this.proyecto || !this.selectedMarca) {
       return;
     }
-    const marcaId = id === 1 ? this.selectedMarca.marcaId : this.proyecto.marcaId;
-    this.setRegiones(marcaId);
-  }
 
-  setRegiones(marcaId: number): void {
     this.proyectoService.getProyectoRegionesByMarca(
-      this.proyecto.proyectoId,
-      marcaId,
-      this.usuarioSession.usuarioOID
+        this.proyecto.proyectoId,
+        this.selectedMarca.marcaId,
+        this.usuarioSession.usuarioOID
     ).subscribe({
-      next: (data) => {
-        this.displayRegiones(data);
-      },
-      error: (err) => {
-        console.error('Error fetching proyecto regiones:', err);
-      }
-    });
+          next: (data) => {
+            this.displayRegiones(data);
+          },
+          error: (err) => {
+            console.error('Error fetching proyecto regiones:', err);
+          }
+        });
   }
 
 
@@ -301,8 +297,8 @@ export class ProyectoComponent implements OnInit {
       return;
     }
 
-    let regProy: ProyectoRegion;
-    for (let i = 0; i < proyRegionesTraido.length; i++) {
+    var regProy: ProyectoRegion;
+    for (var i = 0; i < proyRegionesTraido.length; i++) {
       regProy = proyRegionesTraido[i];
       if (regProy == null) {
         continue;
@@ -316,18 +312,15 @@ export class ProyectoComponent implements OnInit {
     }
   }
 
-  public marcaChanged(event: { value: Marca }, isFirstTime: boolean = false) {
-    const newSelectedMarca: Marca = event.value;
-    if (isFirstTime) {
-      this.setRegiones(newSelectedMarca.marcaId);
-    } else {
-      if (newSelectedMarca && this.selectedMarca.marcaId !== newSelectedMarca.marcaId) {
-        this.selectedMarca = newSelectedMarca;
-        this.proyecto.marcaId = newSelectedMarca.marcaId;
-        this.setRegiones(newSelectedMarca.marcaId);
-      }
+  public marcaChanged() {
+    if (this.selectedMarca==null) {
+      return;
+
     }
-  }
+
+      this.getRegionesByMarca();
+    }
+
 
   public guardarProyecto() {
     this.msgs = [];

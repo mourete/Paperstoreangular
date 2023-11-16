@@ -4,6 +4,7 @@ import { SeccionInstancia } from './seccion-instancia';
 export class DocumentoInstancia {
 
    fechaCreacion:Date;
+   noEditable: number;
    documentoId:number;
    documentoInstanciaOID;
    documento: number;

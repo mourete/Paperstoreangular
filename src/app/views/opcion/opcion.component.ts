@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Opcion } from 'src/app/model/opcion';
 import { Usuario } from 'src/app/model/usuario';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import { ListaService } from 'src/app/service/lista.service';
 import { of } from 'rxjs';
+import {FormBuilder, Validators} from "@angular/forms";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-opcion',
@@ -13,10 +15,10 @@ import { of } from 'rxjs';
 })
 export class OpcionComponent implements OnInit {
 
-
+  @ViewChild('claveInput') claveInput: ElementRef;
   opcion:Opcion;
   opcionAccion:string;
-
+  msgs: Message[] = [];
   visible:boolean;
   enabled:boolean;
   soyFiltro : boolean = false;
@@ -26,9 +28,24 @@ export class OpcionComponent implements OnInit {
   usuarioSession:Usuario;
   usuarioOID:string;
 
+  profileForm = this.fb.group({
+    clave: ['',  Validators.required]
+  });
 
 
-  constructor(private listaService : ListaService , public config: DynamicDialogConfig , public ref: DynamicDialogRef   ) { }
+  convertirAMayusculas() {
+    const claveValue: string = this.profileForm.get('clave').value;
+    this.profileForm.get('clave').setValue(claveValue.toUpperCase(), {emitEvent: false});
+  }
+
+
+  constructor(private listaService : ListaService ,
+              private fb: FormBuilder,
+              public config: DynamicDialogConfig ,
+              public ref: DynamicDialogRef   ) { }
+
+
+  get f() { return this.profileForm.controls; }
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
@@ -65,6 +82,11 @@ export class OpcionComponent implements OnInit {
       // console.log("Entre");
       console.log(this.config.data.lista.listaFiltroOID);
     }
+    this.profileForm.get('clave').valueChanges.subscribe(valor => {
+      if(this.opcion) {
+        this.opcion.clave = valor;
+      }
+    });
 
 
 
@@ -159,6 +181,7 @@ export class OpcionComponent implements OnInit {
 
   public guardarOpcion(){
 
+
     if(this.visible){
       this.opcion.visible=1;
     }else{
@@ -184,6 +207,7 @@ export class OpcionComponent implements OnInit {
       this.ref.close(this.opcion);
     });
   }
+
 
 
 

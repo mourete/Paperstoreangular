@@ -11,20 +11,22 @@
       <tr>
         <td>Clave</td>
         <td>
+
           <input
             #claveInput
             type="text"
-            [(ngModel)]="catalogo.clave"
             pInputText
             size="25"
             formControlName="clave"
-            mask="AAAAAAAAAA"
             (input)="convertirAMayusculas()"
-            [showMaskTyped]="true"
-            required
+            mask="AAAAAAAAAA"
             style="width: 400px"
+            required
+            [showMaskTyped]="true"
           />
-          <div *ngIf="clave.errors?.required">Clave es requerido</div>
+          <div *ngIf="clave.errors?.required">Clave es requerida</div>
+          <div *ngIf="clave.errors?.maxlength || clave.errors?.minlength">La clave debe tener 10 caracteres</div>
+
         </td>
       </tr>
 
@@ -36,7 +38,6 @@
             formControlName="nombre"
             pInputText
             size="25"
-            [(ngModel)]="catalogo.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
             required
             style="width: 400px"
@@ -50,7 +51,7 @@
         <td>Filtro</td>
         <td>
           <p-inputSwitch
-            [(ngModel)]="filtro"
+            formControlName="filtro"
             (onChange)="clickFiltro($event)"
           ></p-inputSwitch>
         </td>
@@ -60,19 +61,19 @@
         <td>Filtrada</td>
         <td>
           <p-inputSwitch
-            [(ngModel)]="filtrada"
+            formControlName="filtrada"
             (onChange)="clickFiltrada($event)"
           ></p-inputSwitch>
         </td>
       </tr>
 
-      <tr *ngIf="filtrada">
+      <tr *ngIf="profileForm.get('filtrada').value">
         <td>Lista</td>
         <td>
           <p-dropdown
             [showTransitionOptions]="'0ms'"
             [hideTransitionOptions]="'0ms'"
-            [(ngModel)]="selectedLista"
+            formControlName="selectedLista"
             [options]="listaFiltrada"
             optionLabel="nombre"
           ></p-dropdown>

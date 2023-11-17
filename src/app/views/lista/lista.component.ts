@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
+import { InputTextModule} from "primeng/inputtext";
 import { ListaService } from 'src/app/service/lista.service';
 import { Lista } from 'src/app/model/lista';
 import { DialogService } from 'primeng/dynamicdialog'
@@ -26,27 +27,33 @@ export class ListaComponent implements OnInit {
   listaFiltrada:Lista[];
   usuarioSession:Usuario;
   msgs: Message[] = [];
-
-  profileForm = this.fb.group({
-    clave: ['',  Validators.required],
-    nombre: ['', Validators.required]
-
-  });
+  profileForm: FormGroup;
 
   constructor(private listaService : ListaService ,
               public config: DynamicDialogConfig ,
               public ref: DynamicDialogRef,
               private fb: FormBuilder
-              ) { }
+              ) {
+
+    this.profileForm = this.fb.group({
+      clave: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern('^[A-Z0-9]*$')]],
+      nombre: ['', Validators.required],
+      filtro: [false],
+      filtrada: [false],
+      selectedLista: [null]
+    });
+  }
 
 
-    get clave() { return this.profileForm.get('clave'); }
-    get nombre() { return this.profileForm.get('nombre'); }
+  get clave() { return this.profileForm.get('clave'); }
+  get nombre() { return this.profileForm.get('nombre'); }
+
 
 
 
 
   ngOnInit(): void {
+
 
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
 
@@ -60,6 +67,16 @@ export class ListaComponent implements OnInit {
         this.listaAccion="AGREGANDO LISTA";
         this.catalogo.tipoListaId=1;
     }
+      this.profileForm.valueChanges.subscribe(val => {
+          if (this.catalogo) {
+              this.catalogo.clave = val.clave;
+              this.catalogo.nombre = val.nombre;
+              this.catalogo.filtro = val.filtro;
+              this.catalogo.filtrada = val.filtrada;
+              this.catalogo.listaFiltroOID = val.lista;
+          }
+      });
+
 
   }
 
@@ -70,10 +87,17 @@ export class ListaComponent implements OnInit {
 
     this.listaService.getListaByListaOID( listaOID , this.usuarioSession.usuarioOID).subscribe(
       (data)=>{
-          console.log(data);
-          // console.log("Soy yo leal");
 
           this.catalogo =data;
+          if (this.catalogo) {
+              this.profileForm.patchValue({
+                  clave: this.catalogo.clave,
+                  nombre: this.catalogo.nombre,
+                  filtro: this.catalogo.filtro === 1,
+                  filtrada: this.catalogo.filtrada === 1
+              });
+          }
+
           if(this.catalogo.filtro == 1)
             this.filtro = true ;
 
@@ -104,11 +128,7 @@ export class ListaComponent implements OnInit {
 
 
   public clickFiltro(e) {
-    console.log(e.checked);
-
-    if(e.checked){
-   //  this.conceptoFiltro(e.checked);
-    }
+    this.profileForm.get('filtro').setValue(e.checked);
   }
 
 
@@ -129,35 +149,35 @@ export class ListaComponent implements OnInit {
 
 
 
-  public guardarLista(){
+  public guardarLista() {
+      console.log('Form Valid:', this.profileForm.valid);
+      console.log('Form Values:', this.profileForm.value);
+      if (this.profileForm.valid) {
+          const formValues = this.profileForm.value;
 
-    // console.log("Ando aqui");
+          this.catalogo.clave = formValues.clave.toUpperCase();
+          this.catalogo.nombre = formValues.nombre;
+          this.catalogo.filtro = formValues.filtro ? 1 : 0;
+          this.catalogo.filtrada = formValues.filtrada ? 1 : 0;
 
+      if (formValues.filtrada) {
+          this.catalogo.listaFiltroOID = this.selectedLista ? this.selectedLista.listaOID : null;
+          this.catalogo.nombreLista = this.selectedLista ? this.selectedLista.nombre : '';
+      } else {
+          this.catalogo.listaFiltroOID = null;
+          this.catalogo.nombreLista = "";
+      }
 
-    console.log(this.filtro);
+      this.listaService.guardarLista(this.catalogo, this.usuarioSession.usuarioOID).subscribe((data) => {
+          console.log(data);
+          this.ref.close(this.catalogo);
+      });
+      } else {
+          this.msgs = [];
+          this.msgs.push({severity:'error', summary:'Error', detail:'Faltan campos por rellenar'});
 
-    if(this.filtro){
-      this.catalogo.filtro = 1;
-    }else{
-      this.catalogo.filtro = 0;
-    }
+}
 
-
-    if(this.filtrada){
-      this.catalogo.filtrada = 1;
-      console.log(this.selectedLista);
-      this.catalogo.listaFiltroOID = this.selectedLista.listaOID;
-      this.catalogo.nombreLista = this.selectedLista.nombre;
-    }else{
-      this.catalogo.filtrada = 0;
-      this.catalogo.listaFiltroOID = null;
-      this.catalogo.nombreLista = "";
-    }
-
-    this.listaService.guardarLista ( this.catalogo,this.usuarioSession.usuarioOID ).subscribe((data)=>{
-      console.log(data);
-      this.ref.close(this.catalogo);
-    });
  }
 
 
@@ -167,19 +187,20 @@ export class ListaComponent implements OnInit {
 
  onSubmit() {
 
-  console.warn(this.profileForm.value);
-
-  console.warn(this.catalogo);
-
-
-  this.guardarLista();
+ if (this.profileForm.valid) {
+   this.guardarLista();
+ }else{
+   this.msgs = [];
+   this.msgs.push({severity:'error', summary:'Error', detail:'Faltan campos por rellenar'});
+ }
 
 }
 
  convertirAMayusculas() {
-  const claveValue: string = this.catalogo.clave;
-  this.catalogo.clave = claveValue.toUpperCase();
-}
+
+   const claveValue = this.profileForm.get('clave').value;
+   this.profileForm.get('clave').setValue(claveValue.toUpperCase(), { emitEvent: false });
+ }
 
 
 }

@@ -10,21 +10,18 @@
             <tr    >
                <td>Clave</td>
                <td>
-                 <div [formGroup]="profileForm">
                 <input
                   #claveInput
                   type="text"
-                  formControlName="clave"
                   pInputText
                   size="30"
                   [(ngModel)]="opcion.clave"
                   mask="AAAAAAAAAA"
-                  (input)="convertirAMayusculas()"
+                  (ngModelChange)="onClaveChange()"
                   [showMaskTyped]="true"
                   required
                 />
-                 <div *ngIf="f.clave.errors?.required">Clave es requerido</div>
-                 </div>
+                 <div *ngIf="claveError">La clave debe tener al menos 10 caracteres</div>
                </td>
              </tr>
              <tr    >
@@ -81,7 +78,7 @@
                 <td colspan="2"  >
                 <div style="margin-top:10px ;"  >
 
-                    <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarOpcion()"></button>
+                    <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarOpcion()" [disabled]="!esClaveValida" ></button>
 
                     <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelarOpcion()"></button>
 

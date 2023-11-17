@@ -5,7 +5,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import { ListaService } from 'src/app/service/lista.service';
 import { of } from 'rxjs';
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Message} from "primeng/api";
 
 @Component({
@@ -13,10 +13,11 @@ import {Message} from "primeng/api";
   templateUrl: './opcion.component.html',
   styleUrls: ['./opcion.component.scss']
 })
+
 export class OpcionComponent implements OnInit {
 
   @ViewChild('claveInput') claveInput: ElementRef;
-  opcion:Opcion;
+  opcion:Opcion = new Opcion();
   opcionAccion:string;
   msgs: Message[] = [];
   visible:boolean;
@@ -27,25 +28,20 @@ export class OpcionComponent implements OnInit {
   type : boolean = false;
   usuarioSession:Usuario;
   usuarioOID:string;
+  claveError: boolean = false;
+  esClaveValida: boolean = true;
 
-  profileForm = this.fb.group({
-    clave: ['',  Validators.required]
-  });
-
-
-  convertirAMayusculas() {
-    const claveValue: string = this.profileForm.get('clave').value;
-    this.profileForm.get('clave').setValue(claveValue.toUpperCase(), {emitEvent: false});
-  }
 
 
   constructor(private listaService : ListaService ,
-              private fb: FormBuilder,
               public config: DynamicDialogConfig ,
               public ref: DynamicDialogRef   ) { }
 
 
-  get f() { return this.profileForm.controls; }
+    onClaveChange() {
+        this.convertirAMayusculas();
+        this.verificarClave();
+    }
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
@@ -82,15 +78,6 @@ export class OpcionComponent implements OnInit {
       // console.log("Entre");
       console.log(this.config.data.lista.listaFiltroOID);
     }
-    this.profileForm.get('clave').valueChanges.subscribe(valor => {
-      if(this.opcion) {
-        this.opcion.clave = valor;
-      }
-    });
-
-
-
-
 
 
   }
@@ -208,10 +195,14 @@ export class OpcionComponent implements OnInit {
     });
   }
 
-
-
-
-
-
+    convertirAMayusculas() {
+        if (this.opcion && this.opcion.clave) {
+            this.opcion.clave = this.opcion.clave.toUpperCase();
+        }
+    }
+    verificarClave(){
+        const clave = this.opcion.clave || '';
+        this.esClaveValida = clave.length >= 10;
+    }
 
 }

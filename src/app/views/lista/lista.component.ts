@@ -94,7 +94,11 @@ export class ListaComponent implements OnInit {
                   clave: this.catalogo.clave,
                   nombre: this.catalogo.nombre,
                   filtro: this.catalogo.filtro === 1,
-                  filtrada: this.catalogo.filtrada === 1
+                  filtrada: this.catalogo.filtrada === 1,
+                  selectedLista: {
+                      listaOID: this.catalogo.listaFiltroOID,
+                      nombre: this.catalogo.nombreLista
+                  }
               });
           }
 
@@ -150,8 +154,6 @@ export class ListaComponent implements OnInit {
 
 
   public guardarLista() {
-      console.log('Form Valid:', this.profileForm.valid);
-      console.log('Form Values:', this.profileForm.value);
       if (this.profileForm.valid) {
           const formValues = this.profileForm.value;
 
@@ -159,14 +161,25 @@ export class ListaComponent implements OnInit {
           this.catalogo.nombre = formValues.nombre;
           this.catalogo.filtro = formValues.filtro ? 1 : 0;
           this.catalogo.filtrada = formValues.filtrada ? 1 : 0;
+          this.catalogo.listaFiltroOID = formValues.selectedLista ? formValues.selectedLista.listaOID : null;
+          this.catalogo.nombreLista = formValues.selectedLista ? formValues.selectedLista.nombre : '';
 
-      if (formValues.filtrada) {
+          if (formValues.filtrada) {
           this.catalogo.listaFiltroOID = this.selectedLista ? this.selectedLista.listaOID : null;
           this.catalogo.nombreLista = this.selectedLista ? this.selectedLista.nombre : '';
       } else {
           this.catalogo.listaFiltroOID = null;
           this.catalogo.nombreLista = "";
       }
+
+          if(formValues.selectedLista){
+            this.catalogo.listaFiltroOID = formValues.selectedLista.listaOID;
+            this.catalogo.nombreLista = formValues.selectedLista.nombre;
+          }
+          else {
+              this.catalogo.listaFiltroOID = null;
+              this.catalogo.nombreLista = null;
+          }
 
       this.listaService.guardarLista(this.catalogo, this.usuarioSession.usuarioOID).subscribe((data) => {
           console.log(data);

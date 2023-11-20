@@ -23,5 +23,6 @@ export class DocumentoInstancia {
    sucursalId:number;
    tipoAlerta: number;
    readOnly: number;
-
+   noEditable: number;
+   codigoBarra:number;
 }

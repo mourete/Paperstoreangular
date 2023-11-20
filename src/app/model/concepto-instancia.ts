@@ -8,6 +8,7 @@ export class ConceptoInstancia {
     descripcion:string;
     condicionada:number;
     enabled:number;
+    noEditable:number;
     tipoConceptoId : number;
     valor : string;
     valorUrl : string;
@@ -29,6 +30,7 @@ export class ConceptoInstancia {
     selectedValues: OpcionInstancia[] | string[];
     tipoAlerta: number;
     nombreFile:string;
+    readOnly:boolean;
 
 
 }

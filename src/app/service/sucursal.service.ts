@@ -26,8 +26,12 @@ public getSucursalesByUsuarioOID(usuarioOID:string) : Observable<Sucursal[]> {
 
 
 public getSucursalByID(sucursalId:number , usuarioOID :string) : Observable<Sucursal> {
+ 
   let url:string = GlobalConstants.apiURL + "sucursales/getSucursalByID/" + sucursalId + "/" + usuarioOID ; 
+  console.log("sucursal guardar");
+  console.log(this.http.get<Sucursal>( url));
   return this.http.get<Sucursal>( url  );
+
 }
 
 
@@ -39,6 +43,8 @@ public getSucursagetSucursalesByMarcaYEmpresalByID( marcaId:number , empresaId:n
 
 
 public guardarSucursal( sucursal: Sucursal, usuarioOID:string ): Observable< Sucursal > {
+  console.log("sucursal guardar");
+  console.log(sucursal);
   let url:string = GlobalConstants.apiURL + "sucursales/save" + "/"+ usuarioOID; 
   return this.http.post<Sucursal>( url , JSON.stringify(sucursal), {headers: this.headers});    
 } 

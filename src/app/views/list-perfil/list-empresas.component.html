@@ -1,0 +1,96 @@
+<div>
+  <div *ngIf="empresas">
+    <div style="font-family: Arial, Helvetica, sans-serif; margin: 20px">
+      <h3>EMPRESAS</h3>
+    </div>
+
+    <p-toolbar>
+      <div class="ui-toolbar-group-left">
+        <button
+          pButton
+          type="button"
+          (click)="agregarEmpresa()"
+          label="Agregar empresa"
+          icon="pi pi-plus"
+        ></button>
+      </div>
+    </p-toolbar>
+
+    <div>
+      <div>
+        <p-toolbar>
+          <div *ngIf="selectedEmpresa" class="ui-toolbar-group-left">
+            <button
+              pButton
+              type="button"
+              (click)="modificarEmpresa()"
+              [style]="{
+                'vertical-align': 'middle',
+                width: '25px',
+                height: '25px',
+                'margin-right': '4px'}"
+              icon="pi pi-pencil"
+            ></button>
+
+            <button
+              pButton
+              type="button"
+              (click)="confirmDeleteEmpresa()"
+              [style]="{
+                'vertical-align': 'middle',
+                width: '25px',
+                height: '25px',
+                'margin-right': '4px'
+              }"
+              icon="pi pi-trash"
+            ></button>
+
+          </div>
+        </p-toolbar>
+      </div>
+
+      <p-table
+        (onRowSelect)="empresaChanged()"
+        [value]="empresas"
+        [paginator]="true"
+        [rows]="10"
+        selectionMode="single"
+        [(selection)]="selectedEmpresa"
+        [contextMenu]="cmEmpresa"
+        dataKey="empresaId"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <!-- <th style="width: 300px">Id</th> Se quita el id-->
+            <th style="width: 300px">Clave</th>
+            <th style="width: 300px">Nombre</th>
+
+            <th style="width: 300px">Mail</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-empresa>
+          <tr [pSelectableRow]="empresa" [pContextMenuRow]="empresa" (contextmenu)="onRightClick($event,empresa )">
+            <!-- <td>{{ empresa.empresaId }}</td> Se quita el id-->
+            <td>{{ empresa.clave }}</td>
+            <td>{{ empresa.nombre }}</td>
+
+            <td>{{ empresa.email }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+
+<p-contextMenu
+  #cmEmpresa
+  popup="false"
+  [style]="{ width: '250px' }"
+  appendTo="body"
+  [model]="itemsEmpresa"
+></p-contextMenu>

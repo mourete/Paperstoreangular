@@ -146,13 +146,13 @@
                     <p-dropdown [(ngModel)]="conceptoInstancia.selected" [showTransitionOptions]="'0ms'"
                                 [hideTransitionOptions]="'0ms'" (onChange)="listaChanged(conceptoInstancia)"
                                 [options]="conceptoInstancia.opcionesInstancia" dataKey="opcionOID" filter="true"
-                                optionLabel="texto" [readonly]="readOnly"
+                                optionLabel="texto" [readonly]="conceptoInstancia.readOnly"
                                 [style]="{'width': '800px', 'height': '35px'}"></p-dropdown>
                   </td>
 
                   <td
                     *ngIf="conceptoInstancia.tipoConceptoId==2 || conceptoInstancia.tipoConceptoId==3 || conceptoInstancia.tipoConceptoId==12 ">
-                    <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor" [readonly]="readOnly"
+                    <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor" [readonly]="conceptoInstancia.readOnly"
                     [style]="{'width': '800px', 'height': '35px'}"
                     />
                   </td>
@@ -160,21 +160,21 @@
 
                   <td *ngIf="conceptoInstancia.tipoConceptoId==1">
                     <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor"
-                           maxlength="{{conceptoInstancia.maximo}}" [readonly]="readOnly"
+                           maxlength="{{conceptoInstancia.maximo}}" [readonly]="conceptoInstancia.readOnly"
                            [style]="{'width': '800px', 'height': '35px'}"
                            />
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==4">
                     <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" dateFormat="dd/mm/yy" showIcon="false"
-                                showButtonBar="true"  [disabled]="readOnly" ></p-calendar>
+                                showButtonBar="true"  [disabled]="conceptoInstancia.readOnly" ></p-calendar>
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==13">
                     <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" dateFormat="dd/mm/yy" showIcon="false"
-                                showButtonBar="true"  [disabled]="readOnly"  ></p-calendar>
+                                showButtonBar="true"  [disabled]="conceptoInstancia.readOnly"  ></p-calendar>
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==5">
                     <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" timeOnly="true" showIcon="true"
-                                showTime="true" hourFormat="12" [disabled]="true"  [disabled]="readOnly"></p-calendar>
+                                showTime="true" hourFormat="12" [disabled]="true"  [disabled]="conceptoInstancia.readOnly"></p-calendar>
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==7">
                     <!--<div *ngIf="conceptoInstancia.opcionesInstancia">-->
@@ -184,7 +184,7 @@
                         optionLabel="texto"
                         [style]="{'width': '800px', 'height': '35px'}"
                         optionValue="opcionOID"
-                        [readonly]="readOnly"
+                        [readonly]="conceptoInstancia.readOnly"
 >
                       </p-multiSelect>
                     <!--</div>-->
@@ -195,8 +195,8 @@
                       <input type="file"
                              (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"
                              #fileInput style="display: none;" >
-                      <button (click)="fileInput.click()"  [disabled]="readOnly">Seleccionar archivo</button>
-                      <button (click)="clearFile($event,conceptoInstancia)"  [disabled]="readOnly" >Eliminar archivo</button>
+                      <button (click)="fileInput.click()"  [disabled]="conceptoInstancia.readOnly">Seleccionar archivo</button>
+                      <button (click)="clearFile($event,conceptoInstancia)"  [disabled]="conceptoInstancia.readOnly" >Eliminar archivo</button>
                       <p *ngIf="conceptoInstancia.nombreFile">{{conceptoInstancia.nombreFile}}
                       <p>
 
@@ -213,7 +213,7 @@
                       <input type="file"
                              (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"
                              #fileInput style="display: none;">
-                      <button (click)="fileInput.click()"  [disabled]="readOnly">Seleccionar archivo</button>
+                      <button (click)="fileInput.click()"  [disabled]="conceptoInstancia.readOnly">Seleccionar archivo</button>
 
                     </div>
 

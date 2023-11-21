@@ -112,13 +112,11 @@ export class AppModule {
 export class DisplayDocumentInstanciaComponent implements OnInit {
   myVariable: any;
   readOnly: boolean;
-  noEditable: boolean;
   documentoInstanciaOID: string;
   usuarioOID: string;
   documentoId: number;
   seccionOID: string;
   documentoInstancia: DocumentoInstancia;
-
   seccionInstancia: SeccionInstancia;
   errores: string[];
   msgs: Message[] = [];
@@ -154,6 +152,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   @Input() public varAlerta: string;
   @Input() public varTipoAlerta: number;
   @Input() public varImage: string;
+  noEditable: boolean;
 
 
 
@@ -476,9 +475,11 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     } else {
       console.log("readOnly");
       console.log(this.documentoInstancia.readOnly);
-
-      if (this.documentoInstancia.readOnly==1) this.readOnly = true;
+      console.log("noEditable");
+      console.log(this.documentoInstancia.noEditable);
       if (this.documentoInstancia.noEditable==1) this.noEditable = true;
+      if (this.documentoInstancia.readOnly==1) this.readOnly = true;
+
       if (this.documentoInstancia.imagePath != null) {
         this.documentoInstancia.imagePath = this.usuario.infoHuesped.pathImagenWeb + this.documentoInstancia.imagePath;
       } else {
@@ -499,7 +500,15 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
     for (var idx = 0; idx < this.seccionInstancia.conceptosInstancia.length; idx++) {
       var ci = this.seccionInstancia.conceptosInstancia[idx];
-
+      console.log("ConceptonoEditable");
+      console.log(ci.noEditable);
+      ci.readOnly=this.readOnly;
+      if(ci.noEditable==1 && !this.readOnly ){
+        if(this.noEditable)
+           ci.readOnly = true;
+      }
+      console.log("ConceptonoreadOnly");
+      console.log(ci.readOnly);
 
       if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_FECHA) {
 

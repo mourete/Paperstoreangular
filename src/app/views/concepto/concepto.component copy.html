@@ -1,0 +1,287 @@
+
+
+ <p-messages [value]="msgs"   [escape]=true  ></p-messages>
+
+              <div    *ngIf="concepto"    >
+                <form [formGroup]="profileConcepto" (ngSubmit)="onSubmit()" >
+                <table  border="0" >
+
+                  <tr>
+                    <td>Tipo de concepto</td>
+                    <td>
+                      <p-dropdown size="70"   (onChange)="tipoConceptoChanged()"  formControlName="tipoConcepto"  [disabled]="concepto.conceptoOID!=null" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedTipoConcepto" [options]="tiposConcepto"  optionLabel="nombre" ></p-dropdown>
+                   </td>
+                 </tr>         
+                 <tr>
+                  <td>Clave</td>
+                  <td>
+                     <textarea pInputTextarea   [rows]="1" [cols]="35"   [(ngModel)]="concepto.clave"  formControlName="clave"  ></textarea> 
+                 </td>
+               </tr>      
+
+                  <tr>
+                    <td>Descripción</td>
+                    <td>
+                       <textarea pInputTextarea   [rows]="2" [cols]="35"   [(ngModel)]="concepto.descripcion" formControlName="descripcion"   ></textarea> 
+                   </td>
+                 </tr>                     
+                     <tr>
+                        <td>Requerido</td>
+                        <td>
+                          <p-inputSwitch [(ngModel)]="requerida" formControlName="requerido" > </p-inputSwitch>
+                       </td>
+                     </tr>    
+                     
+                     <tr>
+                      <td>Habilitado</td>
+                      <td>
+                        <p-inputSwitch [(ngModel)]="habilitada" formControlName="habilitada" ></p-inputSwitch>
+                     </td>
+                   </tr>  
+                   
+                   
+                   <tr>
+                    <td>No editable</td>
+                    <td>
+                      <p-inputSwitch [(ngModel)]="noEditable" formControlName="noEditable" ></p-inputSwitch>
+                   </td>
+                 </tr> 
+                     
+                                    
+                   <tr   *ngIf="selectedTipoConcepto.tipoConceptoId==1"  >
+                    <td>Longitud máxima</td>
+                    <td>
+                       <input type="text"  pInputText   formControlName="textMaximo"   [(ngModel)]="concepto.maximo"   /> 
+                   </td>
+                    </tr>   
+
+                     <tr    *ngIf="selectedTipoConcepto.tipoConceptoId==2 || selectedTipoConcepto.tipoConceptoId==3 || selectedTipoConcepto.tipoConceptoId==12"  >                      
+                          <td>Valor máximo</td>
+                          <td><input type="text" pInputText  size="35" formControlName="maximo"    [(ngModel)]="concepto.maximo"   /></td>                                    
+                      </tr>        
+                      
+                      <tr    *ngIf="selectedTipoConcepto.tipoConceptoId==2 || selectedTipoConcepto.tipoConceptoId==3 || selectedTipoConcepto.tipoConceptoId==12"  >                      
+                            <td>Valor mínimo</td>
+                            <td><input type="text" pInputText  size="35" formControlName="minimo"     [(ngModel)]="concepto.minimo"   /></td>
+                      </tr>                        
+                      
+                      <tr    *ngIf="selectedTipoConcepto.tipoConceptoId==4 "  >                                               
+                          <td>Fecha mínima</td>
+                          <td> <p-calendar   [(ngModel)]="concepto.fechaMinima"  formControlName="fechaMinima"   dataType="string"  formControlName="fechaMinima"  dateFormat="dd/mm/yy"   showIcon="true" showButtonBar="true"></p-calendar></td>                                                                     
+                       
+                      </tr>          
+                      <tr    *ngIf="selectedTipoConcepto.tipoConceptoId==4 "  >                                                                            
+                          <td>Fecha máxima</td>
+                          <td> <p-calendar    [(ngModel)]="concepto.fechaMaxima"  formControlName="fechaMaxima"  dateFormat="dd/mm/yy" formControlName="fechaMaxima"  dataType="string" showIcon="true" showButtonBar="true"></p-calendar></td>
+                      </tr>      
+                      <tr    *ngIf="selectedTipoConcepto.tipoConceptoId==5"  >                                               
+                        <td>Hora mínima</td>
+                        <td> <p-calendar   [(ngModel)]="concepto.horaMinima"  timeOnly="true"  formControlName="horaMinima"  dataType="string"     showIcon="true"  ></p-calendar></td>                                                                     
+                     
+                    </tr>          
+                    <tr    *ngIf="selectedTipoConcepto.tipoConceptoId==5"  >                                                                            
+                        <td>Hora máxima</td>
+                        <td> <p-calendar    [(ngModel)]="concepto.horaMaxima"  timeOnly="true"    formControlName="horaMaxima"  dataType="string" showIcon="true" ></p-calendar></td>
+                    </tr>  
+                    
+                    <tr   *ngIf="selectedTipoConcepto.tipoConceptoId==11" >
+                      <td>Mensaje</td>
+                      <td>
+                         <textarea pInputTextarea   [rows]="2" [cols]="35"   [(ngModel)]="concepto.mensajes"  formControlName="mensaje"    ></textarea> 
+                     </td>
+                   </tr>      
+
+
+                   <tr   *ngIf="selectedTipoConcepto.tipoConceptoId==6 || selectedTipoConcepto.tipoConceptoId==7  "  >
+                    <td>Opciones</td>
+                    <td>
+                        <p-dropdown     (onChange)="opcionesCambia()"  [virtualScroll]="true"  formControlName="opciones"    [(ngModel)]="selectedTipoLista"   [(options)]="tiposLista"     optionLabel="nombre"></p-dropdown>
+                   </td>
+                   </tr>  
+
+                   
+                   <tr   *ngIf="selectedTipoLista!=null && selectedTipoLista.tipoListaId==1 &&  (  selectedTipoConcepto.tipoConceptoId==6 || selectedTipoConcepto.tipoConceptoId==7  )  "  >
+                    <td>Catálogo</td>
+                    <td>
+                        <p-dropdown  (onChange)="listaChanged()"     [virtualScroll]="true"   formControlName="catalogo"   [(ngModel)]="selectedLista"   [(options)]="listas"     optionLabel="nombre"></p-dropdown>
+                   </td>
+                   </tr>     
+
+                   <tr   *ngIf="selectedTipoLista!=null && selectedTipoLista.tipoListaId==1 && (  selectedTipoConcepto.tipoConceptoId==6 || selectedTipoConcepto.tipoConceptoId==7 ) "  >
+                    <td>Opciones</td>
+                    <td>
+                       
+
+                        <p-table   [paginator]="true" [rows]="10"   [value]="opciones"   [(selection)]="selectedOpcion"  formControlName = "opciones"      selectionMode="single"    dataKey="opcionOID"  >
+
+
+                          <ng-template pTemplate="header" >
+                            <tr>
+                                    <th   style="width: 50px;"  ></th>
+                                    <th>Valor</th>
+                                    <th style="width: 120px;" >Clave</th>
+                                    <th style="width: 200px;" >Texto</th>
+                                   
+                                   
+                               
+                            </tr>
+                        </ng-template>
+
+                    
+                          <ng-template pTemplate="body" let-opcion    let-rowIndex="rowIndex"   >
+                              <tr  [pSelectableRow]="opcion"      >
+      
+        
+                                  <td  style="width: 50px;"  >{{rowIndex+1}} </td>
+                                  <td>{{opcion.valor}}</td>
+                                  <td>{{opcion.clave}}</td>
+                                  <td>{{opcion.texto}}</td>
+                    
+          
+                              </tr>
+                          </ng-template>     
+                      </p-table>
+
+
+
+                   </td>
+                   </tr>               
+                   
+
+                   <tr   *ngIf="selectedTipoLista!=null &&  (selectedTipoConcepto.tipoConceptoId==6 )  && selectedTipoLista.tipoListaId==1 && selectedLista!= null && selectedLista.filtro==1"  >
+                    <td>Filtro</td>
+                    <td>
+                        <p-inputSwitch [(ngModel)]="filtro" (onChange)="clickFiltro($event)" ></p-inputSwitch>
+                   </td>
+                   </tr>  
+
+
+                   <tr   *ngIf="filtro && selectedTipoLista!=null &&  (selectedTipoConcepto.tipoConceptoId==6 ) && selectedTipoLista.tipoListaId==1"  >
+                    <td>Concepto filtra</td>
+                    <td>
+                      <p-dropdown  [virtualScroll]="true"     [(ngModel)]="selectedListaFiltra"   [(options)]="listasFiltra"   formControlName="conceptoFiltro"   optionLabel="descripcion"></p-dropdown>
+                   </td>
+                   </tr> 
+
+
+                   <tr   *ngIf="selectedTipoLista!=null && selectedTipoLista.tipoListaId==1 && (  selectedTipoConcepto.tipoConceptoId==6 || selectedTipoConcepto.tipoConceptoId==7 ) "  >
+                    <td>Orden</td>
+                    <td>
+                        <p-dropdown     [virtualScroll]="true"     [(ngModel)]="selectedOrder"   [(options)]="catOrders"   formControlName="orden" ></p-dropdown>
+                   </td>
+                   </tr>                         
+                   
+                   <tr *ngIf="selectedTipoConcepto.tipoConceptoId==13 " >
+                    <td>Número de dias en riesgo</td>
+                    <td>
+                      <textarea pInputTextarea   [rows]="1" [cols]="35" [(ngModel)]="concepto.diasAlertaRojo" formControlName="diasAlertaRojo"></textarea>Notificar 
+                      <p-inputSwitch [(ngModel)]="alertaRojo" formControlName="alertaRojo" ></p-inputSwitch>
+                    </td>
+                    </tr>      
+                    <tr *ngIf="selectedTipoConcepto.tipoConceptoId==13&&(alertaRojo)" >
+                      <td>Usuarios a Notificar</td>
+                      <td >
+                        
+                        <p-table  [style]="{width:'600px'}"    [paginator]="false" [rows]="10"   [value]="conceptoAlertaPerfilRojo"  >
+              
+                          <ng-template pTemplate="header" >
+                            <tr>
+                                    <th>Perfil</th>
+                                                                              
+                            </tr>
+                          </ng-template>
+            
+                          <ng-template pTemplate="body" let-item  let-rowIndex="rowIndex"   >
+                              <tr  [pSelectableRow]="item" >          
+                                  <td     > 
+                                      <table  cellpadding='1'   >
+                                         <tr> 
+                                               <td style="width: 55px;" > 
+                                                 <p-inputSwitch [(ngModel)]="item.seleccionado"   formControlName="flagSeleccionadoRojo"   ></p-inputSwitch>
+                                               </td>
+                                               <td> {{item.nombre}} </td>
+                                         </tr>
+                                
+                                      </table>
+                                  </td>           
+                               </tr>
+                            </ng-template>     
+                        </p-table>
+                      </td>
+                      </tr>     
+  
+                     <tr  *ngIf="selectedTipoConcepto.tipoConceptoId==13">
+                      <td>Número de dias en alerta</td>
+                      <td>
+                        <textarea pInputTextarea   [(ngModel)]="concepto.diasAlertaAmarillo"  [rows]="1" [cols]="35"  formControlName="diasAlertaAmarillo" ></textarea>Notificar 
+                        <p-inputSwitch [(ngModel)]="alertaAmarillo" formControlName="alertaAmarillo" ></p-inputSwitch>
+                     </td>
+
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                     <td>
+
+                      <p-listbox formControlName="listbox" [options]="conceptoAlertaPerfilRojo" [(ngModel)]="conceptoAlertaPerfilRojoSeleccion" [metaKeySelection]="false" [checkbox]="true" [multiple]="true"
+                          [filter]="true" [listStyle]="{'max-height':'250px'}" [style]="{'width':'30rem'}" optionLabel="nombre">
+                          
+                      </p-listbox>
+                        
+                     </td>
+                    </tr>
+
+
+
+
+                       
+                    
+                          
+                     <tr  *ngIf="selectedTipoConcepto.tipoConceptoId==13&&(alertaAmarillo)">
+                      <td>Usuarios a Notificar</td>
+                      <td >
+                        <p-table  [style]="{width:'600px'}"    [paginator]="false" [rows]="10"         [value]="conceptoAlertaPerfilAmarillo"  >
+              
+                          <ng-template pTemplate="header" >
+                            <tr>
+                                    <th>Perfil</th>
+                                                                              
+                            </tr>
+                          </ng-template>
+            
+                          <ng-template pTemplate="body" let-itemAmarillo  let-rowIndex="rowIndex"   >
+                              <tr  [pSelectableRow]="itemAmarillo" >          
+                                  <td> 
+                                      <table  cellpadding='1'   >
+                                         <tr> 
+                                               <td style="width: 55px;" > 
+                                                 <p-inputSwitch [(ngModel)]="itemAmarillo.seleccionado"   formControlName="flagSeleccionadoAmarillo"   ></p-inputSwitch>
+                                               </td>
+                                               <td> {{itemAmarillo.nombre}} </td>
+                                         </tr>
+                                
+                                      </table>
+                                  </td>           
+                               </tr>
+                            </ng-template>     
+                        </p-table>
+                      </td>
+
+
+                     </tr>      
+                    
+                   
+     
+                </table>  
+                
+             
+              </form>
+                   
+
+              </div>
+              <div style="padding:20px;"  >
+                 
+                <button pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarConcepto()" [disabled]="!profileConcepto.valid"></button>
+                 <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
+              
+            </div>

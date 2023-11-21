@@ -1,0 +1,77 @@
+<p-messages [value]="msgs" [escape]="true"></p-messages>
+
+<div *ngIf="perfil">
+  <form
+    [formGroup]="profilePerfil"
+    (ngSubmit)="onSubmit()"
+    class="box-model form-support-margin"
+  >
+    <table border="0" cellpadding="1" cellspacing="1">
+      <tr>
+        <td>Perfil</td>
+        <td>
+          <input
+            type="text"
+            pInputText
+            [style]="{ width: '30rem' }"
+            formControlName="perfilName"
+            [(ngModel)]="perfil.Nombre"
+          />
+          <div *ngIf="f.nombre.errors?.required">Perfil es requerido</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Descripción</td>
+
+        <td>
+          <input
+            type="text"
+            pInputText
+            formControlName="descripcion"
+            [style]="{ width: '30rem' }"
+            [(ngModel)]="perfil.descripcion"
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
+          />
+          <div *ngIf="f.descripcion.errors?.required">Descripción es requerido</div>
+         
+        </td>
+      </tr> 
+
+      <tr>
+        <td>Modulos</td>
+        <td>
+          <p-tree
+            [value]="accesosModulos"
+            min="1"
+            formControlName="flag_modulo"
+            selectionMode="checkbox"
+            [style]="{ width: '30rem' }"
+            [(selection)]="accesosModuloSeleccionados"
+            (onNodeSelect)="nodeSelect($event)"
+            (onNodeUnselect)="nodeUnselect($event)"
+          ></p-tree>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div style="padding: 20px">
+  <button
+    pButton
+    style="margin: 3px"
+    icon="pi pi-check"
+    type="button"
+    label="Guardar"
+    (click)="guadarModulo()"
+  ></button>
+
+  <button
+    pButton
+    style="margin: 3px"
+    icon="pi pi-times"
+    type="button"
+    label="Cancelar"
+    (click)="cancelar()"
+  ></button>
+</div>

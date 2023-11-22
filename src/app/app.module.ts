@@ -21,7 +21,7 @@ import {DocumentComponent} from './views/document/document.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {SeccionComponent} from './views/seccion/seccion.component';
 import {ConceptoComponent} from './views/concepto/concepto.component';
-import {ToolbarModule} from 'primeng/toolbar'; 
+import {ToolbarModule} from 'primeng/toolbar';
 import {DialogModule} from 'primeng/dialog';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {MenuModule} from 'primeng/menu';
@@ -48,6 +48,8 @@ import { ListEmpresasComponent } from './views/list-empresas/list-empresas.compo
 import { EmpresaComponent } from './views/empresa/empresa.component';
 import { ListUsuariosComponent } from './views/list-usuarios/list-usuarios.component';
 import { UsuarioComponent } from './views/usuario/usuario.component';
+import { PerfilComponent} from "./views/perfil/perfil.component";
+import { ListPerfilComponent} from "./views/list-perfil/list-perfil.component";
 import { MarcaComponent } from './views/marca/marca.component';
 import { ListMarcasComponent } from './views/list-marcas/list-marcas.component';
 import { RegionComponent } from './views/region/region.component';
@@ -69,7 +71,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TreeTable, TreeTableModule} from 'primeng/treetable';
 import {TreeNode} from 'primeng/api';
 import {BlockUIModule} from 'primeng/blockui';
-  
+
 
 
 
@@ -99,6 +101,8 @@ import {BlockUIModule} from 'primeng/blockui';
     EmpresaComponent,
     ListUsuariosComponent,
     UsuarioComponent,
+    PerfilComponent,
+    ListPerfilComponent,
     MarcaComponent,
     ListMarcasComponent,
     RegionComponent,
@@ -116,13 +120,13 @@ import {BlockUIModule} from 'primeng/blockui';
     BrowserModule,
     AppRoutingModule ,
     HttpClientModule ,
-    TableModule , 
+    TableModule ,
     FormsModule ,
     ButtonModule ,
     FileUploadModule,
     InputTextModule ,
     DropdownModule ,
-    PanelModule , 
+    PanelModule ,
     CalendarModule ,
     CheckboxModule ,
     InputTextareaModule ,

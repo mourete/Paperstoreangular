@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Perfil } from '../model/perfil';
 import { GlobalConstants } from '../model/global-constants';
 import { Modulo} from '../model/modulo';
+import {Empresa} from "../model/empresa";
 
 
 
@@ -12,14 +13,14 @@ import { Modulo} from '../model/modulo';
   providedIn: 'root'
 })
 export class PerfilService {
- 
+
 
   endpoint: String;
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor( private http : HttpClient ) { }
 
- 
+
 
 public getPerfilById(perfilId:number,   usuarioCreatedOID:string) : Observable<Perfil> {
     let url:string = GlobalConstants.apiURL + "perfiles/perfilConsulta/" + perfilId + "/" + usuarioCreatedOID;
@@ -38,27 +39,27 @@ public getModulosJson(perfilId:number , usuarioCreatedOID:string ) : Observable<
   return this.http.get<string[]>( url );
 }
 
-
-
-
-
-
 public guardarPerfil(perfil: Perfil , usuarioCreatedOID:string): Observable< Perfil > {
-  
-  let url:string = GlobalConstants.apiURL + "perfiles/save/"+usuarioCreatedOID; 
-  return this.http.post<Perfil>( url , JSON.stringify(perfil), {headers: this.headers});    
-} 
+
+  let url:string = GlobalConstants.apiURL + "perfiles/save/"+usuarioCreatedOID;
+  return this.http.post<Perfil>( url , JSON.stringify(perfil), {headers: this.headers});
+}
 
 
 public guardarPerfilModulo( um : Modulo[],perfilID:string,usuarioCreatedOID:string ): Observable< Modulo[] > {
-  let url:string = GlobalConstants.apiURL + "/perfiles/saveModulo/" + perfilID + "/" + usuarioCreatedOID; 
-  return this.http.post<Modulo[]>( url , JSON.stringify(um), {headers: this.headers});    
-} 
+  let url:string = GlobalConstants.apiURL + "/perfiles/saveModulo/" + perfilID + "/" + usuarioCreatedOID;
+  return this.http.post<Modulo[]>( url , JSON.stringify(um), {headers: this.headers});
+}
+
+public eliminaPerfil(perfil: Perfil, usuarioOID ): Observable< Perfil > {
+    let url:string = GlobalConstants.apiURL + "perfiles/delete" + "/" + usuarioOID;
+    return this.http.post<Perfil>( url , JSON.stringify(perfil), {headers: this.headers});
+  }
 
 
 
 
- 
+
 
 
  errorHandl(error) {

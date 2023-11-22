@@ -4,6 +4,7 @@ export class Perfil {
 
 
     nombre:string;
+    descripcion:string;
 	clave:string;
   moduloId:number;
     modulos: Modulo[];

@@ -15,7 +15,7 @@
             pInputText
             [style]="{ width: '30rem' }"
             formControlName="perfilName"
-            [(ngModel)]="perfil.Nombre"
+            [(ngModel)]="perfil.nombre"
           />
           <div *ngIf="f.nombre.errors?.required">Perfil es requerido</div>
         </td>
@@ -63,7 +63,7 @@
     icon="pi pi-check"
     type="button"
     label="Guardar"
-    (click)="guardarModulo()"
+    (click)="guardarPerfil()"
   ></button>
 
   <button

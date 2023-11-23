@@ -55,7 +55,6 @@ export class SucursalComponent implements OnInit {
     estadosForm : [''],
     ciudadesForm: [''],
     telefono:[''],
-    fax : [''],
     coordenadaX : [''],
     coordenadaY : [''],
     responsable : [''],

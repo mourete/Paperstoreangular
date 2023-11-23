@@ -19,13 +19,14 @@ import { ConceptoAlertaPerfil } from 'src/app/model/concepto-alerta-perfil';
 import { FormGroup, FormControl, Validators, FormBuilder,} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/primeng';
-import { validarFecha } from 'src/app/utils/forms';
+import {validarFecha, validarHora} from 'src/app/utils/forms';
 
 @Component({
   selector: 'app-concepto',
   templateUrl: './concepto.component.html',
   styleUrls: ['./concepto.component.scss'],
 })
+
 export class ConceptoComponent implements OnInit {
   profileConcepto: FormGroup;
   listas: Lista[];
@@ -75,7 +76,6 @@ export class ConceptoComponent implements OnInit {
     { tipoConceptoId: 6, nombre: 'Opcion Múltiple' },
     { tipoConceptoId: 7, nombre: 'Selección múltiple' },
     { tipoConceptoId: 8, nombre: 'Foto(PNG)/Archivo(PDF)' },
-    { tipoConceptoId: 9, nombre: 'Personal' },
     { tipoConceptoId: 10, nombre: 'Instrucción' },
     { tipoConceptoId: 11, nombre: 'Mensajes' },
     { tipoConceptoId: 13, nombre: 'Vigencia' },
@@ -157,6 +157,13 @@ export class ConceptoComponent implements OnInit {
       this.revisarFechaMax();
     });
 
+    this.profileConcepto.get('horaMinima').valueChanges.subscribe(() => {
+      this.revisarHoraMin();
+    });
+    this.profileConcepto.get('horaMaxima').valueChanges.subscribe(() => {
+      this.revisarHoraMax();
+    });
+
     if (this.config.data.concepto != null) {
       if (this.config.data.concepto.conceptoOID != null) {
         this.getConceptoByOID(this.config.data.concepto.conceptoOID);
@@ -164,7 +171,10 @@ export class ConceptoComponent implements OnInit {
     } else {
       this.concepto.orden = this.config.data.orden;
     }
+
+
   }
+
 
   private getTipoConcepto(idTipCon: number): TipoConcepto {
     for (var idx = 0; idx < this.tiposConcepto.length; idx++) {
@@ -178,6 +188,7 @@ export class ConceptoComponent implements OnInit {
   public listaChanged() {
     this.getOpcionesByLista(this.selectedLista.listaOID);
     this.conceptoFiltro(this.filtro);
+    this.ordenarOpciones();
   }
 
   public cancelar() {
@@ -697,4 +708,30 @@ export class ConceptoComponent implements OnInit {
       this.profileConcepto.get('fechaMaxima').setErrors(null);
     }
   }
+
+  revisarHoraMin() {
+    const horaMin = this.profileConcepto.get('horaMinima').value;
+    const horaMax = this.profileConcepto.get('horaMaxima').value;
+    if (horaMin !== undefined &&
+      horaMax !== undefined &&
+      !validarHora(horaMin, horaMax))
+    {
+      this.profileConcepto.get('horaMinima').setErrors({ dateError: true });
+    } else {
+      this.profileConcepto.get('horaMinima').setErrors(null);
+    }
+  }
+  revisarHoraMax() {
+    const horaMin = this.profileConcepto.get('horaMinima').value;
+    const horaMax = this.profileConcepto.get('horaMaxima').value;
+    if (horaMin !== undefined &&
+      horaMax !== undefined &&
+      !validarHora(horaMin, horaMax))
+    {
+      this.profileConcepto.get('horaMaxima').setErrors({ dateError: true });
+    } else {
+      this.profileConcepto.get('horaMaxima').setErrors(null);
+    }
+  }
+
 }

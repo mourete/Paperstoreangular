@@ -170,6 +170,7 @@
             dataType="string"
             showIcon="true"
           ></p-calendar>
+          <div *ngIf="profileConcepto.get('horaMinima').hasError('dateError')">La Hora Minima no debe ser mayor que Hora Máxima</div>
         </td>
       </tr>
       <tr *ngIf="selectedTipoConcepto.tipoConceptoId == 5">
@@ -182,6 +183,7 @@
             dataType="string"
             showIcon="true"
           ></p-calendar>
+          <div *ngIf="profileConcepto.get('horaMaxima').hasError('dateError')">La Hora Máxima debe ser mayor a Hora Minima</div>
         </td>
       </tr>
 

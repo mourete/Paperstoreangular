@@ -7,3 +7,15 @@ export function parseDateString(date: string): Date {
   const fecha = new Date(year, month, day);
   return fecha;
 }
+
+export function parseTimeString(timeString: string): Date {
+  const timeParts = timeString.split(':');
+  const hours = parseInt(timeParts[0], 10);
+  const minutes = parseInt(timeParts[1], 10);
+
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+  return date;
+}
+
+

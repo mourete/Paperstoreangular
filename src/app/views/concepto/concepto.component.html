@@ -170,6 +170,7 @@
             dataType="string"
             showIcon="true"
           ></p-calendar>
+          <div *ngIf="profileConcepto.get('horaMinima').hasError('dateError')">La Hora Minima no debe ser mayor que Hora Máxima</div>
         </td>
       </tr>
       <tr *ngIf="selectedTipoConcepto.tipoConceptoId == 5">
@@ -182,6 +183,7 @@
             dataType="string"
             showIcon="true"
           ></p-calendar>
+          <div *ngIf="profileConcepto.get('horaMaxima').hasError('dateError')">La Hora Máxima debe ser mayor a Hora Minima</div>
         </td>
       </tr>
 
@@ -211,7 +213,7 @@
             [virtualScroll]="true"
             formControlName="tipoListaCtr"
             [(ngModel)]="selectedTipoLista"
-            [(options)]="tiposLista"
+            [options]="tiposLista"
             optionLabel="nombre"
           ></p-dropdown>
         </td>
@@ -232,7 +234,7 @@
             [virtualScroll]="true"
             formControlName="catalogo"
             [(ngModel)]="selectedLista"
-            [(options)]="listas"
+            [options]="listas"
             optionLabel="nombre"
             [filter]="true"
           ></p-dropdown>
@@ -310,7 +312,7 @@
           <p-dropdown
             [virtualScroll]="true"
             [(ngModel)]="selectedListaFiltra"
-            [(options)]="listasFiltra"
+            [options]="listasFiltra"
             formControlName="conceptoFiltro"
             optionLabel="descripcion"
           ></p-dropdown>
@@ -330,7 +332,8 @@
           <p-dropdown
             [virtualScroll]="true"
             [(ngModel)]="selectedOrder"
-            [(options)]="catOrders"
+            [options]="catOrders"
+
             formControlName="orden"
           ></p-dropdown>
         </td>

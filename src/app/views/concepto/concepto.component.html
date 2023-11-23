@@ -213,7 +213,7 @@
             [virtualScroll]="true"
             formControlName="tipoListaCtr"
             [(ngModel)]="selectedTipoLista"
-            [(options)]="tiposLista"
+            [options]="tiposLista"
             optionLabel="nombre"
           ></p-dropdown>
         </td>
@@ -234,7 +234,7 @@
             [virtualScroll]="true"
             formControlName="catalogo"
             [(ngModel)]="selectedLista"
-            [(options)]="listas"
+            [options]="listas"
             optionLabel="nombre"
             [filter]="true"
           ></p-dropdown>
@@ -312,7 +312,7 @@
           <p-dropdown
             [virtualScroll]="true"
             [(ngModel)]="selectedListaFiltra"
-            [(options)]="listasFiltra"
+            [options]="listasFiltra"
             formControlName="conceptoFiltro"
             optionLabel="descripcion"
           ></p-dropdown>
@@ -332,7 +332,8 @@
           <p-dropdown
             [virtualScroll]="true"
             [(ngModel)]="selectedOrder"
-            [(options)]="catOrders"
+            [options]="catOrders"
+
             formControlName="orden"
           ></p-dropdown>
         </td>

@@ -172,7 +172,28 @@ export class ConceptoComponent implements OnInit {
       this.concepto.orden = this.config.data.orden;
     }
 
+    this.profileConcepto.get('orden').valueChanges.subscribe((newOrder) => {
+      this.selectedOrder = newOrder;
+      this.ordenarOpciones();
+    });
 
+
+  }
+  onOrderChange() {
+    this.ordenarOpciones();
+  }
+
+  ordenarOpciones() {
+    const selectedOrder = this.profileConcepto.get('orden').value;
+    if (!this.opciones || selectedOrder === undefined) {
+      return;
+    }
+
+    if (this.selectedOrder === 1) {
+      this.opciones.sort((a, b) => a.orden- b.orden);
+    } else if (this.selectedOrder === 2) {
+      this.opciones.sort((a, b) => b.orden - a.orden);
+    }
   }
 
 
@@ -426,10 +447,10 @@ export class ConceptoComponent implements OnInit {
 
   public getOpcionesByLista(listaOID: string) {
     this.opciones = [];
-    this.listaService
-      .getOpcionesByLista(listaOID, this.usuario.usuarioOID)
+    this.listaService.getOpcionesByLista(listaOID, this.usuario.usuarioOID)
       .subscribe((data) => {
         this.opciones = data;
+        this.ordenarOpciones();
       });
   }
 

@@ -8,8 +8,6 @@
     content: none; /* Elimina el contenido predeterminado */
   }
 
-  /* En tu archivo de estilos CSS o en el archivo de estilos de tu componente */
-  /* Utiliza un selector específico para el botón de carga */
   .p-fileupload-buttonbar .p-fileupload-upload {
     display: none;
   }
@@ -17,19 +15,18 @@
 
 
 <div style="font-family:Arial, Helvetica, sans-serif; text-align: left; ">
-
   <p-blockUI [blocked]="blockedDocument"></p-blockUI>
 
   <h3>CONTESTAR INSTANCIA DE DOCUMENTO </h3>
 
-
   <table cellppading="5" style="margin-bottom: 10px;" *ngIf=" documentoInstancia  ">
-
-    <td>
-      <tr>
+  <tbody>
+  <tr>
+  <td>
+  <table>
+    <tr>
     <td style="font-weight: bold;">DOCUMENTO:</td>
-    <td>{{documentoInstancia.nombre}}</td>
-    <td>{{documentoInstancia.documento}}</td>
+      <td>{{documentoInstancia.nombre}}</td>
     </tr>
 
     <tr>
@@ -58,15 +55,16 @@
                                                           height="30"> {{documentoInstancia.alerta}}</td>
       <td *ngIf="documentoInstancia.tipoAlerta == -1"><img src="assets/img/alertaAmarillo.png" width="30"
                                                            height="30"> {{documentoInstancia.alerta}}</td>
-
-
     </tr>
-    </td>
-    <td *ngIf="documentoInstancia.imagePath!=''"><img src={{documentoInstancia.imagePath}} width="200" height="200">
-    </td>
   </table>
+  </td>
 
-
+    <td *ngIf="documentoInstancia.imagePath!=''">
+      <img src={{documentoInstancia.imagePath}} width="200" height="200">
+    </td>
+  </tr>
+    </tbody>
+  </table>
 </div>
 
 

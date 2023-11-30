@@ -1,3 +1,11 @@
+<style>
+  .p-checkbox-box {
+    pointer-events: none;
+    opacity: 0.6; /* Opcional: para dar apariencia de deshabilitado */
+  }
+
+</style>
+
 <p-messages [value]="msgs" [escape]="true"></p-messages>
 
 <div *ngIf="usuario">
@@ -178,7 +186,7 @@
             [(selection)]="accesosSeleccionados"
             (onNodeSelect)="nodeSelect($event)"
             (onNodeUnselect)="nodeUnselect($event)"
-            [disabled]="readOnly"
+            [ngClass]="{'p-checkbox-box': readOnly}"
           ></p-tree>
         </td>
       </tr>

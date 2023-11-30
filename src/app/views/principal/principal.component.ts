@@ -123,7 +123,7 @@ export class PrincipalComponent implements OnInit, OnDestroy {
         }
 
         let ref= this.dialogService.open( UsuarioComponent , {
-          header: 'loginUsuario',
+          header: 'Ver Perfil',
           width: '90%',
           contentStyle: {"max-height": "650px" , "height" : "500px;"  } ,
           data: { usuarioOID : this.usuario.usuarioOID, tipoVentana : 2  }

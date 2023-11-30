@@ -7,6 +7,7 @@ import { UsuarioEmpresa } from '../model/usuario-empresa';
 import { PerfilUsuario } from '../model/perfil-usuario';
 import { UsuarioMarca } from '../model/usuario-marca';
 import { UsuarioRegion } from '../model/usuario-region';
+
 import { SucursalRegion } from '../model/sucursal-region';
 
 
@@ -14,14 +15,14 @@ import { SucursalRegion } from '../model/sucursal-region';
   providedIn: 'root'
 })
 export class UsuariosService {
- 
+
 
   endpoint: String;
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor( private http : HttpClient ) { }
 
- 
+
 
 public getUsuariosByUsuarioConsulta(usuarioOID:string,   usuarioCreatedOID:string) : Observable<Usuario[]> {
     let url:string = GlobalConstants.apiURL + "usuarios/byUsuarioConsulta/" + usuarioOID + "/" + usuarioCreatedOID;
@@ -68,32 +69,32 @@ public getPerfilesByUsuarioOID(usuarioOID:string  , sessionUser:string ) : Obser
 
 
 public getUsuarioByOID(usuarioOID:string  , usuarioConsultaOID:string ) : Observable<Usuario> {
- 
-  let url:string = GlobalConstants.apiURL + "usuarios/byUsuarioOID/" + usuarioOID + "/" + usuarioConsultaOID ; 
+
+  let url:string = GlobalConstants.apiURL + "usuarios/byUsuarioOID/" + usuarioOID + "/" + usuarioConsultaOID ;
   return this.http.get<Usuario>( url  );
 }
 
 
 public guardarUsuario(usuario: Usuario , usuarioConsultaOID:string): Observable< Usuario > {
-  
-  let url:string = GlobalConstants.apiURL + "usuarios/save/"+usuarioConsultaOID; 
-  return this.http.post<Usuario>( url , JSON.stringify(usuario), {headers: this.headers});    
-} 
+
+  let url:string = GlobalConstants.apiURL + "usuarios/save/"+usuarioConsultaOID;
+  return this.http.post<Usuario>( url , JSON.stringify(usuario), {headers: this.headers});
+}
 
 
 public guardarUsuarioMarcas( um : UsuarioMarca,usuarioConsultaOID:string ): Observable< UsuarioMarca > {
-  let url:string = GlobalConstants.apiURL + "/usuarios/saveMarcas/" + usuarioConsultaOID; 
-  return this.http.post<UsuarioMarca>( url , JSON.stringify(um), {headers: this.headers});    
-} 
+  let url:string = GlobalConstants.apiURL + "/usuarios/saveMarcas/" + usuarioConsultaOID;
+  return this.http.post<UsuarioMarca>( url , JSON.stringify(um), {headers: this.headers});
+}
 
 
 public guardarUsuarioRegiones( ur : UsuarioRegion,usuarioConsultaOID:string ): Observable< UsuarioRegion > {
-  let url:string = GlobalConstants.apiURL + "/usuarios/saveRegiones/" + usuarioConsultaOID ; 
-  return this.http.post<UsuarioRegion>( url , JSON.stringify(ur), {headers: this.headers});    
-} 
+  let url:string = GlobalConstants.apiURL + "/usuarios/saveRegiones/" + usuarioConsultaOID ;
+  return this.http.post<UsuarioRegion>( url , JSON.stringify(ur), {headers: this.headers});
+}
 
 
- 
+
 
 
  errorHandl(error) {

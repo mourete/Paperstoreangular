@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 
+import {DialogService, DynamicDialogComponent, DynamicDialogModule} from 'primeng/dynamicdialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -62,20 +63,14 @@ import { ProyectoComponent } from './views/proyecto/proyecto.component';
 import { ListProyectosComponent } from './views/list-proyectos/list-proyectos.component';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { TreeModule } from 'primeng/tree'
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 import { ReactiveFormsModule } from '@angular/forms';
 import {DashboardComponent} from './views/dashboard/dashboard.component';
 import {StoreCheckComponent} from './views/storeCheck/storeCheck.component';
 import { AngularFileUploaderModule } from "angular-file-uploader";
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {TreeTable, TreeTableModule} from 'primeng/treetable';
-import {TreeNode} from 'primeng/api';
+import {TreeTableModule} from 'primeng/treetable';
 import {BlockUIModule} from 'primeng/blockui';
-
-
-
-
-
+import {ListVerPerfilComponent} from "./views/list-ver-perfil/list-ver-perfil.component";
 
 
 @NgModule({
@@ -103,6 +98,7 @@ import {BlockUIModule} from 'primeng/blockui';
     UsuarioComponent,
     PerfilComponent,
     ListPerfilComponent,
+    // VerPerfilComponent,
     MarcaComponent,
     ListMarcasComponent,
     RegionComponent,
@@ -114,7 +110,8 @@ import {BlockUIModule} from 'primeng/blockui';
     ProyectoComponent,
     ListProyectosComponent,
     DashboardComponent,
-    StoreCheckComponent
+    StoreCheckComponent,
+    ListVerPerfilComponent
   ],
   imports: [
     BrowserModule,
@@ -149,9 +146,13 @@ import {BlockUIModule} from 'primeng/blockui';
     NgxMaskModule.forRoot(),
     ReactiveFormsModule,
     AngularFileUploaderModule,
-    BlockUIModule
+    BlockUIModule,
+    DynamicDialogModule
   ],
-  providers: [],
+  providers: [
+      DynamicDialogComponent,
+      DialogService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

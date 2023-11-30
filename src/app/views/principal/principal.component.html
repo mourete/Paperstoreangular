@@ -1,3 +1,13 @@
+<style>
+  .user-dropdown-button {
+    background-color: #9b9b9b; /* Color de fondo del botón */
+    color: #FFFFFF; /* Color del texto del botón */
+    font-weight: bold; /* texto en negritas */
+    margin-right: 60px; /* mover el boton del usuario */
+  }
+
+</style>
+
 <!--Main Navigation-->
 <header style="margin-bottom: 0px; position: relative; z-index: 1;">
   <nav class="navbar navbar-expand-md sticky-top">
@@ -5,23 +15,19 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <p-menubar [model]="items"></p-menubar>
     </div>
-    <div>
-      <table>
-        <tr>
-          <td>
-            <a [routerLink]="[]" (click)="logOff()">
-              <img width="40" height="40" src="/assets/img/logout.png" />
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>{{ usuario.userName }} - {{ usuario.nombre }}</td>
-        </tr>
-        <tr>
-          <td>{{ usuario.huespedNombre }}</td>
-        </tr>
-      </table>
+
+    <div class="dropdown" >
+      <button class="btn btn-secondary dropdown-toggle user-dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ usuario.userName}} - {{ usuario.nombre }} - {{ usuario.huespedNombre }}
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 200px">
+        <button class="dropdown-item" (click)="openVerPerfil()"><i class="pi pi-user"></i> Ver perfil</button>
+        <button class="dropdown-item" (click)="logOff()"><i class="pi pi-sign-out"></i> Cerrar sesión</button>
+      </div>
+
     </div>
+
   </nav>
   <hr color="#00000" />
 </header>

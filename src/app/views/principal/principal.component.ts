@@ -27,7 +27,7 @@ import {DashboardComponent} from '../dashboard/dashboard.component';
 import {StoreCheckComponent} from '../storeCheck/storeCheck.component';
 import {ListPerfilComponent} from "../list-perfil/list-perfil.component";
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
-import {ListVerPerfilComponent} from "../list-ver-perfil/list-ver-perfil.component";
+import {UsuarioComponent} from "../usuario/usuario.component";
 
 
 @Component({
@@ -117,13 +117,31 @@ export class PrincipalComponent implements OnInit, OnDestroy {
     }
 
     openVerPerfil() {
-        this.ref = this.dialogService.open(ListVerPerfilComponent, {
-            header: 'Ver Perfil',
-            width: '70%',
-            data: {
-                usuario: this.usuario
-            }
-        })
+
+        if( this.usuario==null   ){
+          return;
+        }
+
+        let ref= this.dialogService.open( UsuarioComponent , {
+          header: 'loginUsuario',
+          width: '90%',
+          contentStyle: {"max-height": "650px" , "height" : "500px;"  } ,
+          data: { usuarioOID : this.usuario.usuarioOID, tipoVentana : 2  }
+        });
+
+
+        ref.onClose.subscribe((  ) => {
+
+          // }
+        });
+
+        // this.ref = this.dialogService.open(ListVerPerfilComponent, {
+        //     header: 'Ver Perfil',
+        //     width: '70%',
+        //     data: {
+        //         usuario: this.usuario
+        //     }
+        // })
     }
 
 

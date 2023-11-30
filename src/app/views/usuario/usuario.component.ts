@@ -39,8 +39,8 @@ export class UsuarioComponent implements OnInit {
   usuarioEmpresas:UsuarioEmpresa[];
   usuarioPerfiles:PerfilUsuario[];
   usuarioPerfilSeleccionado : PerfilUsuario[] = [];
-
-
+  tipoVentana: 0; //1= VentanaUsario, 2=VerPerfil
+  readOnly : boolean;
   resultadoAccesos : any[];
   accesosSeleccionados: TreeNode[] = [];
   selectedFiles: TreeNode[] = [];
@@ -62,6 +62,7 @@ export class UsuarioComponent implements OnInit {
     flagTodasMarcas : [''],
     ciudadesForm : [''],
     listboxPerfil: ['']
+
 
   });
 
@@ -90,10 +91,14 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+this.readOnly=false;
   this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.config.data.usuarioOID = '4cd877c4-7eff-46da-b67a-738d6d36bcb8';
   if( this.config.data.usuarioOID!=null &&this.config.data.usuarioOID!= ""   ){
+    if(this.config.data.tipoVentana==2) this.readOnly=true;
+
          this.getUsuarioByOID(  this.config.data.usuarioOID , this.usuarioSession.usuarioOID  );
+
   }else{
      this.usuario=new Usuario();
      this.usuario.usuarioCreated=this.usuarioSession.usuarioOID;
@@ -262,8 +267,10 @@ public setCurrentPuesto(){
 public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
 
 
+
   this.usuariosService.getUsuarioByOID ( usuarioOID , usuarioConsultaOID ).subscribe(
     (data)=>{
+
       this.usuario =data;
       this.passwordConfirm=this.usuario.pass;
       this.getEmpUsuarioByUserOIDJson();

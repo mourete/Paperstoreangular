@@ -70,7 +70,7 @@ import {StoreCheckComponent} from './views/storeCheck/storeCheck.component';
 import { AngularFileUploaderModule } from "angular-file-uploader";
 import {TreeTableModule} from 'primeng/treetable';
 import {BlockUIModule} from 'primeng/blockui';
-import {ListVerPerfilComponent} from "./views/list-ver-perfil/list-ver-perfil.component";
+
 
 
 @NgModule({
@@ -110,8 +110,7 @@ import {ListVerPerfilComponent} from "./views/list-ver-perfil/list-ver-perfil.co
     ProyectoComponent,
     ListProyectosComponent,
     DashboardComponent,
-    StoreCheckComponent,
-    ListVerPerfilComponent
+    StoreCheckComponent
   ],
   imports: [
     BrowserModule,

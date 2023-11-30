@@ -75,9 +75,9 @@ export class ListUsuariosComponent implements OnInit {
 
     let ref= this.dialogService.open( UsuarioComponent , {
       header: 'Usuario',
-      width: '70%',
+      width: '90%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
-      data: { usuarioOID : this.selectedUsuario.usuarioOID  }
+      data: { usuarioOID : this.selectedUsuario.usuarioOID, tipoVentana: 1  }
   });
 
 

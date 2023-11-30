@@ -1,3 +1,11 @@
+<style>
+  .p-checkbox-box {
+    pointer-events: none;
+    opacity: 0.6; /* Opcional: para dar apariencia de deshabilitado */
+  }
+
+</style>
+
 <p-messages [value]="msgs" [escape]="true"></p-messages>
 
 <div *ngIf="usuario">
@@ -13,6 +21,7 @@
           <input
             type="text"
             pInputText
+            [readonly]="readOnly"
             [style]="{ width: '30rem' }"
             formControlName="userName"
             (input)="usuario.userName = usuario.userName.toUpperCase()"
@@ -36,6 +45,7 @@
             [style]="{ width: '30rem' }"
             [(ngModel)]="usuario.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
+            [readonly]="readOnly"
           />
           <div *ngIf="f.nombre.errors?.required">Nombre es requerido</div>
           <div *ngIf="f.nombre.errors?.pattern">Nombre solo acepta letras</div>
@@ -51,6 +61,7 @@
             [style]="{ width: '30rem' }"
             formControlName="pass"
             [(ngModel)]="usuario.pass"
+            [readonly]="readOnly"
           />
           <div *ngIf="f.pass.errors?.required">Contraseña es requerido</div>
         </td>
@@ -65,6 +76,7 @@
             pInputText
             formControlName="passwordConfirm"
             [(ngModel)]="passwordConfirm"
+            [readonly]="readOnly"
           />
         </td>
       </tr>
@@ -80,6 +92,7 @@
             [(ngModel)]="usuario.mail"
             pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
             required
+            [readonly]="readOnly"
           />
           <div *ngIf="f.mail.errors?.required">Correo es requerido</div>
           <div *ngIf="f.mail.errors?.pattern">Correo invalido</div>
@@ -96,6 +109,7 @@
             [cols]="35"
             formControlName="direccion"
             [(ngModel)]="usuario.direccion"
+            [readonly]="readOnly"
           ></textarea>
         </td>
       </tr>
@@ -109,6 +123,7 @@
             [style]="{ width: '30rem' }"
             formControlName="telefono"
             [(ngModel)]="usuario.telefono"
+            [readonly]="readOnly"
           />
         </td>
       </tr>
@@ -125,6 +140,7 @@
             [(ngModel)]="selectedPuesto"
             [options]="puestos"
             optionLabel="nombre"
+            [readonly]="readOnly"
           ></p-dropdown>
         </td>
       </tr>
@@ -148,6 +164,7 @@
             [listStyle]="{ 'max-height': '250px' }"
             [style]="{ width: '30rem' }"
             optionLabel="nombre"
+            [readonly]="readOnly"
           >
           </p-listbox>
         </td>
@@ -169,6 +186,7 @@
             [(selection)]="accesosSeleccionados"
             (onNodeSelect)="nodeSelect($event)"
             (onNodeUnselect)="nodeUnselect($event)"
+            [ngClass]="{'p-checkbox-box': readOnly}"
           ></p-tree>
         </td>
       </tr>
@@ -177,13 +195,14 @@
 </div>
 <div style="padding: 20px">
   <button
-    pButton
-    style="margin: 3px"
-    icon="pi pi-check"
-    type="button"
-    label="Guardar"
-    (click)="guardarUsuario()"
-    >
+          *ngIf="!readOnly"
+          pButton
+          style="margin: 3px"
+          icon="pi pi-check"
+          type="button"
+          label="Guardar"
+          (click)="guardarUsuario()"
+  >
   </button>
 
   <button

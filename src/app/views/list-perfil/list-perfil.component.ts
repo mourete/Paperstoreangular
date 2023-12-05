@@ -142,7 +142,7 @@ export class ListPerfilComponent implements OnInit {
       return;
     }
 
-    this.selectedPerfil.usuarioOID = this.usuario.usuarioOID ;
+    this.selectedPerfil.UsuarioOID = this.usuario.usuarioOID ;
 
     this.perfilService.eliminaPerfil( this.selectedPerfil, this.usuarioOID ).subscribe((data)=>{
       //  this.getMarcasByUsuarioOID();

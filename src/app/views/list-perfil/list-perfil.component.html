@@ -73,7 +73,7 @@
         <ng-template pTemplate="body" let-perfil>
           <tr [pSelectableRow]="perfil" [pContextMenuRow]="perfil" (contextmenu)="onRightClick($event,perfil )">
 
-            <td>{{ perfil.perfilName }}</td>
+            <td>{{ perfil.nombre }}</td>
             <td>{{ perfil.descripcion }}</td>
 
           </tr>

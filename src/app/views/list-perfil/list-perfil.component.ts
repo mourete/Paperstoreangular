@@ -10,21 +10,26 @@ import { ContextMenu } from 'primeng/contextmenu';
 
 
 @Component({
-  selector: 'app-perfil',
+  selector: 'app-list-perfil',
   templateUrl: './list-perfil.component.html',
   styleUrls: ['./list-perfil.component.scss'],
   providers: [DialogService, ConfirmationService]
 })
 export class ListPerfilComponent implements OnInit {
-@ViewChild('cmPerfil') cmPerfil: ContextMenu;
+
+  @ViewChild('cmPerfil') cmPerfil: ContextMenu;
   itemsPerfil: MenuItem[];
-  perfil:Perfil[];
+
+
+  perfiles:Perfil[];
   selectedPerfil: Perfil;
   usuario:Usuario;
   usuarioOID :string;
 
-  constructor( public perfilService: PerfilService , private confirmationService: ConfirmationService ,
-    public dialogService: DialogService   ) { }
+
+  constructor( public perfilService: PerfilService,
+               private confirmationService: ConfirmationService ,
+                public dialogService: DialogService   ) { }
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
@@ -57,29 +62,26 @@ export class ListPerfilComponent implements OnInit {
     if( this.usuario==null ){
       return;
     }
-    console.log(this.usuario.usuarioOID);
-    //this.perfilService.getPerfiles(  this.usuario.usuarioOID ) .subscribe(
-      (data)=>{
-         console.log( data );
-         this.perfil=data;
-      }
-     //);
-
+    this.perfilService.getAll( this.usuario.usuarioOID).subscribe(
+        (data) => {
+          this.perfiles = data;
+        }
+    );
   }
 
 
   public agregarPerfil(){
 
-    let ref= this.dialogService.open( ListPerfilComponent , {
+    let ref= this.dialogService.open( PerfilComponent , {
       header: 'Perfil',
       width: '70%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { empresaId:0  }
   });
 
-  ref.onClose.subscribe(( emp : Perfil  ) => {
-    // console.log("Entro aqui 2");
-    if (emp!=null  ) {
+  ref.onClose.subscribe(( per : Perfil  ) => {
+
+    if (per!=null  ) {
 
         this.getModuloPerfilJson();
     }
@@ -101,7 +103,7 @@ export class ListPerfilComponent implements OnInit {
     header: 'Perfil',
     width: '70%',
     contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
-    data: { empresaId: this.selectedPerfil.perfilId  }
+    data: { perfilId: this.selectedPerfil.perfilId  }
   });
 
 
@@ -115,8 +117,8 @@ export class ListPerfilComponent implements OnInit {
 
   }
 
-  onRightClick(event: MouseEvent, empresa: any) {
-    this.selectedPerfil = empresa; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+  onRightClick(event: MouseEvent, perfil: any) {
+    this.selectedPerfil = perfil; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
     this.cmPerfil.show(event);   // Muestra el menú contextual.
     event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
     event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
@@ -126,7 +128,7 @@ export class ListPerfilComponent implements OnInit {
   public confirmDeletePerfil(){
 
     this.confirmationService.confirm({
-      message: 'Está seguro que desea eliminar la Empresa ?',
+      message: 'Está seguro que desea eliminar el Perfil ?',
       accept: () => {
          this.deletePerfil();
       }

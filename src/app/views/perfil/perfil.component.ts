@@ -1,17 +1,19 @@
 import { Perfil } from './../../model/perfil';
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Modulo } from 'src/app/model/modulo';
 import { Usuario } from './../../model/usuario';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
-import {DynamicDialogRef} from 'primeng/dynamicdialog';
+import {DynamicDialogRef, DialogService} from 'primeng/dynamicdialog';
 import {SelectItem} from 'primeng/api';
 import {Message} from 'primeng/api';
 import {PerfilService } from 'src/app/service/perfil.service';
-
 import { FormGroup, FormControl, Validators , FormBuilder} from '@angular/forms';
 import { TreeNode } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import {PerfilUsuario} from "../../model/perfil-usuario";
+import {PuestoService} from "../../service/puesto.service";
+import {Puesto} from "../../model/puesto";
+import {UsuarioEmpresa} from "../../model/usuario-empresa";
 
 
 
@@ -22,74 +24,103 @@ import {PerfilUsuario} from "../../model/perfil-usuario";
 })
 export class PerfilComponent implements OnInit {
 
-  usuarioSession:Usuario;
-  usuario:Usuario;
+
+  perfilSession: Perfil;
   perfil:Perfil;
+  puestos:Puesto[];
   dataArray: string[] = [];
   modulos:Modulo[];
+  selectedPuesto:Puesto;
   msgs: Message[] = [];
   moduloSeleccionado :Modulo;
   resultadoAccesos : any[];
   perfilSeleccionados: TreeNode[] = [];
   selectedFiles: TreeNode[] = [];
   accesosModulos: TreeNode[];
-  accesosModuloSeleccionados: TreeNode[];
+  accesosModuloSeleccionados: TreeNode[] = [];
   usuarioPerfiles:PerfilUsuario[];
   usuarioPerfilSeleccionado : PerfilUsuario[] = [];
+  profilePerfil: FormGroup;
+    noEditable: boolean;
 
-
-  profilePerfil = this.fb.group({
-    perfil: ['',  Validators.required],
-    descripcion: ['', Validators.required],
-    flag_modulo: [''],
-
-  });
 
   constructor( public perfilService:PerfilService ,  private fb: FormBuilder,
-           public config: DynamicDialogConfig , public ref: DynamicDialogRef
+           public config: DynamicDialogConfig , public ref: DynamicDialogRef,
+               public dialogService: DialogService, public puestoService:PuestoService
+      ) {
 
-      ) { }
+    this.profilePerfil = this.fb.group({
+      clave: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern('^[A-Z0-9]*$')]],
+      perfilName: ['', Validators.required],
+      descripcion: [''],
+        noEditable: [''],
+        readOnly: [''],
+        activa: [''],
+        dashboard: [''],
+      flag_modulo: ['']
+    })
+  }
 
-
+  get clave() { return this.profilePerfil.get('clave'); }
   get f() { return this.profilePerfil.controls; }
 
 
   onSubmit() {
 
-
     this.guardarPerfil();
-
 
   }
 
 
   ngOnInit(): void {
 
+    const perfilSession = localStorage.getItem('perfil');
+    if(perfilSession){
+      this.perfilSession = JSON.parse(perfilSession);
+    }
 
-  this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
-  if (this.config.data.perfilId > 0) {
-         this.getPerfilByID(this.config.data.perfilId , this.usuarioSession.usuarioOID  );
+  if (this.config && this.config.data && this.config.data.perfilId ) {
+      this.getPerfilByID(this.config.data.perfilId , this.perfilSession.perfilId  );
+
   }else{
-     this.perfil=new Perfil();
+    this.perfil=new Perfil();
+    this.perfil.perfilCreated=this.perfilSession.perfilId;
+    this.perfil.huesped = this.perfilSession.huesped;
+    this.getAll();
      this.getModuloPerfilJson();
 
   }
+
+  this.profilePerfil.valueChanges.subscribe( val => {
+    if(this.perfil){
+      this.perfil.clave = val.clave;
+      this.perfil.perfilName = val.perfilName;
+      this.perfil.descripcion = val.descripcion;
+      this.perfil.noEditable = val.noEditable;
+      this.perfil.readOnly = val.readOnly;
+      this.perfil.activa = val.activa;
+      this.perfil.dashboard = val.dashboard;
+      this.perfil.flag_modulo = val.flag_modulo;
+    }
+  });
+
+  this.noEditable = false;
 
 }
 
 
 
 public getModuloPerfilJson(){
-  var perfilID=0;
+  var perfilID="*";
   var  sdataArray:string;
 
-  if( this.perfil==null || this.perfil.perfilId==0 ){
-     perfilID=0;
+  if( this.perfil==null || this.perfil.perfilId==null ){
+     perfilID="*";
   }else{
     perfilID=this.perfil.perfilId;
   }
 
-  this.perfilService.getModulosJson(  perfilID  , this.usuarioSession.usuarioOID  ) .subscribe(
+  this.perfilService.getPerfilModulosJson(  perfilID  , this.perfilSession.perfilId  ) .subscribe(
     (data)=>{
         this.resultadoAccesos = data;
 
@@ -98,6 +129,7 @@ public getModuloPerfilJson(){
         this.dataArray = sdataArray.split("/");
 
         this.checkNode(this.accesosModulos, this.dataArray);
+        this.getAll()
 
 
 
@@ -106,113 +138,166 @@ public getModuloPerfilJson(){
 
 }
 
-public getPerfilByID ( perfilId : number , usuarioConsultaOID: string ){
+
+public getPerfilByID(perfilId: string, perfilConsultaID: string){
 
 
-  this.perfilService.getPerfilById( perfilId , usuarioConsultaOID ).subscribe(
+  this.perfilService.getPerfilById( perfilId , perfilConsultaID ).subscribe(
     (data)=>{
+
       this.perfil =data;
-      this,this.getModuloPerfilJson();
 
-   }
+      this.getModuloPerfilJson();
+   },
+
   );
-
 }
+
+  public empresaChanged(){
+
+  }
+
+
+  public initFlagsPerfiles() {
+    if( this.usuarioPerfiles==null || this.usuarioPerfiles.length<=0 ){
+      return;
+    }
+
+
+    var pu:PerfilUsuario;
+    for( var i=0;i< this.usuarioPerfiles.length;i++ ){
+      pu=this.usuarioPerfiles[i];
+      if(pu==null){
+        continue;
+      }
+
+      if(pu.seleccionado==1){
+        this.usuarioPerfilSeleccionado.push(pu);
+      }
+    }
+  }
+
+  public getAll (  ){
+    this.puestoService.getAllPuestos (this.perfilSession.perfilId).subscribe(
+      (data)=>{
+        this.puestos=data;
+        if(  this.perfil.puestoId>0 ){
+          this.setCurrentPuesto();
+
+
+        }
+        this.getPerfilesByUsuarioOID();
+
+      }
+    );
+
+  }
+
+  public setCurrentPuesto(){
+    if( this.puestos==null || this.puestos.length<=0 ){
+      return;
+    }
+
+    for( var  i=0; i<this.puestos.length; i++  ){
+      if( this.puestos[i].puestoId==this.perfil.puestoId  ){
+        this.selectedPuesto=this.puestos[i];
+
+      }
+
+    }
+
+
+  }
+
+  public getPerfilesByUsuarioOID(){
+    var perfilID="*";
+
+    if( this.perfil==null || this.perfil.usuarioOID==null || this.perfil.usuarioOID==""   ){
+      perfilID="*";
+    }else{
+      perfilID=this.perfil.perfilId;
+    }
+
+    this.perfilService.getPerfilesByPerfilID (  perfilID, this.perfilSession.perfilId    ) .subscribe(
+      (data)=>{
+
+        this.usuarioPerfiles=data;
+
+        this.initFlagsPerfiles();
+      }
+
+    );
+
+  }
+
+
+
 
 
   public guardarPerfil(){
 
     this.msgs=[];
 
-    if(  this.perfil.nombre ==null ||this.perfil.nombre=="" ){
-      this.msgs.push({severity:'error', detail: "Se requiere capturar el nombre del perfil "  , summary:'Validation failed'});
-      return;
-    }
+    if(!this.perfilSession) {
 
-    if(  this.dataArray ==null ||this.dataArray.length ==0 ){
-      this.msgs.push({severity:'error', detail: "Se requiere accesos al usuario "  , summary:'Validation failed'});
-      return;
-    }
-    if(  this.usuarioPerfilSeleccionado ==null ||this.usuarioPerfilSeleccionado.length ==0 ){
-      console.log(this.usuarioPerfilSeleccionado.length);
-
-      this.msgs.push({severity:'error', detail: "Se requiere puestos del usuario "  , summary:'Validation failed'});
-      return;
-    }
-
-    if(  this.perfilSeleccionados ==null ||this.perfilSeleccionados.length ==0 ){
-      console.log(this.perfilSeleccionados.length);
-      this.msgs.push({severity:'error', detail: "Se requiere seleccionar accesos al menos a una empresa"  , summary:'Validation failed'});
-      return;
-    }
-
-    if( this.moduloSeleccionado!=null ){
-       this.perfil.moduloId=this.moduloSeleccionado.moduloId;
-    }
-
-    if( this.usuario.usuarioOID!=null && this.usuario.usuarioOID!="" ){
-       this.usuario.usuarioUpdated=this.usuarioSession.usuarioOID;
-       this.usuario.huesped =this.usuarioSession.huesped;
-
-    }
-
-
-    this.setModuloConcat();
-
-    this.perfil.activo=1;
-    this.perfilService.guardarPerfil(  this.perfil, this.usuarioSession.usuarioOID ).subscribe(
-      (data)=>{
-        this.perfil=data;
-        this.ref.close(this.perfil);
+      if( this.moduloSeleccionado!=null ){
+         this.perfil.ModuloId=this.moduloSeleccionado.moduloId;
       }
 
-    );
+      if( this.perfil.perfilId!=null && this.perfil.perfilId!="" ){
+         this.perfil.perfilUpdated=this.perfilSession.perfilId;
+         this.perfil.huesped =this.perfil.huesped;
+
+      }
+      if (this.noEditable) {
+        this.perfil.noEditable = 1;
+      } else {
+        this.perfil.noEditable = 0;
+      }
 
 
+      this.setModuloConcat();
+
+      this.perfil.Activo = 1;
+      this.perfilService.guardarPerfil(this.perfil, this.perfilSession.perfilId).subscribe(
+        (data) => {
+          this.perfil = data;
+          this.ref.close(this.perfil);
+        }
+      );
+
+    }
   }
 
 
   public setModuloConcat(){
 
-    if( this.perfil==null ){
+    if( this.perfil==null){
       return;
     }
 
    // var ue:UsuarioEmpresa;
-    var moduloConcat:string=null;
+    var ue:UsuarioEmpresa;
+    var empresasConcat:string=null;
     var todasMarcas:number;
     if( this.dataArray!=null && this.dataArray.length>0  ){
 
        for( var i=0;i< this.dataArray.length; i++  ){
 
-          /* ue=this.usuarioEmpresas[i];
-           if(ue==null){
-             continue;
-           }
-
-           if( !ue.flagSeleccionada ){
-              continue;
-           }
-
-           todasMarcas=0;
-           if( ue.flagTodasMarcas ){
-             todasMarcas=1;
-           }
- */        if(this.dataArray[i]!=null && this.dataArray[i].length>0)
+         if(this.dataArray[i]!=null && this.dataArray[i].length>0)
            {
-              if( moduloConcat==null ){
-                moduloConcat= this.dataArray[i] +  "|";
+              if( empresasConcat==null ){
+                empresasConcat= this.dataArray[i] +  "|";
               }else{
-                moduloConcat+=  this.dataArray[i] +  "|";
+                empresasConcat+=  this.dataArray[i] +  "|";
               }
            }
        }
     }
-    console.log("concant: " + moduloConcat.substring(0,moduloConcat.length-1))
 
-
-    this.perfil.moduloConcat=moduloConcat.substring(0,moduloConcat.length-1);
-
+    if (empresasConcat) {
+      this.perfil.moduloConcat = empresasConcat.substring(0, empresasConcat.length - 1);
+    }
 
   }
 
@@ -274,12 +359,14 @@ nodeSelect(event) {
   this.addNode(event.node);
   this.selectedFiles = [];
   this.checkNode(this.accesosModulos, this.dataArray);
+  this.profilePerfil.get('flag_modulo').setValue(this.dataArray)
   }
 
 nodeUnselect(event) {
   this.removeNode(event.node);
   this.selectedFiles = [];
   this.checkNode(this.accesosModulos, this.dataArray);
+  this.profilePerfil.get('flag_modulo').setValue(this.dataArray)
 }
 
 removeNode(node: TreeNode) {
@@ -305,6 +392,12 @@ addNode(node: TreeNode) {
       this.addNode(node.children[i]);
   }
 }
+
+  convertirAMayusculas() {
+
+    const claveValue = this.profilePerfil.get('clave').value;
+    this.profilePerfil.get('clave').setValue(claveValue.toUpperCase(), { emitEvent: false });
+  }
 
 
 }

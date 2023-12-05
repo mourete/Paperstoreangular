@@ -1,5 +1,5 @@
 <div>
-  <div *ngIf="perfil">
+  <div *ngIf="perfiles">
     <div style="font-family: Arial, Helvetica, sans-serif; margin: 20px">
       <h3>PERFILES</h3>
     </div>
@@ -15,6 +15,8 @@
         ></button>
       </div>
     </p-toolbar>
+
+
 
     <div>
       <div>
@@ -49,35 +51,36 @@
         </p-toolbar>
       </div>
 
+
       <p-table
         (onRowSelect)="perfilChanged()"
-        [value]="perfil"
+        [value]="perfiles"
         [paginator]="true"
         [rows]="10"
         selectionMode="single"
         [(selection)]="selectedPerfil"
         [contextMenu]="cmPerfil"
-        dataKey="perfilId"
-      >
+        dataKey="perfilId">
+
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <!-- <th style="width: 300px">Id</th> Se quita el id-->
+
             <th style="width: 300px">Perfil</th>
             <th style="width: 300px">Descripción</th>
-
           </tr>
         </ng-template>
+
         <ng-template pTemplate="body" let-perfil>
           <tr [pSelectableRow]="perfil" [pContextMenuRow]="perfil" (contextmenu)="onRightClick($event,perfil )">
-            <!-- <td>{{ empresa.empresaId }}</td> Se quita el id-->
-            <td>{{ perfil.perfil }}</td>
+
+            <td>{{ perfil.perfilName }}</td>
             <td>{{ perfil.descripcion }}</td>
 
           </tr>
         </ng-template>
       </p-table>
     </div>
-  </div>
+    </div>
 </div>
 
 <p-confirmDialog
@@ -92,3 +95,4 @@
   appendTo="body"
   [model]="itemsPerfil"
 ></p-contextMenu>
+

@@ -1,28 +1,50 @@
 <p-messages [value]="msgs" [escape]="true"></p-messages>
 
-<div *ngIf="perfil">
+
   <form
     [formGroup]="profilePerfil"
     (ngSubmit)="onSubmit()"
     class="box-model form-support-margin"
   >
+    <div *ngIf="perfil">
     <table border="0" cellpadding="1" cellspacing="1">
+
       <tr>
-        <td>Perfil</td>
+        <td>Clave</td>
+        <td>
+
+          <input
+            #claveInput
+            type="text"
+            pInputText
+            size="25"
+            formControlName="clave"
+            (input)="convertirAMayusculas()"
+            mask="AAAAAAAAAA"
+            [style]="{ width: '30rem' }"
+            required
+            [showMaskTyped]="true"
+          />
+          <div *ngIf="clave.errors?.required">Clave es requerida</div>
+          <div *ngIf="clave.errors?.maxLength || clave.errors?.minLength">La clave debe tener 10 caracteres</div>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>Perfil </td>
         <td>
           <input
             type="text"
             pInputText
             [style]="{ width: '30rem' }"
             formControlName="perfilName"
-            [(ngModel)]="perfil.nombre"
           />
-          <div *ngIf="f.nombre.errors?.required">Perfil es requerido</div>
         </td>
       </tr>
 
       <tr>
-        <td>Descripción</td>
+        <td>Descripción </td>
 
         <td>
           <input
@@ -30,21 +52,58 @@
             pInputText
             formControlName="descripcion"
             [style]="{ width: '30rem' }"
-            [(ngModel)]="perfil.descripcion"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
           />
-          <div *ngIf="f.descripcion.errors?.required">Descripción es requerido</div>
 
         </td>
       </tr>
 
       <tr>
-        <td>Modulos</td>
+        <td>No editable</td>
+        <td>
+          <p-inputSwitch
+            formControlName="noEditable"
+          ></p-inputSwitch>
+        </td>
+      </tr>
+
+      <tr>
+      <td>Read Only</td>
+      <td>
+        <p-inputSwitch
+          formControlName="readOnly"
+        ></p-inputSwitch>
+      </td>
+      </tr>
+
+      <tr>
+        <td>Activo</td>
+        <td>
+          <p-inputSwitch
+            formControlName="activa"
+          ></p-inputSwitch>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Dashboard </td>
+
+        <td>
+          <input
+            type="text"
+            pInputText
+            formControlName="dashboard"
+            [style]="{ width: '30rem' }"
+          />
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>Modulos </td>
         <td>
           <p-tree
             [value]="accesosModulos"
-            min="1"
-            formControlName="flag_modulo"
             selectionMode="checkbox"
             [style]="{ width: '30rem' }"
             [(selection)]="accesosModuloSeleccionados"
@@ -54,8 +113,10 @@
         </td>
       </tr>
     </table>
+    </div>
   </form>
-</div>
+
+
 <div style="padding: 20px">
   <button
     pButton

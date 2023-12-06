@@ -76,7 +76,7 @@ export class ListPerfilComponent implements OnInit {
       header: 'Perfil',
       width: '70%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
-      data: { empresaId:0  }
+      data: { UsuarioOID: this.usuarioOID }
   });
 
   ref.onClose.subscribe(( per : Perfil  ) => {
@@ -103,7 +103,7 @@ export class ListPerfilComponent implements OnInit {
     header: 'Perfil',
     width: '70%',
     contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
-    data: { perfilId: this.selectedPerfil.perfilId  }
+    data: { UsuarioOID: this.usuarioOID, perfil: this.selectedPerfil }
   });
 
 

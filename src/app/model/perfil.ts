@@ -4,12 +4,12 @@ export class Perfil {
   perfilId: number;
   clave: string;
   nombre: string;
-  AccesoMovil: number;
-  Descripcion: string;
+  accesoMovil: number;
+  descripcion: string;
   Activo: number;
   ModuloId: number;
-  ReadOnly: number;
-  NoEditable: number;
+  readOnly: boolean;
+  noEditable: number;
   flag_modulo: number;
   UsuarioOID: string;
   huesped:number;

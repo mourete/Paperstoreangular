@@ -57,6 +57,7 @@ export class PerfilComponent implements OnInit {
       noEditable: [''],
       readOnly: [''],
       accesoMovil: [''],
+      activo: [''],
     })
   }
 
@@ -93,7 +94,8 @@ export class PerfilComponent implements OnInit {
         descripcion: this.perfil.descripcion ?? '',
         noEditable: this.perfil.noEditable ?? 0,
         readOnly: this.perfil.readOnly ?? 0,
-        accesoMovil: this.perfil.accesoMovil ?? 0
+        accesoMovil: this.perfil.accesoMovil ?? 0,
+        activo: this.perfil.activo ?? 0
       });
     } else {
       this.perfil = new Perfil();
@@ -112,6 +114,7 @@ export class PerfilComponent implements OnInit {
         this.perfil.noEditable = val.noEditable;
         this.perfil.readOnly = val.readOnly;
         this.perfil.accesoMovil = val.accesoMovil;
+        this.perfil.activo = val.activo;
       }
     });
 
@@ -256,7 +259,7 @@ export class PerfilComponent implements OnInit {
       this.setEmpresasConcat();
       this.setModuloConcat();
 
-      this.perfil.Activo = 1;
+      this.perfil.activo = 1;
       this.perfilService.guardarPerfil(this.perfil, this.perfilSession.UsuarioOID).subscribe(
         (data) => {
           this.perfil = data;

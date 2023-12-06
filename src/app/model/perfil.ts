@@ -6,7 +6,7 @@ export class Perfil {
   nombre: string;
   accesoMovil: number;
   descripcion: string;
-  Activo: number;
+  activo: number;
   ModuloId: number;
   readOnly: boolean;
   noEditable: number;

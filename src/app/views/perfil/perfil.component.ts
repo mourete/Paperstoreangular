@@ -14,6 +14,8 @@ import {PerfilUsuario} from "../../model/perfil-usuario";
 import {PuestoService} from "../../service/puesto.service";
 import {Puesto} from "../../model/puesto";
 import {UsuarioEmpresa} from "../../model/usuario-empresa";
+import {Empresa} from "../../model/empresa";
+
 
 
 
@@ -27,20 +29,21 @@ export class PerfilComponent implements OnInit {
 
   perfilSession: Perfil;
   perfil:Perfil;
-  puestos:Puesto[];
   dataArray: string[] = [];
-  modulos:Modulo[];
   selectedPuesto:Puesto;
+  selectedEmpresa: Empresa;
+  puestos:Puesto[];
+  modulos:Modulo[];
   msgs: Message[] = [];
   moduloSeleccionado :Modulo;
-  resultadoAccesos : any[];
-  perfilSeleccionados: TreeNode[] = [];
-  selectedFiles: TreeNode[] = [];
-  accesosModulos: TreeNode[];
-  accesosModuloSeleccionados: TreeNode[] = [];
+  profilePerfil: FormGroup;
+  usuarioEmpresas: UsuarioEmpresa[];
   usuarioPerfiles:PerfilUsuario[];
   usuarioPerfilSeleccionado : PerfilUsuario[] = [];
-  profilePerfil: FormGroup;
+  resultadoAccesos : any[];
+  accesosModuloSeleccionados: TreeNode[] = [];
+  selectedFiles: TreeNode[] = [];
+  accesosModulos: TreeNode[];
     noEditable: boolean;
 
 
@@ -51,13 +54,11 @@ export class PerfilComponent implements OnInit {
 
     this.profilePerfil = this.fb.group({
       clave: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern('^[A-Z0-9]*$')]],
-      perfilName: ['', Validators.required],
-      descripcion: [''],
-        noEditable: [''],
-        readOnly: [''],
-        activa: [''],
-        dashboard: [''],
-      flag_modulo: ['']
+      nombre: ['', Validators.required],
+      Descripcion: [''],
+      NoEditable: [''],
+      ReadOnly: [''],
+      AccesoMovil: [''],
     })
   }
 
@@ -75,79 +76,93 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
 
     const perfilSession = localStorage.getItem('perfil');
-    if(perfilSession){
+    if (perfilSession){
+
       this.perfilSession = JSON.parse(perfilSession);
     }
 
-  if (this.config && this.config.data && this.config.data.perfilId ) {
-      this.getPerfilByID(this.config.data.perfilId , this.perfilSession.perfilId  );
+  if (this.config.data.UsuarioOID!=null &&this.config.data.UsuarioOID!= ""  ) {
+
+      this.getPerfilByID(this.config.data.UsuarioOID , this.perfilSession.UsuarioOID );
 
   }else{
     this.perfil=new Perfil();
-    this.perfil.perfilCreated=this.perfilSession.perfilId;
+    this.perfil.perfilCreated=this.perfilSession.UsuarioOID;
     this.perfil.huesped = this.perfilSession.huesped;
-    this.getAll();
-     this.getModuloPerfilJson();
+    this.getAllPuestos();
+     this.getPerfilModulosJson();
 
   }
 
   this.profilePerfil.valueChanges.subscribe( val => {
     if(this.perfil){
       this.perfil.clave = val.clave;
-      this.perfil.perfilName = val.perfilName;
-      this.perfil.descripcion = val.descripcion;
-      this.perfil.noEditable = val.noEditable;
-      this.perfil.readOnly = val.readOnly;
-      this.perfil.activa = val.activa;
-      this.perfil.dashboard = val.dashboard;
-      this.perfil.flag_modulo = val.flag_modulo;
+      this.perfil.nombre = val.nombre;
+      this.perfil.Descripcion = val.Descripcion;
+      this.perfil.NoEditable = val.NoEditable;
+      this.perfil.ReadOnly = val.ReadOnly;
+      this.perfil.AccesoMovil = val.AccesoMovil;
     }
   });
 
-  this.noEditable = false;
 
 }
 
+  public getPerfilModulosJson(){
+    let userOID: number;
+    let sdataArray: string;
 
+    if( this.perfil==null || this.perfil.UsuarioOID==null ){
+      userOID=this.perfilSession.perfilId;
+    }else{
 
-public getModuloPerfilJson(){
-  var perfilID="*";
-  var  sdataArray:string;
+      userOID=this.perfil.perfilId;
 
-  if( this.perfil==null || this.perfil.perfilId==null ){
-     perfilID="*";
-  }else{
-    perfilID=this.perfil.perfilId;
-  }
-
-  this.perfilService.getPerfilModulosJson(  perfilID  , this.perfilSession.perfilId  ) .subscribe(
-    (data)=>{
+    }
+    this.perfilService.getPerfilModulosJson(  userOID  , this.perfilSession.UsuarioOID  ) .subscribe(
+      (data)=>{
         this.resultadoAccesos = data;
 
-        this.accesosModulos = JSON.parse(this.resultadoAccesos[1]) ;
+        this.accesosModulos = JSON.parse(this.resultadoAccesos[1]);
         sdataArray = this.resultadoAccesos[0];
         this.dataArray = sdataArray.split("/");
 
         this.checkNode(this.accesosModulos, this.dataArray);
-        this.getAll()
+        this.getAllPuestos();
+
+      }
+    );
+
+  }
+
+  public getAllPuestos (  ){
+    this.puestoService.getAllPuestos(this.perfilSession.UsuarioOID).subscribe(
+      (data)=>{
+        this.puestos=data;
+        if(  this.perfil.puestoId>0 ){
+          this.setCurrentPuesto();
+
+
+        }
+        this.getPerfilesByUsuarioOID();
+
+      }
+    );
+
+  }
 
 
 
-    }
-   );
 
-}
+public getPerfilByID(UsuarioOID: number, perfilConsultaID: string){
 
 
-public getPerfilByID(perfilId: string, perfilConsultaID: string){
-
-
-  this.perfilService.getPerfilById( perfilId , perfilConsultaID ).subscribe(
+  this.perfilService.getPerfilById( UsuarioOID , perfilConsultaID ).subscribe(
     (data)=>{
 
       this.perfil =data;
 
-      this.getModuloPerfilJson();
+      this.getPerfilModulosJson();
    },
 
   );
@@ -177,21 +192,7 @@ public getPerfilByID(perfilId: string, perfilConsultaID: string){
     }
   }
 
-  public getAll (  ){
-    this.puestoService.getAllPuestos (this.perfilSession.perfilId).subscribe(
-      (data)=>{
-        this.puestos=data;
-        if(  this.perfil.puestoId>0 ){
-          this.setCurrentPuesto();
 
-
-        }
-        this.getPerfilesByUsuarioOID();
-
-      }
-    );
-
-  }
 
   public setCurrentPuesto(){
     if( this.puestos==null || this.puestos.length<=0 ){
@@ -212,13 +213,13 @@ public getPerfilByID(perfilId: string, perfilConsultaID: string){
   public getPerfilesByUsuarioOID(){
     var perfilID="*";
 
-    if( this.perfil==null || this.perfil.usuarioOID==null || this.perfil.usuarioOID==""   ){
+    if( this.perfil==null || this.perfil.UsuarioOID==null || this.perfil.UsuarioOID==""   ){
       perfilID="*";
     }else{
-      perfilID=this.perfil.perfilId;
+      perfilID=this.perfil.UsuarioOID;
     }
 
-    this.perfilService.getPerfilesByPerfilID (  perfilID, this.perfilSession.perfilId    ) .subscribe(
+    this.perfilService.getPerfilesByPerfilID (  perfilID, this.perfilSession.UsuarioOID    ) .subscribe(
       (data)=>{
 
         this.usuarioPerfiles=data;
@@ -244,22 +245,17 @@ public getPerfilByID(perfilId: string, perfilConsultaID: string){
          this.perfil.ModuloId=this.moduloSeleccionado.moduloId;
       }
 
-      if( this.perfil.perfilId!=null && this.perfil.perfilId!="" ){
-         this.perfil.perfilUpdated=this.perfilSession.perfilId;
-         this.perfil.huesped =this.perfil.huesped;
+      if( this.perfil.UsuarioOID!=null && this.perfil.UsuarioOID!="" ){
+         this.perfil.perfilUpdated=this.perfilSession.UsuarioOID;
+         this.perfil.huesped =this.perfilSession.huesped;
 
       }
-      if (this.noEditable) {
-        this.perfil.noEditable = 1;
-      } else {
-        this.perfil.noEditable = 0;
-      }
 
-
+      this.setEmpresasConcat();
       this.setModuloConcat();
 
       this.perfil.Activo = 1;
-      this.perfilService.guardarPerfil(this.perfil, this.perfilSession.perfilId).subscribe(
+      this.perfilService.guardarPerfil(this.perfil, this.perfilSession.UsuarioOID).subscribe(
         (data) => {
           this.perfil = data;
           this.ref.close(this.perfil);
@@ -269,8 +265,43 @@ public getPerfilByID(perfilId: string, perfilConsultaID: string){
     }
   }
 
-
   public setModuloConcat(){
+
+    if( this.perfil==null ){
+      return;
+    }
+
+    var pu:PerfilUsuario;
+    var perfilesConcat:string=null;
+
+    if( this.usuarioPerfilSeleccionado!=null && this.usuarioPerfilSeleccionado.length>0  ){
+
+      for( var i=0;i< this.usuarioPerfilSeleccionado.length; i++  ){
+        pu=this.usuarioPerfilSeleccionado[i];
+        if(pu==null){
+          continue;
+        }
+
+        /* if( !pu.flagSeleccionado ){
+            continue;
+         }
+*/
+
+        if( perfilesConcat==null ){
+          perfilesConcat= "" + pu.perfilId  ;
+        }else{
+          perfilesConcat+= "|" +  pu.perfilId ;
+        }
+
+
+      }
+    }
+
+    this.perfil.perfilesConcat=perfilesConcat;
+  }
+
+
+  public setEmpresasConcat(){
 
     if( this.perfil==null){
       return;
@@ -296,7 +327,7 @@ public getPerfilByID(perfilId: string, perfilConsultaID: string){
     }
 
     if (empresasConcat) {
-      this.perfil.moduloConcat = empresasConcat.substring(0, empresasConcat.length - 1);
+      this.perfil.empresasConcat = empresasConcat.substring(0, empresasConcat.length - 1);
     }
 
   }
@@ -357,17 +388,18 @@ public getPerfilByID(perfilId: string, perfilConsultaID: string){
 }
 nodeSelect(event) {
   this.addNode(event.node);
-  this.selectedFiles = [];
-  this.checkNode(this.accesosModulos, this.dataArray);
-  this.profilePerfil.get('flag_modulo').setValue(this.dataArray)
+  this.updateFormControl();
   }
 
 nodeUnselect(event) {
   this.removeNode(event.node);
-  this.selectedFiles = [];
-  this.checkNode(this.accesosModulos, this.dataArray);
-  this.profilePerfil.get('flag_modulo').setValue(this.dataArray)
+  this.updateFormControl();
 }
+
+updateFormControl() {
+    const selectedValues = this.accesosModuloSeleccionados.map(node => node.data);
+    this.profilePerfil.get('flag_modulo').setValue(selectedValues);
+  }
 
 removeNode(node: TreeNode) {
   if(node.leaf) {

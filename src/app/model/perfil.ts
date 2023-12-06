@@ -1,5 +1,8 @@
+
+
 export class Perfil {
   perfilId: number;
+  clave: string;
   nombre: string;
   AccesoMovil: number;
   Descripcion: string;
@@ -7,6 +10,12 @@ export class Perfil {
   ModuloId: number;
   ReadOnly: number;
   NoEditable: number;
-  Dashboard: string;
+  flag_modulo: number;
   UsuarioOID: string;
+  huesped:number;
+  perfilCreated: string;
+  puestoId:number;
+  perfilUpdated: string;
+  empresasConcat: string;
+  perfilesConcat: string;
 }

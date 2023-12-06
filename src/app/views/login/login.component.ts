@@ -168,6 +168,7 @@ getPerfil() {
   const perfiles = this.perfilService.getAll( this.usuario.usuarioOID );
   perfiles.subscribe(data => {
     this.perfil = data[0];
+    this.perfil.UsuarioOID = this.usuario.usuarioOID;
     localStorage.setItem('perfil', JSON.stringify(this.perfil));
   })
 }

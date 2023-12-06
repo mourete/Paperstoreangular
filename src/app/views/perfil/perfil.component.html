@@ -38,7 +38,7 @@
             type="text"
             pInputText
             [style]="{ width: '30rem' }"
-            formControlName="perfilName"
+            formControlName="nombre"
           />
         </td>
       </tr>
@@ -50,7 +50,7 @@
           <input
             type="text"
             pInputText
-            formControlName="descripcion"
+            formControlName="Descripcion"
             [style]="{ width: '30rem' }"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
           />
@@ -62,7 +62,7 @@
         <td>No editable</td>
         <td>
           <p-inputSwitch
-            formControlName="noEditable"
+            formControlName="NoEditable"
           ></p-inputSwitch>
         </td>
       </tr>
@@ -71,31 +71,17 @@
       <td>Read Only</td>
       <td>
         <p-inputSwitch
-          formControlName="readOnly"
+          formControlName="ReadOnly"
         ></p-inputSwitch>
       </td>
       </tr>
 
       <tr>
-        <td>Activo</td>
+        <td>Acceso Movil</td>
         <td>
           <p-inputSwitch
-            formControlName="activa"
+            formControlName="AccesoMovil"
           ></p-inputSwitch>
-        </td>
-      </tr>
-
-      <tr>
-        <td>Dashboard </td>
-
-        <td>
-          <input
-            type="text"
-            pInputText
-            formControlName="dashboard"
-            [style]="{ width: '30rem' }"
-          />
-
         </td>
       </tr>
 

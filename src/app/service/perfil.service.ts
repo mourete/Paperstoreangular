@@ -24,25 +24,26 @@ export class PerfilService {
 
 
 
-public getPerfilById(perfilId:string, usuarioOID:string) : Observable<Perfil> {
+public getPerfilById(perfilId:number, usuarioOID:string) : Observable<Perfil> {
     let url:string = GlobalConstants.apiURL + "perfiles/getPerfilesById/" + perfilId + "/" + usuarioOID;
     return this.http.get<Perfil>( url  );
 }
+
 
   public getAll(usuarioOID:string) : Observable<Perfil[]> {
     let url:string = GlobalConstants.apiURL + "perfiles/getAll/" + usuarioOID;
     return this.http.get<Perfil[]>( url  );
   }
 
-  public getPerfilesByPerfilID(perfilID:string  , sessionUser:string ) : Observable<PerfilUsuario[]> {
-    let url:string = GlobalConstants.apiURL + "usuarios/getPerfilesByPerfilID/" + perfilID +"/"+sessionUser ;
+  public getPerfilesByPerfilID(usuarioOID:string  , sessionUser:string ) : Observable<PerfilUsuario[]> {
+    let url:string = GlobalConstants.apiURL + "usuarios/getPerfilesByUsuarioOID/" + usuarioOID +"/"+sessionUser ;
     return this.http.get<PerfilUsuario[]>( url  );
   }
 
 
-public getPerfilModulosJson(perfilId:string , usuarioCreatedOID:string ) : Observable<string[]> {
-  let url:string = GlobalConstants.apiURL + "perfiles/getPerfilModulosJson/" + perfilId + "/" + usuarioCreatedOID;
-  console.log(this.http.get<string[]>( url ));
+
+  public getPerfilModulosJson(perfilId:number , usuarioConsultaOID:string ) : Observable<string[]> {
+  let url:string = GlobalConstants.apiURL + "perfiles/getPerfilModulosJson/" + perfilId + "/" + usuarioConsultaOID;
   return this.http.get<string[]>( url );
 }
 

@@ -43,6 +43,7 @@ export class PerfilComponent implements OnInit {
   selectedFiles: TreeNode[] = [];
   accesosModulos: TreeNode[];
   noEditable: boolean;
+  activo: boolean;
 
 
   constructor(public perfilService: PerfilService, private fb: FormBuilder,
@@ -102,6 +103,8 @@ export class PerfilComponent implements OnInit {
       this.perfil.perfilCreated = this.perfilSession.UsuarioOID;
       this.perfil.huesped = this.perfilSession.huesped;
       this.getAllPuestos();
+      this.noEditable = false;
+      this.activo = false;
       this.getPerfilModulosJson();
 
     }
@@ -255,11 +258,21 @@ export class PerfilComponent implements OnInit {
         this.perfil.huesped = this.perfilSession.huesped;
 
       }
+      if (this.noEditable) {
+        this.perfil.noEditable = 1;
+      } else {
+        this.perfil.noEditable = 0;
+      }
+
+      if(this.activo==true){
+        this.perfil.activo=1;
+      }else{
+        this.perfil.activo=0;
+      }
 
       this.setEmpresasConcat();
       this.setModuloConcat();
 
-      this.perfil.activo = 1;
       this.perfilService.guardarPerfil(this.perfil, this.perfilSession.UsuarioOID).subscribe(
         (data) => {
           this.perfil = data;

@@ -8,7 +8,7 @@ export class Perfil {
   descripcion: string;
   activo: number;
   ModuloId: number;
-  readOnly: boolean;
+  readOnly: number;
   noEditable: number;
   flag_modulo: number;
   UsuarioOID: string;

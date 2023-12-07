@@ -44,6 +44,7 @@ export class PerfilComponent implements OnInit {
   accesosModulos: TreeNode[];
   noEditable: boolean;
   activo: boolean;
+  readOnly : boolean;
 
 
   constructor(public perfilService: PerfilService, private fb: FormBuilder,
@@ -105,6 +106,7 @@ export class PerfilComponent implements OnInit {
       this.getAllPuestos();
       this.noEditable = false;
       this.activo = false;
+      this.readOnly = false;
       this.getPerfilModulosJson();
 
     }
@@ -268,6 +270,12 @@ export class PerfilComponent implements OnInit {
         this.perfil.activo=1;
       }else{
         this.perfil.activo=0;
+      }
+
+      if(this.readOnly==true){
+        this.perfil.readOnly=1;
+      }else{
+        this.perfil.readOnly=0;
       }
 
       this.setEmpresasConcat();

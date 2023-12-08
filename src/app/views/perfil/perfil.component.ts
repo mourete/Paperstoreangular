@@ -82,7 +82,6 @@ export class PerfilComponent implements OnInit {
 
     const perfilSession = localStorage.getItem('perfil');
     if (perfilSession) {
-
       this.perfilSession = JSON.parse(perfilSession);
     }
 
@@ -248,7 +247,15 @@ export class PerfilComponent implements OnInit {
 
     this.msgs = [];
 
-    if (!this.perfilSession) {
+    if (this.perfilSession) {
+      for (let attr in this.profilePerfil.value) {
+        let value = this.profilePerfil.get(attr).value;
+        if (typeof value == "boolean") {
+          this.perfil[attr] = +value;
+        } else {
+          this.perfil[attr] = this.profilePerfil.get(attr).value;
+        }
+      }
 
       if (this.moduloSeleccionado != null) {
         this.perfil.moduloId = this.moduloSeleccionado.moduloId;
@@ -257,29 +264,10 @@ export class PerfilComponent implements OnInit {
       if (this.perfil.UsuarioOID != null && this.perfil.UsuarioOID != "") {
         this.perfil.perfilUpdated = this.perfilSession.UsuarioOID;
         this.perfil.huesped = this.perfilSession.huesped;
-
-      }
-      if (this.noEditable) {
-        this.perfil.noEditable = 1;
-      } else {
-        this.perfil.noEditable = 0;
-      }
-
-      if(this.activo){
-        this.perfil.activo=1;
-      }else{
-        this.perfil.activo=0;
-      }
-
-      if(this.readOnly){
-        this.perfil.readOnly=1;
-      }else{
-        this.perfil.readOnly=0;
       }
 
       this.setEmpresasConcat();
       this.setModuloConcat();
-
       this.perfilService.guardarPerfil(this.perfil, this.perfilSession.UsuarioOID).subscribe(
         (data) => {
           this.perfil = data;

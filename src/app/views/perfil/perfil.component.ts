@@ -40,11 +40,10 @@ export class PerfilComponent implements OnInit {
   usuarioPerfilSeleccionado: PerfilUsuario[] = [];
   resultadoAccesos: any[];
   accesosModuloSeleccionados: TreeNode[] = [];
-  selectedFiles: TreeNode[] = [];
   accesosModulos: TreeNode[];
-  noEditable: boolean;
-  activo: boolean;
-  readOnly : boolean;
+  noEditable: number;
+  activo: number;
+  readOnly : number;
 
 
   constructor(public perfilService: PerfilService, private fb: FormBuilder,
@@ -97,16 +96,16 @@ export class PerfilComponent implements OnInit {
         noEditable: this.perfil.noEditable ?? 0,
         readOnly: this.perfil.readOnly ?? 0,
         accesoMovil: this.perfil.accesoMovil ?? 0,
-        activo: this.perfil.activo ?? 0
+        activo: this.perfil.activo ?? 0,
       });
     } else {
       this.perfil = new Perfil();
       this.perfil.perfilCreated = this.perfilSession.UsuarioOID;
       this.perfil.huesped = this.perfilSession.huesped;
-      this.getAllPuestos();
-      this.noEditable = false;
-      this.activo = false;
-      this.readOnly = false;
+      // this.getAllPuestos();
+      this.noEditable = 0;
+      this.activo = 0;
+      this.readOnly = 0;
       this.getPerfilModulosJson();
 
     }
@@ -146,28 +145,28 @@ export class PerfilComponent implements OnInit {
         this.dataArray = sdataArray.split("/");
 
         this.checkNode(this.accesosModulos, this.dataArray);
-        this.getAllPuestos();
+        // this.getAllPuestos();
 
       }
     );
 
   }
 
-  public getAllPuestos() {
-    this.puestoService.getAllPuestos(this.perfilSession.UsuarioOID).subscribe(
-      (data) => {
-        this.puestos = data;
-        if (this.perfil.puestoId > 0) {
-          this.setCurrentPuesto();
-
-
-        }
-        this.getPerfilesByUsuarioOID();
-
-      }
-    );
-
-  }
+  // public getAllPuestos() {
+  //   this.puestoService.getAllPuestos(this.perfilSession.UsuarioOID).subscribe(
+  //     (data) => {
+  //       this.puestos = data;
+  //       if (this.perfil.puestoId > 0) {
+  //         this.setCurrentPuesto();
+  //
+  //
+  //       }
+  //       this.getPerfilesByUsuarioOID();
+  //
+  //     }
+  //   );
+  //
+  // }
 
 
   public getPerfilByID(UsuarioOID: number, perfilConsultaID: string) {
@@ -252,7 +251,7 @@ export class PerfilComponent implements OnInit {
     if (!this.perfilSession) {
 
       if (this.moduloSeleccionado != null) {
-        this.perfil.ModuloId = this.moduloSeleccionado.moduloId;
+        this.perfil.moduloId = this.moduloSeleccionado.moduloId;
       }
 
       if (this.perfil.UsuarioOID != null && this.perfil.UsuarioOID != "") {
@@ -266,13 +265,13 @@ export class PerfilComponent implements OnInit {
         this.perfil.noEditable = 0;
       }
 
-      if(this.activo==true){
+      if(this.activo){
         this.perfil.activo=1;
       }else{
         this.perfil.activo=0;
       }
 
-      if(this.readOnly==true){
+      if(this.readOnly){
         this.perfil.readOnly=1;
       }else{
         this.perfil.readOnly=0;
@@ -366,12 +365,14 @@ export class PerfilComponent implements OnInit {
   checkNode(nodes: TreeNode[], str: string[]) {
 
     for (let i = 0; i < nodes.length; i++) {
+
       if (!nodes[i].leaf && nodes[i].children.length > 0) {
         if (nodes[i].children[0].leaf) {
 
           for (let j = 0; j < nodes[i].children.length; j++) {
 
-            if (str.includes(nodes[i].children[j].key)) {
+            if (str.includes(nodes[i].children[j].data)) {
+
               if (!this.accesosModuloSeleccionados.includes(nodes[i].children[j])) {
                 this.accesosModuloSeleccionados.push(nodes[i].children[j]);
 
@@ -411,7 +412,7 @@ export class PerfilComponent implements OnInit {
 
   nodeSelect(event) {
     this.addNode(event.node);
-    this.updateFormControl();
+    // this.updateFormControl();
   }
 
   nodeUnselect(event) {
@@ -421,7 +422,7 @@ export class PerfilComponent implements OnInit {
 
   updateFormControl() {
     const selectedValues = this.accesosModuloSeleccionados.map(node => node.data);
-    this.profilePerfil.get('flag_modulo').setValue(selectedValues);
+    this.profilePerfil.get('moduloId').setValue(selectedValues);
   }
 
   removeNode(node: TreeNode) {
@@ -443,8 +444,10 @@ export class PerfilComponent implements OnInit {
       }
       return;
     }
-    for (let i = 0; i < node.children.length; i++) {
-      this.addNode(node.children[i]);
+    if (node?.children !== undefined) {
+      for (let i of node.children) {
+        this.addNode(i)
+      }
     }
   }
 

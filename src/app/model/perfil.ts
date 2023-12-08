@@ -7,7 +7,7 @@ export class Perfil {
   accesoMovil: number;
   descripcion: string;
   activo: number;
-  ModuloId: number;
+  moduloId: number;
   readOnly: number;
   noEditable: number;
   flag_modulo: number;

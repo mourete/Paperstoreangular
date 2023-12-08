@@ -79,9 +79,7 @@ export class ListRegionesComponent implements OnInit {
     let ref= this.dialogService.open( RegionComponent , {
       header: 'Región',
       width: '90%',
-      height : '80%',
-
-      contentStyle: {"max-height": "80%" , "height" : "80%"  } ,
+      contentStyle: {"max-height": "550px" , "height" : "500px" } ,
       data: { regionId:0  }
   });
 

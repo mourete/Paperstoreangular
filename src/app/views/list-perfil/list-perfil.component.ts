@@ -75,7 +75,7 @@ export class ListPerfilComponent implements OnInit {
 
     let ref= this.dialogService.open( PerfilComponent , {
       header: 'Perfil',
-      width: '70%',
+      width: '90%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { UsuarioOID: this.UsuarioOID }
   });

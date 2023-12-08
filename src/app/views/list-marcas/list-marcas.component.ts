@@ -78,7 +78,7 @@ export class ListMarcasComponent implements OnInit {
 
       let ref= this.dialogService.open( MarcaComponent , {
         header: 'Marca',
-        width: '70%',
+        width: '90%',
         contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
         data: { marcaId:0  }
     });

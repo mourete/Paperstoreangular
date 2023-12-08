@@ -8,7 +8,7 @@
 
         <table cellpadding="2"  cellspacing="2"   border="0" >
             <tr    >
-               <td>Clave</td>
+               <td style="line-height:30pt;">Clave</td>
                <td>
                 <input
                   #claveInput
@@ -19,29 +19,30 @@
                   mask="AAAAAAAAAA"
                   (ngModelChange)="onClaveChange()"
                   [showMaskTyped]="true"
+                  [style]="{ width: '500px' }"
                   required
                 />
                  <div *ngIf="claveError">La clave debe tener al menos 10 caracteres</div>
                </td>
              </tr>
              <tr    >
-                <td>Texto</td>
+                <td style="line-height:30pt;">Texto</td>
                 <td>
-                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.texto"   />
+                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.texto"   [style]="{ width: '500px' }" />
                 </td>
               </tr>
 
               <tr    >
-                <td>Valor</td>
+                <td style="line-height:30pt;">Valor</td>
                 <td>
-                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.valor"   />
+                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.valor"  [style]="{ width: '500px' }"  />
                 </td>
               </tr>
 
               <tr    >
-                <td>Tag</td>
+                <td style="line-height:30pt;">Tag</td>
                 <td>
-                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.tag"   />
+                 <input type="text" pInputText   size="30"   [(ngModel)]="opcion.tag"  [style]="{ width: '500px' }" />
                 </td>
               </tr>
 
@@ -61,9 +62,9 @@
 
 
            <tr    >
-            <td>Orden</td>
+            <td style="line-height:30pt;">Orden</td>
             <td>
-               <input type="text" pInputText     [(ngModel)]="opcion.orden"   />
+               <input type="text" pInputText     [(ngModel)]="opcion.orden"   [style]="{ width: '500px' }" />
            </td>
            </tr>
 

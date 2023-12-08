@@ -240,7 +240,7 @@ export class ListSucursalesComponent implements OnInit {
 
     let ref= this.dialogService.open( SucursalComponent , {
       header: 'Sucursal',
-      width: '55%',
+      width: '90%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { regionId:0  }
   });

@@ -10,24 +10,30 @@ import { ContextMenu } from 'primeng/contextmenu';
 
 
 @Component({
-  selector: 'app-perfil',
+  selector: 'app-list-perfil',
   templateUrl: './list-perfil.component.html',
   styleUrls: ['./list-perfil.component.scss'],
   providers: [DialogService, ConfirmationService]
 })
 export class ListPerfilComponent implements OnInit {
-@ViewChild('cmPerfil') cmPerfil: ContextMenu;
+
+  @ViewChild('cmPerfil') cmPerfil: ContextMenu;
   itemsPerfil: MenuItem[];
-  perfil:Perfil[];
+
+  perfilSession: Perfil;
+  perfiles:Perfil[];
   selectedPerfil: Perfil;
   usuario:Usuario;
-  usuarioOID :string;
+  UsuarioOID :string;
 
-  constructor( public perfilService: PerfilService , private confirmationService: ConfirmationService ,
-    public dialogService: DialogService   ) { }
+
+  constructor( public perfilService: PerfilService,
+               private confirmationService: ConfirmationService ,
+                public dialogService: DialogService   ) { }
 
   ngOnInit(): void {
-    this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    this.perfilSession = JSON.parse(localStorage.getItem('perfil'));
+    this.UsuarioOID = this.perfilSession.UsuarioOID;
     this.getModuloPerfilJson();
 
     this.itemsPerfil = [
@@ -54,32 +60,29 @@ export class ListPerfilComponent implements OnInit {
 
 
   public getModuloPerfilJson(){
-    if( this.usuario==null ){
+    if( this.perfilSession==null ){
       return;
     }
-    console.log(this.usuario.usuarioOID);
-    //this.perfilService.getPerfiles(  this.usuario.usuarioOID ) .subscribe(
-      (data)=>{
-         console.log( data );
-         this.perfil=data;
-      }
-     //);
-
+    this.perfilService.getAll( this.perfilSession.UsuarioOID).subscribe(
+        (data) => {
+          this.perfiles = data;
+        }
+    );
   }
 
 
   public agregarPerfil(){
 
-    let ref= this.dialogService.open( ListPerfilComponent , {
+    let ref= this.dialogService.open( PerfilComponent , {
       header: 'Perfil',
-      width: '70%',
+      width: '90%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
-      data: { empresaId:0  }
+      data: { UsuarioOID: this.UsuarioOID }
   });
 
-  ref.onClose.subscribe(( emp : Perfil  ) => {
-    // console.log("Entro aqui 2");
-    if (emp!=null  ) {
+  ref.onClose.subscribe(( per : Perfil  ) => {
+
+    if (per!=null  ) {
 
         this.getModuloPerfilJson();
     }
@@ -101,7 +104,7 @@ export class ListPerfilComponent implements OnInit {
     header: 'Perfil',
     width: '70%',
     contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
-    data: { empresaId: this.selectedPerfil.perfilId  }
+    data: { UsuarioOID: this.UsuarioOID, perfil: this.selectedPerfil }
   });
 
 
@@ -115,8 +118,8 @@ export class ListPerfilComponent implements OnInit {
 
   }
 
-  onRightClick(event: MouseEvent, empresa: any) {
-    this.selectedPerfil = empresa; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
+  onRightClick(event: MouseEvent, perfil: any) {
+    this.selectedPerfil = perfil; // Establece la fila seleccionada en la fila sobre la cual se hizo clic derecho.
     this.cmPerfil.show(event);   // Muestra el menú contextual.
     event.preventDefault();          // Evita que el menú contextual predeterminado del navegador se muestre.
     event.stopPropagation();         // Detiene la propagación del evento para no afectar otros elementos.
@@ -126,7 +129,7 @@ export class ListPerfilComponent implements OnInit {
   public confirmDeletePerfil(){
 
     this.confirmationService.confirm({
-      message: 'Está seguro que desea eliminar la Empresa ?',
+      message: 'Está seguro que desea eliminar el Perfil ?',
       accept: () => {
          this.deletePerfil();
       }
@@ -136,13 +139,14 @@ export class ListPerfilComponent implements OnInit {
 
 
   public deletePerfil() {
+
     if( this.selectedPerfil==null  ){
       return;
     }
 
-    this.selectedPerfil.usuarioOID = this.usuario.usuarioOID ;
+    this.selectedPerfil.UsuarioOID = this.perfilSession.UsuarioOID ;
 
-    this.perfilService.eliminaPerfil( this.selectedPerfil, this.usuarioOID ).subscribe((data)=>{
+    this.perfilService.eliminaPerfil( this.selectedPerfil, this.UsuarioOID ).subscribe((data)=>{
       //  this.getMarcasByUsuarioOID();
       this.getModuloPerfilJson();
         this.selectedPerfil=null ;

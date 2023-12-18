@@ -55,11 +55,9 @@ export class SucursalComponent implements OnInit {
     estadosForm : [''],
     ciudadesForm: [''],
     telefono:[''],
-    coordenadaX : [''],
-    coordenadaY : [''],
+    coordenadaX: [''],
+    coordenadaY: [''],
     responsable : [''],
-
-
 
   });
 
@@ -69,8 +67,6 @@ export class SucursalComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
-
-
 
     if( this.config.data.sucursalId >0   ){
 
@@ -98,28 +94,17 @@ export class SucursalComponent implements OnInit {
 
     }
 
-    //this.getAllEstados( this.ciudad);
-
-
-
-
-
-
-
-
-
-
-
   }
 
-
-
   public getSucursalById(sucId:number  ){
-    // console.log("ENTRE");
-
-    this.sucursalService.getSucursalByID(  sucId ,  this.usuarioSession.usuarioOID ).subscribe(
+   this.sucursalService.getSucursalByID(  sucId ,  this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
         this.sucursal=data;
+
+        this.profileSucursal.patchValue({
+          coordenadaX : this.sucursal.coordenadaX,
+          coordenadaY : this.sucursal.coordenadaY,
+        });
 
 
         this.estadoService.getAllEstados (  this.usuarioSession.usuarioOID ).subscribe(
@@ -137,19 +122,10 @@ export class SucursalComponent implements OnInit {
                               this.estadoChanged(  );
                               break
                         }
-
-
                     }
-
                 }
-
             }
-
-            /*if(!check)
-              this.getCiudadesByEstado(this.estados[0].estadoId);*/
-         }
-        );
-
+         });
 
 
         if( this.sucursal.activo==1 ){
@@ -159,13 +135,9 @@ export class SucursalComponent implements OnInit {
         }
 
 
-
       this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
         (data)=>{
-          // console.log("ENTRE2");
           this.empresas=data;
-
-
 
           if(  this.empresas!=null && this.empresas.length>0 ){
             var empresaTmp:Empresa;
@@ -176,34 +148,11 @@ export class SucursalComponent implements OnInit {
                     this.empresaChanged( this.sucursal.marcaId );
                     break;
                 }
-
             }
-
-
-         }
-
-       }
-      );
-
-
-     }
-    );
-
+          }
+       });
+     });
   }
-
-
-  /*public getAllEstados( check : any ){
-    this.estadoService.getAllEstados (   ).subscribe(
-      (data)=>{
-
-        this.estados=data;
-
-        /*if(!check)
-          this.getCiudadesByEstado(this.estados[0].estadoId);*/
-    // }
- //   );
-
-  //}
 
 
   public getEmpresasByUsuarioOID(auxEdit : Boolean){
@@ -215,15 +164,9 @@ export class SucursalComponent implements OnInit {
           if(!auxEdit){
             this.getMarcasByEmpresaYUsuario(0);
           }
-
         }
-
-     }
-    );
-
+     });
   }
-
-
 
   public getMarcasByEmpresaYUsuario(idMarca : any ){
     if( this.usuarioSession==null  || this.selectedEmpresa==null  ){
@@ -253,31 +196,19 @@ export class SucursalComponent implements OnInit {
                 /* this.marcasAux[0] = element;
                  this.marcasAux[index] = elementAux;*/
               }
-
-
-
             }
-
            /*this.marcas.forEach((element, index) => {
-
               if(element.marcaId == idMarca)
                   this.selectedMarca=element;
-
             });*/
 
          }
 
          this.marcas=this.marcasAux;
-
-
-      }
-     );
-
+      });
   }
 
-
-
-  public guadarSucursal(){
+  public guardarSucursal(){
 
 
     this.msgs=[];
@@ -291,8 +222,6 @@ export class SucursalComponent implements OnInit {
       this.msgs.push({severity:'error', detail: "Se requiere capturar el nombre de la sucursal "  , summary:'Validation failed'});
       return;
     }
-
-    console.log(this.selectedMarca);
 
     if(  this.selectedMarca ==null || this.selectedMarca.marcaId<=0   ){
       this.msgs.push({severity:'error', detail: "Se requiere seleccionar la marca para la región "  , summary:'Validation failed'});
@@ -313,44 +242,36 @@ export class SucursalComponent implements OnInit {
       this.sucursal.estadoId=this.selectedEstado.estadoId;
   }
 
-
-
-
     if( this.sucursal.flagActivo ){
        this.sucursal.activo=1;
     }else{
        this.sucursal.activo=0;
     }
 
+    if (this.profileSucursal.valid) {
+      const formValues = this.profileSucursal.value;
 
-    this.sucursalService.guardarSucursal(  this.sucursal, this.usuarioSession.usuarioOID ).subscribe(
-      (data)=>{
-        this.sucursal=data;
-        this.ref.close(this.sucursal);
-      }
+      this.sucursal.coordenadaX = formValues.coordenadaX;
+      this.sucursal.coordenadaY = formValues.coordenadaY;
 
-    );
+      this.sucursalService.guardarSucursal(  this.sucursal, this.usuarioSession.usuarioOID ).subscribe(
+        (data)=>{
+          this.sucursal=data;
+          this.ref.close(this.sucursal);
+        });
 
+    } else {
 
-
+    }
   }
-
-
 
   public cancelar(){
     this.ref.close();
   }
 
-
-
-
   public empresaChanged(idMarca : any){
     this.getMarcasByEmpresaYUsuario(idMarca);
   }
-
-
-
-
 
   public estadoChanged(){
     if(this.selectedEstado==null || this.selectedEstado.estadoId<=0  ){
@@ -358,25 +279,15 @@ export class SucursalComponent implements OnInit {
     }
 
     this.getCiudadesByEstado(this.selectedEstado.estadoId, this.usuarioSession.usuarioOID);
-
-
   }
 
 
   onSubmit() {
-
-  /*  console.warn(this.profileSucursal.value);
-
-    console.warn(this.sucursal);*/
-
-
-    this. guadarSucursal();
-
+    this. guardarSucursal();
   }
 
 
   public getCiudadesByEstado( estadoId: number , usuarioOID:string ){
-    // console.log("Entro aqui Siempre");
     this.ciudadService.getCiudadesByEstado ( estadoId , usuarioOID ).subscribe(
       (data)=>{
         this.ciudades=data;
@@ -385,13 +296,6 @@ export class SucursalComponent implements OnInit {
         var aux = false;
 
         ciudadTmp=this.ciudades[0];
-
-       // this.selectedCiudad=ciudadTmp;
-
-        console.log(this.ciudad);
-
-        console.log(this.sucursal.ciudadId);
-
 
         this.ciudades.forEach(element => {
 

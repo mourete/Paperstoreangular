@@ -12,8 +12,17 @@
                 <table  border="0"   cellpadding="1"  cellspacing="1"      >
 
                     <tr     >
-                        <td>Clave</td>
-                        <input #claveInput type="text" formControlName="clave" pInputText   size="35"  [(ngModel)]="sucursal.clave"  mask="AAAAAAAAAA" (input)="convertirAMayusculas()" [showMaskTyped]="true" required />
+                        <td style="line-height:30pt;">Clave</td>
+                        <input
+                          style="width: 400px"
+                          #claveInput type="text"
+                          formControlName="clave"
+                          pInputText
+                          size="35"
+                          [(ngModel)]="sucursal.clave"
+                          mask="AAAAAAAAAA"
+                          (input)="convertirAMayusculas()"
+                          [showMaskTyped]="true" required />
                        <div *ngIf="f.clave.errors?.required">
                         Clave es requerido
                         </div>
@@ -21,9 +30,16 @@
 
 
                     <tr     >
-                        <td>Nombre</td>
+                        <td style="line-height:30pt;">Nombre</td>
                         <td>
-                           <input type="text" pInputText formControlName="nombre"  size="35"  [(ngModel)]="sucursal.nombre"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+" />
+                           <input
+                             style="width: 400px"
+                             type="text"
+                             pInputText
+                             formControlName="nombre"
+                             size="35"
+                             [(ngModel)]="sucursal.nombre"
+                             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+" />
                            <div *ngIf="f.nombre.errors?.required">
                             Nombre es requerido
                           </div>
@@ -35,65 +51,125 @@
 
 
                     <tr     >
-                        <td>Empresa</td>
+                        <td style="line-height:30pt;">Empresa</td>
                         <td>
-                          <p-dropdown     [style]="{ width: '290px' }" (onChange)="empresaChanged(0)"  formControlName="empresa"  [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedEmpresa"   [options]="empresas"  optionLabel="nombre"></p-dropdown>
+                          <p-dropdown
+                            [style]="{ width: '400px' }"
+                            (onChange)="empresaChanged(0)"
+                            formControlName="empresa"
+                            [showTransitionOptions]="'0ms'"
+                            [hideTransitionOptions]="'0ms'"
+                            [(ngModel)]="selectedEmpresa"
+                            [options]="empresas"
+                            optionLabel="nombre"></p-dropdown>
                        </td>
                      </tr>
 
                      <tr    >
-                        <td>Marca</td>
+                        <td style="line-height:30pt;">Marca</td>
                         <td>
-                          <p-dropdown     [style]="{ width: '290px' }" formControlName="marca"  [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedMarca"   [options]="marcas"  optionLabel="nombre"></p-dropdown>
+                          <p-dropdown
+                            [style]="{ width: '400px' }"
+                            formControlName="marca"
+                            [showTransitionOptions]="'0ms'"
+                            [hideTransitionOptions]="'0ms'"
+                            [(ngModel)]="selectedMarca"
+                            [options]="marcas"
+                            optionLabel="nombre"></p-dropdown>
                        </td>
                      </tr>
 
                      <tr     >
-                        <td>Calle</td>
+                        <td style="line-height:30pt;">Calle</td>
                         <td>
-                           <input type="text" pInputText     size="35"    [(ngModel)]="sucursal.calle"  formControlName="calle" />
+                           <input
+                             style="width: 400px"
+                             type="text" pInputText
+                             size="35"
+                             [(ngModel)]="sucursal.calle"
+                             formControlName="calle" />
                        </td>
                     </tr>
 
                     <tr     >
-                        <td>Número</td>
+                        <td style="line-height:30pt;">Número</td>
                         <td>
-                           <input type="text" pInputText    size="35"     [(ngModel)]="sucursal.numero"   formControlName="numero"/>
+                           <input
+                             style="width: 400px"
+                             type="text" pInputText
+                             size="35"
+                             [(ngModel)]="sucursal.numero"
+                             formControlName="numero"/>
                         </td>
                     </tr>
 
                     <tr     >
-                        <td>Entre Calles</td>
+                        <td style="line-height:30pt;">Entre Calles</td>
                         <td>
-                           <input type="text" pInputText     size="35"    [(ngModel)]="sucursal.entreCalle"  formControlName="entreCalle" />
+                           <input
+                             style="width: 400px"
+                             type="text"
+                             pInputText
+                             size="35"
+                             [(ngModel)]="sucursal.entreCalle"
+                             formControlName="entreCalle" />
                         </td>
                     </tr>
 
                     <tr     >
-                        <td>Colonia</td>
+                        <td style="line-height:30pt;">Colonia</td>
                         <td>
-                           <input type="text" pInputText    size="35"     [(ngModel)]="sucursal.colonia"  formControlName="colonia" />
+                           <input
+                             style="width: 400px"
+                             type="text"
+                             pInputText
+                             size="35"
+                             [(ngModel)]="sucursal.colonia"
+                             formControlName="colonia" />
                         </td>
                     </tr>
 
                     <tr     >
-                        <td>CP</td>
+                        <td style="line-height:30pt;">CP</td>
                         <td>
-                           <input type="text" pInputText    size="35"     [(ngModel)]="sucursal.cp"   formControlName="cp"/>
+                           <input
+                             style="width: 400px"
+                             type="text"
+                             pInputText
+                             size="35"
+                             [(ngModel)]="sucursal.cp"
+                             formControlName="cp"/>
                         </td>
                     </tr>
 
                     <tr    >
-                        <td>Estado</td>
+                        <td style="line-height:30pt;">Estado</td>
                         <td>
-                           <p-dropdown    [style]="{ width: '290px' }" (onChange)="estadoChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"  formControlName="estadosForm"  [(ngModel)]="selectedEstado"   [options]="estados"  optionLabel="nombre" [filter]="true"></p-dropdown>
+                           <p-dropdown
+                             [style]="{ width: '400px' }"
+                             (onChange)="estadoChanged()"
+                             [showTransitionOptions]="'0ms'"
+                             [hideTransitionOptions]="'0ms'"
+                             formControlName="estadosForm"
+                             [(ngModel)]="selectedEstado"
+                             [options]="estados"
+                             optionLabel="nombre"
+                             [filter]="true"></p-dropdown>
                        </td>
                      </tr>
 
                      <tr    >
-                        <td>Ciudad</td>
+                        <td style="line-height:30pt;">Ciudad</td>
                         <td>
-                           <p-dropdown   [style]="{ width: '290px' }" [showTransitionOptions]="'0ms'" formControlName="ciudadesForm" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedCiudad"   [options]="ciudades"  optionLabel="nombre" [filter]="true"></p-dropdown>
+                           <p-dropdown
+                             [style]="{ width: '400px' }"
+                             [showTransitionOptions]="'0ms'"
+                             formControlName="ciudadesForm"
+                             [hideTransitionOptions]="'0ms'"
+                             [(ngModel)]="selectedCiudad"
+                             [options]="ciudades"
+                             optionLabel="nombre"
+                             [filter]="true"></p-dropdown>
                        </td>
                      </tr>
 
@@ -110,43 +186,73 @@
 
 
 
-                     <tr     >
-                        <td>Teléfono</td>
+                     <tr>
+                        <td style="line-height:30pt;">Teléfono</td>
                         <td>
-                           <input type="text" pInputText    size="35"    formControlName="telefono"  [(ngModel)]="sucursal.telefono"   />
+                           <input
+                             style="width: 400px"
+                             type="text" pInputText
+                             size="35"
+                             formControlName="telefono"
+                             [(ngModel)]="sucursal.telefono"   />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="line-height:30pt;">GPS Latitud</td>
+                        <td>
+                           <input
+                             style="width: 400px"
+                             type="text"
+                             pInputText
+                             size="35"
+                             formControlName="coordenadaX"  />
+                        </td>
+                    </tr>
+                    <tr     >
+                        <td style="line-height:30pt;">GPS Longitud</td>
+                        <td>
+                           <input
+                             style="width: 400px"
+                             type="text"
+                             pInputText
+                             size="35"
+                             formControlName="coordenadaY"   />
+                        </td>
+                    </tr>
+                    <tr     >
+                        <td style="line-height:30pt;">Responsable</td>
+                        <td>
+                           <input
+                             style="width: 400px"
+                             type="text"
+                             pInputText
+                             size="35"
+                             formControlName="responsable"
+                             [(ngModel)]="sucursal.responsable"   />
                         </td>
                     </tr>
 
                     <tr     >
-                        <td>GPS Latitud</td>
+                        <td style="line-height:30pt;">Email Responsable</td>
                         <td>
-                           <input type="text" pInputText    size="35"   mask = "^-?\d{1,3}\.\d{7}$"  formControlName="coordenadaX" [(ngModel)]="sucursal.coordenadaX"   />
-                        </td>
-                    </tr>
-                    <tr     >
-                        <td>GPS Longitud</td>
-                        <td>
-                           <input type="text" pInputText     size="35" mask = "^-?\d{1,3}\.\d{7}$" formControlName="coordenadaY"   [(ngModel)]="sucursal.coordenadaY"   />
-                        </td>
-                    </tr>
-                    <tr     >
-                        <td>Responsable</td>
-                        <td>
-                           <input type="text" pInputText     size="35"  formControlName="responsable"  [(ngModel)]="sucursal.responsable"   />
-                        </td>
-                    </tr>
-
-                    <tr     >
-                        <td>Email Responsable</td>
-                        <td>
-                           <input type="text" pInputText    size="35"    formControlName="mail" [(ngModel)]="sucursal.mail"   />
+                           <input
+                             style="width: 400px"
+                             type="text"
+                             pInputText
+                             size="35"
+                             formControlName="mail"
+                             [(ngModel)]="sucursal.mail"   />
                         </td>
                     </tr>
 
                     <tr     >
                         <td>Activo</td>
                         <td>
-                            <p-inputSwitch [(ngModel)]="sucursal.flagActivo"  formControlName="flagActivo"  ></p-inputSwitch>
+                            <p-inputSwitch
+                              [(ngModel)]="sucursal.flagActivo"
+                              formControlName="flagActivo"
+                            ></p-inputSwitch>
                        </td>
                     </tr>
 
@@ -164,16 +270,10 @@
     </form>
 
 
-
-
-
-
-
-
  </div>
  <div style="padding:20px;"  >
 
-   <button *ngIf ="profileSucursal" pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guadarSucursal()" [disabled]="!profileSucursal.valid"></button>
+   <button *ngIf ="profileSucursal" pButton style="margin:3px;" icon="pi pi-check"  type="button" label="Guardar" (click)="guardarSucursal()" [disabled]="!profileSucursal.valid"></button>
 
    <button pButton style="margin:3px;" icon="pi pi-times"  type="button" label="Cancelar" (click)="cancelar()"></button>
 

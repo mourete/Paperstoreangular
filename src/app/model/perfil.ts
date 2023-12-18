@@ -1,16 +1,19 @@
-import { Modulo } from "./modulo";
+
 
 export class Perfil {
-
-
-    nombre:string;
-    descripcion:string;
-	clave:string;
-  moduloId:number;
-    modulos: Modulo[];
   perfilId: number;
+  clave: string;
+  nombre: string;
+  accesoMovil: number;
+  descripcion: string;
   activo: number;
-  moduloConcat: string;
-  usuarioOID? : String;
-
+  moduloId: number;
+  readOnly: number;
+  noEditable: number;
+  modulosPerfilConcatenados: string;
+  UsuarioOID: string;
+  huesped:number;
+  perfilCreated: string;
+  puestoId:number;
+  perfilUpdated: string;
 }

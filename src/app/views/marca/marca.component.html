@@ -3,14 +3,14 @@
   <div *ngIf="marca">
     <table border="0" cellpadding="1" cellspacing="1" >
       <tr>
-        <td align="center">Clave</td>
+        <td align="center" style="line-height:30pt;">Clave</td>
         <td>
           <input
             #claveInput
             type="text"
             formControlName="clave"
             pInputText
-            style="width: 400px"
+            style="width: 500px"
             [(ngModel)]="marca.clave"
             mask="AAAAAAAAAA"
             (input)="convertirAMayusculas()"
@@ -23,13 +23,13 @@
       </tr>
 
       <tr>
-        <td align="center">Nombre</td>
+        <td align="center" style="line-height:30pt;">Nombre</td>
         <td>
           <input
             type="text"
             pInputText
             formControlName="nombre"
-            style="width: 400px"
+            style="width: 500px"
             [(ngModel)]="marca.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
           />
@@ -41,7 +41,7 @@
       </tr>
 
       <tr *ngIf="selectedEmpresa">
-        <td align="center">Empresa</td>
+        <td align="center" style="line-height:30pt;">Empresa</td>
         <td>
           <p-dropdown
             (onChange)="empresaChanged()"
@@ -51,19 +51,19 @@
             [(ngModel)]="selectedEmpresa"
             [options]="empresas"
             optionLabel="nombre"
-            [style]="{ width: '400px' }"
+            [style]="{ width: '500px' }"
             filter="true"
           ></p-dropdown>
         </td>
       </tr>
 
       <tr>
-        <td align="center">Calle</td>
+        <td align="center" style="line-height:30pt;">Calle</td>
         <td>
           <input
             type="text"
             pInputText
-            style="width: 400px"
+            style="width: 500px"
             formControlName="calle"
             [(ngModel)]="marca.calle"
           />
@@ -71,12 +71,12 @@
       </tr>
 
       <tr>
-        <td align="center">Número</td>
+        <td align="center" style="line-height:30pt;">Número</td>
         <td>
           <input
             type="text"
             pInputText
-            style="width: 400px"
+            style="width: 500px"
             formControlName="numero"
             [(ngModel)]="marca.numero"
           />
@@ -84,12 +84,12 @@
       </tr>
 
       <tr>
-        <td align="center">Entre calles</td>
+        <td align="center" style="line-height:30pt;">Entre calles</td>
         <td>
           <input
             type="text"
             pInputText
-            style="width: 400px"
+            style="width: 500px"
             formControlName="entreCalle"
             [(ngModel)]="marca.entreCalle"
           />
@@ -97,12 +97,12 @@
       </tr>
 
       <tr>
-        <td align="center">Colonia</td>
+        <td align="center" style="line-height:30pt;">Colonia</td>
         <td>
           <input
             type="text"
             pInputText
-            style="width: 400px"
+            style="width: 500px"
             formControlName="colonia"
             [(ngModel)]="marca.colonia"
           />
@@ -110,12 +110,12 @@
       </tr>
 
       <tr>
-        <td align="center">CP</td>
+        <td align="center" style="line-height:30pt;">CP</td>
         <td>
           <input
             type="text"
             pInputText
-            style="width: 400px"
+            style="width: 500px"
             formControlName="cp"
             [(ngModel)]="marca.cp"
           />
@@ -123,12 +123,12 @@
       </tr>
 
       <tr>
-        <td align="center">Encargado</td>
+        <td align="center" style="line-height:30pt;">Encargado</td>
         <td>
           <input
             type="text"
             pInputText
-            style="width: 400px"
+            style="width: 500px"
             formControlName="encargado"
             [(ngModel)]="marca.encargado"
           />
@@ -136,12 +136,12 @@
       </tr>
 
       <tr>
-        <td align="center">E-Mail resp</td>
+        <td align="center" style="line-height:30pt;">E-Mail resp</td>
         <td>
           <input
             type="text"
             pInputText
-            style="width: 400px"
+            style="width: 500px"
             formControlName="mail"
             [(ngModel)]="marca.mail"
           />
@@ -149,7 +149,7 @@
       </tr>
 
       <tr>
-        <td align="center">Activo</td>
+        <td align="center" style="line-height:30pt;">Activo</td>
         <td>
           <p-inputSwitch
             [(ngModel)]="marca.flagActivo"
@@ -159,7 +159,7 @@
       </tr>
 
       <tr>
-        <td align="center">Estado</td>
+        <td align="center" style="line-height:30pt;">Estado</td>
         <td>
           <p-dropdown
             (onChange)="estadoChanged()"
@@ -169,13 +169,13 @@
             [options]="estados"
             optionLabel="nombre"
             filter="true"
-            [style]="{ width: '400px' }"
+            [style]="{ width: '500px' }"
           ></p-dropdown>
         </td>
       </tr>
 
       <tr>
-        <td align="center">Ciudad</td>
+        <td align="center" style="line-height:30pt;">Ciudad</td>
         <td>
           <p-dropdown
             [showTransitionOptions]="'0ms'"
@@ -184,7 +184,7 @@
             [options]="ciudades"
             optionLabel="nombre"
             filter="true"
-            [style]="{ width: '400px' }"
+            [style]="{ width: '500px' }"
           ></p-dropdown>
         </td>
       </tr>

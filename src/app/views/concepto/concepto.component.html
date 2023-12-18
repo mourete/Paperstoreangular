@@ -4,9 +4,10 @@
   <form [formGroup]="profileConcepto" (ngSubmit)="onSubmit()">
     <table border="0">
       <tr>
-        <td>Tipo de concepto</td>
+        <td style="line-height:30pt;">Tipo de concepto</td>
         <td>
           <p-dropdown
+            [style]="{ width: '500px' }"
             size="70"
             (onChange)="tipoConceptoChanged()"
             formControlName="tipoConcepto"
@@ -21,9 +22,10 @@
         </td>
       </tr>
       <tr>
-        <td>Clave</td>
+        <td style="line-height:30pt;">Clave</td>
         <td>
           <textarea
+            style="width: 500px"
             #claveInput
             pInputTextarea
             [rows]="1"
@@ -40,9 +42,10 @@
       </tr>
 
       <tr>
-        <td>Descripción</td>
+        <td style="line-height:30pt;">Descripción</td>
         <td>
           <textarea
+            style="width: 500px"
             pInputTextarea
             [rows]="2"
             [cols]="35"
@@ -80,9 +83,10 @@
       </tr>
 
       <tr *ngIf="selectedTipoConcepto.tipoConceptoId == 1">
-        <td>Longitud máxima</td>
+        <td style="line-height:30pt;">Longitud máxima</td>
         <td>
           <input
+            style="width: 500px"
             type="text"
             pInputText
             formControlName="textMaximo"

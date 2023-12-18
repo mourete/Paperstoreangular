@@ -201,7 +201,7 @@ export class DisplayDocumentComponent implements OnInit {
 
     let ref = this.dialogService.open(ConceptoComponent, {
       header: 'Agregar concepto',
-      width: '70%',
+      width: '90%',
       contentStyle: { 'max-height': '550px', height: '500px;' },
       data: { seccion: this.seccion, orden: ordenActual },
     });

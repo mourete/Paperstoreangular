@@ -98,7 +98,6 @@ import {BlockUIModule} from 'primeng/blockui';
     UsuarioComponent,
     PerfilComponent,
     ListPerfilComponent,
-    // VerPerfilComponent,
     MarcaComponent,
     ListMarcasComponent,
     RegionComponent,

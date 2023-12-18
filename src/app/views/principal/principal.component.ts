@@ -46,7 +46,6 @@ export class PrincipalComponent implements OnInit, OnDestroy {
     //mapModulos:{};
     usuario: Usuario;
     usuarioLog: UsuarioLog;
-
     mapModulos: Map<string, Modulo>;
     componentClass: any;
 
@@ -81,12 +80,14 @@ export class PrincipalComponent implements OnInit, OnDestroy {
                                 this.documentosAdmin();
                             }
                         }
+
                     ]
                 },
                     {label: 'Open'},
                     {label: 'Quit'}
                 ]
             },
+
             {
                 label: 'Edit',
                 icon: 'pi pi-fw pi-pencil',
@@ -148,7 +149,8 @@ export class PrincipalComponent implements OnInit, OnDestroy {
     public selectCurrentTemplate(menu: Modulo) {
 
 
-        let menuId = menu.objetoId;
+        let menuId = menu.objetoId.trim() !== "" ? menu.objetoId : menu.titulos;
+        menuId = menuId.toUpperCase()
 
         if (menuId == GlobalConstants.MENU_LISTAS) {
             this.currentTemplate = "listasAdmin";
@@ -169,10 +171,11 @@ export class PrincipalComponent implements OnInit, OnDestroy {
             //this.currentTemplate="usuariosAdmin";
             this.componentClass = ListUsuariosComponent;
             this.setCurrentComponent(this.componentClass);
+
         } else if (menuId == GlobalConstants.MENU_PERFIL) {
-            //this.currentTemplate="usuariosAdmin";
             this.componentClass = ListPerfilComponent;
             this.setCurrentComponent(this.componentClass);
+
         } else if (menuId == GlobalConstants.MENU_MARCAS) {
             // this.currentTemplate="marcas";
             this.componentClass = ListMarcasComponent
@@ -293,7 +296,6 @@ export class PrincipalComponent implements OnInit, OnDestroy {
     public getRawModulosByUserOID(userOID: string) {
         this.accountService.getModulosByUserOID(userOID).subscribe(
             (data) => {
-
                 this.rawModulos = data;
 
                 if (this.rawModulos == null || this.rawModulos.length <= 0) {

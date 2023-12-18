@@ -71,8 +71,8 @@ export class ListEmpresasComponent implements OnInit {
 
     let ref= this.dialogService.open( EmpresaComponent , {
       header: 'Empresa',
-      width: '70%',
-      contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
+      width: '90%',
+      contentStyle: {"max-height": "550px" , "height" : "500px"  } ,
       data: { empresaId:0  }
   });
 

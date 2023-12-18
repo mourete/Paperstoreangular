@@ -3,7 +3,7 @@
   <div *ngIf="documento">
     <table border="0">
       <tr>
-        <td>Clave</td>
+        <td style="line-height:50pt;">Clave</td>
         <td>
           <input
             #claveInput
@@ -16,14 +16,14 @@
             (input)="convertirAMayusculas()"
             [showMaskTyped]="true"
             required
-            style="width: 400px"
+            style="width: 500px"
           />
           <div *ngIf="clave.errors?.required">Clave es requerido</div>
         </td>
       </tr>
 
       <tr>
-        <td>Nombre</td>
+        <td style="line-height:50pt;">Nombre</td>
         <td>
           <input
             type="text"
@@ -33,7 +33,7 @@
             [(ngModel)]="documento.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
             required
-            style="width: 400px"
+            style="width: 500px"
           />
           <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
           <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>
@@ -42,7 +42,7 @@
 
 
       <tr>
-        <td>Estatus</td>
+        <td style="line-height:50pt;">Estatus</td>
 
       <td>
         <p-dropdown
@@ -52,7 +52,7 @@
           [(ngModel)]="selectedStatusProyecto"
           [options]="statusProyectos"
           optionLabel="nombre"
-          [style]="{ width: '400px' }"
+          [style]="{ width: '500px' }"
 
 
         ></p-dropdown>
@@ -71,14 +71,14 @@
       </td> -->
 
       <tr>
-        <td>Observaciones</td>
+        <td style="line-height:50pt;">Observaciones</td>
         <td>
           <textarea
             pInputTextarea
             [rows]="5"
             [cols]="25"
             formControlName="observaciones"
-            style="width: 400px"
+            style="width: 500px"
           ></textarea>
         </td>
       </tr>

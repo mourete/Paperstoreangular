@@ -247,21 +247,21 @@ public getAllEmpresas (  ){
 
 
 
-public setCurrentPuesto(){
-   if( this.puestos==null || this.puestos.length<=0 ){
-     return;
-   }
+  public setCurrentPuesto(){
+    if( this.puestos==null || this.puestos.length<=0 ){
+      return;
+    }
 
-   for( var  i=0; i<this.puestos.length; i++  ){
-        if( this.puestos[i].puestoId==this.usuario.puestoId  ){
-            this.selectedPuesto=this.puestos[i];
+    for( var  i=0; i<this.puestos.length; i++  ){
+      if( this.puestos[i].puestoId==this.usuario.puestoId  ){
+        this.selectedPuesto=this.puestos[i];
 
-        }
+      }
 
-   }
+    }
 
 
-}
+  }
 
 
 public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){

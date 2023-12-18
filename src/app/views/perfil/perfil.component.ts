@@ -265,84 +265,39 @@ export class PerfilComponent implements OnInit {
         this.perfil.perfilUpdated = this.perfilSession.UsuarioOID;
         this.perfil.huesped = this.perfilSession.huesped;
       }
+      this.modulosPerfilConcatenados();
 
-      this.setEmpresasConcat();
-      this.setModuloConcat();
-      this.perfilService.guardarPerfil(this.perfil, this.perfilSession.UsuarioOID).subscribe(
-        (data) => {
-          this.perfil = data;
-          this.ref.close(this.perfil);
-        }
-      );
-
+      if(!this.perfil?.perfilId){
+        this.perfilService.guardarPerfil(this.perfil, this.perfilSession.UsuarioOID).subscribe(
+          (data) => {
+            this.perfil = data;
+            this.ref.close(this.perfil);
+          });
+      } else {
+        this.perfilService.editarPerfil(this.perfil, this.perfilSession.UsuarioOID).subscribe(
+          (data) => {
+            this.perfil = data;
+            this.ref.close(this.perfil);
+          });
+      }
     }
   }
 
-  public setModuloConcat() {
-
-    if (this.perfil == null) {
+  public modulosPerfilConcatenados() {
+    if (this.perfil == null || this.accesosModuloSeleccionados == null) {
       return;
     }
 
-    var pu: PerfilUsuario;
-    var perfilesConcat: string = null;
+    let moduloConcat = this.accesosModuloSeleccionados
+      .map(node => node.key)
+      .filter(key => key != null && key.length > 0)
+      .join("|");
 
-    if (this.usuarioPerfilSeleccionado != null && this.usuarioPerfilSeleccionado.length > 0) {
-
-      for (var i = 0; i < this.usuarioPerfilSeleccionado.length; i++) {
-        pu = this.usuarioPerfilSeleccionado[i];
-        if (pu == null) {
-          continue;
-        }
-
-        /* if( !pu.flagSeleccionado ){
-            continue;
-         }
-*/
-
-        if (perfilesConcat == null) {
-          perfilesConcat = "" + pu.perfilId;
-        } else {
-          perfilesConcat += "|" + pu.perfilId;
-        }
-
-
-      }
+    if (moduloConcat) {
+      this.perfil.modulosPerfilConcatenados = moduloConcat;
     }
-
-    this.perfil.perfilesConcat = perfilesConcat;
   }
 
-
-  public setEmpresasConcat() {
-
-    if (this.perfil == null) {
-      return;
-    }
-
-    // var ue:UsuarioEmpresa;
-    var ue: UsuarioEmpresa;
-    var empresasConcat: string = null;
-    var todasMarcas: number;
-    if (this.dataArray != null && this.dataArray.length > 0) {
-
-      for (var i = 0; i < this.dataArray.length; i++) {
-
-        if (this.dataArray[i] != null && this.dataArray[i].length > 0) {
-          if (empresasConcat == null) {
-            empresasConcat = this.dataArray[i] + "|";
-          } else {
-            empresasConcat += this.dataArray[i] + "|";
-          }
-        }
-      }
-    }
-
-    if (empresasConcat) {
-      this.perfil.empresasConcat = empresasConcat.substring(0, empresasConcat.length - 1);
-    }
-
-  }
 
 
   public cancelar() {
@@ -400,17 +355,11 @@ export class PerfilComponent implements OnInit {
 
   nodeSelect(event) {
     this.addNode(event.node);
-    // this.updateFormControl();
   }
 
   nodeUnselect(event) {
     this.removeNode(event.node);
-    this.updateFormControl();
-  }
 
-  updateFormControl() {
-    const selectedValues = this.accesosModuloSeleccionados.map(node => node.data);
-    this.profilePerfil.get('moduloId').setValue(selectedValues);
   }
 
   removeNode(node: TreeNode) {
@@ -424,18 +373,16 @@ export class PerfilComponent implements OnInit {
   }
 
   addNode(node: TreeNode) {
-    if (node.leaf) {
+    if(node.leaf) {
 
-      if (!this.dataArray.includes(node.key)) {
-        this.dataArray.push(node.key);
+      if(!this.dataArray.includes(node.key)){
+        this.dataArray.push( node.key);
 
       }
       return;
     }
-    if (node?.children !== undefined) {
-      for (let i of node.children) {
-        this.addNode(i)
-      }
+    for(let i=0 ; i < node.children.length ; i++) {
+      this.addNode(node.children[i]);
     }
   }
 

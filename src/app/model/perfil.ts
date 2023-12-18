@@ -10,12 +10,10 @@ export class Perfil {
   moduloId: number;
   readOnly: number;
   noEditable: number;
-  flag_modulo: number;
+  modulosPerfilConcatenados: string;
   UsuarioOID: string;
   huesped:number;
   perfilCreated: string;
   puestoId:number;
   perfilUpdated: string;
-  empresasConcat: string;
-  perfilesConcat: string;
 }

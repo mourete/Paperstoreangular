@@ -48,10 +48,13 @@ public getPerfilById(perfilId:number, usuarioOID:string) : Observable<Perfil> {
 }
 
 public guardarPerfil(per: Perfil , usuarioOID:string): Observable< Perfil > {
-  let url:string = GlobalConstants.apiURL + "perfiles/savePerfil/" + usuarioOID;
+  let url:string = `${GlobalConstants.apiURL}perfiles/savePerfil/${usuarioOID}`;
   return this.http.post<Perfil>( url , JSON.stringify(per), {headers: this.headers});
 }
-
+public editarPerfil(per: Perfil , usuarioOID:string): Observable< Perfil > {
+  let url:string = `${GlobalConstants.apiURL}perfiles/saveModulosPerfil/${per.perfilId}/${usuarioOID}`;
+  return this.http.post<Perfil>( url , JSON.stringify(per), {headers: this.headers});
+}
 
 public eliminaPerfil(per: Perfil, usuarioOID: string ): Observable< Perfil > {
     let url:string = GlobalConstants.apiURL + "perfiles/delete" + "/" + usuarioOID;

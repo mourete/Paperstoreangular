@@ -18,6 +18,7 @@ export class DocumentoInstanciaService {
  
 public getDocByDocumentInstanceAndSection( documentoId :number ,   documentoInstanciaOID:string , seccionOID : string , usuarioOID:string   ) : Observable<DocumentoInstancia> {
   let url:string = GlobalConstants.apiURL + "documentosInstancia/respuestas/" + documentoId + "/"  + documentoInstanciaOID + "/" + seccionOID + "/" + usuarioOID   ; 
+  console.log(url);
   return this.http.get<DocumentoInstancia>( url  );
 }
 

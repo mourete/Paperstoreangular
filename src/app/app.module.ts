@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 
+import {DialogService, DynamicDialogComponent, DynamicDialogModule} from 'primeng/dynamicdialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,7 +22,7 @@ import {DocumentComponent} from './views/document/document.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {SeccionComponent} from './views/seccion/seccion.component';
 import {ConceptoComponent} from './views/concepto/concepto.component';
-import {ToolbarModule} from 'primeng/toolbar'; 
+import {ToolbarModule} from 'primeng/toolbar';
 import {DialogModule} from 'primeng/dialog';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {MenuModule} from 'primeng/menu';
@@ -48,6 +49,8 @@ import { ListEmpresasComponent } from './views/list-empresas/list-empresas.compo
 import { EmpresaComponent } from './views/empresa/empresa.component';
 import { ListUsuariosComponent } from './views/list-usuarios/list-usuarios.component';
 import { UsuarioComponent } from './views/usuario/usuario.component';
+import { PerfilComponent} from "./views/perfil/perfil.component";
+import { ListPerfilComponent} from "./views/list-perfil/list-perfil.component";
 import { MarcaComponent } from './views/marca/marca.component';
 import { ListMarcasComponent } from './views/list-marcas/list-marcas.component';
 import { RegionComponent } from './views/region/region.component';
@@ -60,19 +63,13 @@ import { ProyectoComponent } from './views/proyecto/proyecto.component';
 import { ListProyectosComponent } from './views/list-proyectos/list-proyectos.component';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { TreeModule } from 'primeng/tree'
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 import { ReactiveFormsModule } from '@angular/forms';
 import {DashboardComponent} from './views/dashboard/dashboard.component';
 import {StoreCheckComponent} from './views/storeCheck/storeCheck.component';
 import { AngularFileUploaderModule } from "angular-file-uploader";
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {TreeTable, TreeTableModule} from 'primeng/treetable';
-import {TreeNode} from 'primeng/api';
+import {TreeTableModule} from 'primeng/treetable';
 import {BlockUIModule} from 'primeng/blockui';
-  
-
-
-
 
 
 
@@ -99,6 +96,8 @@ import {BlockUIModule} from 'primeng/blockui';
     EmpresaComponent,
     ListUsuariosComponent,
     UsuarioComponent,
+    PerfilComponent,
+    ListPerfilComponent,
     MarcaComponent,
     ListMarcasComponent,
     RegionComponent,
@@ -116,13 +115,13 @@ import {BlockUIModule} from 'primeng/blockui';
     BrowserModule,
     AppRoutingModule ,
     HttpClientModule ,
-    TableModule , 
+    TableModule ,
     FormsModule ,
     ButtonModule ,
     FileUploadModule,
     InputTextModule ,
     DropdownModule ,
-    PanelModule , 
+    PanelModule ,
     CalendarModule ,
     CheckboxModule ,
     InputTextareaModule ,
@@ -145,9 +144,13 @@ import {BlockUIModule} from 'primeng/blockui';
     NgxMaskModule.forRoot(),
     ReactiveFormsModule,
     AngularFileUploaderModule,
-    BlockUIModule
+    BlockUIModule,
+    DynamicDialogModule
   ],
-  providers: [],
+  providers: [
+      DynamicDialogComponent,
+      DialogService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

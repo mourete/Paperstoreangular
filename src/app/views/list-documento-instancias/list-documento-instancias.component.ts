@@ -212,7 +212,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     //alert("Region:" + this.regionId )
     let ref= this.dialogService.open( DocumentoInstanciaComponent , {
         header: 'Documento',
-        width: '70%',
+        width: '90%',
         contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
         data: { documentoId:this.documentoId ,
                 usuarioOID : AppStore.usuarioOIDActual ,

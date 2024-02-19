@@ -152,7 +152,7 @@ export class ListProyectosComponent implements OnInit {
 
     let ref= this.dialogService.open( ProyectoComponent , {
       header: 'Proyecto',
-      width: '70%',
+      width: '90%',
 
       contentStyle: {"max-height": "550px" , "height" : "550px;"  } ,
       data: { proyectoId:0  }

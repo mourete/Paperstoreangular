@@ -5,24 +5,32 @@
                   <tr>
                     <td>Clave</td>
                     <td>
-                       <input type="text" pInputText   size="10"     [(ngModel)]="seccion.clave"   /> 
+                       <input
+                         type="text"
+                         pInputText
+                         size="50"
+                         mask="AAAAAAAAAA"
+
+                         [(ngModel)]="seccion.clave"
+                         (ngModelChange)="seccion.clave = seccion.clave.toUpperCase()"
+                         [showMaskTyped]="true"/>
                    </td>
-                 </tr>                      
-                               
+                 </tr>
+
                       <tr>
                         <td>Nombre</td>
                         <td>
-                           <input type="text" pInputText   size="50"   [(ngModel)]="seccion.nombre"   /> 
+                           <input type="text" pInputText   size="50"   [(ngModel)]="seccion.nombre"   />
                        </td>
-                     </tr>       
-                                                              
-                </table>                
-              </div>
-              
+                     </tr>
 
-                <div style="margin-top:20px;"  >                
-               
-                <button pButton style="margin:3px;" type="button" label="Guardar" (click)="guadarSeccion()"></button>
+                </table>
+              </div>
+
+
+                <div style="margin-top:20px;"  >
+
+                <button pButton style="margin:3px;" type="button" label="Guardar" (click)="guardarSeccion()"></button>
                 <button pButton style="margin:3px;" type="button" label="Cancelar" (click)="cancelar()"></button>
               </div>
 

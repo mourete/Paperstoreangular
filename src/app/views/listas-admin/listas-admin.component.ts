@@ -172,7 +172,7 @@ export class ListasAdminComponent implements OnInit {
   public agregarOpcion() {
     let ref = this.dialogService.open(OpcionComponent, {
       header: 'Agregar Opción',
-      width: '70%',
+      width: '90%',
       contentStyle: { 'max-height': '550px', overflow: 'auto' },
       data: { lista: this.selectedLista, opcion: null },
     });
@@ -295,7 +295,7 @@ export class ListasAdminComponent implements OnInit {
   public agregarLista() {
     let ref = this.dialogService.open(ListaComponent, {
       header: 'Agregar Lista',
-      width: '70%',
+      width: '90%',
       contentStyle: {
         'max-height': '600px',
         overflow: 'auto',

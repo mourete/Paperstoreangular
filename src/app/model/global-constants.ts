@@ -38,6 +38,7 @@ export class GlobalConstants {
    public static MENU_MARCAS="MARCAS";
    public static MENU_REGIONES="REGIONES";
    public static MENU_USUARIOS="USUARIOS";
+  public static MENU_PERFIL="PERFILES";
    public static MENU_SUCURSALES="SUCURSALES";
    public static MENU_PROYECTOS="PROYECTOS";
    public static MENU_DASHBOARD = "DASHBOARD_OPERATIVO";

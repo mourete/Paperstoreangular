@@ -32,43 +32,44 @@ export class UsuarioComponent implements OnInit {
 
   selectedPuesto:Puesto;
   selectedEmpresa:Empresa;
-  
+
   puestos:Puesto[];
   empresas:Empresa[];
   msgs: Message[] = [];
   usuarioEmpresas:UsuarioEmpresa[];
   usuarioPerfiles:PerfilUsuario[];
   usuarioPerfilSeleccionado : PerfilUsuario[] = [];
-
-  
+  tipoVentana: 0; //1= VentanaUsario, 2=VerPerfil
+  readOnly : boolean;
   resultadoAccesos : any[];
   accesosSeleccionados: TreeNode[] = [];
   selectedFiles: TreeNode[] = [];
   accesos: TreeNode[];
- 
-  
+
+
   profileUsuario = this.fb.group({
-    userName: ['',  Validators.required],
+    userName: ['', [Validators.required, Validators.maxLength(15), Validators.pattern(/^[A-Z0-9.,]*$/)]],
     nombre: ['', Validators.required],
     pass: ['',  Validators.required],
     passwordConfirm:['',  Validators.required],
-    mail: ['', Validators.required], 
+    mail: ['', Validators.required],
     direccion: [''],
     telefono: [''],
-    selectedPuesto: [''],
+    selectedPuesto: ['',  Validators.required],
     selectedEmpresa: [''],
     flag_seleccionado: [''],
     flag_puesto: [''],
-    flagTodasMarcas : [''], 
+    flagTodasMarcas : [''],
     ciudadesForm : [''],
     listboxPerfil: ['']
 
+
   });
 
-  constructor( public empresaService:EmpresaService ,  private fb: FormBuilder,  
-     public puestoService:PuestoService ,  public usuariosService:UsuariosService ,  
-      public config: DynamicDialogConfig , public ref: DynamicDialogRef 
-     
+  constructor( public empresaService:EmpresaService ,  private fb: FormBuilder,
+     public puestoService:PuestoService ,  public usuariosService:UsuariosService ,
+      public config: DynamicDialogConfig , public ref: DynamicDialogRef
+
       ) { }
 
 
@@ -77,31 +78,35 @@ export class UsuarioComponent implements OnInit {
 
   onSubmit() {
 
-   
-  
-   
-  
-  
-    this.guadarUsuario();
 
-   
+
+
+
+
+    this.guardarUsuario();
+
+
   }
 
 
   ngOnInit(): void {
-    
 
-  this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));   
-  if( this.config.data.usuarioOID!=null &&this.config.data.usuarioOID!= ""   ){       
-         this.getUsuarioByOID(  this.config.data.usuarioOID , this.usuarioSession.usuarioOID  );      
-  }else{       
+this.readOnly=false;
+  this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.config.data.usuarioOID = '4cd877c4-7eff-46da-b67a-738d6d36bcb8';
+  if( this.config.data.usuarioOID!=null &&this.config.data.usuarioOID!= ""   ){
+    if(this.config.data.tipoVentana==2) this.readOnly=true;
+
+         this.getUsuarioByOID(  this.config.data.usuarioOID , this.usuarioSession.usuarioOID  );
+
+  }else{
      this.usuario=new Usuario();
      this.usuario.usuarioCreated=this.usuarioSession.usuarioOID;
      this.usuario.huesped = this.usuarioSession.huesped;
      this.getAllPuestos();
      //this.getEmpUsuarioByUserOID();
      this.getEmpUsuarioByUserOIDJson();
-     
+
   }
 
 }
@@ -116,12 +121,12 @@ public getEmpUsuarioByUserOID(){
       userOID=this.usuario.usuarioOID;
   }
 
-  this.usuariosService.getEmpUsuarioByUserOID(  userOID  , this.usuarioSession.usuarioOID  ) .subscribe( 
+  this.usuariosService.getEmpUsuarioByUserOID(  userOID  , this.usuarioSession.usuarioOID  ) .subscribe(
     (data)=>{
 
-       this.usuarioEmpresas=data; 
-      
-       //this.initFlags(); 
+       this.usuarioEmpresas=data;
+
+       //this.initFlags();
     }
    );
 
@@ -130,53 +135,53 @@ public getEmpUsuarioByUserOID(){
 public getEmpUsuarioByUserOIDJson(){
   var userOID="*";
   var  sdataArray:string;
- 
+
   if( this.usuario==null || this.usuario.usuarioOID==null ){
       userOID="*";
   }else{
       userOID=this.usuario.usuarioOID;
   }
   console.log(userOID);
-  this.usuariosService.getEmpUsuarioByUserOIDJson(  userOID  , this.usuarioSession.usuarioOID  ) .subscribe( 
+  this.usuariosService.getEmpUsuarioByUserOIDJson(  userOID  , this.usuarioSession.usuarioOID  ) .subscribe(
     (data)=>{
-        this.resultadoAccesos = data;  
-       
+        this.resultadoAccesos = data;
+
         this.accesos = JSON.parse(this.resultadoAccesos[1]) ;
         sdataArray = this.resultadoAccesos[0];
         this.dataArray = sdataArray.split("/");
-       
+
         this.checkNode(this.accesos, this.dataArray);
-        this.getAllPuestos();    
-     // this.getEmpUsuarioByUserOID();    
-     
-      
+        this.getAllPuestos();
+     // this.getEmpUsuarioByUserOID();
+
+
     }
    );
 
 }
 
 
- 
+
 
 public getPerfilesByUsuarioOID(){
   var userOID="*";
-  
+
   if( this.usuario==null || this.usuario.usuarioOID==null || this.usuario.usuarioOID==""   ){
       userOID="*";
   }else{
       userOID=this.usuario.usuarioOID;
   }
 
-  this.usuariosService.getPerfilesByUsuarioOID (  userOID, this.usuarioSession.usuarioOID    ) .subscribe( 
+  this.usuariosService.getPerfilesByUsuarioOID (  userOID, this.usuarioSession.usuarioOID    ) .subscribe(
     (data)=>{
-       
-       this.usuarioPerfiles=data;        
-       
-       this.initFlagsPerfiles(); 
+
+       this.usuarioPerfiles=data;
+
+       this.initFlagsPerfiles();
     }
-    
+
    );
-   
+
 }
 
 
@@ -186,7 +191,7 @@ public initFlagsPerfiles() {
     return;
   }
 
-  
+
   var pu:PerfilUsuario;
   for( var i=0;i< this.usuarioPerfiles.length;i++ ){
       pu=this.usuarioPerfiles[i];
@@ -205,7 +210,7 @@ public initFlagsPerfiles() {
   public getAllPuestos (  ){
     this.puestoService.getAllPuestos (this.usuarioSession.usuarioOID).subscribe(
       (data)=>{
-        this.puestos=data;        
+        this.puestos=data;
         if(  this.usuario.puestoId>0 ){
             this.setCurrentPuesto();
 
@@ -219,22 +224,22 @@ public initFlagsPerfiles() {
 
 
 public getEmpresasByUsuarioOID(){
-  
+
   this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
     (data)=>{
-      this.empresas=data; 
+      this.empresas=data;
       console.log( "getEmpresasByUsuarioOID:" + this.empresas);
-          
+
    }
   );
 
 }
 /*
 public getAllEmpresas (  ){
-  
+
   this.empresaService.getAll().subscribe(
     (data)=>{
-      this.empresas=data;        
+      this.empresas=data;
    }
   );
 
@@ -242,32 +247,34 @@ public getAllEmpresas (  ){
 
 
 
-public setCurrentPuesto(){
-   if( this.puestos==null || this.puestos.length<=0 ){
-     return;
-   }
+  public setCurrentPuesto(){
+    if( this.puestos==null || this.puestos.length<=0 ){
+      return;
+    }
 
-   for( var  i=0; i<this.puestos.length; i++  ){
-        if( this.puestos[i].puestoId==this.usuario.puestoId  ){
-            this.selectedPuesto=this.puestos[i];
-           
-        }
+    for( var  i=0; i<this.puestos.length; i++  ){
+      if( this.puestos[i].puestoId==this.usuario.puestoId  ){
+        this.selectedPuesto=this.puestos[i];
 
-   }
+      }
+
+    }
 
 
-}
+  }
 
 
 public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
 
 
+
   this.usuariosService.getUsuarioByOID ( usuarioOID , usuarioConsultaOID ).subscribe(
     (data)=>{
-      this.usuario =data;  
-      this.passwordConfirm=this.usuario.pass;  
+
+      this.usuario =data;
+      this.passwordConfirm=this.usuario.pass;
       this.getEmpUsuarioByUserOIDJson();
-     
+
    }
   );
 
@@ -288,7 +295,7 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
   }
 
 
-  public guadarUsuario(){
+  public guardarUsuario(){
 
     this.msgs=[];
     console.log("huesped: " + this.usuarioSession.usuarioOID);
@@ -301,70 +308,70 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
     if(  this.usuario.userName ==null ||this.usuario.userName =="" ){
       this.msgs.push({severity:'error', detail: "Se requiere capturar el usuario "  , summary:'Validation failed'});
       return;
-    }    
- 
+    }
+
 
     if(  this.usuario.pass ==null ||this.usuario.pass =="" ){
       this.msgs.push({severity:'error', detail: "Se requiere capturar el password del usuario "  , summary:'Validation failed'});
       return;
-    }   
-    
+    }
+
 
     if(  this.passwordConfirm ==null ||this.passwordConfirm =="" ){
       this.msgs.push({severity:'error', detail: "Se requiere capturar la confirmación del password "  , summary:'Validation failed'});
       return;
-    }   
+    }
 
-    
+
     if(  this.usuario.pass!=this.passwordConfirm  ){
        this.msgs.push({severity:'error', detail: "La confirmación del password es incorrecta "  , summary:'Validation failed'});
        return;
-    }    
- 
- 
+    }
+
+
 
     if(  this.usuario.mail ==null ||this.usuario.mail =="" ){
       this.msgs.push({severity:'error', detail: "Se requiere capturar el correo del usuario "  , summary:'Validation failed'});
       return;
-    }       
+    }
     if(  this.dataArray ==null ||this.dataArray.length ==0 ){
       this.msgs.push({severity:'error', detail: "Se requiere accesos al usuario "  , summary:'Validation failed'});
       return;
-    }       
+    }
     if(  this.usuarioPerfilSeleccionado ==null ||this.usuarioPerfilSeleccionado.length ==0 ){
       console.log(this.usuarioPerfilSeleccionado.length);
-     
+
       this.msgs.push({severity:'error', detail: "Se requiere puestos del usuario "  , summary:'Validation failed'});
       return;
-    } 
-    
+    }
+
     if(  this.accesosSeleccionados ==null ||this.accesosSeleccionados.length ==0 ){
       console.log(this.accesosSeleccionados.length);
       this.msgs.push({severity:'error', detail: "Se requiere seleccionar accesos al menos a una empresa"  , summary:'Validation failed'});
       return;
-    } 
+    }
 
     if( this.selectedPuesto!=null ){
        this.usuario.puestoId=this.selectedPuesto.puestoId;
     }
-    
+
     if( this.usuario.usuarioOID!=null && this.usuario.usuarioOID!="" ){
        this.usuario.usuarioUpdated=this.usuarioSession.usuarioOID;
        this.usuario.huesped =this.usuarioSession.huesped;
-       
+
     }
 
-    
+
 
     this.setEmpresasConcat();
     this.setPerfilesConcat();
     this.usuario.activo=1;
     this.usuariosService.guardarUsuario(  this.usuario, this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
-        this.usuario=data;     
-        this.ref.close(this.usuario);          
+        this.usuario=data;
+        this.ref.close(this.usuario);
       }
-  
+
     );
 
 
@@ -381,18 +388,18 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
     var empresasConcat:string=null;
     var todasMarcas:number;
     if( this.dataArray!=null && this.dataArray.length>0  ){
-      
+
        for( var i=0;i< this.dataArray.length; i++  ){
 
           /* ue=this.usuarioEmpresas[i];
            if(ue==null){
              continue;
            }
- 
+
            if( !ue.flagSeleccionada ){
               continue;
            }
- 
+
            todasMarcas=0;
            if( ue.flagTodasMarcas ){
              todasMarcas=1;
@@ -404,7 +411,7 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
               }else{
                   empresasConcat+=  this.dataArray[i] +  "|";
               }
-           } 
+           }
        }
     }
     console.log("concant: " + empresasConcat.substring(0,empresasConcat.length-1))
@@ -426,30 +433,30 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
 
     var pu:PerfilUsuario;
     var perfilesConcat:string=null;
-    
+
     if( this.usuarioPerfilSeleccionado!=null && this.usuarioPerfilSeleccionado.length>0  ){
-      
+
        for( var i=0;i< this.usuarioPerfilSeleccionado.length; i++  ){
            pu=this.usuarioPerfilSeleccionado[i];
            if(pu==null){
              continue;
            }
- 
+
           /* if( !pu.flagSeleccionado ){
               continue;
            }
  */
- 
+
            if( perfilesConcat==null ){
               perfilesConcat= "" + pu.perfilId  ;
            }else{
               perfilesConcat+= "|" +  pu.perfilId ;
            }
- 
- 
+
+
        }
     }
-  
+
    this.usuario.perfilesConcat=perfilesConcat;
   }
 
@@ -459,18 +466,18 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
 
 
   checkNode(nodes:TreeNode[], str:string[]) {
-   
+
     for(let i=0 ; i < nodes.length ; i++) {
        if(!nodes[i].leaf && nodes[i].children.length>0) {
           if(nodes[i].children[0].leaf) {
-          
+
            for(let j=0 ; j < nodes[i].children.length ; j++) {
-            
+
                 if(str.includes(nodes[i].children[j].key)) {
                     if(!this.accesosSeleccionados.includes(nodes[i].children[j])){
                         this.accesosSeleccionados.push(nodes[i].children[j]);
-                       
-                      
+
+
                     }
                 }
             }
@@ -488,21 +495,21 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
             }
             if(nodes[i].children[j].partialSelected){
               nodes[i].partialSelected = true;
-        
+
             }
         }
         if(c == 0) {}
-        else if(c == count) { 
+        else if(c == count) {
             nodes[i].partialSelected = false;
             if(!this.accesosSeleccionados.includes(nodes[i])){
-                this.accesosSeleccionados.push(nodes[i]); 
+                this.accesosSeleccionados.push(nodes[i]);
             }
         }
         else {
             nodes[i].partialSelected = true;
         }
     }
-    
+
 }
 nodeSelect(event) {
   this.addNode(event.node);
@@ -520,7 +527,7 @@ removeNode(node: TreeNode) {
   if(node.leaf) {
       this.dataArray.splice(this.dataArray.indexOf(node.key),1);
       return;
-  } 
+  }
   for(let i=0 ; i < node.children.length ; i++){
       this.removeNode(node.children[i]);
   }
@@ -528,10 +535,10 @@ removeNode(node: TreeNode) {
 
 addNode(node: TreeNode) {
   if(node.leaf) {
-      
+
       if(!this.dataArray.includes(node.key)){
           this.dataArray.push( node.key);
-         
+
       }
       return;
   }
@@ -540,5 +547,5 @@ addNode(node: TreeNode) {
   }
 }
 
-  
+
 }

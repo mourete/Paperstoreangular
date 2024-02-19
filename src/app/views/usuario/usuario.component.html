@@ -1,3 +1,11 @@
+<style>
+  .p-checkbox-box {
+    pointer-events: none;
+    opacity: 0.6; /* Opcional: para dar apariencia de deshabilitado */
+  }
+
+</style>
+
 <p-messages [value]="msgs" [escape]="true"></p-messages>
 
 <div *ngIf="usuario">
@@ -8,21 +16,26 @@
   >
     <table border="0" cellpadding="1" cellspacing="1">
       <tr>
-        <td>Usuario</td>
+        <td style="line-height:30pt;">Usuario</td>
         <td>
           <input
             type="text"
             pInputText
+            [readonly]="readOnly"
             [style]="{ width: '30rem' }"
             formControlName="userName"
+            (input)="usuario.userName = usuario.userName.toUpperCase()"
+            [value]="usuario.userName"
             [(ngModel)]="usuario.userName"
           />
           <div *ngIf="f.nombre.errors?.required">Usuario es requerido</div>
+          <div *ngIf="profileUsuario.get('userName').errors?.maxlength">Usuario no puede exceder 15 caracteres</div>
+          <div *ngIf="profileUsuario.get('userName').errors?.pattern">Usuario no puede contener espacios en blanco solo letras, números, '.' y ','</div>
         </td>
       </tr>
 
       <tr>
-        <td>Nombre</td>
+        <td style="line-height:30pt;">Nombre</td>
 
         <td>
           <input
@@ -32,6 +45,7 @@
             [style]="{ width: '30rem' }"
             [(ngModel)]="usuario.nombre"
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
+            [readonly]="readOnly"
           />
           <div *ngIf="f.nombre.errors?.required">Nombre es requerido</div>
           <div *ngIf="f.nombre.errors?.pattern">Nombre solo acepta letras</div>
@@ -39,7 +53,7 @@
       </tr>
 
       <tr style="padding: 15px">
-        <td>Contraseña:</td>
+        <td style="line-height:30pt;">Contraseña:</td>
         <td>
           <input
             type="password"
@@ -47,13 +61,14 @@
             [style]="{ width: '30rem' }"
             formControlName="pass"
             [(ngModel)]="usuario.pass"
+            [readonly]="readOnly"
           />
           <div *ngIf="f.pass.errors?.required">Contraseña es requerido</div>
         </td>
       </tr>
 
       <tr style="padding: 15px">
-        <td>Repita contraseña:</td>
+        <td style="line-height:30pt;">Repita contraseña:</td>
         <td>
           <input
             type="password"
@@ -61,12 +76,13 @@
             pInputText
             formControlName="passwordConfirm"
             [(ngModel)]="passwordConfirm"
+            [readonly]="readOnly"
           />
         </td>
       </tr>
 
       <tr>
-        <td>Correo electrónico</td>
+        <td style="line-height:30pt;">Correo electrónico</td>
         <td>
           <input
             type="text"
@@ -76,6 +92,7 @@
             [(ngModel)]="usuario.mail"
             pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
             required
+            [readonly]="readOnly"
           />
           <div *ngIf="f.mail.errors?.required">Correo es requerido</div>
           <div *ngIf="f.mail.errors?.pattern">Correo invalido</div>
@@ -83,7 +100,7 @@
       </tr>
 
       <tr>
-        <td>Dirección</td>
+        <td style="line-height:30pt;">Dirección</td>
         <td>
           <textarea
             pInputTextarea
@@ -92,12 +109,13 @@
             [cols]="35"
             formControlName="direccion"
             [(ngModel)]="usuario.direccion"
+            [readonly]="readOnly"
           ></textarea>
         </td>
       </tr>
 
       <tr>
-        <td>Teléfono</td>
+        <td style="line-height:30pt;">Teléfono</td>
         <td>
           <input
             type="text"
@@ -105,12 +123,13 @@
             [style]="{ width: '30rem' }"
             formControlName="telefono"
             [(ngModel)]="usuario.telefono"
+            [readonly]="readOnly"
           />
         </td>
       </tr>
 
       <tr>
-        <td>Puesto</td>
+        <td style="line-height:30pt;">Puesto</td>
         <td>
           <p-dropdown
             [style]="{ width: '30rem' }"
@@ -121,6 +140,7 @@
             [(ngModel)]="selectedPuesto"
             [options]="puestos"
             optionLabel="nombre"
+            [readonly]="readOnly"
           ></p-dropdown>
         </td>
       </tr>
@@ -130,7 +150,7 @@
       </tr>
 
       <tr>
-        <td>Perfiles</td>
+        <td style="line-height:30pt;">Perfiles</td>
         <td>
           <p-listbox
             [options]="usuarioPerfiles"
@@ -144,6 +164,7 @@
             [listStyle]="{ 'max-height': '250px' }"
             [style]="{ width: '30rem' }"
             optionLabel="nombre"
+            [readonly]="readOnly"
           >
           </p-listbox>
         </td>
@@ -154,7 +175,7 @@
       </tr>
 
       <tr>
-        <td>Puestos</td>
+        <td style="line-height:30pt;">Puestos</td>
         <td>
           <p-tree
             [value]="accesos"
@@ -165,6 +186,7 @@
             [(selection)]="accesosSeleccionados"
             (onNodeSelect)="nodeSelect($event)"
             (onNodeUnselect)="nodeUnselect($event)"
+            [ngClass]="{'p-checkbox-box': readOnly}"
           ></p-tree>
         </td>
       </tr>
@@ -173,13 +195,15 @@
 </div>
 <div style="padding: 20px">
   <button
-    pButton
-    style="margin: 3px"
-    icon="pi pi-check"
-    type="button"
-    label="Guardar"
-    (click)="guadarUsuario()"
-  ></button>
+          *ngIf="!readOnly"
+          pButton
+          style="margin: 3px"
+          icon="pi pi-check"
+          type="button"
+          label="Guardar"
+          (click)="guardarUsuario()"
+  >
+  </button>
 
   <button
     pButton

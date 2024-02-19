@@ -4,7 +4,7 @@
   <form [formGroup]="profileRegion" (ngSubmit)="onSubmit()">
     <table border="0" cellpadding="1" cellspacing="1">
       <tr>
-        <td>Clave</td>
+        <td style="line-height:30pt;">Clave</td>
         <td>
           <input
             #claveInput
@@ -23,7 +23,7 @@
       </tr>
 
       <tr>
-        <td>Nombre</td>
+        <td style="line-height:30pt;">Nombre</td>
         <td>
           <input
             type="text"
@@ -39,7 +39,7 @@
       </tr>
 
       <tr *ngIf="selectedEmpresa">
-        <td>Empresa</td>
+        <td style="line-height:30pt;">Empresa</td>
         <td>
           <p-dropdown
             (onChange)="empresaChanged()"
@@ -55,7 +55,7 @@
       </tr>
 
       <tr *ngIf="selectedMarca">
-        <td>Marca</td>
+        <td style="line-height:30pt;">Marca</td>
         <td>
           <p-dropdown
             (onChange)="marcaChanged()"
@@ -108,17 +108,17 @@
                 <th style="width: 50px">
                   <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th style="width: 200px">Clave</th>
+                <th style="width: 100px">Clave</th>
                 <th style="width: 200px">Nombre</th>
                 <th style="width: 200px">Calle</th>
-                <th style="width: 200px">Numero</th>
+                <th style="width: 60px">Numero</th>
               </tr>
               <tr>
                 <th></th>
                 <th></th>
                 <th>
                   <input
-                    size="20"
+                    size="30"
                     pInputText
                     type="text"
                     (input)="
@@ -197,17 +197,17 @@
                 <th style="width: 50px">
                   <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th style="width: 200px">Clave</th>
+                <th style="width: 100px">Clave</th>
                 <th style="width: 200px">Nombre</th>
                 <th style="width: 200px">Calle</th>
-                <th style="width: 200px">Numero</th>
+                <th style="width: 60px">Numero</th>
               </tr>
               <tr>
                 <th></th>
                 <th></th>
                 <th>
                   <input
-                    size="20"
+                    size="30"
                     pInputText
                     type="text"
                     (input)="

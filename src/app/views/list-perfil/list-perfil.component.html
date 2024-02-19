@@ -1,7 +1,7 @@
 <div>
-  <div *ngIf="empresas">
+  <div *ngIf="perfiles">
     <div style="font-family: Arial, Helvetica, sans-serif; margin: 20px">
-      <h3>EMPRESAS</h3>
+      <h3>PERFILES</h3>
     </div>
 
     <p-toolbar>
@@ -9,21 +9,23 @@
         <button
           pButton
           type="button"
-          (click)="agregarEmpresa()"
-          label="Agregar empresa"
+          (click)="agregarPerfil()"
+          label="Agregar Perfil"
           icon="pi pi-plus"
         ></button>
       </div>
     </p-toolbar>
 
+
+
     <div>
       <div>
         <p-toolbar>
-          <div *ngIf="selectedEmpresa" class="ui-toolbar-group-left">
+          <div *ngIf="selectedPerfil" class="ui-toolbar-group-left">
             <button
               pButton
               type="button"
-              (click)="modificarEmpresa()"
+              (click)="modificarPerfil()"
               [style]="{
                 'vertical-align': 'middle',
                 width: '25px',
@@ -35,7 +37,7 @@
             <button
               pButton
               type="button"
-              (click)="confirmDeleteEmpresa()"
+              (click)="confirmDeletePerfil()"
               [style]="{
                 'vertical-align': 'middle',
                 width: '25px',
@@ -49,37 +51,44 @@
         </p-toolbar>
       </div>
 
+
       <p-table
-        (onRowSelect)="empresaChanged()"
-        [value]="empresas"
+        (onRowSelect)="perfilChanged()"
+        [value]="perfiles"
         [paginator]="true"
         [rows]="10"
         selectionMode="single"
-        [(selection)]="selectedEmpresa"
-        [contextMenu]="cmEmpresa"
-        dataKey="empresaId"
-      >
+        [(selection)]="selectedPerfil"
+        [contextMenu]="cmPerfil"
+        dataKey="perfilId">
+
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <!-- <th style="width: 300px">Id</th> Se quita el id-->
-            <th style="width: 300px">Clave</th>
-            <th style="width: 300px">Nombre</th>
 
-            <th style="width: 300px">Mail</th>
+            <th style="width: 150px">Perfil</th>
+            <th style="width: 400px">Descripción</th>
+            <th style="width: 100px">No Editable</th>
+            <th style="width: 100px">ReadOnly</th>
+            <th style="width: 100px">Acceso Móvil</th>
+            <th style="width: 100px">Activo</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-empresa>
-          <tr [pSelectableRow]="empresa" [pContextMenuRow]="empresa" (contextmenu)="onRightClick($event,empresa )">
-            <!-- <td>{{ empresa.empresaId }}</td> Se quita el id-->
-            <td>{{ empresa.clave }}</td>
-            <td>{{ empresa.nombre }}</td>
 
-            <td>{{ empresa.email }}</td>
+        <ng-template pTemplate="body" let-perfil>
+          <tr [pSelectableRow]="perfil" [pContextMenuRow]="perfil" (contextmenu)="onRightClick($event,perfil )">
+
+            <td>{{ perfil.nombre }}</td>
+            <td>{{ perfil.descripcion }}</td>
+            <td>{{ perfil.noEditable == 0 ? "No" : "Si" }}</td>
+            <td>{{ perfil.readOnly == 0 ? "No" : "Si"}}</td>
+            <td>{{ perfil.accesoMovil == 0 ? "No" : "Si" }}</td>
+            <td>{{ perfil.activo == 0 ? "No" : "Si"}}</td>
+
           </tr>
         </ng-template>
       </p-table>
     </div>
-  </div>
+    </div>
 </div>
 
 <p-confirmDialog
@@ -88,9 +97,10 @@
 ></p-confirmDialog>
 
 <p-contextMenu
-  #cmEmpresa
+  #cmPerfil
   popup="false"
   [style]="{ width: '250px' }"
   appendTo="body"
-  [model]="itemsEmpresa"
+  [model]="itemsPerfil"
 ></p-contextMenu>
+

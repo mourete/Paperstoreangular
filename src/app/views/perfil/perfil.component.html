@@ -1,50 +1,106 @@
 <p-messages [value]="msgs" [escape]="true"></p-messages>
 
-<div *ngIf="perfil">
+
   <form
     [formGroup]="profilePerfil"
     (ngSubmit)="onSubmit()"
     class="box-model form-support-margin"
   >
+    <div *ngIf="perfil">
     <table border="0" cellpadding="1" cellspacing="1">
+
       <tr>
-        <td>Perfil</td>
+        <td style="line-height:30pt;">Clave</td>
         <td>
+
           <input
+            #claveInput
             type="text"
             pInputText
+            size="25"
+            formControlName="clave"
+            (input)="convertirAMayusculas()"
+            mask="AAAAAAAAAA"
             [style]="{ width: '30rem' }"
-            formControlName="perfilName"
-            [(ngModel)]="perfil.Nombre"
+            required
+            [showMaskTyped]="true"
           />
-          <div *ngIf="f.nombre.errors?.required">Perfil es requerido</div>
+          <div *ngIf="clave.errors?.required">Clave es requerida</div>
+          <div *ngIf="clave.errors?.maxLength || clave.errors?.minLength">La clave debe tener 10 caracteres</div>
+
         </td>
       </tr>
 
       <tr>
-        <td>Descripción</td>
-
+        <td style="line-height:30pt;">Perfil </td>
         <td>
           <input
             type="text"
             pInputText
-            formControlName="descripcion"
             [style]="{ width: '30rem' }"
-            [(ngModel)]="perfil.descripcion"
-            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
+            formControlName="nombre"
           />
-          <div *ngIf="f.descripcion.errors?.required">Descripción es requerido</div>
-         
         </td>
-      </tr> 
+      </tr>
 
       <tr>
-        <td>Modulos</td>
+        <td style="line-height:30pt;">Descripción </td>
+
+        <td>
+          <textarea
+            type="text"
+            [rows]="5"
+            [cols]="25"
+            pInputText
+            formControlName="descripcion"
+            [style]="{ width: '30rem' }"
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,]+"
+          ></textarea>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>No editable</td>
+        <td>
+          <p-inputSwitch
+            formControlName="noEditable"
+          ></p-inputSwitch>
+        </td>
+      </tr>
+
+      <tr>
+      <td>Read Only</td>
+      <td>
+        <p-inputSwitch
+          formControlName="readOnly"
+        ></p-inputSwitch>
+      </td>
+      </tr>
+
+      <tr>
+        <td>Acceso Movil</td>
+        <td>
+          <p-inputSwitch
+            formControlName="accesoMovil"
+          ></p-inputSwitch>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Activo</td>
+        <td>
+          <p-inputSwitch
+            formControlName="activo"
+          ></p-inputSwitch>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="line-height:30pt;">Modulos </td>
         <td>
           <p-tree
             [value]="accesosModulos"
-            min="1"
-            formControlName="flag_modulo"
             selectionMode="checkbox"
             [style]="{ width: '30rem' }"
             [(selection)]="accesosModuloSeleccionados"
@@ -54,8 +110,10 @@
         </td>
       </tr>
     </table>
+    </div>
   </form>
-</div>
+
+
 <div style="padding: 20px">
   <button
     pButton
@@ -63,7 +121,7 @@
     icon="pi pi-check"
     type="button"
     label="Guardar"
-    (click)="guadarModulo()"
+    (click)="guardarPerfil()"
   ></button>
 
   <button

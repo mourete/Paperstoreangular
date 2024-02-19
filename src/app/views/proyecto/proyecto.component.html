@@ -9,7 +9,7 @@
         <td style="vertical-align: top">
           <table border="0" cellpadding="1" cellspacing="1">
             <tr>
-              <td>Clave</td>
+              <td style="line-height:30pt;">Clave</td>
               <td>
                 <input
                   #claveInput
@@ -19,14 +19,14 @@
                   mask="AAAAAAAAAA"
                   (input)="convertirMayusculas($event)"
                   [showMaskTyped]="true"
-                  style="width: 400px"
+                  style="width: 500px"
                 />
                 <div *ngIf="f.clave.errors?.required">Clave es requerido</div>
               </td>
             </tr>
 
             <tr>
-              <td>Nombre</td>
+              <td style="line-height:30pt;">Nombre</td>
               <td>
                 <input
                   type="text"
@@ -34,7 +34,7 @@
                   pInputText
                   pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
                   required
-                  style="width: 400px"
+                  style="width: 500px"
                 />
                 <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
                 <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>
@@ -42,7 +42,7 @@
             </tr>
 
             <tr *ngIf="selectedEmpresa">
-              <td>Empresa</td>
+              <td style="line-height:30pt;">Empresa</td>
               <td>
                 <p-dropdown
                   (onChange)="empresaEventChanged()"
@@ -52,14 +52,14 @@
                   [(ngModel)]="selectedEmpresa"
                   [options]="empresas"
                   optionLabel="nombre"
-                  [style]="{ width: '400px' }"
+                  [style]="{ width: '500px' }"
                   filter="true"
                 ></p-dropdown>
               </td>
             </tr>
 
             <tr *ngIf="selectedMarca">
-              <td>Marca</td>
+              <td style="line-height:30pt;">Marca</td>
               <td>
                 <p-dropdown
                   (onChange)="marcaChanged()"
@@ -69,19 +69,19 @@
                   [(ngModel)]="selectedMarca"
                   [options]="marcas"
                   optionLabel="nombre"
-                  [style]="{ width: '400px' }"
+                  [style]="{ width: '500px' }"
                 ></p-dropdown>
               </td>
             </tr>
 
             <tr>
-              <td>Descripción</td>
+              <td style="line-height:30pt;">Descripción</td>
               <td>
                 <textarea
                   [rows]="5"
                   [cols]="40"
                   pInputTextarea
-                  style="width: 400px"
+                  style="width: 500px"
                   formControlName="descripcion"
                 ></textarea>
               </td>
@@ -94,7 +94,7 @@
         <td style="vertical-align: top">
           <table border="0" cellpadding="1" cellspacing="1">
             <tr>
-              <td>Fecha Inicial</td>
+              <td style="line-height:30pt;">Fecha Inicial</td>
               <td>
                 <p-calendar
                   dateFormat="dd/mm/yy"
@@ -106,7 +106,7 @@
               </td>
             </tr>
             <tr>
-              <td>Fecha Final</td>
+              <td style="line-height:30pt;">Fecha Final</td>
               <td>
                 <p-calendar
                   dateFormat="dd/mm/yy"
@@ -118,7 +118,7 @@
               </td>
             </tr>
             <tr>
-              <td>Dias Vigencia</td>
+              <td style="line-height:30pt;">Dias Vigencia</td>
               <td>
                 <p-inputNumber
                   formControlName="diasVigencia"
@@ -129,7 +129,7 @@
               </td>
             </tr>
             <tr>
-              <td>Cantidad de documentos</td>
+              <td style="line-height:30pt;">Cantidad de documentos</td>
               <td>
                 <p-inputNumber
                   formControlName="cantidadDocumento"
@@ -170,18 +170,17 @@
           >
             <ng-template pTemplate="header">
               <tr>
-                <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-                <th>Clave</th>
-                <th style="width: 200px">Nombre</th>
-                <th>Calle</th>
-                <th>Numero</th>
+                <th style="width: 50px"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                <th style="width: 100px">Clave</th>
+                <th style="width: 400px">Nombre</th>
+
               </tr>
               <tr>
                 <th></th>
                 <th></th>
                 <th>
                   <input
-                    size="10"
+                    size="45"
                     pInputText
                     type="text"
                     (input)="
@@ -205,8 +204,6 @@
                 </td>
                 <td>{{ prLeft.clave }}</td>
                 <td>{{ prLeft.nombre }}</td>
-                <td>{{ prLeft.calle }}</td>
-                <td>{{ prLeft.numero }}</td>
               </tr>
             </ng-template>
           </p-table>
@@ -257,18 +254,16 @@
           >
             <ng-template pTemplate="header">
               <tr>
-                <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-                <th>Clave</th>
-                <th style="width: 200px">Nombre</th>
-                <th>Calle</th>
-                <th>Numero</th>
+                <th style="width: 50px"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                <th style="width: 100px">Clave</th>
+                <th style="width: 400px">Nombre</th>
               </tr>
               <tr>
                 <th></th>
                 <th></th>
                 <th>
                   <input
-                    size="10"
+                    size="45"
                     pInputText
                     type="text"
                     (input)="
@@ -292,8 +287,7 @@
                 </td>
                 <td>{{ prRight.clave }}</td>
                 <td>{{ prRight.nombre }}</td>
-                <td>{{ prRight.calle }}</td>
-                <td>{{ prRight.numero }}</td>
+
               </tr>
             </ng-template>
           </p-table>
@@ -327,16 +321,16 @@
           >
             <ng-template pTemplate="header">
               <tr>
-                <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-                <th>Clave</th>
-                <th style="width: 200px">Nombre</th>
+                <th style="width: 50px"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                <th style="width: 160px">Clave</th>
+                <th style="width: 300px">Nombre</th>
               </tr>
               <tr>
                 <th></th>
                 <th></th>
                 <th>
                   <input
-                    size="10"
+                    size="35"
                     pInputText
                     type="text"
                     (input)="
@@ -408,16 +402,16 @@
           >
             <ng-template pTemplate="header">
               <tr>
-                <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-                <th>Clave</th>
-                <th style="width: 200px">Nombre</th>
+                <th style="width: 50px"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                <th style="width: 160px">Clave</th>
+                <th style="width: 300px">Nombre</th>
               </tr>
               <tr>
                 <th></th>
                 <th></th>
                 <th>
                   <input
-                    size="10"
+                    size="35"
                     pInputText
                     type="text"
                     (input)="

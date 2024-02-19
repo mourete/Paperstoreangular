@@ -27,8 +27,10 @@ const routes: Routes = [{ path: 'displayDocument/:documentoId' , component : Dis
                         { path: 'documentosAdmin' , component : ListDocumentsComponent  },
                         { path: 'instanciasAdmin/:documentoId/:proyectoId/:regionId/:sucursalId/:usuarioOID/:documento/:sucursal/:region/:numDocumentos/:numInstancias' , component : ListDocumentoInstanciasComponent  },
                         { path: 'documentosUsuario/:usuarioOID' , component : DocumentosUsuarioComponent  },
-                        { path: 'principal' , component : PrincipalComponent  }
-                      
+                        { path: 'principal' , component : PrincipalComponent  },
+
+
+
                       ];
 
 @NgModule({

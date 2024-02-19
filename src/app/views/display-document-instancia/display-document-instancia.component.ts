@@ -30,9 +30,10 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule, // Asegurarse de que FormsModule esté importado
+    FormsModule,
     MultiSelectModule,
-    FileUploadModule
+    FileUploadModule,
+
   ],
 
   declarations: [],
@@ -153,7 +154,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   @Input() public varTipoAlerta: number;
   @Input() public varImage: string;
   noEditable: boolean;
- 
+
 
 
   constructor(
@@ -477,7 +478,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
       console.log(this.documentoInstancia.readOnly);
       console.log("noEditable");
       console.log(this.documentoInstancia.noEditable);
-      if (this.documentoInstancia.noEditable==1) this.noEditable = true;    
+      if (this.documentoInstancia.noEditable==1) this.noEditable = true;
       if (this.documentoInstancia.readOnly==1) this.readOnly = true;
 
       if (this.documentoInstancia.imagePath != null) {
@@ -485,7 +486,6 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
       } else {
         this.documentoInstancia.imagePath = 'assets/img/NoImagen.png';
       }
-
 
     }
     if (this.documentoInstancia.seccionesInstancia == null) {
@@ -508,8 +508,8 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
            ci.readOnly = true;
       }
       console.log("ConceptonoreadOnly");
-      console.log(ci.readOnly);       
-       
+      console.log(ci.readOnly);
+
       if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_FECHA) {
 
 

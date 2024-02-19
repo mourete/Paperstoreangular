@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Opcion } from 'src/app/model/opcion';
 import { Usuario } from 'src/app/model/usuario';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import { ListaService } from 'src/app/service/lista.service';
 import { of } from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-opcion',
   templateUrl: './opcion.component.html',
   styleUrls: ['./opcion.component.scss']
 })
+
 export class OpcionComponent implements OnInit {
 
-
-  opcion:Opcion;
+  @ViewChild('claveInput') claveInput: ElementRef;
+  opcion:Opcion = new Opcion();
   opcionAccion:string;
-
+  msgs: Message[] = [];
   visible:boolean;
   enabled:boolean;
   soyFiltro : boolean = false;
@@ -25,10 +28,20 @@ export class OpcionComponent implements OnInit {
   type : boolean = false;
   usuarioSession:Usuario;
   usuarioOID:string;
+  claveError: boolean = false;
+  esClaveValida: boolean = true;
 
 
 
-  constructor(private listaService : ListaService , public config: DynamicDialogConfig , public ref: DynamicDialogRef   ) { }
+  constructor(private listaService : ListaService ,
+              public config: DynamicDialogConfig ,
+              public ref: DynamicDialogRef   ) { }
+
+
+    onClaveChange() {
+        this.convertirAMayusculas();
+        this.verificarClave();
+    }
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
@@ -65,10 +78,6 @@ export class OpcionComponent implements OnInit {
       // console.log("Entre");
       console.log(this.config.data.lista.listaFiltroOID);
     }
-
-
-
-
 
 
   }
@@ -159,6 +168,7 @@ export class OpcionComponent implements OnInit {
 
   public guardarOpcion(){
 
+
     if(this.visible){
       this.opcion.visible=1;
     }else{
@@ -185,9 +195,14 @@ export class OpcionComponent implements OnInit {
     });
   }
 
-
-
-
-
+    convertirAMayusculas() {
+        if (this.opcion && this.opcion.clave) {
+            this.opcion.clave = this.opcion.clave.toUpperCase();
+        }
+    }
+    verificarClave(){
+        const clave = this.opcion.clave || '';
+        this.esClaveValida = clave.length >= 10;
+    }
 
 }

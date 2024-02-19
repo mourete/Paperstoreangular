@@ -30,9 +30,10 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule, // Asegurarse de que FormsModule esté importado
+    FormsModule,
     MultiSelectModule,
-    FileUploadModule
+    FileUploadModule,
+
   ],
 
   declarations: [],
@@ -485,7 +486,6 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
       } else {
         this.documentoInstancia.imagePath = 'assets/img/NoImagen.png';
       }
-
 
     }
     if (this.documentoInstancia.seccionesInstancia == null) {

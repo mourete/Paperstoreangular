@@ -127,24 +127,17 @@
                 <tr [pSelectableRow]="conceptoInstancia" >
                   <td style="width: 50px;">{{rowIndex + 1}}</td>
 
-                  <td *ngIf="conceptoInstancia.tipoConceptoId != 10"  style="width: 300px" >
-                    {{ conceptoInstancia.descripcion }}
-                  </td>
-                  <td *ngIf="conceptoInstancia.tipoConceptoId == 10" colspan="2" >
-                    {{ conceptoInstancia.descripcion }}
-                  </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 2" colspan="2"><img
+                    src="assets/img/alertaRojaConSigno.png" width="30" height="30"> {{conceptoInstancia.descripcion}}
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 1" colspan="2"><img
+                    src="assets/img/alertaNaranja.png" width="30" height="30"> {{conceptoInstancia.descripcion}} </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 0" colspan="2"><img
+                    src="assets/img/alertaVerde.png" width="30" height="30"> {{conceptoInstancia.descripcion}} </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == -1" colspan="2">
+                    <img src="assets/img/alertaAmarillo.png" width="30" height="30"> {{conceptoInstancia.descripcion}}
 
-
-                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 2"><img
-                    src="assets/img/alertaRojaConSigno.png" > {{conceptoInstancia.descripcion}}
-                  </td>
-                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == 1"><img
-                    src="assets/img/alertaNaranja.png"> {{conceptoInstancia.descripcion}} </td>
-                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == -1" ><img
-                    src="assets/img/alertaVerde.png" > {{conceptoInstancia.descripcion}} </td>
-                  <td *ngIf="conceptoInstancia.tipoConceptoId==13 && conceptoInstancia.tipoAlerta == -2" >
-                    <img src="assets/img/alertaAmarillo.png" > {{conceptoInstancia.descripcion}}
-                  </td>
+                  <td *ngIf="conceptoInstancia.tipoConceptoId!=13"
+                      colspan="2" style="width: 400px;"> {{conceptoInstancia.descripcion}}   </td>
 
 
                   <td *ngIf="conceptoInstancia.tipoConceptoId==6">
@@ -189,18 +182,27 @@
                   </td>
 
                   <td *ngIf="conceptoInstancia.tipoConceptoId==7">
-                    <!--<div *ngIf="conceptoInstancia.opcionesInstancia">-->
+                    <!-- Cuando no está en modo readOnly, muestra el p-multiSelect -->
+                    <ng-container *ngIf="!conceptoInstancia.readOnly; else readOnlyBlock">
                       <p-multiSelect
                         [options]="conceptoInstancia.opcionesInstancia"
                         [(ngModel)]="conceptoInstancia.selectedValues"
                         optionLabel="texto"
                         [style]="{'width': '800px', 'height': '35px'}"
                         optionValue="opcionOID"
-                        [readonly]="conceptoInstancia.readOnly"
->
+                        [readonly]="conceptoInstancia.readOnly">
                       </p-multiSelect>
-                    <!--</div>-->
+                    </ng-container>
+                    <!-- Plantilla alternativa para modo readOnly -->
+                    <ng-template #readOnlyBlock>
+                      <ul [style]="{'width': '800px'}">
+                        <li *ngFor="let opcion of conceptoInstancia.selectedValues">
+                          {{ opcion.texto }}
+                        </li>
+                      </ul>
+                    </ng-template>
                   </td>
+
                   <td *ngIf="conceptoInstancia.tipoConceptoId==8">
 
                     <div *ngIf="conceptoInstancia.valor ">

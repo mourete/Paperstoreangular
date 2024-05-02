@@ -1,29 +1,24 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, NgModule, OnInit} from '@angular/core';
 import {Seccion} from 'src/app/model/seccion';
 import {DocumentoInstancia} from 'src/app/model/documento-instancia';
 import {DocumentoInstanciaService} from 'src/app/service/documento-instancia.service';
 import {ActivatedRoute} from '@angular/router';
 
 import {DialogService} from 'primeng/dynamicdialog';
-import {ConfirmationService} from 'primeng/api';
+import {ConfirmationService, Message, MessageService} from 'primeng/api';
 import {SeccionInstancia} from 'src/app/model/seccion-instancia';
-import {Message} from 'primeng/api';
-import {MessageService} from 'primeng/api';
 import {GlobalConstants} from 'src/app/model/global-constants';
 import {DatePipe} from '@angular/common';
 import {OpcionInstancia} from 'src/app/model/opcion-instancia';
 import {ConceptoInstancia} from 'src/app/model/concepto-instancia';
 import {SeccionService} from 'src/app/service/seccion.service';
 import {SeccionInstanciaService} from 'src/app/service/seccion-instancia.service';
-import {BlockUIModule} from 'primeng/blockui';
 import {Usuario} from 'src/app/model/usuario';
-import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms'; // Asegurarse de que FormsModule esté importado
 import {MultiSelectModule} from 'primeng/multiselect';
 import {BrowserModule} from '@angular/platform-browser';
 import {FileUploadModule} from 'primeng/fileupload';
-import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -352,7 +347,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
       }
 
 
-      if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_ENTERO || ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_DECIMAL || ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_PORCENTAJE) {
+      if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_ENTERO || ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_PORCENTAJE) {
 
 
         var numbers = /^[0-9]+$/;
@@ -417,50 +412,37 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
 
   public configRespuestasForDB() {
-    if (this.documentoInstancia.seccionesInstancia == null) {
-      return false;
-    }
 
-    if (this.seccionInstancia == null || this.seccionInstancia.conceptosInstancia == null || this.seccionInstancia.conceptosInstancia.length <= 0) {
+    if (this.seccionInstancia?.conceptosInstancia.length <= 0 || this.documentoInstancia?.seccionesInstancia === null) {
       return;
     }
 
-
-    for (var idx = 0; idx < this.seccionInstancia.conceptosInstancia.length; idx++) {
-      var ci = this.seccionInstancia.conceptosInstancia[idx];
-
-      if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_FECHA) {
-        if (ci.valueAsDate != null) {
-          let dateAsString = this.datePipe.transform(ci.valueAsDate, 'yyyy/MM/dd');
-          ci.valor = dateAsString;
-
+    for (const ci of this.seccionInstancia.conceptosInstancia) {
+      if (ci.valueAsDate === null) {
+        if (ci.tipoConceptoId === GlobalConstants.CONCEPTO_TIPO_OPCION_MULTIPLE) {
+          // alert( ci.selected );
         }
-
-
-      } else if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_HORA) {
-        if (ci.valueAsDate != null) {
-          let dateAsString = this.datePipe.transform(ci.valueAsDate, 'shortTime');
-          ci.valor = dateAsString;
-
+      } else {
+        switch (ci.tipoConceptoId) {
+          case GlobalConstants.CONCEPTO_TIPO_FECHA: {
+            ci.valor = this.datePipe.transform(ci.valueAsDate, 'yyyy/MM/dd');
+            break;
+          }
+          case GlobalConstants.CONCEPTO_TIPO_HORA: {
+            ci.valor = this.datePipe.transform(ci.valueAsDate, 'shortTime');
+            break;
+          }
+          case GlobalConstants.CONCEPTO_TIPO_VIGENCIA: {
+            ci.valor = this.datePipe.transform(ci.valueAsDate, 'yyyy/MM/dd');
+            break;
+          }
+          default: {
+            break;
+          }
         }
-      } else if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_VIGENCIA) {
-        if (ci.valueAsDate != null) {
-          let dateAsString = this.datePipe.transform(ci.valueAsDate, 'yyyy/MM/dd');
-          ci.valor = dateAsString;
-
-
-        }
-
-      } else if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_OPCION_MULTIPLE) {
-        // alert( ci.selected );
-
-
       }
 
     }
-    return true;
-
-
   }
 
   public validarRequeirdaOpcionySeleccionMultiple(ci: ConceptoInstancia) {

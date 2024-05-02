@@ -139,12 +139,14 @@
             <tr [pSelectableRow]="concepto" [pContextMenuRow]="concepto" >
               <td style="width: 50px">{{ rowIndex + 1 }}</td>
               <td style="width: 150px">{{ concepto.clave }}</td>
-              <td *ngIf="concepto.tipoConceptoId != 10"  style="width: 300px">
+
+              <td *ngIf="concepto.tipoConceptoId != 10 && concepto.tipoConceptoId != 11"  style="width: 300px">
                 {{ concepto.descripcion }}
               </td>
-              <td *ngIf="concepto.tipoConceptoId == 10" colspan="2" >
+              <td *ngIf="concepto.tipoConceptoId == 10 || concepto.tipoConceptoId == 11" colspan="2" >
                 {{ concepto.descripcion }}
               </td>
+
               <td *ngIf="concepto.tipoConceptoId == 6" >
                 <p-dropdown
                   [showTransitionOptions]="'0ms'"

@@ -14,6 +14,7 @@ import {ButtonModule} from 'primeng/button';
 import {FileUploadModule } from 'primeng/fileupload';
 import {InputTextModule} from 'primeng/inputtext';
 import {DisplayDocumentComponent } from './views/display-document/display-document.component';
+import {DisplayDocumentBuscarComponent } from './views/display-document-buscar/display-document-buscar.component';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PanelModule} from 'primeng/panel';
 import {CalendarModule} from 'primeng/calendar';
@@ -40,6 +41,7 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { ListDocumentsComponent } from './views/list-documents/list-documents.component';
 import { ListDocumentoInstanciasComponent } from './views/list-documento-instancias/list-documento-instancias.component';
+import { ListDocumentoInstanciasCajaComponent } from './views/list-documento-instancias-caja/list-documento-instancias-caja.component';
 import { DocumentosUsuarioComponent } from './views/documentos-usuario/documentos-usuario.component';
 import { LoginComponent } from './views/login/login.component';
 import { InfoHuespedComponent } from './views/info-huesped/info-huesped.component';
@@ -58,6 +60,7 @@ import { ListRegionesComponent } from './views/list-regiones/list-regiones.compo
 import { UsuarioMarcasComponent } from './views/usuario-marcas/usuario-marcas.component';
 import { ListSucursalesComponent } from './views/list-sucursales/list-sucursales.component';
 import { ListDocumentoUsuariosComponent } from './views/list-documento-usuarios/list-documento-usuarios.component';
+import { ListDocumentoUsuariosBuscarComponent } from './views/list-documento-usuarios-buscar/list-documento-usuarios-buscar.component';
 import { SucursalComponent } from './views/sucursal/sucursal.component';
 import { ProyectoComponent } from './views/proyecto/proyecto.component';
 import { ListProyectosComponent } from './views/list-proyectos/list-proyectos.component';
@@ -77,6 +80,7 @@ import {BlockUIModule} from 'primeng/blockui';
   declarations: [
     AppComponent,
     DisplayDocumentComponent,
+    DisplayDocumentBuscarComponent,
     DocumentComponent,
     SeccionComponent,
     ConceptoComponent,
@@ -88,7 +92,8 @@ import {BlockUIModule} from 'primeng/blockui';
     DocumentoInstanciaComponent,
     ListDocumentsComponent,
     ListDocumentoInstanciasComponent,
-    DocumentosUsuarioComponent,
+    ListDocumentoInstanciasCajaComponent,
+   DocumentosUsuarioComponent,
     LoginComponent,
     InfoHuespedComponent,
     PrincipalComponent,
@@ -105,6 +110,7 @@ import {BlockUIModule} from 'primeng/blockui';
     UsuarioMarcasComponent,
     ListSucursalesComponent,
     ListDocumentoUsuariosComponent,
+    ListDocumentoUsuariosBuscarComponent,
     SucursalComponent,
     ProyectoComponent,
     ListProyectosComponent,

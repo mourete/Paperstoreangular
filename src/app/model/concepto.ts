@@ -28,6 +28,7 @@ export class Concepto {
     listasConceptosSecciones:ListasConceptosSecciones;
     noEditable: number;
     filtro : number;
+    buscar : number;
     descripcionText : String;
     listaOID : String;
     listaFiltroOID : String;

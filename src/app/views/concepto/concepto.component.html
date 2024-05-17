@@ -81,7 +81,15 @@
           ></p-inputSwitch>
         </td>
       </tr>
-
+      <tr  *ngIf="selectedTipoConcepto.tipoConceptoId != 10 && selectedTipoConcepto.tipoConceptoId != 11 && selectedTipoConcepto.tipoConceptoId != 8 " >
+        <td>Buscar</td>
+        <td>
+          <p-inputSwitch
+            [(ngModel)]="buscar"
+            formControlName="buscar"
+          ></p-inputSwitch>
+        </td>
+      </tr>
       <tr *ngIf="selectedTipoConcepto.tipoConceptoId == 1">
         <td style="line-height:30pt;">Longitud máxima</td>
         <td>

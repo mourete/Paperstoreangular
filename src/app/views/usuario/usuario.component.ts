@@ -93,7 +93,7 @@ export class UsuarioComponent implements OnInit {
 
 this.readOnly=false;
   this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
-    this.config.data.usuarioOID = '4cd877c4-7eff-46da-b67a-738d6d36bcb8';
+   
   if( this.config.data.usuarioOID!=null &&this.config.data.usuarioOID!= ""   ){
     if(this.config.data.tipoVentana==2) this.readOnly=true;
 

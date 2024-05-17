@@ -52,6 +52,7 @@ export class ConceptoComponent implements OnInit {
   selectedOpcion: Opcion;
   requerida: boolean;
   habilitada: boolean;
+  buscar: boolean;
   selectedOrder: number;
   usuario: Usuario;
   usuarioOID: string;
@@ -110,6 +111,7 @@ export class ConceptoComponent implements OnInit {
       clave: ['', Validators.required],
       requerido: [''],
       habilitada: [''],
+      buscar: [''],
       noEditable: [''],
       textMaximo: [''],
       maximo: [''],
@@ -141,6 +143,7 @@ export class ConceptoComponent implements OnInit {
 
     this.habilitada = true;
     this.noEditable = false;
+    this.buscar = true;
     this.selectedTipoConcepto = this.tiposConcepto[0];
 
     this.profileConcepto.get('maximo').valueChanges.subscribe(() => {
@@ -358,6 +361,11 @@ export class ConceptoComponent implements OnInit {
     } else {
       this.concepto.enabled = 0;
     }
+    if (this.buscar) {
+      this.concepto.buscar = 1;
+    } else {
+      this.concepto.buscar = 0;
+    }
 
     if (this.noEditable) {
       this.concepto.noEditable = 1;
@@ -469,7 +477,11 @@ export class ConceptoComponent implements OnInit {
     } else {
       this.habilitada = false;
     }
-
+    if (this.concepto.buscar == 1) {
+      this.buscar = true;
+    } else {
+      this.buscar = false;
+    }
     if (this.concepto.noEditable == 1) {
       this.noEditable = true;
     } else {

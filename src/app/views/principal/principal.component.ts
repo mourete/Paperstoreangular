@@ -15,6 +15,7 @@ import {Router} from "@angular/router";
 import {GlobalConstants} from 'src/app/model/global-constants';
 import {DocumentosUsuarioComponent} from '../documentos-usuario/documentos-usuario.component';
 import {ListDocumentoUsuariosComponent} from '../list-documento-usuarios/list-documento-usuarios.component';
+import {ListDocumentoUsuariosBuscarComponent} from '../list-documento-usuarios-buscar/list-documento-usuarios-buscar.component';
 import {ListDocumentsComponent} from '../list-documents/list-documents.component';
 import {ListEmpresasComponent} from '../list-empresas/list-empresas.component';
 import {ListUsuariosComponent} from '../list-usuarios/list-usuarios.component';
@@ -28,6 +29,7 @@ import {StoreCheckComponent} from '../storeCheck/storeCheck.component';
 import {ListPerfilComponent} from "../list-perfil/list-perfil.component";
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {UsuarioComponent} from "../usuario/usuario.component";
+import { DisplayDocumentBuscarComponent } from '../display-document-buscar/display-document-buscar.component';
 
 
 @Component({
@@ -193,6 +195,10 @@ export class PrincipalComponent implements OnInit, OnDestroy {
         } else if (menuId == GlobalConstants.MENU_INSTANCIAS) {
             this.currentTemplate = "instancias";
             this.componentClass = DocumentosUsuarioComponent;
+            this.setCurrentComponent(this.componentClass);
+
+        } else if (menuId == GlobalConstants.MENU_LISTA_DOCUMENTO_USUARIOS_BUSCAR) {
+            this.componentClass = ListDocumentoUsuariosBuscarComponent;
             this.setCurrentComponent(this.componentClass);
 
         } else if (menuId == GlobalConstants.MENU_LISTA_DOCUMENTO_USUARIOS) {

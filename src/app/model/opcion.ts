@@ -5,7 +5,7 @@ export class Opcion {
     clave:string;
     valor:string;
     tag:string;
-    opcionOID : string;
+    opcionOID : string
     listaOID : string;
     texto : string;
     orden : number;
@@ -14,7 +14,8 @@ export class Opcion {
     condiciones : Condicion[];
     opcionFiltroOID : string;
     opcionesNombre : string;
-    
+    ponderacion: number;
+
 
 
 }

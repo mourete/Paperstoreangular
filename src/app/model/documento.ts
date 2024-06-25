@@ -7,8 +7,9 @@ export class Documento {
     statusId  : number;
     estatus:string;
     plantilla: string;
-    operacion : number;    
-	observaciones : string;	    
+    operacion : number;
+    observaciones : string;
+    ponderacion : number;
     secciones : Seccion[]
     activa:number;
     cantidadDocumento:number;
@@ -17,5 +18,5 @@ export class Documento {
     regionId:number;
     sucursalId:number;
 
-    
+
 }

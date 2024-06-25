@@ -59,7 +59,8 @@ export class DocumentComponent implements OnInit {
       clave: new FormControl(''),
       nombre: new FormControl(''),
       statusProyectoForm: new FormControl(''),
-      observaciones: new FormControl('')
+      observaciones: new FormControl(''),
+      ponderacion: new FormControl(''),
     });
   }
 
@@ -78,6 +79,11 @@ export class DocumentComponent implements OnInit {
   get observaciones() {
     return this.profileDocument.get('observaciones');
   }
+
+  get ponderacion() {
+    return this.profileDocument.get('ponderacion');
+  }
+
 
 
   ngOnInit(): void {
@@ -106,7 +112,8 @@ export class DocumentComponent implements OnInit {
           clave: this.documento.clave,
           nombre: this.documento.nombre,
           estatus: this.documento.statusId,
-          observaciones: this.documento.observaciones
+          observaciones: this.documento.observaciones,
+          ponderacion: this.documento.ponderacion,
         });
 
         if (this.statusProyectos != null) {
@@ -151,6 +158,7 @@ export class DocumentComponent implements OnInit {
     this.documento.nombre = this.nombre.value;
     this.documento.clave = this.clave.value;
     this.documento.observaciones = this.observaciones.value;
+    this.documento.ponderacion = this.ponderacion.value;
     this.documento.estatus = this.selectedStatusProyecto.nombre;
     this.documento.activa = 1;
     this.documento.statusId = this.selectedStatusProyecto.statusProyectoId;

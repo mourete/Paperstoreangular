@@ -1,62 +1,58 @@
 <p-messages [value]="msgs" [escape]="true"></p-messages>
+<div *ngIf="documento">
 <form [formGroup]="profileDocument" (ngSubmit)="onSubmit()">
-  <div *ngIf="documento">
-    <table border="0">
+    <table border="0" cellpadding="1"  cellspacing="1">
       <tr>
-        <td style="line-height:50pt;">Clave</td>
-        <td>
-          <input
-            #claveInput
-            type="text"
-            [(ngModel)]="documento.clave"
-            pInputText
-            size="25"
-            formControlName="clave"
-            mask="AAAAAAAAAA"
-            (input)="convertirAMayusculas()"
-            [showMaskTyped]="true"
-            required
-            style="width: 500px"
-          />
+        <td  style="vertical-align: top;"  >
+          <table border="0">
+
+        <tr>
+          <td style="line-height:50pt;">Clave</td>
+              <input
+                #claveInput
+                type="text"
+                [(ngModel)]="documento.clave"
+                pInputText
+                size="25"
+                formControlName="clave"
+                mask="AAAAAAAAAA"
+                (input)="convertirAMayusculas()"
+                [showMaskTyped]="true"
+                required
+                style="width: 500px"/>
           <div *ngIf="clave.errors?.required">Clave es requerido</div>
-        </td>
-      </tr>
+        </tr>
 
       <tr>
         <td style="line-height:50pt;">Nombre</td>
-        <td>
-          <input
-            type="text"
-            formControlName="nombre"
-            pInputText
-            size="25"
-            [(ngModel)]="documento.nombre"
-            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
-            required
-            style="width: 500px"
-          />
-          <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
-          <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>
-        </td>
+            <td>
+              <input
+                type="text"
+                formControlName="nombre"
+                pInputText
+                size="25"
+                [(ngModel)]="documento.nombre"
+                pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s.,0-9]+"
+                required
+                style="width: 500px"
+              />
+              <div *ngIf="nombre.errors?.required">Nombre es requerido</div>
+              <div *ngIf="nombre.errors?.pattern">Nombre solo acepta letras y números</div>
+            </td>
       </tr>
 
 
       <tr>
         <td style="line-height:50pt;">Estatus</td>
-
-      <td>
-        <p-dropdown
-          [showTransitionOptions]="'0ms'"
-          [hideTransitionOptions]="'0ms'"
-          formControlName="statusProyectoForm"
-          [(ngModel)]="selectedStatusProyecto"
-          [options]="statusProyectos"
-          optionLabel="nombre"
-          [style]="{ width: '500px' }"
-
-
-        ></p-dropdown>
-      </td>
+          <p-dropdown
+            [showTransitionOptions]="'0ms'"
+            [hideTransitionOptions]="'0ms'"
+            formControlName="statusProyectoForm"
+            [(ngModel)]="selectedStatusProyecto"
+            [options]="statusProyectos"
+            optionLabel="nombre"
+            [style]="{ width: '500px' }"
+          ></p-dropdown>
     </tr>
       <!-- <td>
         <p-dropdown
@@ -72,17 +68,42 @@
 
       <tr>
         <td style="line-height:50pt;">Observaciones</td>
-        <td>
-          <textarea
-            pInputTextarea
-            [rows]="5"
-            [cols]="25"
-            formControlName="observaciones"
-            style="width: 500px"
-          ></textarea>
-        </td>
+          <td>
+            <textarea
+              pInputTextarea
+              [rows]="5"
+              [cols]="25"
+              formControlName="observaciones"
+              style="width: 500px">
+            </textarea>
+          </td>
       </tr>
+          </table>
+    </td>
+
+    <td style="width: 50px;" > </td>
+    <td style="vertical-align: top;">
+      <table border="0"   cellpadding="1"  cellspacing="1">
+
+        <tr><td style="line-height:30pt;">Ponderación</td></tr>
+        <tr>
+          <td>
+            <textarea
+              pInputTextarea
+              [rows]="12"
+              [cols]="35"
+              formControlName="ponderación"
+              style="width: 500px"
+            ></textarea>
+          </td>
+        </tr>
+      </table>
+    </td>
+
+</tr>
     </table>
+</form>
+</div>
 
     <div>
       <button
@@ -100,5 +121,5 @@
         (click)="cancelar()"
       ></button>
     </div>
-  </div>
-</form>
+
+

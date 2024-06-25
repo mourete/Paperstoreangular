@@ -207,7 +207,9 @@
             <th style="width: 70px">Orden</th>
             <th style="width: 120px">Clave</th>
             <th style="width: 350px">Texto</th>
-            <th>Valor</th>
+            <th style="width: 350px">Valor</th>
+            <th style="width: 350px">Ponderación</th>
+
             <th *ngIf="estaFiltrada == 1">Filtro</th>
           </tr>
 
@@ -244,6 +246,16 @@
                 "
               />
             </th>
+            <th style="width: 120px; text-align: left">
+              <input
+                size="30"
+                pInputText
+                type="text"
+                (input)="
+                  dtOpciones.filter($event.target.value, 'ponderación', 'contains')
+                "
+              />
+            </th>
 
             <th
               *ngIf="estaFiltrada == 1"
@@ -270,6 +282,7 @@
             <td>{{ opcion.clave }}</td>
             <td>{{ opcion.texto }}</td>
             <td>{{ opcion.valor }}</td>
+            <td>{{ opcion.ponderacion }}</td>
             <td *ngIf="estaFiltrada == 1">{{ opcion.opcionesNombre }}</td>
           </tr>
         </ng-template>

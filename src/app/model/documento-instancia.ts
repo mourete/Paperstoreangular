@@ -24,5 +24,6 @@ export class DocumentoInstancia {
    tipoAlerta: number;
    readOnly: number;
    noEditable: number;
+   ponderacion: number;
    codigoBarra:number;
 }

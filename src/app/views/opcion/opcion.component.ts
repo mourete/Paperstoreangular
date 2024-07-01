@@ -22,6 +22,7 @@ export class OpcionComponent implements OnInit {
   msgs: Message[] = [];
   visible:boolean;
   enabled:boolean;
+  ponderacion:boolean;
   soyFiltro : boolean = false;
   selectedOpcion  : Opcion;
   opcionFiltrada : Opcion[];
@@ -66,6 +67,7 @@ export class OpcionComponent implements OnInit {
 
         this.visible=true;
         this.enabled=true;
+        this.ponderacion=false;
         this.opcion.orden=1;
     }
 
@@ -150,6 +152,12 @@ export class OpcionComponent implements OnInit {
            this.visible=false;
          }
 
+        if( this.opcion.ponderacion==1 ){
+          this.visible=true;
+        }else{
+          this.visible=false;
+        }
+
 
 
       }
@@ -179,6 +187,12 @@ export class OpcionComponent implements OnInit {
       this.opcion.enabled=1;
     }else{
       this.opcion.enabled=0;
+    }
+
+    if(this.ponderacion){
+      this.opcion.ponderacion=1;
+    }else{
+      this.opcion.ponderacion=0;
     }
 
     //console.log(this.selectedOpcion);

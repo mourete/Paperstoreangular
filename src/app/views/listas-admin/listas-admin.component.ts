@@ -77,14 +77,14 @@ export class ListasAdminComponent implements OnInit {
         label: 'Agregar opcion arriba',
         icon: 'pi pi-plus',
         command: (event) => {
-          // this.agregarConcepto(1);
+          this.changeOptionOrder(1)
         },
       },
       {
         label: 'Agregar opción abajo',
         icon: 'pi pi-plus',
         command: (event) => {
-          // this.agregarConcepto(2);
+          this.changeOptionOrder(0)
         },
       },
     ];

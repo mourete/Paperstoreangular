@@ -35,8 +35,9 @@ public getAllActives(usuarioOID:string) : Observable<Documento[]> {
 
 
 
-public getDocumentForConfig(documentoId:number, usuarioOID:string) : Observable<Documento> {
-    let url:string = GlobalConstants.apiURL + "documentos/design/" + documentoId + "/" + usuarioOID;
+public getDocumentForConfig(documentoId:number, buscar: number, usuarioOID:string) : Observable<Documento> {
+    let url:string = GlobalConstants.apiURL + "documentos/design/" + documentoId + "/" + 0 + "/" + usuarioOID;
+    console.log("Url que se va a consumir: " + url);
     return this.http.get<Documento>( url  );
 }
 

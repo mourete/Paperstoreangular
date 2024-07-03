@@ -24,15 +24,14 @@ export class Sucursal {
         coordenadaY:number
         responsable:string;
         usuarioOID:string;
-    sucursal:string;
-    direccion:string;
-    telefono:string;
-    fax:string;
-    documentos:Documento[];
-    flagActivo:boolean;
-    nombreEmpresa : String;
-    nombreMarca : String;
+        sucursal:string;
+        direccion:string;
+        fax:string;
+        documentos:Documento[];
+        flagActivo:boolean;
+        nombreEmpresa : String;
+        nombreMarca : String;
 
- 
+
 
 }

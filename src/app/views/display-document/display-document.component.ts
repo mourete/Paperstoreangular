@@ -324,8 +324,7 @@ export class DisplayDocumentComponent implements OnInit {
 
   public getDocumentForConfig() {
     this.disabled = true;
-    this.documentService
-      .getDocumentForConfig(this.documentoId, this.usuarioOID)
+    this.documentService.getDocumentForConfig(this.documentoId, 0,this.usuarioOID)
       .subscribe(
         (data) => {
           this.documento = data;

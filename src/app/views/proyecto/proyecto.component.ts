@@ -341,7 +341,7 @@ export class ProyectoComponent implements OnInit {
       this.msgs.push({
         severity: 'error',
         detail: 'Se requiere capturar la clave del proyecto ',
-        summary: 'Validation failed',
+        summary: 'Campo Requerido',
       });
       return;
     }
@@ -350,7 +350,7 @@ export class ProyectoComponent implements OnInit {
       this.msgs.push({
         severity: 'error',
         detail: 'Se requiere capturar el nombre del proyecto ',
-        summary: 'Validation failed',
+        summary: 'Campo Requerido',
       });
       return;
     }
@@ -361,19 +361,37 @@ export class ProyectoComponent implements OnInit {
       this.proyecto.activo = 0;
     }
 
-    if (this.proyecto.fechaIniDate != null) {
+    if (this.proyecto.fechaIniDate == null) {
+      this.msgs.push({
+        severity: 'error',
+        detail: 'La fecha de inicio del proyecto es obligatoria',
+        summary: 'Campo Requerido',
+      });
+      return;
+    } else {
+
       this.proyecto.fechaIniText = this.datePipe.transform(
-          this.proyecto.fechaIniDate,
-          'dd/MM/yyyy'
+        this.proyecto.fechaIniDate,
+        'dd/MM/yyyy'
       );
     }
 
-    if (this.proyecto.fechaFinDate != null) {
+
+    if (this.proyecto.fechaFinDate == null) {
+      // Si no se proporciona una fecha de finalización, añade un mensaje de error
+      this.msgs.push({
+        severity: 'error',
+        detail: 'La fecha de finalización del proyecto es obligatoria',
+        summary: 'Campo Requerido',
+      });
+      return;
+    } else {
       this.proyecto.fechaFinText = this.datePipe.transform(
-          this.proyecto.fechaFinDate,
-          'dd/MM/yyyy'
+        this.proyecto.fechaFinDate,
+        'dd/MM/yyyy'
       );
     }
+
 
     if (
       this.proyectoRegionesSelected != null &&

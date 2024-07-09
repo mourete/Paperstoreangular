@@ -113,6 +113,7 @@ public guadarDocumentoInstancia(   ){
     console.log(data);
     // console.log("bien");
     this.documentoInstancia=data;
+    console.log("DocumentoInstancia" + this.documentoInstancia )
     this.ref.close(this.documentoInstancia );
 
 });

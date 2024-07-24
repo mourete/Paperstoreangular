@@ -215,7 +215,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
         width: '90%',
         contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
         data: { documentoId:this.documentoId ,
-                usuarioOID : AppStore.usuarioOIDActual ,
+                usuarioOID : this.usuarioOID ,
                 proyectoId : this.proyectoId ,
                 proyecto: this.proyecto ,
                 regionId : this.regionId ,

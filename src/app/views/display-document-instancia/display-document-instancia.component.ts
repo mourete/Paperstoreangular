@@ -181,17 +181,28 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     //    fileInput.value = ''; }
   }
 
-  selectFile(event, documentoId, documentoInstanciaOID, seccionOID, conceptoOID, conceptoInstanciaOID, valorConcepto) {
+  selectFile(event, documentoId, documentoInstanciaOID, seccionOID, conceptoOID, conceptoInstanciaOID, conceptoInstancia) {
+    const file = event.target.files[0];
+    if (file) {
+      const fileName = file.name;
+      if (this.isFileNameValid(fileName)) {
+        conceptoInstancia.nombreFile = fileName;
+        console.log('Archivo seleccionado:', fileName);
 
-    console.log('selectFile' + documentoId);
-    console.log('documentoInstanciaOID' + documentoInstanciaOID);
-    this.selectedFiles = event.target.files;
-    valorConcepto.nombreFile = event.target.files[0].name;
-    console.log('File' + event.target.files[0].name);
-    this.upload(documentoId, documentoInstanciaOID, seccionOID, conceptoOID, conceptoInstanciaOID, valorConcepto);
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error de archivo',
+          detail: 'El nombre del archivo no debe contener los siguientes caracteres: " ( ) : [ ] { }'
+        });
 
-    event.target.value = '';
-
+        event.target.value = '';
+      }
+    }
+  }
+  isFileNameValid(fileName: string): boolean {
+    const forbiddenChars = /[\"()\[\]:{}]/;
+    return !forbiddenChars.test(fileName);
   }
 
   selectFile2(event) {
@@ -312,13 +323,24 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
           }
 
 
-        } else if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_TEXTO ||
-          ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_ENTERO ||
-          ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_FECHA ||
-          ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_VIGENCIA ||
-          ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_HORA ||
-          ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_PORCENTAJE ||
-          ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_DECIMAL) {
+        } else if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_TEXTO){
+          if (ci.valor == null || ci.valor.trim() === '') {
+            const msg = 'La pregunta <strong>' + ci.descripcion + '</strong> es requerida.';
+            this.msgs.push({severity: 'error', detail: msg, summary: ''});
+          } else {
+            const forbiddenChars = /[\"()\[\]:{}]/;
+            if (forbiddenChars.test(ci.valor)) {
+              const msg = 'La pregunta <strong>' + ci.descripcion + '</strong> no debe contener los siguientes caracteres: " ( ) : [ ] { }';
+              this.msgs.push({severity: 'error', detail: msg, summary: ''});
+            }
+          }
+
+        }else if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_ENTERO ||
+                ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_FECHA ||
+                ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_VIGENCIA ||
+                ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_HORA ||
+                ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_PORCENTAJE ||
+                ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_DECIMAL) {
 
           if (ci.valor == null || ci.valor == '') {
             var msg = 'La pregunta <strong>' + ci.descripcion + '</strong> es requerida ';
@@ -354,7 +376,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
         if ((ci.valor != null && ci.valor != '') && ci.valor.match(numbers) == null) {
 
-          var msg = 'La pregunta <strong>' + ci.descripcion + '</strong> no permite caracteres ';
+          var msg = 'La pregunta <strong>' + ci.descripcion + '</strong> no permite letras, solo permite números ';
           this.msgs.push({severity: 'error', detail: msg, summary: ''});
 
         }

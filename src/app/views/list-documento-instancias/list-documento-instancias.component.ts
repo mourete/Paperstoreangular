@@ -82,6 +82,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
   constructor(public principal : PrincipalComponent,  public documentoInstanciaService: DocumentoInstanciaService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService    ,     private actRoute: ActivatedRoute , private router: Router , private seccionService : SeccionService  ) {
+ 
        this.documentoId=this.actRoute.snapshot.params.documentoId;
        this.proyectoId=this.actRoute.snapshot.params.proyectoId;
        this.sucursalId=this.actRoute.snapshot.params.sucursalId;
@@ -100,6 +101,8 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    console.log(localStorage.getItem('usuario'));
+    console.log("localStorage.getItem('usuario')");
     this.image = this.usuario.infoHuesped.pathImagenWeb;
     this. itemsDocumento = [
       {
@@ -126,6 +129,8 @@ export class ListDocumentoInstanciasComponent implements OnInit {
       },
       { separator: true },
     ];
+    console.log(this.varUsuarioOID);
+    console.log("this.varUsuarioOID");
     if( this.documentoId == undefined || this.documentoId<=0  ){
 
        this.documentoId=this.varDocumentoId;

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 import { GlobalConstants } from 'src/app/model/global-constants';
+import { Usuario } from 'src/app/model/usuario';
 
 @Component({
   selector: 'app-documento-instancia',
@@ -18,6 +19,7 @@ export class DocumentoInstanciaComponent implements OnInit {
   documentoInstancia: DocumentoInstancia;
   documentoId:number;
   usuarioOID:string;
+  usuario : Usuario;
   proyectoId : number;
   regionId : number;
   sucursalId: number;
@@ -39,14 +41,16 @@ export class DocumentoInstanciaComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    this.usuarioOID = this.usuario.usuarioOID;
+    console.log("this.usuario.usuarioOID =" +  this.usuario.usuarioOID );
+    console.log("this.usuarioOID =" +  this.usuarioOID );
     if( this.config.data != null  && this.config.data.update>0){
 
-      console.log(this.config.data.documento.documentoID);
-      console.log(this.config.data.documento);
+      
 
       this.documentoId=this.config.data.documento.documentoId;
-      this.usuarioOID=this.config.data.documento.usuarioOID;
+     // this.usuarioOID=this.config.data.documento.usuarioOID;
       this.proyectoId=this.config.data.documento.proyectoId;
       this.regionId=this.config.data.documento.regionId;
       this.sucursalId=this.config.data.documento.sucursalId;
@@ -73,7 +77,7 @@ export class DocumentoInstanciaComponent implements OnInit {
     }else{
 
       this.documentoId=this.config.data.documentoId;
-      this.usuarioOID=this.config.data.usuarioOID;
+      //this.usuarioOID=this.config.data.usuarioOID;
       this.proyectoId=this.config.data.proyectoId;
       this.regionId=this.config.data.regionId;
       this.sucursalId=this.config.data.sucursalId;
@@ -108,10 +112,12 @@ export class DocumentoInstanciaComponent implements OnInit {
   }
 
 public guadarDocumentoInstancia(   ){
-
+  
+  console.log("this.usuario.usuarioOID =" +  this.usuario.usuarioOID );
+  console.log("this.usuarioOID =" +  this.usuarioOID );
   this.documentoInstanciaService.guardarDocumentoInstancia ( this.documentoInstancia , this.usuarioOID).subscribe((data)=>{
-    console.log(data);
-    // console.log("bien");
+   
+    //console.log("bien");
     this.documentoInstancia=data;
     console.log("DocumentoInstancia" + this.documentoInstancia )
     this.ref.close(this.documentoInstancia );

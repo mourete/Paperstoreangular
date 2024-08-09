@@ -193,7 +193,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error de archivo',
-          detail: 'El nombre del archivo no debe contener los siguientes caracteres: " ( ) : [ ] { }'
+          detail: 'El nombre del archivo no debe contener los siguientes caracteres: [ ] { }'
         });
 
         event.target.value = '';
@@ -201,7 +201,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     }
   }
   isFileNameValid(fileName: string): boolean {
-    const forbiddenChars = /[\"()\[\]:{}]/;
+    const forbiddenChars = /[[\]{}]/;
     return !forbiddenChars.test(fileName);
   }
 
@@ -328,9 +328,9 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
             const msg = 'La pregunta <strong>' + ci.descripcion + '</strong> es requerida.';
             this.msgs.push({severity: 'error', detail: msg, summary: ''});
           } else {
-            const forbiddenChars = /[\"()\[\]:{}]/;
+            const forbiddenChars = /[[\]{}]/;
             if (forbiddenChars.test(ci.valor)) {
-              const msg = 'La pregunta <strong>' + ci.descripcion + '</strong> no debe contener los siguientes caracteres: " ( ) : [ ] { }';
+              const msg = 'La pregunta <strong>' + ci.descripcion + '</strong> no debe contener los siguientes caracteres:  [ ] { }';
               this.msgs.push({severity: 'error', detail: msg, summary: ''});
             }
           }

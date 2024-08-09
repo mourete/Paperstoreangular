@@ -28,6 +28,8 @@ export class DocumentoInstanciaComponent implements OnInit {
   image:string;
   apiURLImagen: string;
   selectedFileName:string;
+  errorNombre: boolean = false;
+  errorObservaciones: boolean = false;
 
 
   constructor( private documentoInstanciaService : DocumentoInstanciaService ,
@@ -47,7 +49,7 @@ export class DocumentoInstanciaComponent implements OnInit {
     console.log("this.usuarioOID =" +  this.usuarioOID );
     if( this.config.data != null  && this.config.data.update>0){
 
-      
+
 
       this.documentoId=this.config.data.documento.documentoId;
      // this.usuarioOID=this.config.data.documento.usuarioOID;
@@ -112,11 +114,11 @@ export class DocumentoInstanciaComponent implements OnInit {
   }
 
 public guadarDocumentoInstancia(   ){
-  
+
   console.log("this.usuario.usuarioOID =" +  this.usuario.usuarioOID );
   console.log("this.usuarioOID =" +  this.usuarioOID );
   this.documentoInstanciaService.guardarDocumentoInstancia ( this.documentoInstancia , this.usuarioOID).subscribe((data)=>{
-   
+
     //console.log("bien");
     this.documentoInstancia=data;
     console.log("DocumentoInstancia" + this.documentoInstancia )
@@ -127,10 +129,6 @@ public guadarDocumentoInstancia(   ){
 
 }
 
-
-
-
-
 public cancelar(){
   this.ref.close();
 }
@@ -138,7 +136,7 @@ public cancelar(){
 clearFile(event, documentoInstancia){
   this.selectedFileName ='';
   documentoInstancia.imagePath = '';
-  event.target.value = ''; // Esto reiniciará el campo de entrada a un valor en blanco
+  event.target.value = '';
   //const fileInput = document.querySelector('input[type="file"]');
   //if (fileInput) {
   //    fileInput.value = ''; }
@@ -172,12 +170,7 @@ upload( documentoInstanciaOID, documentoId ) {
 
     event => {
 
-
-      console.log(event['url']);
-
       this.documentoInstancia.imagePath = event['url'];
-
-
 
     },
     err => {
@@ -187,13 +180,24 @@ upload( documentoInstanciaOID, documentoId ) {
     });
 
   this.selectedFiles = undefined;
-
-
-
 }
 
+  validateFields() {
+    const forbiddenChars = /[{}\[\]]/;
 
+    // Validación para el campo nombre
+    if (forbiddenChars.test(this.documentoInstancia.nombre)) {
+      this.errorNombre = true;
+    } else {
+      this.errorNombre = false;
+    }
 
-
+    // Validación para el campo observaciones
+    if (forbiddenChars.test(this.documentoInstancia.observaciones)) {
+      this.errorObservaciones = true;
+    } else {
+      this.errorObservaciones = false;
+    }
+  }
 
 }

@@ -2,21 +2,22 @@
               <div     >
                 <table  border="0" >
 
-                      <tr>
-                        <td style="line-height:50pt;">Nombre</td>
-                        <td>
-                           <input type="text" pInputText     [(ngModel)]="documentoInstancia.nombre"   style="width: 500px"/>
-                       </td>
-                     </tr>
+                  <tr>
+                    <td style="line-height:50pt;">Nombre</td>
+                    <td>
+                      <input type="text" pInputText [(ngModel)]="documentoInstancia.nombre" (ngModelChange)="validateFields()" style="width: 500px"/>
+                      <p-message *ngIf="errorNombre" severity="error" text="El campo Nombre no debe contener los caracteres [ ] { }"></p-message>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="line-height:50pt;">Observaciones</td>
+                    <td>
+                      <textarea pInputTextarea [rows]="5" [cols]="30" [(ngModel)]="documentoInstancia.observaciones" (ngModelChange)="validateFields()" style="width: 500px"></textarea>
+                      <p-message *ngIf="errorObservaciones" severity="error" text="El campo Observaciones no debe contener los caracteres [ ] { }"></p-message>
+                    </td>
+                  </tr>
 
-
-                     <tr>
-                        <td style="line-height:50pt;">Observaciones</td>
-                        <td>
-                           <textarea  pInputTextarea   [rows]="5" [cols]="30"   [(ngModel)]="documentoInstancia.observaciones" style="width: 500px"  ></textarea>
-                       </td>
-                     </tr>
-                     <tr>
+                  <tr>
                       <td>Imagen</td>
                       <td>
                         <div *ngIf="documentoInstancia.imagePath && !documentoInstancia.imagePath.includes('NoImagen.png')">

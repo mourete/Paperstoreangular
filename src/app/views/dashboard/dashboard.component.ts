@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Usuario } from 'src/app/model/usuario';
 
 @Component({
@@ -8,16 +9,13 @@ import { Usuario } from 'src/app/model/usuario';
 })
 export class DashboardComponent implements OnInit {
   usuario: Usuario;
-  url:String;
+  url: SafeResourceUrl;
 
-  constructor() { 
-   
-  }
+  constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
- 
-      this.usuario = JSON.parse(localStorage.getItem('usuario'));
-      this.url = this.usuario.infoHuesped.publicadorReporte;
+    this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    const unsafeUrl = this.usuario.infoHuesped.publicadorReporte;
+    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
-
 }

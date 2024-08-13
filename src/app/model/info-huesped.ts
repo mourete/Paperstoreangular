@@ -11,6 +11,7 @@ export class InfoHuesped {
 	pathImagenWebTemp:string; 
 	pathImagen:string; 
 	pathImagenWeb:string; 
+    publicadorReporte:string;
 
 
 

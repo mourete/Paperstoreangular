@@ -24,6 +24,7 @@ export class Usuario {
 	perfilesConcat:string;
 	huespedNombre:string;
 	perfilId:number;
+	
 
 	infoHuesped: InfoHuesped;
 	readOnly: string;

@@ -45,7 +45,7 @@
                     <tr>
 
                             <!-- <th style="width: 100px;"  >Acciones</th> -->
-                            <!-- <th  style="width: 120px;" >Id</th> se quita id-->
+                            <th  style="width: 120px;" >Id</th>
                             <th  >Clave</th>
                             <th>Nombre</th>
                             <th>Estatus</th>
@@ -55,9 +55,9 @@
                     <tr>
 
 
-                        <!-- <th  style="width: 120px;" >
+                        <th  style="width: 120px;" >
                             <input size="10"  pInputText type="text" (input)="dtDoc.filter($event.target.value, 'documentoId' , 'contains')">
-                         </th> se quita id-->
+                         </th>
 
                          <th >
                             <input size="20"  pInputText type="text" (input)="dtDoc.filter($event.target.value, 'clave' , 'contains')">
@@ -83,7 +83,7 @@
                             <button  type="button" [style]="{ 'vertical-align':'middle' , 'width':'22px' , 'height':'22px'  }"  pButton icon="pi pi-list"   (click)="menuDocumento.toggle($event);onClickMenuDocumento(documento);"></button>
                             </div>
                         </td>    -->
-                        <!-- <td style="width: 120px;" >{{documento.documentoId}}</td> se quita id-->
+                        <td style="width: 120px;" >{{documento.documentoId}}</td>
                         <td>{{documento.clave}}</td>
                         <td>{{documento.nombre}}</td>
                         <td>{{documento.estatus}}</td>

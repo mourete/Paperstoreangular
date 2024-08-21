@@ -168,7 +168,7 @@
                                 filter="true"
                                 optionLabel="texto"
                                 [readonly]="conceptoInstancia.readOnly"
-                                [style]="{'width': '800px', 'height': '35px'}"
+                                [style]="{'width': '680px', 'height': '35px'}"
                     ></p-dropdown>
                   </td>
 
@@ -179,7 +179,7 @@
                     conceptoInstancia.tipoConceptoId==12
                     ">
                     <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor" [readonly]="conceptoInstancia.readOnly"
-                    [style]="{'width': '800px', 'height': '35px'}"
+                    [style]="{'width': '680px', 'height': '35px'}"
                     />
                   </td>
 
@@ -187,7 +187,7 @@
                   <td *ngIf="conceptoInstancia.tipoConceptoId==1">
                     <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor"
                            maxlength="{{conceptoInstancia.maximo}}" [readonly]="conceptoInstancia.readOnly"
-                           [style]="{'width': '800px', 'height': '35px'}"
+                           [style]="{'width': '680px', 'height': '35px'}"
                            />
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==4">
@@ -218,7 +218,7 @@
                     </ng-container>
 
                     <ng-template #readOnlyBlock>
-                      <ul [style]="{'width': '800px'}">
+                      <ul [style]="{'width': '680px'}">
                         <li *ngFor="let opcion of conceptoInstancia.selectedValues">
                           {{ opcion.texto }}
                         </li>

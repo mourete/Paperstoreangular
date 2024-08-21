@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TipoConcepto } from 'src/app/model/tipo-concepto';
 import { ConceptoService } from 'src/app/service/concepto.service';
 import { ListaService } from 'src/app/service/lista.service';
@@ -56,7 +56,6 @@ export class ConceptoComponent implements OnInit {
   selectedOrder: number;
   usuario: Usuario;
   usuarioOID: string;
-
   noEditable: boolean;
   filtro: boolean;
   valueFiltrada: String;
@@ -66,6 +65,7 @@ export class ConceptoComponent implements OnInit {
   diasAlertaAmarillo: number;
   alertaRojo: boolean;
   alertaAmarillo: boolean;
+  claveIsDisabled: boolean;
 
   tiposConcepto: TipoConcepto[] = [
     { tipoConceptoId: 1, nombre: 'Texto' },
@@ -179,9 +179,8 @@ export class ConceptoComponent implements OnInit {
       this.selectedOrder = newOrder;
       this.ordenarOpciones();
     });
-
-
   }
+
   onOrderChange() {
     this.ordenarOpciones();
   }
@@ -445,6 +444,7 @@ export class ConceptoComponent implements OnInit {
       .getConceptoByOID(conceptoOID, this.usuarioOID)
       .subscribe((data) => {
         this.concepto = data;
+        this.claveIsDisabled = this.concepto.clave != undefined;
         this.soloParaEditar = this.concepto.listaOID;
 
         this.getConceptoAlertaByPerfil();

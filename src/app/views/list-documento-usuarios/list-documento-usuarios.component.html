@@ -1,5 +1,5 @@
 
- 
+
 <style>
 
     a:hover {
@@ -7,45 +7,45 @@
        text-decoration: underline;
        font-weight: bold;
     }
-    
+
     a:link{
         color: black;
         text-decoration: underline;
         font-weight: bold;
     }
-    
+
     a:active{
         color: black;
         text-decoration: underline;
         font-weight: bold;
     }
-    
+
     a:visited{
         color: black;
         text-decoration: underline;
         font-weight: bold;
     }
-    
-    
+
+
     </style>
-    
-   
+
+
 <div   *ngIf="!mostrandoInstancia" >
         <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
-            <h3>INSTANCIA DE DOCUMENTOS </h3>  
+            <h3>INSTANCIA DE DOCUMENTOS </h3>
         </div>
 
 
         <div >
             <table  border="0"   cellpadding="1"  cellspacing="1"      >
-     
-  
-                         
+
+
+
              <tr     >
                  <td>Empresa</td>
                  <td>Marca</td>
-              </tr>    
-            
+              </tr>
+
               <tr     >
                  <td>
                     <p-dropdown    (onChange)="empresaChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedEmpresa"   [options]="empresas"  optionLabel="nombre"></p-dropdown>
@@ -53,55 +53,62 @@
                  <td>
                    <p-dropdown    (onChange)="marcaChanged()"    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"   [(ngModel)]="selectedMarca"   [options]="marcas"  optionLabel="nombre"></p-dropdown>
                 </td>
-              </tr>   
-    
-             </table>    
-            
+              </tr>
+
+             </table>
+
         </div>
-    
-         
+
+
     <div  style="margin-top: 30px;" >
        <div >
 
             <div    >
                 <p-toolbar>
                     <div   *ngIf="selectedDocumentoUsuario"   class="ui-toolbar-group-left">
-                    </div>                      
+                    </div>
                 </p-toolbar>
-            </div>    
+            </div>
 
 
-            <p-table #dtDocumentoUsurio      
+            <p-table #dtDocumentoUsurio
              [value]="documentosUsuariosList"    [paginator]="true" [rows]="10"  selectionMode="single" [(selection)]="selectedDocumentoUsuario"   >
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-                        <th style="width: 100px;"  >Instancia</th>
+                        <th  style="width: 80px;" >Id</th>
+                        <th style="width: 120px;"  >Instancia</th>
                          <!--<th style="width: 100px;"  >Empresa</th>-->
                             <!--<th style="width: 100px;"  >MarcaId</th>-->
                             <th style="width: 100px;"  >Marca</th>
                             <th style="width: 100px;"  >Sucursal</th>
                             <!-- <th style="width: 120px;"  >ProyectoId</th>-->
                             <!-- <th style="width: 120px;"  >Proyecto</th>-->
-                          
+
                             <!-- <th style="width: 120px;"  >DocumentoId</th>-->
                             <th style="width: 120px;"  >Documento</th>
                             <!-- <th style="width: 180px;"  >Cantidad Documento</th>-->
-                            <th style="width: 180px;"  >Cantidad Instancia</th>
-                            <th style="width: 120px;"  >Responsable</th>         
-                       
+                            <th style="width: 100px;"  >Cantidad Instancia</th>
+                            <th style="width: 100px;"  >Responsable</th>
+
                     </tr>
                     <tr>
-                        <th  ></th>  
+                      <th >
+                        <input style="width: 80px;" pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'documentoId' , 'contains')">
+                      </th>
+                      <th >
+                        <input style="width: 150px;" pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'proyecto' , 'contains')">
+                      </th>
+
                         <!--  <th  >
                             <input style="width: 80px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'empresa' , 'contains')">
-                        </th>     
+                        </th>
                          -->
                          <!--<th  >
                             <input style="width: 80px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'marcaId' , 'contains')">
                          </th>     -->
-                         
+
                          <th>
-                            <input  style="width: 80px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'marca' , 'contains')">
+                            <input  style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'marca' , 'contains')">
                          </th>
 
                          <th>
@@ -113,69 +120,71 @@
                            <!--<th  >
                             <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'proyecto' , 'contains')">
                          </th>  -->
-                         
+
                          <!--  <th  >
                             <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'documentoId' , 'contains')">
                          </th>   -->
                          <th  >
-                            <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'documento' , 'contains')">
-                         </th>   
-                        
+                            <input style="width: 120px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'documento' , 'contains')">
+                         </th>
+
                           <!-- <th  >
                             <input style="width: 160px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'cantidadDocumento' , 'contains')">
                          </th>-->
                          <th  >
-                            <input style="width: 160px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'cantidadInstancia' , 'contains')">
+                            <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'cantidadInstancia' , 'contains')">
                          </th>
                          <th  >
                             <input style="width: 100px;"  pInputText type="text" (input)="dtDocumentoUsurio.filter($event.target.value, 'responsable' , 'contains')">
                          </th>
-                                                
+
 
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-documentoUsuarioList>
                     <tr  [pSelectableRow]="selectedDocumentoUsuario" >
+
+                      <td style="width: 120px;" >{{documentoUsuarioList.documentoId}}</td>
                         <td>
                         <a   [routerLink]="[]" (click)="mostrarInstancia(documentoUsuarioList.documentoId,documentoUsuarioList.proyectoId,documentoUsuarioList.regionId
                         , documentoUsuarioList.sucursalId, usuarioOID,documentoUsuarioList.documento ,
                         documentoUsuarioList.sucursal, documentoUsuarioList.region , documentoUsuarioList.cantidadDocumento ,
-                        documentoUsuarioList.cantidadInstancia,  documentoUsuarioList.marca, documentoUsuarioList.empresa , documentoUsuarioList.proyecto                       
+                        documentoUsuarioList.cantidadInstancia,  documentoUsuarioList.marca, documentoUsuarioList.empresa , documentoUsuarioList.proyecto
                         )" >
                              {{documentoUsuarioList.proyecto}}</a>
-                        </td>                                                                
-                        <!--<td>{{documentoUsuarioList.empresa}}</td>   --> 
+                        </td>
+                        <!--<td>{{documentoUsuarioList.empresa}}</td>   -->
                         <!--<td>{{documentoUsuarioList.marcaId}}</td>  -->
-                        <td>{{documentoUsuarioList.marca}}</td>     
-                        <td>{{documentoUsuarioList.sucursal}}</td> 
-                        <!--<td>{{documentoUsuarioList.proyectoId}}</td>  -->   
-                        <!--<td>{{documentoUsuarioList.proyecto}}</td>-->   
+                        <td>{{documentoUsuarioList.marca}}</td>
+                        <td>{{documentoUsuarioList.sucursal}}</td>
+                        <!--<td>{{documentoUsuarioList.proyectoId}}</td>  -->
+                        <!--<td>{{documentoUsuarioList.proyecto}}</td>-->
                         <!--<td>{{documentoUsuarioList.documentoId}}</td> -->
                         <td>{{documentoUsuarioList.documento}}</td>
                         <!--<td>{{documentoUsuarioList.cantidadDocumento}}</td> -->
-                        <td>{{documentoUsuarioList.cantidadInstancia}}</td> 
+                        <td>{{documentoUsuarioList.cantidadInstancia}}</td>
                         <td>{{documentoUsuarioList.responsable}}</td>
 
-                        
+
                     </tr>
                 </ng-template>
 
-            
+
 
             </p-table>
-        
-        </div> 
 
-
-     
+        </div>
 
 
 
-        
+
+
+
+
     </div>
 
-   
-   
+
+
 </div>
 
 
@@ -191,7 +200,7 @@
     [varDocumentoId]="currDocumentoId"
     [varProyectoId]="currProyectoId"
     [varProyecto]="currProyecto"
-    [varRegionId]="currRegionId" 
+    [varRegionId]="currRegionId"
     [varSucursalId]="currSucursalId"
     [varUsuarioOID]="currUsuarioOID"
 

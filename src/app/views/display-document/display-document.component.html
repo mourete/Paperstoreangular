@@ -154,7 +154,7 @@
                   [(ngModel)]="selectedOption"
                   [options]="concepto.opciones"
                   optionLabel="texto"
-                  [style]="{'width': '700px', 'height': '35px'}"
+                  [style]="{'width': '640px', 'height': '35px'}"
                   filter="true"
                 ></p-dropdown>
               </td>
@@ -166,7 +166,7 @@
                   concepto.tipoConceptoId == 12
                 "
               >
-                <input type="text" pInputText [style]="{'width': '700px', 'height': '35px'}"/>
+                <input type="text" pInputText [style]="{'width': '640px', 'height': '35px'}"/>
               </td>
 
               <td
@@ -177,7 +177,7 @@
                 <p-calendar showIcon="true" showButtonBar="true" ></p-calendar>
               </td>
               <td *ngIf="concepto.tipoConceptoId == 8">
-                <input type="file" [style]="{'width': '700px', 'height': '35px'}"/>
+                <input type="file" [style]="{'width': '640px', 'height': '35px'}"/>
               </td>
               <td *ngIf="concepto.tipoConceptoId == 5">
                 <p-calendar

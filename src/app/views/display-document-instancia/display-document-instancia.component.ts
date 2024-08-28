@@ -19,6 +19,7 @@ import {FormsModule} from '@angular/forms'; // Asegurarse de que FormsModule est
 import {MultiSelectModule} from 'primeng/multiselect';
 import {BrowserModule} from '@angular/platform-browser';
 import {FileUploadModule} from 'primeng/fileupload';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -28,9 +29,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     FormsModule,
     MultiSelectModule,
     FileUploadModule,
-
+    ConfirmDialogModule,
   ],
-
   declarations: [],
   bootstrap: [],
 })
@@ -103,7 +103,7 @@ export class AppModule {
 
   `],
 
-  providers: [DialogService, ConfirmationService, MessageService, DatePipe]
+  providers: [DialogService, ConfirmationService, MessageService, DatePipe, ConfirmationService ]
 })
 export class DisplayDocumentInstanciaComponent implements OnInit {
   myVariable: any;
@@ -173,13 +173,18 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   }
 
   clearFile(event, valorConcepto) {
-    valorConcepto.valor = '';
-    valorConcepto.nombreFile = '';
-    event.target.value = ''; // Esto reiniciará el campo de entrada a un valor en blanco
-    //const fileInput = document.querySelector('input[type="file"]');
-    //if (fileInput) {
-    //    fileInput.value = ''; }
+    console.log('Intentando eliminar archivo');
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de que quieres eliminar este archivo?',
+      accept: () => {
+        console.log('Confirmación aceptada');
+        valorConcepto.valor = '';
+        valorConcepto.nombreFile = '';
+        event.target.value = '';
+      }
+    });
   }
+
 
   selectFile(event, documentoId, documentoInstanciaOID, seccionOID, conceptoOID, conceptoInstanciaOID, valorConcepto) {
     console.log('selectFile' + documentoId);

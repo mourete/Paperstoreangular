@@ -227,7 +227,7 @@
                   </td>
 
                   <td *ngIf="conceptoInstancia.tipoConceptoId==8">
-
+                    <p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
                     <div *ngIf="conceptoInstancia.valor ">
                       <input type="file"
                              (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"

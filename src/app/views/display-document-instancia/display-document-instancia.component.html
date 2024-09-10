@@ -187,16 +187,16 @@
                   <td *ngIf="conceptoInstancia.tipoConceptoId==1 && conceptoInstancia.maximo < 100">
                     <input type="text" pInputText [(ngModel)]="conceptoInstancia.valor"
                            maxlength="{{conceptoInstancia.maximo}}" [readonly]="conceptoInstancia.readOnly"
-                           [style]="{'width': '680px', 'height': '35px'}" 
+                           [style]="{'width': '680px', 'height': '35px'}"
                            />
                   </td>
-                  
+
                   <td *ngIf="conceptoInstancia.tipoConceptoId==1 && conceptoInstancia.maximo >= 100">
-                    <textarea  [(ngModel)]="conceptoInstancia.valor" rows="5"   cols="30"  [readonly]="conceptoInstancia.readOnly"   maxlength="{{conceptoInstancia.maximo}}"  
-                    [style]="{'width': '680px', 'height': '70px'}" 
+                    <textarea  [(ngModel)]="conceptoInstancia.valor" rows="5"   cols="30"  [readonly]="conceptoInstancia.readOnly"   maxlength="{{conceptoInstancia.maximo}}"
+                    [style]="{'width': '680px', 'height': '70px'}"
                     ></textarea>
 
-                   
+
                   </td>
                   <td *ngIf="conceptoInstancia.tipoConceptoId==4">
                     <p-calendar [(ngModel)]="conceptoInstancia.valueAsDate" dateFormat="dd/mm/yy" showIcon="false"
@@ -235,7 +235,6 @@
                   </td>
 
                   <td *ngIf="conceptoInstancia.tipoConceptoId==8">
-                    <p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
                     <div *ngIf="conceptoInstancia.valor ">
                       <input type="file"
                              (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"

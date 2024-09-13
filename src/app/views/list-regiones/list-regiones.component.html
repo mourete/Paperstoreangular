@@ -15,12 +15,12 @@
     <div     >
 
         <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
-            <h3>REGIONES </h3>
+            <h3>{{tituloRegion}} </h3>
         </div>
 
         <p-toolbar>
             <div class="ui-toolbar-group-left">
-                <button pButton type="button"  (click)="agregarRegion()"    label="Agregar región" icon="pi pi-plus"></button>
+                <button pButton type="button"  (click)="agregarRegion()"    label="Agregar {{tituloRegion}}" icon="pi pi-plus"></button>
             </div>
         </p-toolbar>
 
@@ -49,8 +49,8 @@
                            <!-- <th style="width: 100px;"  >Id</th> Se quita el Id -->
                            <th style="width: 100px;"  >Clave</th>
                             <th style="width: 150px;"  >Nombre</th>
-                            <th style="width: 300px;"  >Marca</th>
-                            <th style="width: 300px;"  >Empresa</th>
+                            <th style="width: 300px;"  >{{tituloMarca}}</th>
+                            <th style="width: 300px;"  >{{tituloEmpresa}}</th>
 
                     </tr>
 

@@ -39,7 +39,7 @@
       </tr>
 
       <tr *ngIf="selectedEmpresa">
-        <td style="line-height:30pt;">Empresa</td>
+        <td style="line-height:30pt;">{{tituloEmpresa}}</td>
         <td>
           <p-dropdown
             (onChange)="empresaChanged()"
@@ -55,7 +55,7 @@
       </tr>
 
       <tr *ngIf="selectedMarca">
-        <td style="line-height:30pt;">Marca</td>
+        <td style="line-height:30pt;">{{tituloMarca}}</td>
         <td>
           <p-dropdown
             (onChange)="marcaChanged()"
@@ -83,7 +83,7 @@
   </form>
 
   <div style="margin-top: 30px">
-    <h2>CAPTURA SUCURSALES</h2>
+    <h2>Captura {{tituloSucursal}}</h2>
 
     <table cellpadding="1">
       <tr>

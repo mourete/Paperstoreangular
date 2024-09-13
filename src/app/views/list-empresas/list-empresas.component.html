@@ -1,7 +1,7 @@
 <div>
   <div *ngIf="empresas">
     <div style="font-family: Arial, Helvetica, sans-serif; margin: 20px">
-      <h3>EMPRESAS</h3>
+      <h3>{{tituloEmpresa}}</h3>
     </div>
 
     <p-toolbar>
@@ -10,7 +10,7 @@
           pButton
           type="button"
           (click)="agregarEmpresa()"
-          label="Agregar empresa"
+          label="Agregar {{tituloEmpresa}}"
           icon="pi pi-plus"
         ></button>
       </div>

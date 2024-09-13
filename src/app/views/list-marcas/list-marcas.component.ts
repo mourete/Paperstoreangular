@@ -25,18 +25,22 @@ export class ListMarcasComponent implements OnInit {
   empresas:Empresa[];
   itemsMarca: MenuItem[];
   usuarioOID:string;
+  tituloMarca: string;
+  tituloEmpresa: string;
 
   constructor( public marcaService:MarcaService ,  public empresaService: EmpresaService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService  ) { }
 
     ngOnInit(): void {
       this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+      this.tituloMarca = this.usuarioSession.infoHuesped.nbMarca;
+      this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
       this.usuarioOID = this.usuarioSession.usuarioOID;
       this.getMarcasByUsuarioOID();
 
       this.itemsMarca = [
         {
-          label: 'Editar Marca',
+          label: `Editar ${this.tituloMarca}`,
           icon: 'pi pi-pencil',
           command: (event) => {
             this.modificarMarca();
@@ -44,7 +48,7 @@ export class ListMarcasComponent implements OnInit {
         },
         { separator: true },
         {
-          label: 'Eliminar Marca',
+          label: `Eliminar ${this.tituloMarca}`,
           icon: 'pi pi-trash',
           command: (event) => {
             this.confirmDeleteMarca();
@@ -77,7 +81,7 @@ export class ListMarcasComponent implements OnInit {
     public agregarMarca(){
 
       let ref= this.dialogService.open( MarcaComponent , {
-        header: 'Marca',
+        header: this.tituloMarca,
         width: '90%',
         contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
         data: { marcaId:0  }
@@ -102,7 +106,7 @@ export class ListMarcasComponent implements OnInit {
       }
 
       let ref= this.dialogService.open( MarcaComponent , {
-        header: 'Marca',
+        header: this.tituloMarca,
         width: '70%',
         contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
         data: { marcaId : this.selectedMarca.marcaId  }
@@ -130,7 +134,7 @@ export class ListMarcasComponent implements OnInit {
 
   public confirmDeleteMarca(){
     this.confirmationService.confirm({
-      message: 'Está seguro que desea eliminar la Marca ?',
+      message: `Está seguro que desea eliminar ${this.tituloMarca} ?`,
       accept: () => {
          this.deleteMarca();
       }

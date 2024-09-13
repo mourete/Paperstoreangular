@@ -39,6 +39,9 @@ export class ProyectoComponent implements OnInit {
   selectedProyectoDocumentosRight: ProyectoDocumento[];
   selectedProyectoDocumentosLeft: ProyectoDocumento[];
   formValidadores: FormGroup;
+  tituloEmpresa: string;
+  tituloMarca: string;
+  tituloRegion: string;
 
 
 
@@ -73,6 +76,9 @@ export class ProyectoComponent implements OnInit {
     }, { validators: this.validarFechas });
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuarioSession.usuarioOID;
+    this.tituloMarca = this.usuarioSession.infoHuesped.nbMarca;
+    this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
+    this.tituloRegion = this.usuarioSession.infoHuesped.nbRegion;
 
     if (this.config.data.proyectoId > 0) {
       this.getProyectoById(this.config.data.proyectoId);

@@ -34,6 +34,7 @@ export class MarcaComponent implements OnInit, AfterViewInit {
   estados: Estado[];
   ciudades: Ciudad[];
   selectedCiudad: Ciudad;
+  tituloEmpresa: string;
 
   profileMarca = this.fb.group({
     clave: ['', Validators.required],
@@ -68,6 +69,7 @@ export class MarcaComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
     this.usuarioOID = this.usuarioSession.usuarioOID;
 
     if (this.config.data.marcaId > 0) {

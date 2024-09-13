@@ -28,7 +28,9 @@ export class ListRegionesComponent implements OnInit {
   empresas:Empresa[];
   regiones:Region[];
   itemsRegion: MenuItem[];
-
+  tituloRegion: string;
+  tituloMarca: string;
+  tituloEmpresa: string;
   selectedRegion:Region;
 
   constructor(public regionService:RegionService ,  public marcaService:MarcaService ,  public empresaService: EmpresaService , private confirmationService: ConfirmationService ,
@@ -36,11 +38,14 @@ export class ListRegionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloRegion = this.usuarioSession.infoHuesped.nbRegion;
+    this.tituloMarca = this.usuarioSession.infoHuesped.nbMarca;
+    this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
     this.usuarioOID=this.usuarioSession.usuarioOID;
     this.getRegionesByUsuarioOID();
     this.itemsRegion = [
       {
-        label: 'Editar Región',
+        label: `Editar ${this.tituloRegion}`,
         icon: 'pi pi-pencil',
         command: (event) => {
           this.modificarRegion();
@@ -48,7 +53,7 @@ export class ListRegionesComponent implements OnInit {
       },
       { separator: true },
       {
-        label: 'Eliminar Region',
+        label: `Eliminar ${this.tituloRegion}`,
         icon: 'pi pi-trash',
         command: (event) => {
           this.confirmDeleteRegion();
@@ -77,7 +82,7 @@ export class ListRegionesComponent implements OnInit {
   public agregarRegion(){
 
     let ref= this.dialogService.open( RegionComponent , {
-      header: 'Región',
+      header: this.tituloRegion,
       width: '90%',
       contentStyle: {"max-height": "550px" , "height" : "500px" } ,
       data: { regionId:0  }
@@ -103,7 +108,7 @@ export class ListRegionesComponent implements OnInit {
     //console.log("Edgarleal");
 
     let ref= this.dialogService.open( RegionComponent , {
-      header: 'Región',
+      header: this.tituloRegion,
       width: '90%',
       contentStyle: {"max-height": "800px" , "height" : "550px;"  } ,
       data: { regionId : this.selectedRegion.regionId  }
@@ -127,7 +132,7 @@ export class ListRegionesComponent implements OnInit {
   public confirmDeleteRegion(){
 
     this.confirmationService.confirm({
-      message: 'Está seguro que desea eliminar la Región ?',
+      message: `Está seguro que desea eliminar ${this.tituloRegion}?`,
       accept: () => {
          this.deleteRegion();
       }

@@ -21,17 +21,19 @@ export class ListEmpresasComponent implements OnInit {
   selectedEmpresa: Empresa;
   usuario:Usuario;
   usuarioOID :string;
+  tituloEmpresa: string;
 
   constructor( public empresaService: EmpresaService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService   ) { }
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloEmpresa = this.usuario.infoHuesped.nbEmpresa;
     this.getEmpresasByUsuarioOID();
 
     this.itemsEmpresa = [
       {
-        label: 'Editar Lista',
+        label: `Editar ${this.tituloEmpresa}`,
         icon: 'pi pi-pencil',
         command: (event) => {
           this.modificarEmpresa();
@@ -39,7 +41,7 @@ export class ListEmpresasComponent implements OnInit {
       },
       { separator: true },
       {
-        label: 'Eliminar Lista',
+        label: `Eliminar ${this.tituloEmpresa}`,
         icon: 'pi pi-trash',
         command: (event) => {
           this.confirmDeleteEmpresa();
@@ -70,7 +72,7 @@ export class ListEmpresasComponent implements OnInit {
   public agregarEmpresa(){
 
     let ref= this.dialogService.open( EmpresaComponent , {
-      header: 'Empresa',
+      header: this.tituloEmpresa,
       width: '90%',
       contentStyle: {"max-height": "550px" , "height" : "500px"  } ,
       data: { empresaId:0  }
@@ -97,7 +99,7 @@ export class ListEmpresasComponent implements OnInit {
   }
 
   let ref= this.dialogService.open( EmpresaComponent , {
-    header: 'Empresa',
+    header: this.tituloEmpresa,
     width: '70%',
     contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
     data: { empresaId: this.selectedEmpresa.empresaId  }
@@ -125,7 +127,7 @@ export class ListEmpresasComponent implements OnInit {
   public confirmDeleteEmpresa(){
 
     this.confirmationService.confirm({
-      message: 'Está seguro que desea eliminar la Empresa ?',
+      message: `Está seguro que desea eliminar ${this.tituloEmpresa} ?`,
       accept: () => {
          this.deleteEmpresa();
       }

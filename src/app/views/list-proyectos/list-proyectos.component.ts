@@ -30,6 +30,8 @@ export class ListProyectosComponent implements OnInit {
 
   selectedEmpresa:Empresa;
   selectedMarca:Marca;
+  tituloEmpresa: string;
+  tituloMarca: string;
 
 
   constructor( public marcaService:MarcaService ,  public proyectoService:ProyectoService ,  public empresaService: EmpresaService , private confirmationService: ConfirmationService ,
@@ -37,6 +39,8 @@ export class ListProyectosComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloMarca = this.usuarioSession.infoHuesped.nbMarca;
+    this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
     this.usuarioOID=this.usuarioSession.usuarioOID;
     this.getEmpresasByUsuarioOID();
 

@@ -29,18 +29,24 @@ export class ListSucursalesComponent implements OnInit {
   itemsSucursal: MenuItem[];
   empresas:Empresa[];
   marcas:Marca[];
+  tituloEmpresa: string;
+  tituloMarca: string;
+  tituloSucursal: string;
 
   constructor(public sucursalService:SucursalService ,  public marcaService:MarcaService ,  public empresaService: EmpresaService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService ) { }
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloMarca = this.usuarioSession.infoHuesped.nbMarca;
+    this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
+    this.tituloSucursal = this.usuarioSession.infoHuesped.nbSucursal;
     this.usuarioOID=this.usuarioSession.usuarioOID;
    // this.getSucursalesByUsuarioOID();
     this.getEmpresasByUsuarioOID();
     this.itemsSucursal = [
       {
-        label: 'Editar Sucursal',
+        label: `Editar ${this.tituloSucursal}`,
         icon: 'pi pi-pencil',
         command: (event) => {
           this.modificarSucursal();
@@ -48,7 +54,7 @@ export class ListSucursalesComponent implements OnInit {
       },
       { separator: true },
       {
-        label: 'Eliminar Sucursal',
+        label: `Eliminar ${this.tituloSucursal}`,
         icon: 'pi pi-trash',
         command: (event) => {
           this.confirmDeleteSucursal();
@@ -239,7 +245,7 @@ export class ListSucursalesComponent implements OnInit {
   public agregarSucursal(){
 
     let ref= this.dialogService.open( SucursalComponent , {
-      header: 'Sucursal',
+      header: this.tituloSucursal,
       width: '90%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { regionId:0  }
@@ -262,7 +268,7 @@ export class ListSucursalesComponent implements OnInit {
     }
 
     let ref= this.dialogService.open( SucursalComponent , {
-      header: 'Sucursal',
+      header: this.tituloSucursal,
       width: '90%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
       data: { sucursalId : this.selectedSucursal.sucursalId  }
@@ -300,7 +306,7 @@ export class ListSucursalesComponent implements OnInit {
   public confirmDeleteSucursal(){
 
     this.confirmationService.confirm({
-      message: 'Está seguro que desea eliminar la Sucursal ?',
+      message: `Está seguro que desea eliminar ${this.tituloSucursal} ?`,
       accept: () => {
          this.deleteSucursal();
       }

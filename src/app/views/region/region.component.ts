@@ -39,6 +39,9 @@ export class RegionComponent implements OnInit {
 
   selectedSucursalRegionLeft:SucursalRegion[];
   selectedSucursalRegionRight:SucursalRegion[];
+  tituloEmpresa: string;
+  tituloMarca: string;
+  tituloSucursal: string;
 
   auxVar :  Boolean = true;
 
@@ -65,8 +68,9 @@ export class RegionComponent implements OnInit {
   ngOnInit(): void {
 
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
-
-
+    this.tituloMarca = this.usuarioSession.infoHuesped.nbMarca;
+    this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
+    this.tituloSucursal = this.usuarioSession.infoHuesped.nbSucursal;
     if( this.config.data.regionId >0){
 
 

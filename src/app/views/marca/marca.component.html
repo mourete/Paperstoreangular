@@ -41,7 +41,7 @@
       </tr>
 
       <tr *ngIf="selectedEmpresa">
-        <td align="center" style="line-height:30pt;">Empresa</td>
+        <td align="center" style="line-height:30pt;">{{tituloEmpresa}}</td>
         <td>
           <p-dropdown
             (onChange)="empresaChanged()"

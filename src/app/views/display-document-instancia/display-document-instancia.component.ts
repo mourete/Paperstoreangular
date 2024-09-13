@@ -130,7 +130,8 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   apiURLImagen: string;
   region: string;
   auxClouse: Boolean = false;
-
+  tituloRegion: string;
+  tituloSucursal: string;
   selectedFiles;
 
 
@@ -224,6 +225,8 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloRegion = this.usuario.infoHuesped.nbRegion;
+    this.tituloSucursal = this.usuario.infoHuesped.nbSucursal;
     this.usuarioOID = this.usuario.usuarioOID;
     this.apiURLImagen = this.usuario.infoHuesped.pathImagenWeb;
     this.readOnly = false;

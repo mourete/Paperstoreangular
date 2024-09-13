@@ -38,6 +38,8 @@ export class SucursalComponent implements OnInit {
   marcasAux:Marca[];
   auxEdit : Boolean = true;
   ciudad:Boolean = false;
+  tituloEmpresa: string;
+  tituloMarca: string;
 
   profileSucursal = this.fb.group({
     clave: ['',  Validators.required],
@@ -66,6 +68,8 @@ export class SucursalComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloMarca = this.usuarioSession.infoHuesped.nbMarca;
+    this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
 
     if( this.config.data.sucursalId >0   ){
 

@@ -7,12 +7,12 @@
     <div     >
 
         <div style="font-family:Arial, Helvetica, sans-serif;margin: 20px;" >
-            <h3>MARCAS </h3>
+            <h3>{{tituloMarca}}</h3>
         </div>
 
         <p-toolbar>
             <div class="ui-toolbar-group-left">
-                <button pButton type="button"  (click)="agregarMarca()"    label="Agregar marca" icon="pi pi-plus"></button>
+                <button pButton type="button"  (click)="agregarMarca()"    label="Agregar {{tituloMarca}}" icon="pi pi-plus"></button>
             </div>
         </p-toolbar>
 
@@ -40,7 +40,7 @@
                          <!--  <th style="width: 100px;"  >Acciones</th>-->
                             <!-- <th style="width: 200px;">Id</th>  Se quita el id-->
                             <th style="width: 200px;"  >Nombre</th>
-                            <th style="width: 200px;"  >Empresa</th>
+                            <th style="width: 200px;"  >{{tituloEmpresa}}</th>
 
                     </tr>
 

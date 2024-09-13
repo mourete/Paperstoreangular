@@ -22,7 +22,7 @@ import { UsuarioMarcasComponent } from '../usuario-marcas/usuario-marcas.compone
 export class ListDocumentoUsuariosComponent implements OnInit {
 
 
- 
+
   usuarioOID: string;
   usuarioSession:Usuario;
   mostrandoInstancia:boolean;
@@ -39,7 +39,7 @@ export class ListDocumentoUsuariosComponent implements OnInit {
   public currSucursal:string;
   public currRegion:string;
   public currNumDocumentos:number;
-  public currNumInstancias:number; 
+  public currNumInstancias:number;
   public currMarca:string;
   public currEmpresa:string;
 
@@ -52,6 +52,9 @@ export class ListDocumentoUsuariosComponent implements OnInit {
   itemsSucursal: MenuItem[];
   empresas:Empresa[];
   marcas:Marca[];
+  tituloEmpresa: string;
+  tituloMarca: string;
+  tituloSucursal: string;
 
   constructor(public documentService:DocumentService    ,  public marcaService:MarcaService ,  public empresaService: EmpresaService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService  ,     private actRoute: ActivatedRoute ) {
@@ -60,33 +63,36 @@ export class ListDocumentoUsuariosComponent implements OnInit {
 
      }
 
-   
+
   ngOnInit(): void {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloMarca = this.usuarioSession.infoHuesped.nbMarca;
+    this.tituloEmpresa = this.usuarioSession.infoHuesped.nbEmpresa;
+    this.tituloSucursal = this.usuarioSession.infoHuesped.nbSucursal;
     this.usuarioOID = this.usuarioSession.usuarioOID;
     if(  this.usuarioOID == undefined ||   this.usuarioOID==null || this.usuarioOID=="" ){
         this.usuarioOID=this.usuarioSession.usuarioOID;
     }
-    
+
     this.getEmpresasByUsuarioOID();
   }
 
-  
+
 
 
 
   public getEmpresasByUsuarioOID(){
     this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
       (data)=>{
-        //this.empresas=data; 
-        
+        //this.empresas=data;
+
         this.empresas = new Array(data.length+1);
         this.empresas[0] = {activo:0, empresaId:0,nombre:"Todas", encargado:"",
         email:"",
         notificaciones:0,
           usuarioCreated:"",
           direccion:"",
-        rfc:"",	  
+        rfc:"",
         activa:"",
         clave:""};
 
@@ -96,13 +102,13 @@ export class ListDocumentoUsuariosComponent implements OnInit {
 
 
         if( this.empresas!=null && this.empresas.length>0 ){
-          this.selectedEmpresa=this.empresas[0];  
-          this.getMarcasByEmpresaYUsuario();         
+          this.selectedEmpresa=this.empresas[0];
+          this.getMarcasByEmpresaYUsuario();
         }
 
      }
     );
-  
+
   }
 
 
@@ -112,17 +118,17 @@ export class ListDocumentoUsuariosComponent implements OnInit {
       return;
     }
 
-    this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe( 
+    this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe(
       (data)=>{
         /* console.log( data );
          this.marcas=data;   */
-         
+
          if(data != null )
          {
            this.marcas = new Array(data.length+1);
          }else
            this.marcas = new Array(1);
- 
+
         this.marcas[0] = {  marcaId:0,
          nombre:"Todas",
          clave:"",
@@ -142,10 +148,10 @@ export class ListDocumentoUsuariosComponent implements OnInit {
          empresa:"",
          usuarioCreated:"",
          usuarioUpdated:"",
-     
+
          activoText:"",
          flagActivo:true};
-        
+
          if(data != null )
         data.forEach((element, index) => {
          this.marcas[++index] = element;
@@ -153,7 +159,7 @@ export class ListDocumentoUsuariosComponent implements OnInit {
 
 
          if( this.marcas!=null && this.marcas.length>0 ){
-             this.selectedMarca=this.marcas[0];                 
+             this.selectedMarca=this.marcas[0];
              this.getSucursagetSucursalesByMarcaYEmpresalByID();
          }else{
             this.selectedMarca=null;
@@ -163,22 +169,22 @@ export class ListDocumentoUsuariosComponent implements OnInit {
 
       }
      );
-  
+
   }
 
-  /*public getDocumentosUsuario(  ){      
+  /*public getDocumentosUsuario(  ){
     if( this.usuarioOID==null ){
       return;
     }
 
-    this.documentService.getDocumentosUsuario( this.usuarioOID ).subscribe( 
+    this.documentService.getDocumentosUsuario( this.usuarioOID ).subscribe(
       (data)=>{
          console.log( data );
-         this.documentosUsuario=data;   
-        
+         this.documentosUsuario=data;
+
       }
      );
-  
+
   }*/
 
 
@@ -195,13 +201,13 @@ export class ListDocumentoUsuariosComponent implements OnInit {
           marcaTmpId=this.selectedMarca.marcaId;
         }
 
-        this.documentService.getDocumentosUsuarioList(  marcaTmpId , this.selectedEmpresa.empresaId,  this.usuarioSession.usuarioOID ).subscribe( 
+        this.documentService.getDocumentosUsuarioList(  marcaTmpId , this.selectedEmpresa.empresaId,  this.usuarioSession.usuarioOID ).subscribe(
           (data)=>{
              console.log( data );
-                    
-             this.documentosUsuariosList=data;  
 
-            
+             this.documentosUsuariosList=data;
+
+
 
              this.documentosUsuariosList.forEach((element, index) => {
 
@@ -222,15 +228,15 @@ export class ListDocumentoUsuariosComponent implements OnInit {
                 if(element.empresaId == eleEmpresa.empresaId){
 
                   this.documentosUsuariosList[index].empresa = eleEmpresa.nombre;
-                  
+
                 }
 
               });
 
-              
-                
+
+
              });
-             
+
             // console.log();
 
           }
@@ -239,8 +245,8 @@ export class ListDocumentoUsuariosComponent implements OnInit {
 
 
   }
-  
- 
+
+
    public empresaChanged(){
        this.getMarcasByEmpresaYUsuario();
   }
@@ -263,7 +269,7 @@ export class ListDocumentoUsuariosComponent implements OnInit {
     this.mostrandoInstancia = !this.mostrandoInstancia;
   }
 
-  public mostrarInstancia(docId:number , proyId:number , regId: number 
+  public mostrarInstancia(docId:number , proyId:number , regId: number
     , sucId:number,usrOID:string , doc: string , suc:string, reg:string , cantDoc :number , cantInst:number,  cantMarca: string, cantEmpresa: string , proyecto : string
 ){
 

@@ -58,6 +58,9 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   currAlerta:string;
   currImage: string;
   desplegandoDocumento:boolean;
+  tituloRegion: string;
+  tituloMarca: string;
+  tituloSucursal: string;
 
   //'instanciasAdmin/:documentoId/:proyectoId/:regionId/:sucursalId/:usuarioOID/:documento/:sucursal/:region/:numDocumentos/:numInstancias'+
 
@@ -82,7 +85,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
   constructor(public principal : PrincipalComponent,  public documentoInstanciaService: DocumentoInstanciaService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService    ,     private actRoute: ActivatedRoute , private router: Router , private seccionService : SeccionService  ) {
- 
+
        this.documentoId=this.actRoute.snapshot.params.documentoId;
        this.proyectoId=this.actRoute.snapshot.params.proyectoId;
        this.sucursalId=this.actRoute.snapshot.params.sucursalId;
@@ -101,6 +104,9 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    this.tituloMarca = this.usuario.infoHuesped.nbMarca;
+    this.tituloRegion = this.usuario.infoHuesped.nbEmpresa;
+    this.tituloSucursal = this.usuario.infoHuesped.nbSucursal;
     console.log(localStorage.getItem('usuario'));
     console.log("localStorage.getItem('usuario')");
     this.image = this.usuario.infoHuesped.pathImagenWeb;

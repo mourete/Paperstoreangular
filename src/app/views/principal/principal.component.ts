@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
 import {GlobalConstants} from 'src/app/model/global-constants';
 import {DocumentosUsuarioComponent} from '../documentos-usuario/documentos-usuario.component';
 import {ListDocumentoUsuariosComponent} from '../list-documento-usuarios/list-documento-usuarios.component';
- //import {ListDocumentoUsuariosBuscarComponent} from '../list-documento-usuarios-buscar/list-documento-usuarios-buscar.component';
+import {ListDocumentsBuscarComponent} from '../list-documents-buscar/list-documents-buscar.component';
 import {ListDocumentsComponent} from '../list-documents/list-documents.component';
 import {ListEmpresasComponent} from '../list-empresas/list-empresas.component';
 import {ListUsuariosComponent} from '../list-usuarios/list-usuarios.component';
@@ -50,6 +50,7 @@ export class PrincipalComponent implements OnInit, OnDestroy {
     usuarioLog: UsuarioLog;
     mapModulos: Map<string, Modulo>;
     componentClass: any;
+    urlReporte: string;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -150,7 +151,7 @@ export class PrincipalComponent implements OnInit, OnDestroy {
 
     public selectCurrentTemplate(menu: Modulo) {
 
-
+        
         let menuId = menu.objetoId.trim() !== "" ? menu.objetoId : menu.titulos;
         menuId = menuId.toUpperCase()
 
@@ -162,6 +163,10 @@ export class PrincipalComponent implements OnInit, OnDestroy {
         } else if (menuId == GlobalConstants.MENU_DOCUMENTOS) {
             //  this.currentTemplate="documentosAdmin";
             this.componentClass = ListDocumentsComponent;
+            this.setCurrentComponent(this.componentClass);
+        } else if (menuId == GlobalConstants.MENU_DOCUMENTOSBUSCAR) {
+            //  this.currentTemplate="documentosAdmin";
+            this.componentClass = ListDocumentsBuscarComponent;
             this.setCurrentComponent(this.componentClass);
 
         } else if (menuId == GlobalConstants.MENU_EMPRESAS) {
@@ -212,11 +217,19 @@ export class PrincipalComponent implements OnInit, OnDestroy {
 
         } else if (menuId == GlobalConstants.MENU_STORECHECK) {
             this.componentClass = StoreCheckComponent;
+            this.urlReporte = menu.url;
+            localStorage.setItem('urlReporte',JSON.stringify(this.urlReporte));
+            console.log(this.urlReporte);
+            console.log(menu);
             this.setCurrentComponent(this.componentClass);
 
 
         } else if (menuId == GlobalConstants.MENU_DASHBOARD) {
             this.componentClass = DashboardComponent;
+            this.urlReporte = menu.url;
+            localStorage.setItem('urlReporte',JSON.stringify(this.urlReporte));
+            console.log(this.urlReporte);
+            console.log(menu);
             this.setCurrentComponent(this.componentClass);
         } else {
 
@@ -307,7 +320,7 @@ export class PrincipalComponent implements OnInit, OnDestroy {
                 if (this.rawModulos == null || this.rawModulos.length <= 0) {
                     return;
                 }
-
+                     
                 this.setArbolModulos();
                 this.armaMenu();
                 this.setUserDefaultOption();

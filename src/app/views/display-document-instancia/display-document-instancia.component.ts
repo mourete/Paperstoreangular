@@ -135,19 +135,40 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   selectedFiles;
 
 
+  
+  @Input() public varDocumentoId: number;
+  @Input() public varProyectoId: number;
+  @Input() public varProyecto: string;
+  @Input() public varRegionId: number;
+  @Input() public varSucursalId:number;
+  @Input() public varUsuarioOID:string;
+  @Input() public varDocumento:string;
+  @Input() public varSucursal:string;
+  @Input() public varRegion:string;
+  @Input() public varProyecton:string;
+  @Input() public varNumDocumentos:number;
+  @Input() public varNumInstancias:number;
+  @Input() public varEmpresa:string;
+  @Input() public varMarca:string;
+  @Input() public varTipoAlerta:number;
+  @Input() public varAlerta:string;
+  @Input() public varImage:string;
+
+
   @Input() public varDocumentoInstanciaOID: string;
   @Input() public varSeccionOID: string;
-  @Input() public varDocumentoId: number;
-  @Input() public varUsuarioOID: string;
-  @Input() public varReadOnly: string;
+   @Input() public varReadOnly: string;
   @Input() public varNombreInstancia: string;
-  @Input() public varSucursal: string;
+  
 
-  @Input() public varRegion: string;
-  @Input() public varAlerta: string;
-  @Input() public varTipoAlerta: number;
-  @Input() public varImage: string;
+ 
   noEditable: boolean;
+  sucursalId: number;
+  proyectoId: number;
+  regionId: number;
+  documentos: DocumentoInstancia[];
+  selectedDocumento: DocumentoInstancia;
+  proyecto: string;
 
 
 
@@ -168,6 +189,11 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     this.alerta = this.actRoute.snapshot.params.alerta;
     this.tipoAlerta = this.actRoute.snapshot.params.tipoAlerta;
     this.image = this.actRoute.snapshot.params.image;
+    console.log(this.documentoInstanciaOID);
+    console.log(this.seccionOID);
+    console.log(this.documentoId);
+    console.log(this.usuarioOID);
+    console.log(this.tipoAlerta);
 
   }
 
@@ -232,28 +258,156 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     this.readOnly = false;
     this.noEditable = false;
     var elem = document.getElementById('quitar');
-
-
+    console.log("this.documentoInstanciaOID " +  this.varDocumentoInstanciaOID);
     if (this.documentoInstanciaOID == undefined || this.documentoInstanciaOID == null || this.documentoId == undefined) {
-
+      console.log("Display documentoInstanciaOID");
+      console.log(this.documentoInstanciaOID);
       this.documentoInstanciaOID = this.varDocumentoInstanciaOID;
       this.seccionOID = this.varSeccionOID;
       this.documentoId = this.varDocumentoId;
       this.usuarioOID = this.varUsuarioOID;
       this.nombreInstancia = this.varNombreInstancia;
       this.sucursal = this.varSucursal;
+      this.sucursalId = this.varSucursalId;
+      this.proyecto = this.varProyecto;
+      this.proyectoId = this.varProyectoId;
+      this.regionId = this.varRegionId;
       this.region = this.varRegion;
       this.alerta = this.varAlerta;
       this.tipoAlerta = this.varTipoAlerta;
       this.image = this.usuario.infoHuesped.pathImagenWeb + this.varImage;
-      console.log(this.image);
+     
     }
 
-    this.getSeccionesInstancias();
+    //Validar cuando entre a instancia cuando el nro de documentos es igual a 1
+     if(this.varNumDocumentos == 1){
+          this.getByDocIdSucProyReg();
+        
+
+     }
+     else{this.getSeccionesInstancias();}
+
+    
 
   }
 
+  
+  public getByDocIdSucProyReg(){
 
+    this.documentoInstanciaService.getByDocIdSucProyReg(this.documentoId, this.sucursalId , this.proyectoId , this.regionId, this.usuarioOID  ).subscribe(
+      (data)=>{
+    
+         console.log( data );
+         this.documentos=data;
+          this.getIrInstancia();
+          this.getSeccionesInstancias();
+     
+    }
+  );
+  }
+
+  public getIrInstancia(){
+    
+    if(this.documentos == null){
+      console.log( "guadarDocumentoInstancia" );
+      this.guadarDocumentoInstancia();
+    }
+    else{
+      this.selectedDocumento = this.documentos[0]; 
+    }
+    this.documentoInstanciaOID = this.selectedDocumento.documentoInstanciaOID;
+    this.nombreInstancia= this.selectedDocumento.nombre;
+    this.clickEditarDocInstancia();
+  }
+
+  public clickEditarDocInstancia(){
+    if( this.selectedDocumento==null ){
+      return;
+    }
+
+    this.seccionService.getPrimeraSeccion(this.documentoId, this.usuarioOID  ).subscribe(
+      (data)=>{
+         let secTmp=data;
+         if( secTmp==null ){
+           return;
+         }
+        this.seccionOID=secTmp.seccionOID;
+           }
+     );
+  }
+
+public guadarDocumentoInstancia(){
+  var doc: DocumentoInstancia;
+  var docInst : string;
+  
+        doc = new DocumentoInstancia();
+        doc.nombre = this.proyecto + "-" + this.sucursal;
+        doc.observaciones= this.proyecto + "-" + this.sucursal;
+        doc.alerta = '-1' ;
+        doc.tipoAlerta= -1; 
+        doc.imagePath='';
+        doc.documentoId=this.documentoId;
+        doc.regionId =  this.regionId;
+        doc.proyectoId =  this.proyectoId;
+        doc.sucursalId = this.sucursalId;
+        doc.usuarioOID = this.usuarioOID;
+        
+
+
+  this.documentoInstanciaService.guardarDocumentoInstancia ( doc, this.usuarioOID).subscribe((data)=>{
+    console.log("guadarDocumentoInstancia2" )
+    console.log( data );
+    this.selectedDocumento=data;
+    this.seccionService.getPrimeraSeccion( this.documentoId , this.usuarioOID).subscribe(
+
+       (data)=>{
+
+        console.log("getPrimeraSeccion" )
+
+         console.log( data );
+
+         var  seccion:Seccion=data;
+         this.documentoInstanciaOID = this.selectedDocumento.documentoInstanciaOID ;
+         this.seccionOID = seccion.seccionOID ;
+         this.documentoId = this.documentoId;
+         this.usuarioOID = this.usuarioOID;
+         this.nombreInstancia = this.selectedDocumento.nombre;
+         this.sucursalId = this.selectedDocumento.sucursalId;
+         this.proyecto = this.varProyecto;
+         this.proyectoId = this.selectedDocumento.proyectoId;
+         this.regionId = this.selectedDocumento.regionId;
+         this.alerta =this.selectedDocumento.alerta;
+         this.image = this.usuario.infoHuesped.pathImagenWeb + this.selectedDocumento.imagePath;
+         console.log();
+         console.log( "seccion.seccionOID ");
+         console.log( );
+         console.log( "this.documentoId" );
+         console.log(  );
+         console.log( "this.usuarioOID");
+         console.log( this.usuarioOID);
+         console.log( "this.currReadOnly,");
+         //console.log( this.currReadOnly,);
+         console.log( "this.selectedDocumento.nombre");
+         console.log( this.selectedDocumento.nombre);
+         console.log("this.selectedDocumento.alerta");
+         console.log(this.selectedDocumento.alerta);
+         console.log("this.selectedDocumento.tipoAlerta");
+         console.log(this.selectedDocumento.tipoAlerta);
+         console.log(" this.selectedDocumento.imagePath" );
+         console.log( this.selectedDocumento.imagePath );
+
+         if( seccion!=null ){
+           //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
+
+         
+          /* this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.currReadOnly,   this.selectedDocumento.nombre,this.selectedDocumento.alerta,this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath );
+*/
+         }
+
+      })
+  });
+}
+  
   public getSeccionesInstancias() {
 
     this.seccionInstanciaService.getAll(this.documentoInstanciaOID, this.documentoId, this.usuarioOID).subscribe((data) => {
@@ -491,16 +645,13 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
     for (var idx = 0; idx < this.seccionInstancia.conceptosInstancia.length; idx++) {
       var ci = this.seccionInstancia.conceptosInstancia[idx];
-      console.log("ConceptonoEditable");
-      console.log(ci.noEditable);
+     
       ci.readOnly=this.readOnly;
       if(ci.noEditable==1 && !this.readOnly ){
         if(this.noEditable)
            ci.readOnly = true;
       }
-      console.log("ConceptonoreadOnly");
-      console.log(ci.readOnly);
-
+     
       if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_FECHA) {
 
 
@@ -690,16 +841,22 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
 
   public getDocumentoInstancia() {
+    
+    console.log(this.documentoId, this.documentoInstanciaOID, this.seccionOID, this.usuarioOID);
     this.documentoInstanciaService.getDocByDocumentInstanceAndSection(this.documentoId, this.documentoInstanciaOID, this.seccionOID, this.usuarioOID).subscribe(
       (data) => {
 
         this.documentoInstancia = data;
         console.log("readOnly");
+        console.log(data);
+        console.log(this.documentoId);
+        console.log(this.documentoInstanciaOID);
+        console.log(this.seccionOID);
         console.log(this.usuarioOID);
-        console.log(this.documentoInstancia.readOnly);
         if (this.documentoInstancia != null) {
           if (this.documentoInstancia.seccionesInstancia != null && this.documentoInstancia.seccionesInstancia.length > 0) {
             this.seccionInstancia = this.documentoInstancia.seccionesInstancia[0];
+            console.log("this.seccionInstancia" + this.documentoInstancia.seccionesInstancia[0]);
             this.configRespuestasForView();
           }
 

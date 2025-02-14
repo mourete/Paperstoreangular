@@ -95,7 +95,6 @@ export class ListDocumentoInstanciasComponent implements OnInit {
        this.sucursal=this.actRoute.snapshot.params.sucursal;
        this.region=this.actRoute.snapshot.params.region;
        this.proyecto=this.actRoute.snapshot.params.proyecto;
-
        this.numDocumentos= Number( this.actRoute.snapshot.params.numDocumentos );
        this.numInstancias= Number( this.actRoute.snapshot.params.numInstancias );
        this.desplegandoDocumento=false;
@@ -103,12 +102,12 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     }
 
   ngOnInit(): void {
+
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.tituloMarca = this.usuario.infoHuesped.nbMarca;
     this.tituloRegion = this.usuario.infoHuesped.nbEmpresa;
     this.tituloSucursal = this.usuario.infoHuesped.nbSucursal;
-    console.log(localStorage.getItem('usuario'));
-    console.log("localStorage.getItem('usuario')");
+ 
     this.image = this.usuario.infoHuesped.pathImagenWeb;
     this. itemsDocumento = [
       {
@@ -135,8 +134,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
       },
       { separator: true },
     ];
-    console.log(this.varUsuarioOID);
-    console.log("this.varUsuarioOID");
+
     if( this.documentoId == undefined || this.documentoId<=0  ){
 
        this.documentoId=this.varDocumentoId;
@@ -198,11 +196,29 @@ export class ListDocumentoInstanciasComponent implements OnInit {
       (data)=>{
          console.log( data );
          this.documentos=data;
-      }
-     );
+   
+    
+     //Si la cantidad de docuemento instancia es igual a 1, redireccionamos el documento a la ventana de instancia
+     //if(this.varNumDocumentos == 1){
+     //     this.getIrInstancia();
 
+     //}
+    }
+  );
   }
 
+  /*public getIrInstancia(){
+    
+    if(this.documentos == null){
+      this.guadarDocumentoInstancia();
+    }
+    else{
+     
+      console.log(this.documentos[0]);
+      this.selectedDocumento = this.documentos[0];
+      this.clickEditarDocInstancia();
+    }
+  }*/
   public eliminarDocumento(   ){
 
     this.documentoInstanciaService.eliminarDocumentoInstancia ( this.selectedDocumento, this.usuarioOID ).subscribe((data)=>{
@@ -215,10 +231,83 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
 }
 
+/*public guadarDocumentoInstancia(){
+  var doc: DocumentoInstancia;
+  var docInst : string;
+  if(this.selectedDocumento == null) { 
+    console.log("selectedDocumento" + this.selectedDocumento )
+        doc = new DocumentoInstancia();
+        doc.nombre = this.proyecto + "-" + this.sucursal;
+        doc.observaciones= this.proyecto + "-" + this.sucursal;
+        doc.alerta = '-1' ;
+        doc.tipoAlerta= -1; 
+        doc.imagePath='';
+        doc.documentoId=this.documentoId;
+        doc.regionId =  this.regionId;
+        doc.proyectoId =  this.proyectoId;
+        doc.sucursalId = this.sucursalId;
+        doc.usuarioOID = this.usuarioOID;
+        
 
+  }
+ 
+  this.documentoInstanciaService.guardarDocumentoInstancia ( doc, this.usuarioOID).subscribe((data)=>{
+    console.log("data" )
+    console.log( data );
+    this.selectedDocumento=data;
+    docInst = this.selectedDocumento.documentoInstanciaOID
+//if (docInst != null  ) {
+  console.log("entre datos de primera seccion");
+  console.log(docInst);
+  //if( this.selectedDocumento!=null && this.selectedDocumento.documentoInstanciaOID!=null ){
+    console.log("entre datos de primera seccion2");
+     this.seccionService.getPrimeraSeccion( this.documentoId , this.usuarioOID).subscribe(
+
+       (data)=>{
+
+       
+
+         console.log( data );
+
+         var  seccion:Seccion=data;
+         console.log(this.selectedDocumento.documentoInstanciaOID );
+         console.log( "seccion.seccionOID ");
+         console.log( seccion.seccionOID );
+         console.log( "this.documentoId" );
+         console.log( this.documentoId );
+         console.log( "this.usuarioOID");
+         console.log( this.usuarioOID);
+         console.log( "this.currReadOnly,");
+         console.log( this.currReadOnly,);
+         console.log( "this.selectedDocumento.nombre");
+         console.log( this.selectedDocumento.nombre);
+         console.log("this.selectedDocumento.alerta");
+         console.log(this.selectedDocumento.alerta);
+         console.log("this.selectedDocumento.tipoAlerta");
+         console.log(this.selectedDocumento.tipoAlerta);
+         console.log(" this.selectedDocumento.imagePath" );
+         console.log( this.selectedDocumento.imagePath );
+
+         if( seccion!=null ){
+           //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
+
+         
+           this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.currReadOnly,   this.selectedDocumento.nombre,this.selectedDocumento.alerta,this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath );
+
+         }
+
+      })
+  });
+  
+
+
+//}
+ //     }
+
+}*/
   public agregarDocumentoInstancia(){
 
-    console.log("agregarDocumentoInstancia:" + this.alerta );
+    
 
     //alert("Region:" + this.regionId )
     let ref= this.dialogService.open( DocumentoInstanciaComponent , {
@@ -258,7 +347,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
                 if( seccion!=null ){
                   //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
 
-                  this.displayDocumentoInstancia( doc.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.readOnly, doc.nombre,doc.alerta,doc.tipoAlerta, doc.imagePath );
+                  this.displayDocumentoInstancia( doc.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.currReadOnly, doc.nombre,doc.alerta,doc.tipoAlerta, doc.imagePath );
 
                 }
 
@@ -278,7 +367,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
 
 
-  public clickEditarDocInstancia(){
+ public clickEditarDocInstancia(){
     if( this.selectedDocumento==null ){
       return;
     }
@@ -315,7 +404,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     this.currAlerta=alerta;
     this.curtipoAlerta=tipoAlerta;
     this.currImage =   imagePath;
-    console.log( this.currImage );
+    
   }
 
 

@@ -189,7 +189,7 @@
 
 
 
-<div  *ngIf="mostrandoInstancia"   >
+<div  *ngIf="mostrandoInstancia&&currNumDocumentos>1"   >
 
     <!-- <a   style="font-size:1.1em;margin-bottom:10px;    color: #007ad9;
     text-decoration: none; font-weight: 400;"  id="quitar"  [routerLink]="" (click)="backToDocumentList()" >Regresar a documentos</a>-->
@@ -213,6 +213,33 @@
     [varMarca] = "currMarca"
 
     ></app-list-documento-instancias>
+
+</div>
+
+<div  *ngIf="mostrandoInstancia&&currNumDocumentos==1"   >
+
+     <a   style="font-size:1.1em;margin-bottom:10px;    color: #007ad9;
+    text-decoration: none; font-weight: 400;"  id="quitar"  [routerLink]="" (click)="backToDocumentList()" >Regresar a documentos</a>
+
+
+    <app-display-document-instancia
+
+    [varDocumentoId]="currDocumentoId"
+    [varProyectoId]="currProyectoId"
+    [varProyecto]="currProyecto"
+    [varRegionId]="currRegionId"
+    [varSucursalId]="currSucursalId"
+    [varUsuarioOID]="currUsuarioOID"
+
+    [varDocumento]="currDocumento"
+    [varSucursal]="currSucursal"
+    [varRegion]="currRegion"
+    [varNumDocumentos]="currNumDocumentos"
+    [varNumInstancias]="currNumInstancias"
+    [varEmpresa] = "currEmpresa"
+    [varMarca] = "currMarca"
+
+    ></app-display-document-instancia>
 
 </div>
 

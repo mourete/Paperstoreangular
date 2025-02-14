@@ -52,6 +52,7 @@
             <ng-template pTemplate="header" let-columns>
               <tr>
                 <!--  <th style="width: 50px;"  >Id</th> se quita id -->
+                <th style="width: 150px;">Sucursal ID</th>
                 <th style="width: 150px;">Nombre</th>
                 <th style="width: 120px;">{{tituloEmpresa}}</th>
                 <th style="width: 120px;">{{tituloMarca}}</th>
@@ -59,9 +60,9 @@
                 <th style="width: 120px;">Responsable</th>
               </tr>
               <tr>
-                <!--  <th  >
+                  <th  >
                      <input size="2"  pInputText type="text" (input)="dtSucursales.filter($event.target.value, 'sucursalId' , 'contains')">
-                  </th> se quita id-->
+                  </th> 
                 <th>
                   <input size="10" pInputText type="text"
                          (input)="dtSucursales.filter($event.target.value, 'nombre' , 'contains')">
@@ -86,6 +87,7 @@
             <ng-template pTemplate="body" let-sucursal>
               <tr [pSelectableRow]="sucursal" [pContextMenuRow]="sucursal" (contextmenu)="onRightClick($event, sucursal)">
                 <!-- <td>{{sucursal.sucursalId}}</td>  se quita id-->
+                <td>{{sucursal.sucursalId}}</td>
                 <td>{{sucursal.nombre}}</td>
                 <td>{{sucursal.nombreEmpresa}}</td>
                 <td>{{sucursal.nombreMarca}}</td>

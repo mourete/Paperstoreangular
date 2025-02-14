@@ -40,6 +40,7 @@ import { DocumentoInstanciaComponent } from './views/documento-instancia/documen
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { ListDocumentsComponent } from './views/list-documents/list-documents.component';
+import { ListDocumentsBuscarComponent } from './views/list-documents-buscar/list-documents-buscar.component';
 import { ListDocumentoInstanciasComponent } from './views/list-documento-instancias/list-documento-instancias.component';
 // import { ListDocumentoInstanciasCajaComponent } from './views/list-documento-instancias-caja/list-documento-instancias-caja.component';
 import { DocumentosUsuarioComponent } from './views/documentos-usuario/documentos-usuario.component';
@@ -91,6 +92,7 @@ import {BlockUIModule} from 'primeng/blockui';
     DisplayDocumentInstanciaComponent,
     DocumentoInstanciaComponent,
     ListDocumentsComponent,
+    ListDocumentsBuscarComponent,
     ListDocumentoInstanciasComponent,
     // ListDocumentoInstanciasCajaComponent,
    DocumentosUsuarioComponent,

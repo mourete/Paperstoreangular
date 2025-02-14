@@ -1,7 +1,7 @@
 export class GlobalConstants {
   //public static apiURL: string = "http://paperstore.com.mx:8085/";
-  public static apiURL: string = "http://3.21.151.73:8085/";
-  //public static apiURL: string = "http://localhost:8085/";
+  //public static apiURL: string = "http://3.21.151.73:8085/";
+  public static apiURL: string = "http://localhost:8085/";
 
     public static CONCEPTO_TIPO_TEXTO : number = 1;
     public static CONCEPTO_TIPO_ENTERO : number = 2;
@@ -32,6 +32,7 @@ export class GlobalConstants {
 
 
    public static MENU_DOCUMENTOS="DOCUMENTOS";
+   public static MENU_DOCUMENTOSBUSCAR="DOCUMENTOSBUSCAR";
    public static MENU_INSTANCIAS="INSTANCIAS";
    public static MENU_LISTA_DOCUMENTO_USUARIOS_BUSCAR="LISTADOCUMENTOUSUARIOSBUSCAR";
    public static MENU_LISTA_DOCUMENTO_USUARIOS="LISTADOCUMENTOUSUARIOS";

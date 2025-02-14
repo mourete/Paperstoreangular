@@ -1,14 +1,4 @@
-
-
-
-
-
 <div   *ngIf="!desplegandoDocumento"    style="font-family:Arial, Helvetica, sans-serif; text-align: left; "  >
-
-
-
-
-
 
     <div     >
 
@@ -92,7 +82,7 @@
                             <th >Nombre</th>
                           <!-- <th>Instancia</th>-->
                             <th>Observaciones</th>
-                            <th>Estatus</th>
+                            <!-- <th>Estatus</th>-->
                             <th>Alerta</th>
 
 
@@ -107,7 +97,7 @@
 
                             <!--<th   ></th>-->
                           <th   ></th>
-                          <th   ></th>
+                          <!--<th   ></th>-->
                           <th   >
 
                             <input size="20"  pInputText type="text" (input)="dtDocInsta.filter($event.target.value, 'tipoAlerta' , 'contains')">
@@ -136,11 +126,12 @@
                         <td >{{documento.nombre}}</td>
                           <!--<td >{{documento.documentoInstanciaOID}}</td>-->
                         <td >{{documento.observaciones}}</td>
-                        <td >{{documento.statusNombre}} </td>
+                        <!--<td >{{documento.statusNombre}} </td>-->
                         <td  *ngIf="documento.tipoAlerta == 2"><img  src="assets/img/alertaRojaConSigno.png"  width="30" height="30"> {{documento.alerta}}</td>
                         <td *ngIf="documento.tipoAlerta == 1"><img  src="assets/img/alertaNaranja.png"  width="30" height="30" > {{documento.alerta}}</td>
                         <td  *ngIf="documento.tipoAlerta == 0"><img  src="assets/img/alertaVerde.png"  width="30" height="30" > {{documento.alerta}}</td>
                         <td  *ngIf="documento.tipoAlerta == -1"><img  src="assets/img/alertaAmarillo.png"  width="30" height="30" > {{documento.alerta}}</td>
+                        <td  *ngIf="documento.tipoAlerta == 3"><img  src="assets/img/alertaRechazo.png"  width="30" height="30" > {{documento.alerta}}</td>
 
                     </tr>
                 </ng-template>

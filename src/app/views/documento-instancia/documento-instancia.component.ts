@@ -45,8 +45,7 @@ export class DocumentoInstanciaComponent implements OnInit {
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuario.usuarioOID;
-    console.log("this.usuario.usuarioOID =" +  this.usuario.usuarioOID );
-    console.log("this.usuarioOID =" +  this.usuarioOID );
+  
     if( this.config.data != null  && this.config.data.update>0){
 
 

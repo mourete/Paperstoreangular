@@ -16,6 +16,7 @@ export class DocumentoInstancia {
    statusNombre:string;
    seccionesInstancia:SeccionInstancia[];
    imagePath:string;
+   verImagen:string;
    alerta:string;
    proyectoId :number;
    proyecto :string;

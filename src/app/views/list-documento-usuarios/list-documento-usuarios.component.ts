@@ -31,6 +31,7 @@ export class ListDocumentoUsuariosComponent implements OnInit {
   public currDocumentoId: number;
   public  currProyectoId: number;
   public  currProyecto:string;
+  public currVerImage: number;
   public currRegionId: number;
   public currSucursalId:number;
   public currUsuarioOID:string;
@@ -203,8 +204,7 @@ export class ListDocumentoUsuariosComponent implements OnInit {
 
         this.documentService.getDocumentosUsuarioList(  marcaTmpId , this.selectedEmpresa.empresaId,  this.usuarioSession.usuarioOID ).subscribe(
           (data)=>{
-             console.log( data );
-
+           
              this.documentosUsuariosList=data;
 
 
@@ -270,12 +270,13 @@ export class ListDocumentoUsuariosComponent implements OnInit {
   }
 
   public mostrarInstancia(docId:number , proyId:number , regId: number
-    , sucId:number,usrOID:string , doc: string , suc:string, reg:string , cantDoc :number , cantInst:number,  cantMarca: string, cantEmpresa: string , proyecto : string
+    , sucId:number,usrOID:string , doc: string , suc:string, reg:string , cantDoc :number , cantInst:number,  cantMarca: string, cantEmpresa: string , proyecto : string, verImage : number
 ){
 
 this.currDocumentoId=docId;
 this.currProyectoId=proyId;
 this.currProyecto=proyecto;
+
 this.currRegionId=regId;
 this.currSucursalId=sucId;
 this.currUsuarioOID=usrOID;
@@ -288,6 +289,7 @@ this.currNumInstancias=cantInst;
 this.currMarca = cantMarca;
 this.currEmpresa = cantEmpresa;
 this.mostrandoInstancia=true;
+this.currVerImage=verImage;
 }
 
 

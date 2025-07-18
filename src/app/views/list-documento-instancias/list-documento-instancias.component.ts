@@ -43,6 +43,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   proyecto:string;
   tipoAlerta:number;
   image:string;
+  verImage : number;
   marcaName : string;
   empresaName : string;
   //apiURLImagen :string;
@@ -81,7 +82,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   @Input() public varTipoAlerta:number;
   @Input() public varAlerta:string;
   @Input() public varImage:string;
-
+  @Input() public varVerImage:number;
 
   constructor(public principal : PrincipalComponent,  public documentoInstanciaService: DocumentoInstanciaService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService    ,     private actRoute: ActivatedRoute , private router: Router , private seccionService : SeccionService  ) {
@@ -95,6 +96,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
        this.sucursal=this.actRoute.snapshot.params.sucursal;
        this.region=this.actRoute.snapshot.params.region;
        this.proyecto=this.actRoute.snapshot.params.proyecto;
+       this.image=this.actRoute.snapshot.params.image;
        this.numDocumentos= Number( this.actRoute.snapshot.params.numDocumentos );
        this.numInstancias= Number( this.actRoute.snapshot.params.numInstancias );
        this.desplegandoDocumento=false;
@@ -153,11 +155,13 @@ export class ListDocumentoInstanciasComponent implements OnInit {
        this.alerta = this.varAlerta;
        this.tipoAlerta = this.varTipoAlerta;
        this.image = this.varImage;
+       this.verImage = this.varVerImage;
       // this.apiURLImagen =   GlobalConstants.apiURLImage;
     }
 
 
     this.getByDocIdSucProyReg();
+
     /*
     localStorage.setItem( GlobalConstants.CURRENT_DOCUMENTO_ID   ,  String( this.documentoId)  );
     localStorage.setItem( GlobalConstants.CURRENT_PROYECTO_ID    ,  S   )
@@ -177,7 +181,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
   public backToDocumentList(){
 
-    // console.log("Hola");
+   
 
     //var currentTemplate="instancias";
 
@@ -191,34 +195,37 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   }
 
   public getByDocIdSucProyReg(){
-
+    console.log( "getByDocIdSucProyReg"  );
     this.documentoInstanciaService.getByDocIdSucProyReg(this.documentoId, this.sucursalId , this.proyectoId , this.regionId, this.usuarioOID  ).subscribe(
       (data)=>{
          console.log( data );
          this.documentos=data;
+         console.log( "varNumDocumentos" + this.varNumDocumentos );
    
-    
+         console.log( "ante if varNumDocumentos" + this.varNumDocumentos );
      //Si la cantidad de docuemento instancia es igual a 1, redireccionamos el documento a la ventana de instancia
-     //if(this.varNumDocumentos == 1){
-     //     this.getIrInstancia();
+     if(this.varNumDocumentos == 1){
+          this.getIrInstancia();
 
-     //}
+     }
     }
   );
+  
   }
 
-  /*public getIrInstancia(){
-    
+  public getIrInstancia(){
+    console.log("getIrInstancia");
     if(this.documentos == null){
+      console.log( "this.documentos == null)" );
       this.guadarDocumentoInstancia();
     }
     else{
-     
+      console.log( "this.documentos == null)else" );
       console.log(this.documentos[0]);
       this.selectedDocumento = this.documentos[0];
       this.clickEditarDocInstancia();
     }
-  }*/
+  }
   public eliminarDocumento(   ){
 
     this.documentoInstanciaService.eliminarDocumentoInstancia ( this.selectedDocumento, this.usuarioOID ).subscribe((data)=>{
@@ -231,7 +238,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
 }
 
-/*public guadarDocumentoInstancia(){
+public guadarDocumentoInstancia(){
   var doc: DocumentoInstancia;
   var docInst : string;
   if(this.selectedDocumento == null) { 
@@ -258,7 +265,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     docInst = this.selectedDocumento.documentoInstanciaOID
 //if (docInst != null  ) {
   console.log("entre datos de primera seccion");
-  console.log(docInst);
+  
   //if( this.selectedDocumento!=null && this.selectedDocumento.documentoInstanciaOID!=null ){
     console.log("entre datos de primera seccion2");
      this.seccionService.getPrimeraSeccion( this.documentoId , this.usuarioOID).subscribe(
@@ -304,7 +311,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 //}
  //     }
 
-}*/
+}
   public agregarDocumentoInstancia(){
 
     
@@ -328,6 +335,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
 
     ref.onClose.subscribe((doc: DocumentoInstancia ) => {
+  console.log("entre datos de primera seccion");
 
 
 
@@ -347,6 +355,9 @@ export class ListDocumentoInstanciasComponent implements OnInit {
                 if( seccion!=null ){
                   //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
 
+                  console.log( "getPrimeraSeccion"+ "OnInit" );
+
+                  console.log("Imagen listaDoc" +  doc.imagePath );
                   this.displayDocumentoInstancia( doc.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.currReadOnly, doc.nombre,doc.alerta,doc.tipoAlerta, doc.imagePath );
 
                 }
@@ -371,20 +382,19 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     if( this.selectedDocumento==null ){
       return;
     }
-
+    console.log( "getPrimeraSeccion"+ "clickEditarDocInstancia" );
     this.seccionService.getPrimeraSeccion(this.documentoId, this.usuarioOID  ).subscribe(
       (data)=>{
-         console.log( data );
+        console.log( data);
+       
          let secTmp=data;
          if( secTmp==null ){
            return;
          }
-
+        
          this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , secTmp.seccionOID , this.documentoId , this.usuarioOID, this.readOnly   , this.selectedDocumento.nombre, this.selectedDocumento.alerta, this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath);
       }
      );
-
-
 
 
   }

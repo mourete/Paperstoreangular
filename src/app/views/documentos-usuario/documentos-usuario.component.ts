@@ -26,6 +26,7 @@ export class DocumentosUsuarioComponent implements OnInit {
  public currDocumentoId: number;
 public  currProyectoId: number;
 public currRegionId: number;
+public currVerImage: number;
 public currSucursalId:number;
 public currUsuarioOID:string;
 

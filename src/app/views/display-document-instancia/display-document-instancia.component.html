@@ -50,6 +50,10 @@
       <td>{{region}}</td>
     </tr>
     <tr>
+      <td style="font-weight: bold;">ver Imagen:</td>
+      <td>{{documentoInstancia.verImagen}}</td>
+    </tr>
+    <tr>
       <td style="font-weight: bold;">ALERTA:</td>
 
 
@@ -65,8 +69,9 @@
   </table>
   </td>
 
-    <td *ngIf="documentoInstancia.imagePath!=''">
+    <td *ngIf="documentoInstancia.verImagen">
       <img src={{documentoInstancia.imagePath}} width="200" height="200">
+      {{verImagen}}
     </td>
   </tr>
     </tbody>

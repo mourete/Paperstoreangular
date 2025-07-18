@@ -149,7 +149,7 @@
                         <a   [routerLink]="[]" (click)="mostrarInstancia(documentoUsuarioList.documentoId,documentoUsuarioList.proyectoId,documentoUsuarioList.regionId
                         , documentoUsuarioList.sucursalId, usuarioOID,documentoUsuarioList.documento ,
                         documentoUsuarioList.sucursal, documentoUsuarioList.region , documentoUsuarioList.cantidadDocumento ,
-                        documentoUsuarioList.cantidadInstancia,  documentoUsuarioList.marca, documentoUsuarioList.empresa , documentoUsuarioList.proyecto
+                        documentoUsuarioList.cantidadInstancia,  documentoUsuarioList.marca, documentoUsuarioList.empresa , documentoUsuarioList.proyecto, documentoUsuarioList.verImagen
                         )" >
                              {{documentoUsuarioList.proyecto}}</a>
                         </td>
@@ -211,6 +211,7 @@
     [varNumInstancias]="currNumInstancias"
     [varEmpresa] = "currEmpresa"
     [varMarca] = "currMarca"
+    [varVerImage] = "currVerImage"
 
     ></app-list-documento-instancias>
 
@@ -225,12 +226,11 @@
     <app-display-document-instancia
 
     [varDocumentoId]="currDocumentoId"
-    [varProyectoId]="currProyectoId"
+     [varProyectoId]="currProyectoId"
     [varProyecto]="currProyecto"
     [varRegionId]="currRegionId"
     [varSucursalId]="currSucursalId"
     [varUsuarioOID]="currUsuarioOID"
-
     [varDocumento]="currDocumento"
     [varSucursal]="currSucursal"
     [varRegion]="currRegion"
@@ -238,6 +238,7 @@
     [varNumInstancias]="currNumInstancias"
     [varEmpresa] = "currEmpresa"
     [varMarca] = "currMarca"
+    [varVerImage] = "currVerImage"
 
     ></app-display-document-instancia>
 

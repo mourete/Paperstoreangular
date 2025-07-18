@@ -109,6 +109,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   documentoInstanciaOID: string;
   usuarioOID: string;
   documentoId: number;
+  verImagen : number;
   seccionOID: string;
   documentoInstancia: DocumentoInstancia;
   seccionInstancia: SeccionInstancia;
@@ -119,6 +120,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   alerta: string;
   tipoAlerta: number;
   image: string;
+  verImage: number;
   isClicked: Boolean = false;
   blockedDocument: boolean = false;
 
@@ -137,6 +139,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
   
   @Input() public varDocumentoId: number;
+  @Input() public varVerImage: number;
   @Input() public varProyectoId: number;
   @Input() public varProyecto: string;
   @Input() public varRegionId: number;
@@ -189,11 +192,8 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     this.alerta = this.actRoute.snapshot.params.alerta;
     this.tipoAlerta = this.actRoute.snapshot.params.tipoAlerta;
     this.image = this.actRoute.snapshot.params.image;
-    console.log(this.documentoInstanciaOID);
-    console.log(this.seccionOID);
-    console.log(this.documentoId);
-    console.log(this.usuarioOID);
-    console.log(this.tipoAlerta);
+    this.verImage = this.actRoute.snapshot.params.verImage;
+   
 
   }
 
@@ -206,7 +206,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
 
   selectFile(event, documentoId, documentoInstanciaOID, seccionOID, conceptoOID, conceptoInstanciaOID, valorConcepto) {
-    console.log('selectFile' + documentoId);
+    
     console.log('documentoInstanciaOID' + documentoInstanciaOID);
     this.selectedFiles = event.target.files;
     valorConcepto.nombreFile = event.target.files[0].name;
@@ -258,13 +258,13 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     this.readOnly = false;
     this.noEditable = false;
     var elem = document.getElementById('quitar');
-    console.log("this.documentoInstanciaOID " +  this.varDocumentoInstanciaOID);
+    
     if (this.documentoInstanciaOID == undefined || this.documentoInstanciaOID == null || this.documentoId == undefined) {
-      console.log("Display documentoInstanciaOID");
-      console.log(this.documentoInstanciaOID);
+   
       this.documentoInstanciaOID = this.varDocumentoInstanciaOID;
       this.seccionOID = this.varSeccionOID;
       this.documentoId = this.varDocumentoId;
+      this.verImage = this.varVerImage;
       this.usuarioOID = this.varUsuarioOID;
       this.nombreInstancia = this.varNombreInstancia;
       this.sucursal = this.varSucursal;
@@ -275,8 +275,10 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
       this.region = this.varRegion;
       this.alerta = this.varAlerta;
       this.tipoAlerta = this.varTipoAlerta;
-      this.image = this.usuario.infoHuesped.pathImagenWeb + this.varImage;
-     
+      if(this.image != null){ this.varImage = this.usuario.infoHuesped.pathImagenWeb + this.image;} else  this.varImage = '0';
+      console.log(" this.varVerImage;#");
+      console.log( this.varVerImage)
+      
     }
 
     //Validar cuando entre a instancia cuando el nro de documentos es igual a 1
@@ -287,7 +289,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
      }
      else{this.getSeccionesInstancias();}
 
-    
+     console.log('varImage' +  this.varImage);
 
   }
 
@@ -626,7 +628,7 @@ public guadarDocumentoInstancia(){
       if (this.documentoInstancia.noEditable==1) this.noEditable = true;
       if (this.documentoInstancia.readOnly==1) this.readOnly = true;
 
-      if (this.documentoInstancia.imagePath != null) {
+      if (this.documentoInstancia.imagePath != '0') {
         this.documentoInstancia.imagePath = this.usuario.infoHuesped.pathImagenWeb + this.documentoInstancia.imagePath;
       } else {
         this.documentoInstancia.imagePath = 'assets/img/NoImagen.png';
@@ -847,12 +849,7 @@ public guadarDocumentoInstancia(){
       (data) => {
 
         this.documentoInstancia = data;
-        console.log("readOnly");
-        console.log(data);
-        console.log(this.documentoId);
-        console.log(this.documentoInstanciaOID);
-        console.log(this.seccionOID);
-        console.log(this.usuarioOID);
+       
         if (this.documentoInstancia != null) {
           if (this.documentoInstancia.seccionesInstancia != null && this.documentoInstancia.seccionesInstancia.length > 0) {
             this.seccionInstancia = this.documentoInstancia.seccionesInstancia[0];

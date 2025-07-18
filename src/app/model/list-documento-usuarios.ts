@@ -12,6 +12,7 @@ export class ListDocumentosUsuarios {
   direccion	:string;
   documentoId	:number;
   documento	:string;
+  verImage : number;
   proyectoID	:number;
   regionID	:number;
   cantidadDocumento	:number;

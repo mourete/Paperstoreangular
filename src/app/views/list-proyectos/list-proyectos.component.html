@@ -84,14 +84,13 @@
                     <!-- <th style="width: 100px;"  >Acciones</th>-->
                     <!-- <th style="width: 100px;"  >Id</th> se quita id-->
                     <th style="width: 100px;">Clave</th>
-                    <th style="width: 300px;">Descripción</th>
-                    <th style="width: 120px;">Nombre</th>
-                    <th style="width: 120px;">Fech.Ini</th>
-                    <th style="width: 120px;">Fech.Fin</th>
+                    <th style="width: 300px;">Nombre</th>
+                    <th style="width: 120px;">Descripción</th>
+                    <th style="width: 120px;">Fecha Inicio</th>
+                    <th style="width: 120px;">Fecha Fin</th>
                     <th style="width: 120px;">Dias Vigencia</th>
                     <th style="width: 120px;">Cant. Docs.</th>
-
-                    <th style="width: 120px;">{{tituloMarca}}</th>
+                    <th style="width: 120px;">{{ tituloMarca }}</th>
 
                   </tr>
 
@@ -104,13 +103,14 @@
                              (input)="dtProyectos.filter($event.target.value, 'clave' , 'contains')">
                     </th>
                     <th>
-                      <input size="28" pInputText type="text"
-                             (input)="dtProyectos.filter($event.target.value, 'descripcion' , 'contains')">
-                    </th>
-                    <th>
-                      <input size="10" pInputText type="text"
+                      <input size="18" pInputText type="text"
                              (input)="dtProyectos.filter($event.target.value, 'nombre' , 'contains')">
                     </th>
+                    <th>
+                      <input size="12" pInputText type="text"
+                             (input)="dtProyectos.filter($event.target.value, 'descripcion' , 'contains')">
+                    </th>
+
                     <th>
                       <input size="10" pInputText type="text"
                              (input)="dtProyectos.filter($event.target.value, 'fechaIni' , 'contains')">
@@ -138,8 +138,8 @@
                   <tr [pSelectableRow]="proyecto" [pContextMenuRow]="proyecto"
                       (contextmenu)="onRightClick($event,proyecto )">
                     <td style="width: 100px;">{{proyecto.clave}}</td>
-                    <td style="width: 300px;">{{proyecto.descripcion}}</td>
                     <td style="width: 120px;">{{proyecto.nombre}}</td>
+                    <td style="width: 300px;">{{proyecto.descripcion}}</td>
                     <td style="width: 120px;">{{proyecto.fechaIni}}</td>
                     <td style="width: 120px;">{{proyecto.fechaFin}}</td>
                     <td style="width: 120px;">{{proyecto.diasVigencia}}</td>

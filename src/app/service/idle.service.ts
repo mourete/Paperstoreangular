@@ -41,26 +41,33 @@ export class IdleService {
     this.cerrarSesion();
   }
 
-  public logOff (  usuarioLogOID: string , ip:string )  {
-    let url:string = GlobalConstants.apiURL + "account/logOff/" + usuarioLogOID + "/" + ip;
-    return this.http.get<UsuarioLog>( url  );
-  
-  }
-  
   private cerrarSesion(): void {
-    // Llama al backend para cerrar la base de datos
-    this.http.post('/api/logout-db', {}).subscribe({
-      next: () => {
-        console.log('Base de datos cerrada correctamente.');
-      },
-      error: err => {
-        console.error('Error al cerrar base de datos:', err);
-      },
-      complete: () => {
-        // Limpiar sesión local y redirigir
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    });
+    const usuarioLog = JSON.parse(localStorage.getItem('usuarioLog') || '{}') as UsuarioLog;
+    const ip = usuarioLog?.ip;
+    const usuarioLogOID = usuarioLog?.usuariosLogOID;
+
+    if (usuarioLogOID && ip) {
+      this.logOff(usuarioLogOID, ip).subscribe({
+        next: () => {
+          console.log('Sesión cerrada en backend correctamente.');
+        },
+        error: (err) => {
+          console.error('Error al cerrar sesión en backend:', err);
+        },
+        complete: () => {
+          localStorage.clear();
+          this.router.navigate(['/login']);
+        }
+      });
+    } else {
+      console.warn('No se encontró usuarioLog en localStorage. Redirigiendo.');
+      localStorage.clear();
+      this.router.navigate(['/login']);
+    }
+  }
+
+  public logOff(usuarioLogOID: string, ip: string) {
+    const url = GlobalConstants.apiURL + "account/logOff/" + usuarioLogOID + "/" + ip;
+    return this.http.get<UsuarioLog>(url);
   }
 }

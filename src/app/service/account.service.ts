@@ -15,28 +15,32 @@ export class AccountService {
   endpoint: String;
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
   constructor( private http : HttpClient ) { }
- 
- 
-public getByUserAndPassword( userName:string , password:string   ) : Observable<Usuario> {
-  let url:string = GlobalConstants.apiURL + "account/users/getByUserAndPassword/" + userName + "/" + password ; 
-  return this.http.get<Usuario>( url  );
-}
 
 
-public getLicenciasByUserOID( usuarioOID: string  ) : Observable<InfoHuesped[]> {  
-  let url:string = GlobalConstants.apiURL + "account/licencias/getByUserOID/" + usuarioOID;  
+  public getByUserAndPassword(userName: string, password: string): Observable<Usuario> {
+    const url = GlobalConstants.apiURL + 'account/users/login'; // nuevo endpoint
+    const body = {
+      username: userName,
+      password: password
+    };
+
+    return this.http.post<Usuario>(url, body, { headers: this.headers });
+  }
+
+public getLicenciasByUserOID( usuarioOID: string  ) : Observable<InfoHuesped[]> {
+  let url:string = GlobalConstants.apiURL + "account/licencias/getByUserOID/" + usuarioOID;
   return this.http.get<InfoHuesped[]>( url  );
 }
 
 public usuarioLog (  usuarioOID: string , huespedId: number ) : Observable<UsuarioLog> {
-  let url:string = GlobalConstants.apiURL + "account/usuarioLog/" + usuarioOID + "/" + huespedId ;  
+  let url:string = GlobalConstants.apiURL + "account/usuarioLog/" + usuarioOID + "/" + huespedId ;
   return this.http.get<UsuarioLog>( url  );
 
 }
- 
 
-public getModulosByUserOID(  usuarioOID: string  ) : Observable<Modulo[]> {  
-  let url:string = GlobalConstants.apiURL + "account/modulos/getByUserOID/" + usuarioOID; 
+
+public getModulosByUserOID(  usuarioOID: string  ) : Observable<Modulo[]> {
+  let url:string = GlobalConstants.apiURL + "account/modulos/getByUserOID/" + usuarioOID;
 
   console.log("account/modulos/getByUserOID/" + usuarioOID);
   return this.http.get<Modulo[]>( url  );
@@ -50,8 +54,8 @@ public logOff (  usuarioLogOID: string , ip:string )  {
 }
 
 
-public getModuloPredeterminado(  usuarioOID: string  ) : Observable<Modulo> {  
-  let url:string = GlobalConstants.apiURL + "account/modulos/default/getByUserOID/" + usuarioOID; 
+public getModuloPredeterminado(  usuarioOID: string  ) : Observable<Modulo> {
+  let url:string = GlobalConstants.apiURL + "account/modulos/default/getByUserOID/" + usuarioOID;
   return this.http.get<Modulo>( url  );
 }
 

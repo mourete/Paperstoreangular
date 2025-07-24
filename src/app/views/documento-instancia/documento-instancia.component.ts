@@ -141,7 +141,6 @@ selectFile(event, documentoInstancia,  documentoId) {
 
   this.selectedFiles = event.target.files;
   this.selectedFileName = event.target.files[0].name;
-  console.log("selectFile" + event.target.files[0].name);
   this.selectedFileName = event.target.files[0].name
   this.upload( this.documentoInstancia.documentoInstanciaOID,  this.documentoInstancia.documentoId);
 
@@ -156,7 +155,6 @@ upload( documentoInstanciaOID, documentoId ) {
 
 
   let currentFile = this.selectedFiles.item(0);
-  console.log("upload doc" + currentFile);
   this.documentoInstanciaService.upload(currentFile, documentoId, documentoInstanciaOID,  "*", "*", "*",this.usuarioOID).subscribe(
 
     event => {
@@ -165,7 +163,6 @@ upload( documentoInstanciaOID, documentoId ) {
 
     },
     err => {
-      // console.log('Could not upload the file!');
       currentFile = undefined;
 
     });

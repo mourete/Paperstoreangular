@@ -29,7 +29,6 @@ export class DocumentService {
 
 public getAllActives(usuarioOID:string) : Observable<Documento[]> {
   let url:string = GlobalConstants.apiURL + "documentos/allActives"  + "/" + usuarioOID;
-  console.log(GlobalConstants.apiURL + "documentos/allActives"  + "/" + usuarioOID );
   return this.http.get<Documento[]>( url  );
 }
 
@@ -37,7 +36,6 @@ public getAllActives(usuarioOID:string) : Observable<Documento[]> {
 
 public getDocumentForConfig(documentoId:number, buscar: number, usuarioOID:string) : Observable<Documento> {
     let url:string = GlobalConstants.apiURL + "documentos/design/" + documentoId + "/" + 0 + "/" + usuarioOID;
-    console.log("Url que se va a consumir: " + url);
     return this.http.get<Documento>( url  );
 }
 
@@ -84,7 +82,6 @@ public getByDocumentoId(documentoId:number, usuarioOID:string) : Observable<Docu
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
   // return throwError(errorMessage);
 }
 

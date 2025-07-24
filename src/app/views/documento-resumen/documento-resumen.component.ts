@@ -15,7 +15,7 @@ export class DocumentoResumenComponent implements OnInit {
   usuario:Usuario;
   usuarioOID:string;
 
-  constructor(private documentService : DocumentService ,  private actRoute: ActivatedRoute  ) { 
+  constructor(private documentService : DocumentService ,  private actRoute: ActivatedRoute  ) {
     this.documentoId = this.actRoute.snapshot.params.documentoId;
    }
 
@@ -27,9 +27,8 @@ export class DocumentoResumenComponent implements OnInit {
 
 
   public getDocumentoResumen(){
-    this.documentService.getDocumentoResumen( this.documentoId, this.usuarioOID ).subscribe( 
+    this.documentService.getDocumentoResumen( this.documentoId, this.usuarioOID ).subscribe(
       (data)=>{
-         console.log( data );
          this.documentoResumen=data;
       }
 

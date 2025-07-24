@@ -12,18 +12,18 @@ export class SeccionService {
   endpoint: String;
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
   constructor( private http : HttpClient ) { }
- 
+
 
   public guardarSeccion(seccion: Seccion, usuarioOID:string ): Observable< Seccion > {
-    let url:string = GlobalConstants.apiURL + "secciones/save" + "/" + usuarioOID; 
-    return this.http.post<Seccion>( url , JSON.stringify(seccion), {headers: this.headers});    
-}  
+    let url:string = GlobalConstants.apiURL + "secciones/save" + "/" + usuarioOID;
+    return this.http.post<Seccion>( url , JSON.stringify(seccion), {headers: this.headers});
+}
 
 public upload(file: File,documentoId, documentoInstanciaOID, seccionOID, conceptoOID,conceptoInstanciaOID,  usuarioOID:string ): Observable<String> {
   const formData: FormData = new FormData();
 
 
- 
+
   formData.append('file', file);
   formData.append('documentoId', documentoId);
   formData.append('documentoInstanciaOID', documentoInstanciaOID);
@@ -31,30 +31,30 @@ public upload(file: File,documentoId, documentoInstanciaOID, seccionOID, concept
   formData.append('conceptoOID', conceptoOID);
   formData.append('conceptoInstanciaOID', conceptoInstanciaOID);
 
- 
 
-  let url:string = GlobalConstants.apiURL + "documentosInstancia/saveFile" + "/" + usuarioOID; ; 
-    return this.http.post<any>( url , formData); 
+
+  let url:string = GlobalConstants.apiURL + "documentosInstancia/saveFile" + "/" + usuarioOID; ;
+    return this.http.post<any>( url , formData);
 
  // return this.http.request(req);
 }
 
 
-public getPrimeraSeccion( documentoId :number, usuarioOID:string  ) : Observable<Seccion> {  
-  let url:string = GlobalConstants.apiURL + "secciones/primera/" + documentoId  + "/" + usuarioOID ; 
+public getPrimeraSeccion( documentoId :number, usuarioOID:string  ) : Observable<Seccion> {
+  let url:string = GlobalConstants.apiURL + "secciones/primera/" + documentoId  + "/" + usuarioOID ;
   return this.http.get<Seccion>( url  );
 }
 
-public getSeccionesActivas( documentoId :number , usuarioOID:string ) : Observable<Seccion[]> {  
-  let url:string = GlobalConstants.apiURL + "secciones/activas/" + documentoId   + "/" + usuarioOID;  ; 
+public getSeccionesActivas( documentoId :number , usuarioOID:string ) : Observable<Seccion[]> {
+  let url:string = GlobalConstants.apiURL + "secciones/activas/" + documentoId   + "/" + usuarioOID;  ;
   alert(url);
   return this.http.get<Seccion[]>( url  );
 }
 
 public deleteSeccion(seccion: Seccion ,usuarioOID:string) {
-  let url:string = GlobalConstants.apiURL + "secciones/delete" + "/" + usuarioOID; 
-  return this.http.post<Seccion>( url , JSON.stringify(seccion), {headers: this.headers});    
-}  
+  let url:string = GlobalConstants.apiURL + "secciones/delete" + "/" + usuarioOID;
+  return this.http.post<Seccion>( url , JSON.stringify(seccion), {headers: this.headers});
+}
 
 
  errorHandl(error) {
@@ -66,7 +66,6 @@ public deleteSeccion(seccion: Seccion ,usuarioOID:string) {
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
   // return throwError(errorMessage);
 }
 

@@ -109,7 +109,7 @@ export class ListDocumentoInstanciasComponent implements OnInit {
     this.tituloMarca = this.usuario.infoHuesped.nbMarca;
     this.tituloRegion = this.usuario.infoHuesped.nbEmpresa;
     this.tituloSucursal = this.usuario.infoHuesped.nbSucursal;
- 
+
     this.image = this.usuario.infoHuesped.pathImagenWeb;
     this. itemsDocumento = [
       {
@@ -181,11 +181,10 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 
   public backToDocumentList(){
 
-   
+
 
     //var currentTemplate="instancias";
 
-    // console.log("Hola aqui ando");
 
     this.principal.setCurrentComponent(ListDocumentoUsuariosComponent);
 
@@ -195,14 +194,9 @@ export class ListDocumentoInstanciasComponent implements OnInit {
   }
 
   public getByDocIdSucProyReg(){
-    console.log( "getByDocIdSucProyReg"  );
     this.documentoInstanciaService.getByDocIdSucProyReg(this.documentoId, this.sucursalId , this.proyectoId , this.regionId, this.usuarioOID  ).subscribe(
       (data)=>{
-         console.log( data );
          this.documentos=data;
-         console.log( "varNumDocumentos" + this.varNumDocumentos );
-   
-         console.log( "ante if varNumDocumentos" + this.varNumDocumentos );
      //Si la cantidad de docuemento instancia es igual a 1, redireccionamos el documento a la ventana de instancia
      if(this.varNumDocumentos == 1){
           this.getIrInstancia();
@@ -210,18 +204,14 @@ export class ListDocumentoInstanciasComponent implements OnInit {
      }
     }
   );
-  
+
   }
 
   public getIrInstancia(){
-    console.log("getIrInstancia");
     if(this.documentos == null){
-      console.log( "this.documentos == null)" );
       this.guadarDocumentoInstancia();
     }
     else{
-      console.log( "this.documentos == null)else" );
-      console.log(this.documentos[0]);
       this.selectedDocumento = this.documentos[0];
       this.clickEditarDocInstancia();
     }
@@ -241,71 +231,46 @@ export class ListDocumentoInstanciasComponent implements OnInit {
 public guadarDocumentoInstancia(){
   var doc: DocumentoInstancia;
   var docInst : string;
-  if(this.selectedDocumento == null) { 
-    console.log("selectedDocumento" + this.selectedDocumento )
+  if(this.selectedDocumento == null) {
         doc = new DocumentoInstancia();
         doc.nombre = this.proyecto + "-" + this.sucursal;
         doc.observaciones= this.proyecto + "-" + this.sucursal;
         doc.alerta = '-1' ;
-        doc.tipoAlerta= -1; 
+        doc.tipoAlerta= -1;
         doc.imagePath='';
         doc.documentoId=this.documentoId;
         doc.regionId =  this.regionId;
         doc.proyectoId =  this.proyectoId;
         doc.sucursalId = this.sucursalId;
         doc.usuarioOID = this.usuarioOID;
-        
+
 
   }
- 
+
   this.documentoInstanciaService.guardarDocumentoInstancia ( doc, this.usuarioOID).subscribe((data)=>{
-    console.log("data" )
-    console.log( data );
     this.selectedDocumento=data;
     docInst = this.selectedDocumento.documentoInstanciaOID
 //if (docInst != null  ) {
-  console.log("entre datos de primera seccion");
-  
+
   //if( this.selectedDocumento!=null && this.selectedDocumento.documentoInstanciaOID!=null ){
-    console.log("entre datos de primera seccion2");
      this.seccionService.getPrimeraSeccion( this.documentoId , this.usuarioOID).subscribe(
 
        (data)=>{
 
-       
-
-         console.log( data );
 
          var  seccion:Seccion=data;
-         console.log(this.selectedDocumento.documentoInstanciaOID );
-         console.log( "seccion.seccionOID ");
-         console.log( seccion.seccionOID );
-         console.log( "this.documentoId" );
-         console.log( this.documentoId );
-         console.log( "this.usuarioOID");
-         console.log( this.usuarioOID);
-         console.log( "this.currReadOnly,");
-         console.log( this.currReadOnly,);
-         console.log( "this.selectedDocumento.nombre");
-         console.log( this.selectedDocumento.nombre);
-         console.log("this.selectedDocumento.alerta");
-         console.log(this.selectedDocumento.alerta);
-         console.log("this.selectedDocumento.tipoAlerta");
-         console.log(this.selectedDocumento.tipoAlerta);
-         console.log(" this.selectedDocumento.imagePath" );
-         console.log( this.selectedDocumento.imagePath );
 
          if( seccion!=null ){
            //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
 
-         
+
            this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.currReadOnly,   this.selectedDocumento.nombre,this.selectedDocumento.alerta,this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath );
 
          }
 
       })
   });
-  
+
 
 
 //}
@@ -314,7 +279,7 @@ public guadarDocumentoInstancia(){
 }
   public agregarDocumentoInstancia(){
 
-    
+
 
     //alert("Region:" + this.regionId )
     let ref= this.dialogService.open( DocumentoInstanciaComponent , {
@@ -335,10 +300,6 @@ public guadarDocumentoInstancia(){
 
 
     ref.onClose.subscribe((doc: DocumentoInstancia ) => {
-  console.log("entre datos de primera seccion");
-
-
-
       if (doc!=null  ) {
 
          if( doc!=null && doc.documentoInstanciaOID!=null ){
@@ -346,18 +307,10 @@ public guadarDocumentoInstancia(){
 
               (data)=>{
 
-                // console.log("entre datos de primera seccion");
-
-                console.log( data );
-
                 var  seccion:Seccion=data;
 
                 if( seccion!=null ){
                   //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
-
-                  console.log( "getPrimeraSeccion"+ "OnInit" );
-
-                  console.log("Imagen listaDoc" +  doc.imagePath );
                   this.displayDocumentoInstancia( doc.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.currReadOnly, doc.nombre,doc.alerta,doc.tipoAlerta, doc.imagePath );
 
                 }
@@ -382,16 +335,13 @@ public guadarDocumentoInstancia(){
     if( this.selectedDocumento==null ){
       return;
     }
-    console.log( "getPrimeraSeccion"+ "clickEditarDocInstancia" );
     this.seccionService.getPrimeraSeccion(this.documentoId, this.usuarioOID  ).subscribe(
       (data)=>{
-        console.log( data);
-       
          let secTmp=data;
          if( secTmp==null ){
            return;
          }
-        
+
          this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , secTmp.seccionOID , this.documentoId , this.usuarioOID, this.readOnly   , this.selectedDocumento.nombre, this.selectedDocumento.alerta, this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath);
       }
      );
@@ -414,7 +364,7 @@ public guadarDocumentoInstancia(){
     this.currAlerta=alerta;
     this.curtipoAlerta=tipoAlerta;
     this.currImage =   imagePath;
-    
+
   }
 
 

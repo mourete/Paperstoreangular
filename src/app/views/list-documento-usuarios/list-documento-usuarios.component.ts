@@ -121,8 +121,6 @@ export class ListDocumentoUsuariosComponent implements OnInit {
 
     this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe(
       (data)=>{
-        /* console.log( data );
-         this.marcas=data;   */
 
          if(data != null )
          {
@@ -204,7 +202,7 @@ export class ListDocumentoUsuariosComponent implements OnInit {
 
         this.documentService.getDocumentosUsuarioList(  marcaTmpId , this.selectedEmpresa.empresaId,  this.usuarioSession.usuarioOID ).subscribe(
           (data)=>{
-           
+
              this.documentosUsuariosList=data;
 
 

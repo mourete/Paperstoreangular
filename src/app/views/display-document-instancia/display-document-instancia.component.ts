@@ -215,7 +215,6 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
       }
       selectFile2(event) {
-    console.log('selectFile');
   }
 
 
@@ -233,7 +232,6 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
       },
       err => {
-        console.log('Could not upload the file!');
         currentFile = undefined;
 
       });

@@ -9,47 +9,46 @@ import { DocumentoInstancia } from '../model/documento-instancia';
 })
 export class DocumentoInstanciaService {
 
-  
+
   endpoint: String;
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
   constructor( private http : HttpClient ) { }
 
- 
- 
+
+
 public getDocByDocumentInstanceAndSection( documentoId :number ,   documentoInstanciaOID:string , seccionOID : string , usuarioOID:string   ) : Observable<DocumentoInstancia> {
-  let url:string = GlobalConstants.apiURL + "documentosInstancia/respuestas/" + documentoId + "/"  + documentoInstanciaOID + "/" + seccionOID + "/" + usuarioOID   ; 
-  console.log(url);
+  let url:string = GlobalConstants.apiURL + "documentosInstancia/respuestas/" + documentoId + "/"  + documentoInstanciaOID + "/" + seccionOID + "/" + usuarioOID   ;
   return this.http.get<DocumentoInstancia>( url  );
 }
 
 
-public getDocByDocumentoId( documentoId :number , usuarioOID:string ) : Observable<DocumentoInstancia[]> {  
-  let url:string = GlobalConstants.apiURL + "documentosInstancia/" + documentoId  +"/" + usuarioOID ; 
+public getDocByDocumentoId( documentoId :number , usuarioOID:string ) : Observable<DocumentoInstancia[]> {
+  let url:string = GlobalConstants.apiURL + "documentosInstancia/" + documentoId  +"/" + usuarioOID ;
   return this.http.get<DocumentoInstancia[]>( url  );
 }
 
 
-public getByDocIdSucProyReg( documentoId :number , sucursalId:number, proyectoId:number , regionId:number , usuarioOID:string  ) : Observable<DocumentoInstancia[]> {  
-  let url:string = GlobalConstants.apiURL + "documentosInstancia/" + documentoId + "/" + sucursalId +"/" + proyectoId + "/" + regionId  +"/" + usuarioOID ; 
+public getByDocIdSucProyReg( documentoId :number , sucursalId:number, proyectoId:number , regionId:number , usuarioOID:string  ) : Observable<DocumentoInstancia[]> {
+  let url:string = GlobalConstants.apiURL + "documentosInstancia/" + documentoId + "/" + sucursalId +"/" + proyectoId + "/" + regionId  +"/" + usuarioOID ;
   return this.http.get<DocumentoInstancia[]>( url  );
 }
 
 
 public guardarDocumentoInstanciaRespuestas(documento: DocumentoInstancia , usuarioOID:string ): Observable< DocumentoInstancia > {
-    let url:string = GlobalConstants.apiURL + "documentosInstancia/respuestas/save"+"/" + usuarioOID;    
-    return this.http.post<DocumentoInstancia>( url , JSON.stringify(documento), {headers: this.headers});    
-}  
+    let url:string = GlobalConstants.apiURL + "documentosInstancia/respuestas/save"+"/" + usuarioOID;
+    return this.http.post<DocumentoInstancia>( url , JSON.stringify(documento), {headers: this.headers});
+}
 
- 
+
 public eliminarDocumentoInstancia(documento: DocumentoInstancia, usuarioOID:string  ): Observable< string > {
-  let url:string = GlobalConstants.apiURL + "documentosInstancia/delete" +"/" + usuarioOID; 
-  return this.http.post<string>( url , JSON.stringify(documento), {headers: this.headers});    
+  let url:string = GlobalConstants.apiURL + "documentosInstancia/delete" +"/" + usuarioOID;
+  return this.http.post<string>( url , JSON.stringify(documento), {headers: this.headers});
 }
 
 public guardarDocumentoInstancia(documento: DocumentoInstancia, usuarioOID:string  ): Observable< DocumentoInstancia > {
-  let url:string = GlobalConstants.apiURL + "documentosInstancia/save"+"/" + usuarioOID; 
-  return this.http.post<DocumentoInstancia>( url , JSON.stringify(documento), {headers: this.headers});    
-}  
+  let url:string = GlobalConstants.apiURL + "documentosInstancia/save"+"/" + usuarioOID;
+  return this.http.post<DocumentoInstancia>( url , JSON.stringify(documento), {headers: this.headers});
+}
 
 
 
@@ -65,7 +64,7 @@ public guardarDocumentoInstancia(documento: DocumentoInstancia, usuarioOID:strin
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  
+
 }
 
 
@@ -75,7 +74,7 @@ public upload(file: File, documentoId,documentoInstanciaOID, seccionOID, concept
   const formData: FormData = new FormData();
 
 
- 
+
   formData.append('file', file);
   formData.append('documentoId', documentoId);
   formData.append('documentoInstanciaOID', documentoInstanciaOID);
@@ -86,12 +85,12 @@ public upload(file: File, documentoId,documentoInstanciaOID, seccionOID, concept
 
 
 
- 
 
-  let url:string = GlobalConstants.apiURL + "documentosInstancia/saveFile" + "/" + usuarioOID; ; 
-    return this.http.post<any>( url , formData); 
 
- 
+  let url:string = GlobalConstants.apiURL + "documentosInstancia/saveFile" + "/" + usuarioOID; ;
+    return this.http.post<any>( url , formData);
+
+
 }
 
 

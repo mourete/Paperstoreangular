@@ -38,7 +38,6 @@ export class ListUsuariosComponent implements OnInit {
     }
     this.usuariosService.getUsuariosByUsuarioConsulta(this.usuarioSession.usuarioOID,this.usuarioSession.usuarioOID,) .subscribe(
       (data)=>{
-         console.log( data );
          this.usuarios=data;
       }
      );
@@ -82,7 +81,6 @@ export class ListUsuariosComponent implements OnInit {
 
 
   ref.onClose.subscribe((  ) => {
-    // console.log("Entro aqui 2");
    // if (emp!=null  ) {
 
       this.getUsuariosByUsuarioConsulta();

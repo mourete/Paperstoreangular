@@ -34,7 +34,7 @@ public currDocumento:string;
  public currSucursal:string;
 public currRegion:string;
 public currNumDocumentos:number;
-public currNumInstancias:number; 
+public currNumInstancias:number;
 public currMarca:string;
 public currEmpresa:string;
 
@@ -57,19 +57,18 @@ public currEmpresa:string;
   }
 
 
-  public getDocumentosUsuario(  ){      
+  public getDocumentosUsuario(  ){
     if( this.usuarioOID==null ){
       return;
     }
 
-    this.documentService.getDocumentosUsuario( this.usuarioOID ).subscribe( 
+    this.documentService.getDocumentosUsuario( this.usuarioOID ).subscribe(
       (data)=>{
-         console.log( data );
-         this.documentosUsuario=data;   
-        
+         this.documentosUsuario=data;
+
       }
      );
-  
+
   }
 
 
@@ -78,9 +77,9 @@ public currEmpresa:string;
     this.mostrandoInstancia = !this.mostrandoInstancia;
   }
 
-  
+
   public mostrarInstancia(
-           docId:number , proyId:number , regId: number , sucId:number, usrOID:string , doc: string , suc:string, reg:string , cantDoc :number , cantInst:number,  cantMarca: string, cantEmpresa: string 
+           docId:number , proyId:number , regId: number , sucId:number, usrOID:string , doc: string , suc:string, reg:string , cantDoc :number , cantInst:number,  cantMarca: string, cantEmpresa: string
   ){
 
       this.currDocumentoId=docId;
@@ -88,7 +87,7 @@ public currEmpresa:string;
        this.currRegionId=regId;
       this.currSucursalId=sucId;
       this.currUsuarioOID=usrOID;
-   
+
       this.currDocumento=doc;
        this.currSucursal=suc;
       this.currRegion=reg;
@@ -98,10 +97,10 @@ public currEmpresa:string;
       this.currEmpresa = cantEmpresa;
 
       this.mostrandoInstancia=true;
-      
+
   }
 
- 
+
 
 
 

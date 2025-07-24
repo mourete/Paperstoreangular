@@ -146,7 +146,6 @@ export class ListasAdminComponent implements OnInit {
     this.listaService
       .guardarLista(this.catalogo, this.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
         this.pantalla = 1;
         this.catalogo = null;
       });
@@ -209,7 +208,6 @@ export class ListasAdminComponent implements OnInit {
     this.listaService
       .guardarOpcion(this.opcion, this.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
         this.pantalla = 1;
         this.opcion = null;
       });
@@ -232,7 +230,6 @@ export class ListasAdminComponent implements OnInit {
     this.listaService
       .guardarOpcion(this.selectedOpcion, this.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
         this.opcion = null;
         this.getOpcionesByLista(
           this.selectedLista.listaOID,
@@ -350,7 +347,6 @@ export class ListasAdminComponent implements OnInit {
     this.listaService
       .deleteOpcion(this.selectedOpcion, this.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
         this.getOpcionesByLista(
           this.selectedLista.listaOID,
           this.selectedLista.filtrada
@@ -366,7 +362,6 @@ export class ListasAdminComponent implements OnInit {
     this.listaService
       .deleteLista(this.selectedLista, this.usuarioOID)
       .subscribe((data) => {
-        //console.log(data);
         this.getAllListas();
         this.selectedLista = null;
       });

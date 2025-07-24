@@ -649,12 +649,9 @@ export class ConceptoComponent implements OnInit {
         //pu.flagSeleccionado=true;
         conceptoAlertaSeleccion.push(pu);
       } else {
-        //console.log("SELECCIONADO 2");
         // pu.flagSeleccionado=false;
-        //console.log( conceptoAlerta[i].flagSeleccionado);
       }
     }
-    //console.log(conceptoAlertaSeleccion);
     return conceptoAlertaSeleccion;
   }
 

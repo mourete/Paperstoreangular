@@ -81,7 +81,6 @@ public saveAllSucursales( region: Region,usuarioOID:string ): Observable< Region
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
   // return throwError(errorMessage);
 }
 

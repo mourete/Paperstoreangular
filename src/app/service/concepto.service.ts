@@ -13,51 +13,50 @@ export class ConceptoService {
   endpoint: String;
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
   constructor( private http : HttpClient ) { }
- 
+
 
 public guardarConcepto(concepto: Concepto ,usuarioOID:string): Observable< Concepto > {
-    let url:string = GlobalConstants.apiURL + "conceptos/save" + "/" + usuarioOID; 
-    return this.http.post<Concepto>( url , JSON.stringify(concepto), {headers: this.headers});    
-}  
+    let url:string = GlobalConstants.apiURL + "conceptos/save" + "/" + usuarioOID;
+    return this.http.post<Concepto>( url , JSON.stringify(concepto), {headers: this.headers});
+}
 
 
 
 public guardarConceptoAlertaPerfil( um : ConceptoAlertaPerfil,usuarioOID:string): Observable< ConceptoAlertaPerfil > {
   let url:string = GlobalConstants.apiURL + "/concepto/saveConceptoAlertaPerfil" + "/" + usuarioOID;
-  return this.http.post<ConceptoAlertaPerfil>( url , JSON.stringify(um), {headers: this.headers});  
+  return this.http.post<ConceptoAlertaPerfil>( url , JSON.stringify(um), {headers: this.headers});
 }
 
 public conceptoFiltro(concepto: Concepto, usuarioOID:string ): Observable< Concepto > {
 
-  let url:string = GlobalConstants.apiURL + "conceptos/conceptoFiltro" + "/" + usuarioOID;; 
-  return this.http.post<Concepto>( url , JSON.stringify(concepto), {headers: this.headers});    
+  let url:string = GlobalConstants.apiURL + "conceptos/conceptoFiltro" + "/" + usuarioOID;;
+  return this.http.post<Concepto>( url , JSON.stringify(concepto), {headers: this.headers});
 
 }
 
 
 public deleteConcepto(concepto: Concepto, usuarioOID:string ) {
-  let url:string = GlobalConstants.apiURL + "conceptos/delete"+ "/" + usuarioOID; 
-  return this.http.post<Concepto>( url , JSON.stringify(concepto), {headers: this.headers});    
-}  
+  let url:string = GlobalConstants.apiURL + "conceptos/delete"+ "/" + usuarioOID;
+  return this.http.post<Concepto>( url , JSON.stringify(concepto), {headers: this.headers});
+}
 
 
 public getConceptoByOID(conceptoOID:string, usuarioOID:string) : Observable<Concepto> {
-  let url:string = GlobalConstants.apiURL + "conceptos/" + conceptoOID + "/" + usuarioOID; 
+  let url:string = GlobalConstants.apiURL + "conceptos/" + conceptoOID + "/" + usuarioOID;
   return this.http.get<Concepto>( url  );
 }
 
 public getConceptoAlertaByPerfil({ conceptoOID, tipoAlerta }: { conceptoOID: string; tipoAlerta: number}, usuarioOID : string) : Observable<ConceptoAlertaPerfil[]> {
   let url:string = GlobalConstants.apiURL + "conceptos/getConceptoAlertaByPerfil/" + conceptoOID + "/" + tipoAlerta + "/" + usuarioOID;
-   console.log(url);
   return this.http.get<ConceptoAlertaPerfil[]>( url );
-  
+
 }
 
 public getConceptoBySeccionOID(seccionOID:string, usuarioOID:string) : Observable<Concepto[]> {
-  let url:string = GlobalConstants.apiURL + "conceptos/bySeccionOID/" + seccionOID + "/" + usuarioOID ; 
+  let url:string = GlobalConstants.apiURL + "conceptos/bySeccionOID/" + seccionOID + "/" + usuarioOID ;
   return this.http.get<Concepto[]>( url  );
 }
- 
+
 
  errorHandl(error) {
   let errorMessage = '';
@@ -68,8 +67,7 @@ public getConceptoBySeccionOID(seccionOID:string, usuarioOID:string) : Observabl
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
-  
+
 }
 
 

@@ -45,7 +45,7 @@ export class DocumentoInstanciaComponent implements OnInit {
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.usuarioOID = this.usuario.usuarioOID;
-  
+
     if( this.config.data != null  && this.config.data.update>0){
 
 
@@ -114,13 +114,8 @@ export class DocumentoInstanciaComponent implements OnInit {
 
 public guadarDocumentoInstancia(   ){
 
-  console.log("this.usuario.usuarioOID =" +  this.usuario.usuarioOID );
-  console.log("this.usuarioOID =" +  this.usuarioOID );
   this.documentoInstanciaService.guardarDocumentoInstancia ( this.documentoInstancia , this.usuarioOID).subscribe((data)=>{
-
-    //console.log("bien");
     this.documentoInstancia=data;
-    console.log("DocumentoInstancia" + this.documentoInstancia )
     this.ref.close(this.documentoInstancia );
 
 });
@@ -143,9 +138,6 @@ clearFile(event, documentoInstancia){
 
 
 selectFile(event, documentoInstancia,  documentoId) {
-console.log("selectFile" + this.documentoInstancia.documentoInstanciaOID);
-
-
 
   this.selectedFiles = event.target.files;
   this.selectedFileName = event.target.files[0].name;

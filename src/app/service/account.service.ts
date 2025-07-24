@@ -41,8 +41,6 @@ public usuarioLog (  usuarioOID: string , huespedId: number ) : Observable<Usuar
 
 public getModulosByUserOID(  usuarioOID: string  ) : Observable<Modulo[]> {
   let url:string = GlobalConstants.apiURL + "account/modulos/getByUserOID/" + usuarioOID;
-
-  console.log("account/modulos/getByUserOID/" + usuarioOID);
   return this.http.get<Modulo[]>( url  );
 }
 
@@ -70,7 +68,6 @@ public getModuloPredeterminado(  usuarioOID: string  ) : Observable<Modulo> {
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
   // return throwError(errorMessage);
 }
 

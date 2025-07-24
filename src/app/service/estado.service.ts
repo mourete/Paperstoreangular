@@ -9,20 +9,20 @@ import { GlobalConstants } from '../model/global-constants';
   providedIn: 'root'
 })
 export class EstadoService {
- 
+
 
   endpoint: String;
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor( private http : HttpClient ) { }
 
- 
+
 public getAllEstados(usuarioOID: string) : Observable<Estado[]> {
-    let url:string = GlobalConstants.apiURL + "estados/getAllEstados/"  + usuarioOID ; 
+    let url:string = GlobalConstants.apiURL + "estados/getAllEstados/"  + usuarioOID ;
     return this.http.get<Estado[]>( url  );
 }
 
- 
+
 
  errorHandl(error) {
   let errorMessage = '';
@@ -33,7 +33,6 @@ public getAllEstados(usuarioOID: string) : Observable<Estado[]> {
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
   // return throwError(errorMessage);
 }
 

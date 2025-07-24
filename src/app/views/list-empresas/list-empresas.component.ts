@@ -58,10 +58,8 @@ export class ListEmpresasComponent implements OnInit {
     if( this.usuario==null ){
       return;
     }
-    console.log(this.usuario.usuarioOID);
     this.empresaService.getByUsuarioOID(  this.usuario.usuarioOID ) .subscribe(
       (data)=>{
-         console.log( data );
          this.empresas=data;
       }
      );
@@ -79,7 +77,6 @@ export class ListEmpresasComponent implements OnInit {
   });
 
   ref.onClose.subscribe(( emp : Empresa  ) => {
-    // console.log("Entro aqui 2");
     if (emp!=null  ) {
 
         this.getEmpresasByUsuarioOID();

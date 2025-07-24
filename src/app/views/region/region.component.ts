@@ -104,7 +104,6 @@ export class RegionComponent implements OnInit {
     }
     this.marcaService.getByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
-         console.log( data );
          this.marcas=data;
 
          if( this.marcas!=null && this.marcas.length>0 ){

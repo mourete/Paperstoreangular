@@ -71,8 +71,6 @@ export class ListSucursalesComponent implements OnInit {
     }
     this.sucursalService.getSucursalesByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
-         console.log( data );
-        //  console.log("Soy yo");
          this.sucursales=data;
       }
      );
@@ -120,8 +118,6 @@ export class ListSucursalesComponent implements OnInit {
 
     this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe(
       (data)=>{
-        /* console.log( data );
-         this.marcas=data;   */
 
          if(data != null )
          {
@@ -189,21 +185,8 @@ export class ListSucursalesComponent implements OnInit {
         this.sucursalService.getSucursagetSucursalesByMarcaYEmpresalByID  ( marcaTmpId , this.selectedEmpresa.empresaId ,      this.usuarioSession.usuarioOID   ) .subscribe(
           (data)=>{
 
-             console.log( data );
-            //  console.log("Edgar Leal");
-             console.log(this.empresas);
-             console.log(this.marcas);
-
-
-
-
              this.sucursales=data;
-
-
-
              this.sucursales.forEach((element, index) => {
-
-
               this.marcas.forEach((eleMarca,indx) => {
 
                 if(element.marcaId == eleMarca.marcaId){
@@ -229,7 +212,6 @@ export class ListSucursalesComponent implements OnInit {
 
              });
 
-            // console.log();
 
           }
          );

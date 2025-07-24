@@ -20,7 +20,6 @@ export class ListaService {
 
   public getAll( usuarioOID:string) : Observable<Lista[]> {
       let url:string = GlobalConstants.apiURL + this.controller + this.wsGetAll+"/" + usuarioOID;
-      console.log(url);
       return this.http.get<Lista[]>( url  );
   }
 

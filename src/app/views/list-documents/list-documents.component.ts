@@ -66,7 +66,6 @@ export class ListDocumentsComponent implements OnInit {
   public getAllDocumentsActives(){
     this.documentService.getAllActives(this.usuarioOID).subscribe(
       (data)=>{
-         console.log( data );
          this.documentos=data;
       }
      );
@@ -84,7 +83,6 @@ export class ListDocumentsComponent implements OnInit {
     });
 
     ref.onClose.subscribe((doc: Documento ) => {
-      // console.log("Hola");
       if (doc!=null  ) {
         this.getAllDocumentsActives();
       }
@@ -101,8 +99,6 @@ export class ListDocumentsComponent implements OnInit {
 
 
   public designDocumento(){
-    // console.log("Aqndo aqui");
-    console.log(this.selectedDocumento);
      //this.router.navigate(["/displayDocument/" + this.selectedDocumento.documentoId   ]);
      this.designing=true;
   }
@@ -158,7 +154,6 @@ export class ListDocumentsComponent implements OnInit {
     }
 
     this.documentService.deleteDocumento( this.selectedDocumento.documentoId , this.usuarioOID).subscribe((data)=>{
-        console.log(data);
         var result=data;
         if(  result='0'  ){
            this.getAllDocumentsActives();

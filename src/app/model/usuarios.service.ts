@@ -28,10 +28,10 @@ public getUsuariosByUsuarioConsulta(usuarioOID:string , usuarioConsultaOID:strin
     return this.http.get<Usuario[]>( url  );
 }
 
-  public getByListVerPerfil(usuarioOID:string , usuarioConsultaOID:string) : Observable<VerPerfil[]> {
-    let url:string = GlobalConstants.apiURL + "usuarios/byListVerPerfil/" + usuarioOID + "/" + usuarioConsultaOID ;
-    return this.http.get<VerPerfil[]>( url  );
-  }
+  // public getByListVerPerfil(usuarioOID:string , usuarioConsultaOID:string) : Observable<VerPerfil[]> {
+  //   let url:string = GlobalConstants.apiURL + "usuarios/byListVerPerfil/" + usuarioOID + "/" + usuarioConsultaOID ;
+  //   return this.http.get<VerPerfil[]>( url  );
+  // }
 
 public getEmpUsuarioByUserOID(usuarioOID:string , usuarioCreatedOID:string ) : Observable<UsuarioEmpresa[]> {
   let url:string = GlobalConstants.apiURL + "usuarios/getEmpUsuarioByUserOID/" + usuarioOID + "/" + usuarioCreatedOID;
@@ -104,7 +104,6 @@ public guardarUsuarioRegiones( ur : UsuarioRegion , usuarioConsultaOID:string ):
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
   // return throwError(errorMessage);
 }
 

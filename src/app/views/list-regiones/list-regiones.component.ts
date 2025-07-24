@@ -70,7 +70,6 @@ export class ListRegionesComponent implements OnInit {
     }
     this.regionService.getByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
-         console.log( data );
          this.regiones=data;
       }
      );
@@ -103,9 +102,6 @@ export class ListRegionesComponent implements OnInit {
     if( this.selectedRegion==null   ){
         return;
     }
-
-    console.log(this.selectedRegion);
-    //console.log("Edgarleal");
 
     let ref= this.dialogService.open( RegionComponent , {
       header: this.tituloRegion,

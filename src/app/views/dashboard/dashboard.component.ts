@@ -17,10 +17,8 @@ export class DashboardComponent implements OnInit {
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     //const unsafeUrl = this.usuario.infoHuesped.publicadorReporte;
     //this.url = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
-    
+
     const unsafeUrl =  JSON.parse(localStorage.getItem('urlReporte'));
     this.url = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
-   
-    console.log("Url Reporte:" + this.url)
   }
 }

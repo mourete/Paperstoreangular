@@ -111,8 +111,6 @@ export class ListasAdminComponent implements OnInit {
 
   public getAllListas() {
     this.listaService.getAll(this.usuarioOID).subscribe((data) => {
-      // console.log('Soy yo');
-      console.log(data);
       this.listas = data;
     });
   }

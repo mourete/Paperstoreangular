@@ -16,12 +16,12 @@ export class InfoHuespedComponent implements OnInit {
    selectedHuesped:InfoHuesped;
 
 
-  constructor( private accountService : AccountService , 
-    public config: DynamicDialogConfig , public ref: DynamicDialogRef     ) { 
+  constructor( private accountService : AccountService ,
+    public config: DynamicDialogConfig , public ref: DynamicDialogRef     ) {
 
       if( this.config.data.usuarioOID!=null   ){
-            this.usuarioOID=this.config.data.usuarioOID;                
-      } 
+            this.usuarioOID=this.config.data.usuarioOID;
+      }
 
 
     }
@@ -34,13 +34,12 @@ export class InfoHuespedComponent implements OnInit {
   public obtenerHuespedes(){
 
     this.accountService.getLicenciasByUserOID( this.usuarioOID ).subscribe(
- 
+
       (data)=>{
-        console.log( data );
         this.listaHuespedes = data;
       }
-  
-   
+
+
     );
 
 
@@ -48,7 +47,7 @@ export class InfoHuespedComponent implements OnInit {
 
 
   public huespedChanged(){
-    
+
      this.ref.close(this.selectedHuesped);
 
   }

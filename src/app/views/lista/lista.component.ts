@@ -110,7 +110,6 @@ export class ListaComponent implements OnInit {
 
             this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe(
               (data)=>{
-                  //console.log(data);
                   this.listaFiltrada = data;
 
                   this.listaFiltrada.forEach((element) => {
@@ -137,13 +136,11 @@ export class ListaComponent implements OnInit {
 
 
   public clickFiltrada(e) {
-    console.log(e.checked);
 
     if(e.checked){
 
       this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe(
         (data)=>{
-           // console.log(data);
             this.listaFiltrada = data;
             this.selectedLista = this.listaFiltrada[0];
         });
@@ -182,7 +179,6 @@ export class ListaComponent implements OnInit {
           }
 
       this.listaService.guardarLista(this.catalogo, this.usuarioSession.usuarioOID).subscribe((data) => {
-          console.log(data);
           this.ref.close(this.catalogo);
       });
       } else {

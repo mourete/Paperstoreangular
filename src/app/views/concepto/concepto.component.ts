@@ -233,17 +233,11 @@ export class ConceptoComponent implements OnInit {
     //this.concepto.seccionOID ;
     this.concepto.seccionOID = this.config.data.seccion.seccionOID;
 
-    // this.config.data.seccion.seccionOID
-    // console.log('Filtro para la entrada de filtro');
-
-    console.log(this.selectedLista.filtro);
     if (type && this.selectedLista.filtro == 1) {
       this.conceptoService
         .conceptoFiltro(this.concepto, this.usuarioOID)
         .subscribe((data) => {
           this.listasFiltra = data.listConceptoFiltra;
-
-          console.log(this.listasFiltra);
 
           this.selectedListaFiltra = this.listasFiltra[0];
 
@@ -551,10 +545,6 @@ export class ConceptoComponent implements OnInit {
   }
 
   public tipoConceptoChanged() {
-    /*Validar que sucedera al momento de editar y cambiar el concepto*/
-    console.log(
-      'tipoConceptoSeleccionado: ' + this.selectedTipoConcepto.tipoConceptoId
-    );
     this.concepto = new Concepto();
     this.concepto.tipoConceptoId = this.selectedTipoConcepto.tipoConceptoId;
     if (
@@ -658,7 +648,6 @@ export class ConceptoComponent implements OnInit {
       if (pu.seleccionado == '1') {
         //pu.flagSeleccionado=true;
         conceptoAlertaSeleccion.push(pu);
-        //console.log( conceptoAlerta[i].flagSeleccionado);
       } else {
         //console.log("SELECCIONADO 2");
         // pu.flagSeleccionado=false;

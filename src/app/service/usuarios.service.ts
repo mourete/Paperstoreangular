@@ -37,7 +37,6 @@ public getEmpUsuarioByUserOID(usuarioOID:string , usuarioCreatedOID:string ) : O
 }
 public getEmpUsuarioByUserOIDJson(usuarioOID:string , usuarioCreatedOID:string ) : Observable<string[]> {
   let url:string = GlobalConstants.apiURL + "usuarios/getEmpUsuarioByUserOIDJson/" + usuarioOID + "/" + usuarioCreatedOID;
-  console.log(this.http.get<string[]>( url ));
   return this.http.get<string[]>( url );
 }
 
@@ -106,7 +105,6 @@ public guardarUsuarioRegiones( ur : UsuarioRegion,usuarioConsultaOID:string ): O
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
   // return throwError(errorMessage);
 }
 

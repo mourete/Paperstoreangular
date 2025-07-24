@@ -262,8 +262,6 @@ export class ProyectoComponent implements OnInit {
       )
       .subscribe((data) => {
         docProyectos = data;
-        console.log('proyecto console')
-        console.log(data)
         this.displayDocumentos(docProyectos);
 
       });

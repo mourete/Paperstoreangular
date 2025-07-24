@@ -151,7 +151,7 @@ export class PrincipalComponent implements OnInit, OnDestroy {
 
     public selectCurrentTemplate(menu: Modulo) {
 
-        
+
         let menuId = menu.objetoId.trim() !== "" ? menu.objetoId : menu.titulos;
         menuId = menuId.toUpperCase()
 
@@ -219,8 +219,6 @@ export class PrincipalComponent implements OnInit, OnDestroy {
             this.componentClass = StoreCheckComponent;
             this.urlReporte = menu.url;
             localStorage.setItem('urlReporte',JSON.stringify(this.urlReporte));
-            console.log(this.urlReporte);
-            console.log(menu);
             this.setCurrentComponent(this.componentClass);
 
 
@@ -228,16 +226,11 @@ export class PrincipalComponent implements OnInit, OnDestroy {
             this.componentClass = DashboardComponent;
             this.urlReporte = menu.url;
             localStorage.setItem('urlReporte',JSON.stringify(this.urlReporte));
-            console.log(this.urlReporte);
-            console.log(menu);
             this.setCurrentComponent(this.componentClass);
         } else {
 
             this.currentTemplate = "";
         }
-
-
-        console.log(menuId);
     }
 
 
@@ -320,7 +313,7 @@ export class PrincipalComponent implements OnInit, OnDestroy {
                 if (this.rawModulos == null || this.rawModulos.length <= 0) {
                     return;
                 }
-                     
+
                 this.setArbolModulos();
                 this.armaMenu();
                 this.setUserDefaultOption();
@@ -335,8 +328,6 @@ export class PrincipalComponent implements OnInit, OnDestroy {
 
         this.accountService.getModuloPredeterminado(this.usuario.usuarioOID).subscribe(
             (data) => {
-                // console.log("Modulo predeterminado");
-                console.log(data);
                 let moduloTmp: Modulo = data;
                 if (moduloTmp != null && moduloTmp.objetoId != null) {
                     this.selectCurrentTemplate(moduloTmp);

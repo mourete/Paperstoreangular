@@ -76,7 +76,6 @@ public eliminaPerfil(per: Perfil, usuarioOID: string ): Observable< Perfil > {
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   }
-  console.log(errorMessage);
   // return throwError(errorMessage);
 }
 

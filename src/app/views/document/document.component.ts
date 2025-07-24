@@ -100,8 +100,6 @@ export class DocumentComponent implements OnInit {
       .subscribe((data) => {
         this.documento = data;
 
-        //console.log('EdgarLeal');
-
         this.profileDocument.patchValue({
           clave: this.documento.clave,
           nombre: this.documento.nombre,
@@ -116,7 +114,6 @@ export class DocumentComponent implements OnInit {
             }
           });
         }
-        // console.log(this.lstStatusProyecto);
       });
   }
 
@@ -158,7 +155,6 @@ export class DocumentComponent implements OnInit {
     this.documentService
       .guardarDocumento(this.documento, this.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
         this.ref.close(this.documento);
 
         //aqui debe actualizar.

@@ -93,7 +93,7 @@ export class UsuarioComponent implements OnInit {
 
 this.readOnly=false;
   this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
-   
+
   if( this.config.data.usuarioOID!=null &&this.config.data.usuarioOID!= ""   ){
     if(this.config.data.tipoVentana==2) this.readOnly=true;
 
@@ -141,7 +141,6 @@ public getEmpUsuarioByUserOIDJson(){
   }else{
       userOID=this.usuario.usuarioOID;
   }
-  console.log(userOID);
   this.usuariosService.getEmpUsuarioByUserOIDJson(  userOID  , this.usuarioSession.usuarioOID  ) .subscribe(
     (data)=>{
         this.resultadoAccesos = data;
@@ -228,7 +227,6 @@ public getEmpresasByUsuarioOID(){
   this.empresaService.getByUsuarioOID( this.usuarioSession.usuarioOID ).subscribe(
     (data)=>{
       this.empresas=data;
-      console.log( "getEmpresasByUsuarioOID:" + this.empresas);
 
    }
   );
@@ -298,8 +296,6 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
   public guardarUsuario(){
 
     this.msgs=[];
-    console.log("huesped: " + this.usuarioSession.usuarioOID);
-    console.log("huesped1: " + this.usuarioSession.huesped);
     if(  this.usuario.nombre ==null ||this.usuario.nombre=="" ){
       this.msgs.push({severity:'error', detail: "Se requiere capturar el nombre del usuario "  , summary:'Validation failed'});
       return;
@@ -339,14 +335,11 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
       return;
     }
     if(  this.usuarioPerfilSeleccionado ==null ||this.usuarioPerfilSeleccionado.length ==0 ){
-      console.log(this.usuarioPerfilSeleccionado.length);
-
       this.msgs.push({severity:'error', detail: "Se requiere puestos del usuario "  , summary:'Validation failed'});
       return;
     }
 
     if(  this.accesosSeleccionados ==null ||this.accesosSeleccionados.length ==0 ){
-      console.log(this.accesosSeleccionados.length);
       this.msgs.push({severity:'error', detail: "Se requiere seleccionar accesos al menos a una empresa"  , summary:'Validation failed'});
       return;
     }
@@ -414,8 +407,6 @@ public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
            }
        }
     }
-    console.log("concant: " + empresasConcat.substring(0,empresasConcat.length-1))
-
 
     this.usuario.empresasConcat=empresasConcat.substring(0,empresasConcat.length-1);
 

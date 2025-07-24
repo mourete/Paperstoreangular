@@ -19,7 +19,6 @@ export class StoreCheckComponent implements OnInit {
    //const unsafeUrl = this.usuario.infoHuesped.publicadorReporte;
    const unsafeUrl =  JSON.parse(localStorage.getItem('urlReporte'));
    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
-   console.log("Url Reporte:" + this.url)
   }
 
 }

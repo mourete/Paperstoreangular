@@ -59,7 +59,6 @@ export class OpcionComponent implements OnInit {
 
       }
     }else{
-       // console.log("1");
         this.opcion=new Opcion();
         this.opcionAccion="AGREGANDO OPCIÓN";
         this.opcion.listaOID=this.config.data.lista.listaOID;
@@ -73,10 +72,7 @@ export class OpcionComponent implements OnInit {
 
 
     if(this.soyFiltro){
-      // console.log("2");
       this.getOpcionesByLista(this.config.data.lista.listaFiltroOID, this.type);
-      // console.log("Entre");
-      console.log(this.config.data.lista.listaFiltroOID);
     }
 
 
@@ -86,27 +82,15 @@ export class OpcionComponent implements OnInit {
 
   public getOpcionesByLista( listaOID : string , type : boolean){
     this.opcionFiltrada=[];
-    // console.log("Perturbado");
     this.listaService.getOpcionesByLista  ( listaOID ,this.usuarioOID).subscribe(
       (data)=>{
           this.opcionFiltrada =data;
-
-          // console.log("Lista que llamo con la informacion de arriba");
-          console.log(this.opcionFiltrada);
-
-          // console.log("Opcion seleccionada");
-          console.log(this.config.data.opcion);
 
           if(type && data != null){
 
             this.opcionFiltrada.forEach(element => {
 
-               console.log(element.opcionOID);
-
-
-
                 if(this.config.data.opcion.opcionFiltroOID == element.opcionOID){
-                    // console.log("Entre");
 
                     this.selectedOpcion = element;
                 }
@@ -117,7 +101,6 @@ export class OpcionComponent implements OnInit {
             }
 
           }else if(data != null){
-              // console.log("3");
               this.selectedOpcion = this.opcionFiltrada[0];
           }
 
@@ -181,16 +164,10 @@ export class OpcionComponent implements OnInit {
       this.opcion.enabled=0;
     }
 
-    //console.log(this.selectedOpcion);
-
     if(this.selectedOpcion != null)
         this.opcion.opcionFiltroOID = this.selectedOpcion.opcionOID;
 
-   /* console.log(this.opcion);
-    console.log("Edgar");*/
-
     this.listaService.guardarOpcion ( this.opcion,this.usuarioOID ).subscribe((data)=>{
-      console.log(data);
       this.ref.close(this.opcion);
     });
   }

@@ -137,7 +137,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   selectedFiles;
 
 
-  
+
   @Input() public varDocumentoId: number;
   @Input() public varVerImage: number;
   @Input() public varProyectoId: number;
@@ -162,9 +162,9 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   @Input() public varSeccionOID: string;
    @Input() public varReadOnly: string;
   @Input() public varNombreInstancia: string;
-  
 
- 
+
+
   noEditable: boolean;
   sucursalId: number;
   proyectoId: number;
@@ -193,7 +193,7 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     this.tipoAlerta = this.actRoute.snapshot.params.tipoAlerta;
     this.image = this.actRoute.snapshot.params.image;
     this.verImage = this.actRoute.snapshot.params.verImage;
-   
+
 
   }
 
@@ -206,11 +206,9 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
 
   selectFile(event, documentoId, documentoInstanciaOID, seccionOID, conceptoOID, conceptoInstanciaOID, valorConcepto) {
-    
-    console.log('documentoInstanciaOID' + documentoInstanciaOID);
+
     this.selectedFiles = event.target.files;
     valorConcepto.nombreFile = event.target.files[0].name;
-    console.log('File' + event.target.files[0].name);
     this.upload(documentoId, documentoInstanciaOID, seccionOID, conceptoOID, conceptoInstanciaOID, valorConcepto);
 
     event.target.value = '';
@@ -225,13 +223,9 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 
 
     let currentFile = this.selectedFiles.item(0);
-    console.log('upload sec' + currentFile);
 
     this.seccionService.upload(currentFile, documentoId, documentoInstanciaOID, seccionOID, conceptoOID, conceptoInstanciaOID, this.usuarioOID).subscribe(
       event => {
-
-
-        console.log(event['urlTemp']);
 
         valorConcepto.valor = event['url'];
         valorConcepto.valorUrl = event['url'];
@@ -258,9 +252,9 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
     this.readOnly = false;
     this.noEditable = false;
     var elem = document.getElementById('quitar');
-    
+
     if (this.documentoInstanciaOID == undefined || this.documentoInstanciaOID == null || this.documentoId == undefined) {
-   
+
       this.documentoInstanciaOID = this.varDocumentoInstanciaOID;
       this.seccionOID = this.varSeccionOID;
       this.documentoId = this.varDocumentoId;
@@ -276,46 +270,40 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
       this.alerta = this.varAlerta;
       this.tipoAlerta = this.varTipoAlerta;
       if(this.image != null){ this.varImage = this.usuario.infoHuesped.pathImagenWeb + this.image;} else  this.varImage = '0';
-      console.log(" this.varVerImage;#");
-      console.log( this.varVerImage)
-      
+
     }
 
     //Validar cuando entre a instancia cuando el nro de documentos es igual a 1
      if(this.varNumDocumentos == 1){
           this.getByDocIdSucProyReg();
-        
+
 
      }
      else{this.getSeccionesInstancias();}
 
-     console.log('varImage' +  this.varImage);
-
   }
 
-  
+
   public getByDocIdSucProyReg(){
 
     this.documentoInstanciaService.getByDocIdSucProyReg(this.documentoId, this.sucursalId , this.proyectoId , this.regionId, this.usuarioOID  ).subscribe(
       (data)=>{
-    
-         console.log( data );
+
          this.documentos=data;
           this.getIrInstancia();
           this.getSeccionesInstancias();
-     
+
     }
   );
   }
 
   public getIrInstancia(){
-    
+
     if(this.documentos == null){
-      console.log( "guadarDocumentoInstancia" );
       this.guadarDocumentoInstancia();
     }
     else{
-      this.selectedDocumento = this.documentos[0]; 
+      this.selectedDocumento = this.documentos[0];
     }
     this.documentoInstanciaOID = this.selectedDocumento.documentoInstanciaOID;
     this.nombreInstancia= this.selectedDocumento.nombre;
@@ -341,32 +329,26 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
 public guadarDocumentoInstancia(){
   var doc: DocumentoInstancia;
   var docInst : string;
-  
+
         doc = new DocumentoInstancia();
         doc.nombre = this.proyecto + "-" + this.sucursal;
         doc.observaciones= this.proyecto + "-" + this.sucursal;
         doc.alerta = '-1' ;
-        doc.tipoAlerta= -1; 
+        doc.tipoAlerta= -1;
         doc.imagePath='';
         doc.documentoId=this.documentoId;
         doc.regionId =  this.regionId;
         doc.proyectoId =  this.proyectoId;
         doc.sucursalId = this.sucursalId;
         doc.usuarioOID = this.usuarioOID;
-        
+
 
 
   this.documentoInstanciaService.guardarDocumentoInstancia ( doc, this.usuarioOID).subscribe((data)=>{
-    console.log("guadarDocumentoInstancia2" )
-    console.log( data );
     this.selectedDocumento=data;
     this.seccionService.getPrimeraSeccion( this.documentoId , this.usuarioOID).subscribe(
 
        (data)=>{
-
-        console.log("getPrimeraSeccion" )
-
-         console.log( data );
 
          var  seccion:Seccion=data;
          this.documentoInstanciaOID = this.selectedDocumento.documentoInstanciaOID ;
@@ -380,28 +362,11 @@ public guadarDocumentoInstancia(){
          this.regionId = this.selectedDocumento.regionId;
          this.alerta =this.selectedDocumento.alerta;
          this.image = this.usuario.infoHuesped.pathImagenWeb + this.selectedDocumento.imagePath;
-         console.log();
-         console.log( "seccion.seccionOID ");
-         console.log( );
-         console.log( "this.documentoId" );
-         console.log(  );
-         console.log( "this.usuarioOID");
-         console.log( this.usuarioOID);
-         console.log( "this.currReadOnly,");
-         //console.log( this.currReadOnly,);
-         console.log( "this.selectedDocumento.nombre");
-         console.log( this.selectedDocumento.nombre);
-         console.log("this.selectedDocumento.alerta");
-         console.log(this.selectedDocumento.alerta);
-         console.log("this.selectedDocumento.tipoAlerta");
-         console.log(this.selectedDocumento.tipoAlerta);
-         console.log(" this.selectedDocumento.imagePath" );
-         console.log( this.selectedDocumento.imagePath );
 
          if( seccion!=null ){
            //var url:string="displayDocumentInstancia/"+ this.documentoId  + "/"+ doc.documentoInstanciaOID  +"/"+ seccion.seccionOID + "/" + this.usuarioOID ;
 
-         
+
           /* this.displayDocumentoInstancia( this.selectedDocumento.documentoInstanciaOID , seccion.seccionOID , this.documentoId , this.usuarioOID , this.currReadOnly,   this.selectedDocumento.nombre,this.selectedDocumento.alerta,this.selectedDocumento.tipoAlerta, this.selectedDocumento.imagePath );
 */
          }
@@ -409,11 +374,10 @@ public guadarDocumentoInstancia(){
       })
   });
 }
-  
+
   public getSeccionesInstancias() {
 
     this.seccionInstanciaService.getAll(this.documentoInstanciaOID, this.documentoId, this.usuarioOID).subscribe((data) => {
-      console.log(data);
       this.seccionesInstancias = data;
       this.getDocumentoInstancia();
     });
@@ -424,7 +388,6 @@ public guadarDocumentoInstancia(){
   public getSecciones() {
 
     this.seccionService.getSeccionesActivas(this.documentoId, this.usuarioOID).subscribe((data) => {
-      console.log(data);
       this.secciones = data;
       this.getDocumentoInstancia();
     });
@@ -621,10 +584,6 @@ public guadarDocumentoInstancia(){
     if (this.documentoInstancia == null) {
       return false;
     } else {
-      console.log("readOnly");
-      console.log(this.documentoInstancia.readOnly);
-      console.log("noEditable");
-      console.log(this.documentoInstancia.noEditable);
       if (this.documentoInstancia.noEditable==1) this.noEditable = true;
       if (this.documentoInstancia.readOnly==1) this.readOnly = true;
 
@@ -647,13 +606,13 @@ public guadarDocumentoInstancia(){
 
     for (var idx = 0; idx < this.seccionInstancia.conceptosInstancia.length; idx++) {
       var ci = this.seccionInstancia.conceptosInstancia[idx];
-     
+
       ci.readOnly=this.readOnly;
       if(ci.noEditable==1 && !this.readOnly ){
         if(this.noEditable)
            ci.readOnly = true;
       }
-     
+
       if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_FECHA) {
 
 
@@ -794,7 +753,6 @@ public guadarDocumentoInstancia(){
     mydate.setMinutes(parseInt(parts[1]));
     // mydate.setUTCHours(parseInt(  parts[0]  ) );
 
-    console.log(mydate.toDateString());
     return mydate;
 
   }
@@ -843,17 +801,15 @@ public guadarDocumentoInstancia(){
 
 
   public getDocumentoInstancia() {
-    
-    console.log(this.documentoId, this.documentoInstanciaOID, this.seccionOID, this.usuarioOID);
+
     this.documentoInstanciaService.getDocByDocumentInstanceAndSection(this.documentoId, this.documentoInstanciaOID, this.seccionOID, this.usuarioOID).subscribe(
       (data) => {
 
         this.documentoInstancia = data;
-       
+
         if (this.documentoInstancia != null) {
           if (this.documentoInstancia.seccionesInstancia != null && this.documentoInstancia.seccionesInstancia.length > 0) {
             this.seccionInstancia = this.documentoInstancia.seccionesInstancia[0];
-            console.log("this.seccionInstancia" + this.documentoInstancia.seccionesInstancia[0]);
             this.configRespuestasForView();
           }
 
@@ -884,7 +840,6 @@ public guadarDocumentoInstancia(){
   public listaChanged(ci: ConceptoInstancia) {
     var oi: OpcionInstancia = ci.selected;
 
-    console.log('entro a combox' + oi.texto);
     if (ci.filtro == 1) {
       var ciFiltroOid: string = ci.conceptoFiltroOID;
       var cis: ConceptoInstancia[] = this.seccionInstancia.conceptosInstancia;
@@ -892,7 +847,6 @@ public guadarDocumentoInstancia(){
 
       cis.forEach((ciFiltra) => {
         if (ci.conceptoFiltroOID == ciFiltra.conceptoOID) {
-          console.log(oi.texto);
           this.seccionInstanciaService.getOpciones(ciFiltra.listaOID, oi.opcionOID, this.usuarioOID).subscribe
           ((data) => {
             ciFiltra.opcionesInstancia = data;

@@ -154,7 +154,6 @@ export class RegionComponent implements OnInit {
               this.empresas=data;
               if( this.empresas!=null && this.empresas.length>0 ){
                 this.selectedEmpresa=this.empresas[0];
-                // console.log("Marcos");
 
                 if( this.region.empresaId>0 ){
                   if(  this.empresas!=null && this.empresas.length>0 ){
@@ -344,7 +343,6 @@ export class RegionComponent implements OnInit {
 
     this.marcaService.getMarcasByEmpresaYUsuario  (  this.usuarioSession.usuarioOID , this.selectedEmpresa.empresaId  ) .subscribe(
       (data)=>{
-         console.log( data );
          this.marcas=data;
 
          if( this.marcas!=null && this.marcas.length>0 ){

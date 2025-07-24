@@ -315,7 +315,6 @@ export class SucursalComponent implements OnInit {
 
 
        /* if( this.selectedCiudad.ciudadId >0  && this.ciudades!=null && this.ciudades.length>0 ){
-          console.log("Entro aqui 2");
           var  ciudadTmp:Ciudad;
             for(  var i=0;i<this.ciudades.length;i++ ){
                   ciudadTmp=this.ciudades[i];

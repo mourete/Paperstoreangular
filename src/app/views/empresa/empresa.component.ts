@@ -51,7 +51,7 @@ export class EmpresaComponent implements OnInit {
   ngOnInit(): void {
 
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
-    
+
     if( this.config.data.empresaId >0  ){
          this.getEmpresaById(  this.config.data.empresaId);
   }else{
@@ -142,9 +142,6 @@ onBlurMethod(type : String){
 
   }
 
-
-  console.log(type);
-  console.log(this.empresa.email);
 }
 
 

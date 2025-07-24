@@ -33,8 +33,8 @@ export class UsuarioMarcasComponent implements OnInit {
   constructor( public empresaService:EmpresaService ,   public puestoService:PuestoService ,  public usuariosService:UsuariosService ,   public config: DynamicDialogConfig , public ref: DynamicDialogRef ) { }
 
   ngOnInit(): void {
-    this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));   
-     this.getUsuarioByOID(  this.config.data.usuarioOID , this.usuarioSession.usuarioOID  ); 
+    this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
+     this.getUsuarioByOID(  this.config.data.usuarioOID , this.usuarioSession.usuarioOID  );
      this.getEmpUsuarioNoTodasMarcas(this.config.data.usuarioOID , this.usuarioSession.usuarioOID );
   }
 
@@ -43,25 +43,23 @@ export class UsuarioMarcasComponent implements OnInit {
   public getUsuarioByOID ( usuarioOID : string , usuarioConsultaOID: string ){
     this.usuariosService.getUsuarioByOID ( usuarioOID , usuarioConsultaOID ).subscribe(
       (data)=>{
-        console.log(data);
-        this.usuario =data;         
+        this.usuario =data;
      }
     );
-  
+
   }
 
 
   public getEmpUsuarioNoTodasMarcas(userOID : string , usuarioConsultaOID :string ){
-     
-  
-    this.usuariosService.getEmpUsuarioNoTodasMarcas(  userOID , usuarioConsultaOID   ) .subscribe( 
+
+
+    this.usuariosService.getEmpUsuarioNoTodasMarcas(  userOID , usuarioConsultaOID   ) .subscribe(
       (data)=>{
-         console.log( data );
-         this.usuarioEmpresas=data;        
-        // this.initFlags(); 
+         this.usuarioEmpresas=data;
+        // this.initFlags();
       }
      );
-  
+
   }
 
 
@@ -72,37 +70,35 @@ export class UsuarioMarcasComponent implements OnInit {
 
 
   public getUsuarioMarcasByEmpresa( ){
-     
+
     if(this.selectedUsuarioEmpresa==null  ){
        return;
     }
-  
-    this.usuariosService.getUsuarioMarcasByEmpresa(   this.usuario.usuarioOID  ,  this.selectedUsuarioEmpresa.empresaId  , this.usuarioSession.usuarioOID  ) .subscribe( 
+
+    this.usuariosService.getUsuarioMarcasByEmpresa(   this.usuario.usuarioOID  ,  this.selectedUsuarioEmpresa.empresaId  , this.usuarioSession.usuarioOID  ) .subscribe(
       (data)=>{
-         console.log( data );
-         this.usuarioMarcas=data;        
-        // this.initFlags(); 
+         this.usuarioMarcas=data;
+        // this.initFlags();
       }
      );
-  
+
   }
 
 
 
-   
+
 
 
   public getUsuarioRegionesByMarca( marcaId: number ){
-     
+
     if(this.selectedUsuarioEmpresa==null  ){
        return;
     }
-  
-    
-    this.usuariosService.getUsuarioRegionesByMarca(   this.usuario.usuarioOID  ,  marcaId , this.usuarioSession.usuarioOID ) .subscribe( 
+
+
+    this.usuariosService.getUsuarioRegionesByMarca(   this.usuario.usuarioOID  ,  marcaId , this.usuarioSession.usuarioOID ) .subscribe(
       (data)=>{
-         console.log( data );
-         this.usuarioRegiones=data;  
+         this.usuarioRegiones=data;
 
          if( this.selectedUsuarioMarca!=null && this.selectedUsuarioMarca.marcaId==marcaId ){
             if( this.selectedUsuarioMarca.flagTodo ){
@@ -110,18 +106,18 @@ export class UsuarioMarcasComponent implements OnInit {
             }else{
               this.setEditRegiones( true  );
             }
-            
+
          }
-                      
+
       }
      );
-     
+
   }
 
 
 
   public marcaChanged(){
-    
+
     if( this.selectedUsuarioMarca==null || this.selectedUsuarioMarca.marcaId<=0 ){
        this.usuarioRegiones=[];
        return;
@@ -129,7 +125,7 @@ export class UsuarioMarcasComponent implements OnInit {
 
 
     if(  !this.selectedUsuarioMarca.flagSeleccionada ){
-      
+
       this.usuarioRegiones=[];
       return;
     }
@@ -148,7 +144,7 @@ export class UsuarioMarcasComponent implements OnInit {
 
 
 
-  public marcaSwitchChange(event,um:UsuarioMarca){      
+  public marcaSwitchChange(event,um:UsuarioMarca){
       this.selectedUsuarioMarca=um;
       if( um.flagSeleccionada ){
         this.configRegiones(um.marcaId);
@@ -158,11 +154,11 @@ export class UsuarioMarcasComponent implements OnInit {
 
       this.guardarUsuarioMarcas();
 
-      
+
   }
 
 
-  public marcaSwitchTodoChange(event,um:UsuarioMarca){      
+  public marcaSwitchTodoChange(event,um:UsuarioMarca){
     this.selectedUsuarioMarca=um;
     if( um.flagTodo ){
         this.setEditRegiones( false );
@@ -171,7 +167,7 @@ export class UsuarioMarcasComponent implements OnInit {
       // this.usuarioRegiones=[];
     }
 
-    
+
 }
 
 
@@ -184,9 +180,9 @@ public guardarUsuarioRegiones(  ){
 
   var ur:UsuarioRegion;
   var regionesConcat:string=null;
- 
+
   if( this.usuarioRegiones!=null && this.usuarioRegiones.length>0  ){
-    
+
      for( var i=0;i< this.usuarioRegiones.length; i++  ){
          ur=this.usuarioRegiones[i];
          if(ur==null){
@@ -196,7 +192,7 @@ public guardarUsuarioRegiones(  ){
          if( !ur.flagSeleccionada ){
             continue;
          }
- 
+
 
 
       if( regionesConcat==null ){
@@ -223,9 +219,9 @@ public guardarUsuarioRegiones(  ){
      }
   );
 
- 
 
-   
+
+
 
 }
 
@@ -243,7 +239,7 @@ public setEditRegiones( flag:boolean ){
    for( var i=0; i< this.usuarioRegiones.length; i++   ){
         ur=this.usuarioRegiones[i];
         if(  flag ){
-           ur.flagEditable=true;   
+           ur.flagEditable=true;
         }else{
           ur.flagEditable=false;
           ur.flagSeleccionada=true;
@@ -269,7 +265,7 @@ public guardarUsuarioMarcas(){
   var marcasConcat:string=null;
   var todasRegiones:number;
   if( this.usuarioMarcas!=null && this.usuarioMarcas.length>0  ){
-    
+
      for( var i=0;i< this.usuarioMarcas.length; i++  ){
          um=this.usuarioMarcas[i];
          if(um==null){
@@ -303,17 +299,17 @@ public guardarUsuarioMarcas(){
   um.empresaId=this.selectedUsuarioEmpresa.empresaId;
   um.usuarioCreated=this.usuarioSession.usuarioOID;
 
-  
+
   alert( um.marcasConcat );
   this.usuariosService.guardarUsuarioMarcas(  um , this.usuarioSession.usuarioOID).subscribe(
     (data)=>{
-       // alert("se guardo usuario marca");                 
+       // alert("se guardo usuario marca");
     }
 
   );
 
 
-   
+
 
 }
 

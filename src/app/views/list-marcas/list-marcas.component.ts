@@ -66,7 +66,6 @@ export class ListMarcasComponent implements OnInit {
       }
       this.marcaService.getByUsuarioOID (  this.usuarioSession.usuarioOID ) .subscribe(
         (data)=>{
-           console.log( data );
            this.marcas=data;
         }
        );

@@ -327,8 +327,6 @@ export class DisplayDocumentComponent implements OnInit {
     this.documentService.getDocumentForConfig(this.documentoId, 0,this.usuarioOID)
       .subscribe(
         (data) => {
-          console.log("instancia");
-          console.log(data);
           this.documento = data;
 
           this.disabled = false;
@@ -343,7 +341,6 @@ export class DisplayDocumentComponent implements OnInit {
     this.conceptoService
       .deleteConcepto(this.concepto, this.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
 
         let conceptoTmp = data;
         if (conceptoTmp != null) {
@@ -381,7 +378,6 @@ export class DisplayDocumentComponent implements OnInit {
     this.seccionService
       .deleteSeccion(this.seccion, this.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
 
         let seccionTmp = data;
         if (seccionTmp != null) {
@@ -433,9 +429,6 @@ export class DisplayDocumentComponent implements OnInit {
 
     let orden: number = this.concepto.orden;
 
-  //  console.log('Inicial');
-    console.log(orden);
-
     if (flagOrder == 1) {
       if (this.concepto.orden <= 1) {
         return;
@@ -449,9 +442,6 @@ export class DisplayDocumentComponent implements OnInit {
       orden = orden + 1;
     }
 
-    // console.log('Final');
-    console.log(orden);
-
     this.conceptoService
       .getConceptoByOID(this.concepto.conceptoOID, this.usuarioOID)
       .subscribe((data) => {
@@ -461,7 +451,6 @@ export class DisplayDocumentComponent implements OnInit {
         this.conceptoService
           .guardarConcepto(this.concepto, this.usuarioOID)
           .subscribe((data) => {
-            console.log(data);
             //this.getConceptosBySeccionOID( this.seccion.seccionOID  );
             this.getDocumentForConfig();
           });
@@ -472,8 +461,6 @@ export class DisplayDocumentComponent implements OnInit {
     this.conceptoService
       .getConceptoBySeccionOID(seccionOID, this.usuarioOID)
       .subscribe((data) => {
-        console.log(data);
-
         this.seccion.conceptos = data;
       });
   }

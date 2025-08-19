@@ -1,3 +1,4 @@
+import { SeccionInstanciaSave } from './../model/seccion-instancia-save';
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -34,9 +35,9 @@ public getByDocIdSucProyReg( documentoId :number , sucursalId:number, proyectoId
 }
 
 
-public guardarDocumentoInstanciaRespuestas(documento: DocumentoInstancia , usuarioOID:string ): Observable< DocumentoInstancia > {
+public guardarDocumentoInstanciaRespuestas(seccionInstanciaSave: SeccionInstanciaSave , usuarioOID:string ): Observable< SeccionInstanciaSave > {
     let url:string = GlobalConstants.apiURL + "documentosInstancia/respuestas/save"+"/" + usuarioOID;
-    return this.http.post<DocumentoInstancia>( url , JSON.stringify(documento), {headers: this.headers});
+    return this.http.post<SeccionInstanciaSave>( url , JSON.stringify(seccionInstanciaSave), {headers: this.headers});
 }
 
 

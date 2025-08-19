@@ -4,7 +4,7 @@ import { OpcionInstancia } from './opcion-instancia';
 export class ConceptoInstancia {
 
     conceptoOID : string;
-    conceptoInstanciasOID : string;
+    conceptoInstanciaOID : string;
     descripcion:string;
     condicionada:number;
     enabled:number;

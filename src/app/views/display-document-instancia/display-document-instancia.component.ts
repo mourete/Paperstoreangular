@@ -1,9 +1,10 @@
+import { SeccionInstanciaSave } from './../../model/seccion-instancia-save';
 import {Component, Input, NgModule, OnInit} from '@angular/core';
 import {Seccion} from 'src/app/model/seccion';
 import {DocumentoInstancia} from 'src/app/model/documento-instancia';
 import {DocumentoInstanciaService} from 'src/app/service/documento-instancia.service';
 import {ActivatedRoute} from '@angular/router';
-
+import { DocumentoMapper } from './displey-documento-instancia-mapper';
 import {DialogService} from 'primeng/dynamicdialog';
 import {ConfirmationService, Message, MessageService} from 'primeng/api';
 import {SeccionInstancia} from 'src/app/model/seccion-instancia';
@@ -11,6 +12,7 @@ import {GlobalConstants} from 'src/app/model/global-constants';
 import {DatePipe} from '@angular/common';
 import {OpcionInstancia} from 'src/app/model/opcion-instancia';
 import {ConceptoInstancia} from 'src/app/model/concepto-instancia';
+import {DocumentoInstanciaSave} from 'src/app/model/documento-instancia-save';
 import {SeccionService} from 'src/app/service/seccion.service';
 import {SeccionInstanciaService} from 'src/app/service/seccion-instancia.service';
 import {Usuario} from 'src/app/model/usuario';
@@ -19,6 +21,8 @@ import {FormsModule} from '@angular/forms'; // Asegurarse de que FormsModule est
 import {MultiSelectModule} from 'primeng/multiselect';
 import {BrowserModule} from '@angular/platform-browser';
 import {FileUploadModule} from 'primeng/fileupload';
+import { ConceptoInstanciaSave } from '../../model/concepto-instancia-save';
+import { OpcionInstanciaSave } from '../../model/opcion-instancia-save';
 
 
 @NgModule({
@@ -242,6 +246,14 @@ export class DisplayDocumentInstanciaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // ==== HELPERS DE TIPO ====
+    const isStringArray = (arr: unknown): arr is string[] =>
+  Array.isArray(arr) && arr.every(el => typeof el === 'string');
+
+  const isOpcionArray = (arr: unknown): arr is OpcionInstancia[] =>
+  Array.isArray(arr) && arr.every(el => typeof el === 'object' && el !== null && 'opcionOID' in (el as any));
+
     this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.tituloRegion = this.usuario.infoHuesped.nbRegion;
     this.tituloSucursal = this.usuario.infoHuesped.nbSucursal;
@@ -401,7 +413,7 @@ public guadarDocumentoInstancia(){
     }
 
     if (this.seccionInstancia == null || this.seccionInstancia.conceptosInstancia == null || this.seccionInstancia.conceptosInstancia.length <= 0) {
-      return;
+      return false;
     }
 
     this.msgs = [];
@@ -458,7 +470,7 @@ public guadarDocumentoInstancia(){
 
       if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_TEXTO) {
 
-        if (ci.valor != '' && ci.valor.length > ci.maximo) {
+        if (ci.valor!= null && ci.valor != '' && ci.valor.length > ci.maximo) {
           var msg = 'La pregunta <strong>' + ci.descripcion + '</strong> no puede pasar su longitud permitida de ' + ci.maximo + ' caracteres';
           this.msgs.push({severity: 'error', detail: msg, summary: ''});
         }
@@ -549,6 +561,8 @@ public guadarDocumentoInstancia(){
           // alert( ci.selected );
         }
       } else {
+        if(ci.valueAsDate!=null){
+          
         switch (ci.tipoConceptoId) {
           case GlobalConstants.CONCEPTO_TIPO_FECHA: {
             ci.valor = this.datePipe.transform(ci.valueAsDate, 'yyyy/MM/dd');
@@ -565,7 +579,7 @@ public guadarDocumentoInstancia(){
           default: {
             break;
           }
-        }
+        }}
       }
 
     }
@@ -681,7 +695,8 @@ public guadarDocumentoInstancia(){
       } else if (ci.tipoConceptoId == GlobalConstants.CONCEPTO_TIPO_OPCION_MULTIPLE) {
 
 
-        var selected: OpcionInstancia = null;
+        var selected: OpcionInstancia;
+        selected = null;
         if (ci.opcionesInstancia != null && ci.opcionesInstancia.length > 0) {
           for (var i = 0; i < ci.opcionesInstancia.length; i++) {
             var oi = ci.opcionesInstancia[i];
@@ -767,8 +782,14 @@ public guadarDocumentoInstancia(){
     if (nextSeccionOID == null) {
       this.blockedDocument = true;
     }
-    const documentoInstancia: DocumentoInstancia = this.modifyDocumentInstance(this.documentoInstancia);
-    this.documentoInstanciaService.guardarDocumentoInstanciaRespuestas(documentoInstancia, this.usuarioOID).subscribe((data) => {
+
+   
+    const documentoInstanciaSave: DocumentoInstanciaSave = this.modifyDocumentInstance(this.documentoInstancia);
+    console.log('seccionesInstanciaSave');
+  
+        console.log( documentoInstanciaSave.seccionesInstanciaSave[0]);
+         
+    this.documentoInstanciaService.guardarDocumentoInstanciaRespuestas(documentoInstanciaSave.seccionesInstanciaSave[0], this.usuarioOID).subscribe((data) => {
 
 
       this.myVariable = data;
@@ -784,17 +805,23 @@ public guadarDocumentoInstancia(){
 
   }
 
-  public modifyDocumentInstance(documento: DocumentoInstancia): DocumentoInstancia {
+  public modifyDocumentInstance(documento: DocumentoInstancia): DocumentoInstanciaSave {
     const modifiedDocumento: DocumentoInstancia = JSON.parse(JSON.stringify(documento));
+   
     modifiedDocumento.seccionesInstancia.forEach(seccion => {
+       console.log('forseccion');
+
       seccion.conceptosInstancia.forEach(concepto => {
+         console.log(concepto);
         if (concepto.tipoConceptoId === GlobalConstants.CONCEPTO_TIPO_SELECCION_MULTIPLE) {
           // @ts-ignore
           concepto.selectedValues = concepto.selectedValues.map(opcion => opcion.opcionOID);
         }
       });
     });
-    return modifiedDocumento;
+     const docSave = DocumentoMapper.toDocumentoInstanciaSave(modifiedDocumento);
+    
+    return docSave;
   }
 
 
@@ -857,4 +884,7 @@ public guadarDocumentoInstancia(){
   }
 
 
+
+// const docSave = toDocumentoInstanciaSave(docInstancia);
 }
+

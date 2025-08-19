@@ -5,7 +5,7 @@ export class SeccionInstancia {
 
     seccionOID: string;
     seccionPadreOID : string;
-    seccionInstanciasOID : string;
+    seccionInstanciaOID : string;
     documentoInstanciaOID: string;
     nombre : string;
     ciclica : number;

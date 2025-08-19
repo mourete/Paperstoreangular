@@ -242,7 +242,7 @@
                   <td *ngIf="conceptoInstancia.tipoConceptoId==8">
                     <div *ngIf="conceptoInstancia.valor ">
                       <input type="file"
-                             (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"
+                             (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciaOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"
                              #fileInput style="display: none;" >
                       <button (click)="fileInput.click()"  [disabled]="conceptoInstancia.readOnly">Seleccionar archivo</button>
                       <button (click)="clearFile($event,conceptoInstancia)"  [disabled]="conceptoInstancia.readOnly" >Eliminar archivo</button>
@@ -260,7 +260,7 @@
                     <div *ngIf="!conceptoInstancia.valor ">
 
                       <input type="file"
-                             (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciasOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"
+                             (change)="selectFile($event,documentoInstancia.documento,documentoInstancia.documentoInstanciaOID,seccionInstancia.seccionInstanciaOID, conceptoInstancia.conceptoOID,  conceptoInstancia.conceptoInstanciaOID, conceptoInstancia)"
                              #fileInput style="display: none;">
                       <button (click)="fileInput.click()"  [disabled]="conceptoInstancia.readOnly">Seleccionar archivo</button>
 

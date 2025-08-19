@@ -787,7 +787,7 @@ public guadarDocumentoInstancia(){
     const documentoInstanciaSave: DocumentoInstanciaSave = this.modifyDocumentInstance(this.documentoInstancia);
     console.log('seccionesInstanciaSave');
   
-        console.log( documentoInstanciaSave.seccionesInstanciaSave[0]);
+    console.log( documentoInstanciaSave.seccionesInstanciaSave[0]);
          
     this.documentoInstanciaService.guardarDocumentoInstanciaRespuestas(documentoInstanciaSave.seccionesInstanciaSave[0], this.usuarioOID).subscribe((data) => {
 

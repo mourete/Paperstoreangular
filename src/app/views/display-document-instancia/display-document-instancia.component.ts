@@ -562,7 +562,7 @@ public guadarDocumentoInstancia(){
         }
       } else {
         if(ci.valueAsDate!=null){
-          
+
         switch (ci.tipoConceptoId) {
           case GlobalConstants.CONCEPTO_TIPO_FECHA: {
             ci.valor = this.datePipe.transform(ci.valueAsDate, 'yyyy/MM/dd');
@@ -783,12 +783,12 @@ public guadarDocumentoInstancia(){
       this.blockedDocument = true;
     }
 
-   
+
     const documentoInstanciaSave: DocumentoInstanciaSave = this.modifyDocumentInstance(this.documentoInstancia);
     console.log('seccionesInstanciaSave');
-  
+
     console.log( documentoInstanciaSave.seccionesInstanciaSave[0]);
-         
+
     this.documentoInstanciaService.guardarDocumentoInstanciaRespuestas(documentoInstanciaSave.seccionesInstanciaSave[0], this.usuarioOID).subscribe((data) => {
 
 
@@ -807,22 +807,39 @@ public guadarDocumentoInstancia(){
 
   public modifyDocumentInstance(documento: DocumentoInstancia): DocumentoInstanciaSave {
     const modifiedDocumento: DocumentoInstancia = JSON.parse(JSON.stringify(documento));
-   
+
     modifiedDocumento.seccionesInstancia.forEach(seccion => {
-       console.log('forseccion');
+      console.log('forseccion');
 
       seccion.conceptosInstancia.forEach(concepto => {
-         console.log(concepto);
+        console.log("------------concepto modify document",concepto);
+
         if (concepto.tipoConceptoId === GlobalConstants.CONCEPTO_TIPO_SELECCION_MULTIPLE) {
-          // @ts-ignore
-          concepto.selectedValues = concepto.selectedValues.map(opcion => opcion.opcionOID);
+          let opciones = '';
+
+          if (concepto.selectedValues && concepto.selectedValues.length > 0) {
+            if (typeof concepto.selectedValues[0] === 'string') {
+
+              opciones = (concepto.selectedValues as string[]).join('|');
+            } else {
+
+              opciones = (concepto.selectedValues as OpcionInstanciaSave[])
+                .map(opcion => opcion.opcionOID)
+                .join('|');
+            }
+          }
+
+          concepto.valor = opciones;
         }
+
+
       });
     });
-     const docSave = DocumentoMapper.toDocumentoInstanciaSave(modifiedDocumento);
-    
+
+    const docSave = DocumentoMapper.toDocumentoInstanciaSave(modifiedDocumento);
     return docSave;
   }
+
 
 
   public getDocumentoInstancia() {

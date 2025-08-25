@@ -8,7 +8,7 @@ export class ConceptoInstanciaSave {
     tipoConceptoId : number;
     valor : string;
     valorUrl : string;
-    selected?:OpcionInstanciaSave;
-    selectedValues?: OpcionInstanciaSave[] | string[];
+    selected:OpcionInstanciaSave;
+    selectedValues: OpcionInstanciaSave[] | string[];
 
 }

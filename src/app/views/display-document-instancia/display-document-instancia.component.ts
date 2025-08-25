@@ -807,32 +807,22 @@ public guadarDocumentoInstancia(){
 
   public modifyDocumentInstance(documento: DocumentoInstancia): DocumentoInstanciaSave {
     const modifiedDocumento: DocumentoInstancia = JSON.parse(JSON.stringify(documento));
-
     modifiedDocumento.seccionesInstancia.forEach(seccion => {
-      console.log('forseccion');
-
       seccion.conceptosInstancia.forEach(concepto => {
-        console.log("------------concepto modify document",concepto);
 
         if (concepto.tipoConceptoId === GlobalConstants.CONCEPTO_TIPO_SELECCION_MULTIPLE) {
-          let opciones = '';
 
-          if (concepto.selectedValues && concepto.selectedValues.length > 0) {
-            if (typeof concepto.selectedValues[0] === 'string') {
+          if (Array.isArray(concepto.selectedValues) && concepto.selectedValues.length > 0) {
 
-              opciones = (concepto.selectedValues as string[]).join('|');
-            } else {
+            const primerElemento = concepto.selectedValues[0];
 
-              opciones = (concepto.selectedValues as OpcionInstanciaSave[])
-                .map(opcion => opcion.opcionOID)
-                .join('|');
+            if (typeof primerElemento === 'object' && primerElemento !== null) {
+              concepto.selectedValues = (concepto.selectedValues as OpcionInstancia[]).map(opcion => opcion.opcionOID);
             }
+          } else {
+            concepto.selectedValues = [];
           }
-
-          concepto.valor = opciones;
         }
-
-
       });
     });
 

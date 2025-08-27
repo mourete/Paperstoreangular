@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Usuario } from 'src/app/model/usuario';
 import {MenuItem} from 'primeng/api';
 import {ConfirmationService} from 'primeng/api';
@@ -6,6 +6,7 @@ import { DialogService } from 'primeng/dynamicdialog'
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { UsuarioComponent } from 'src/app/views/usuario/usuario.component';
 import { UsuarioMarcasComponent } from '../usuario-marcas/usuario-marcas.component';
+import {ContextMenu} from "primeng/contextmenu";
 
 @Component({
   selector: 'app-list-usuarios',
@@ -14,11 +15,12 @@ import { UsuarioMarcasComponent } from '../usuario-marcas/usuario-marcas.compone
   providers: [DialogService, ConfirmationService]
 })
 export class ListUsuariosComponent implements OnInit {
-
+  @ViewChild('cmUsuarios') cmUsuarios: ContextMenu;
   itemsUsuario: MenuItem[];
   usuarios:Usuario[];
   selectedUsuario:Usuario;
   usuarioSession:Usuario;
+  items: MenuItem[];
 
   constructor( public usuariosService: UsuariosService , private confirmationService: ConfirmationService ,
     public dialogService: DialogService  ) { }
@@ -27,6 +29,23 @@ export class ListUsuariosComponent implements OnInit {
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
 
     this.getUsuariosByUsuarioConsulta();
+    this.itemsUsuario = [
+      {
+        label: 'Editar Usuario',
+        icon: 'pi pi-pencil',
+        command: (event) => {
+          this.modificarUsuario();
+        },
+      },
+      {
+        label: 'Eliminar Usuario',
+        icon: 'pi pi-trash',
+        command: (event) => {
+          this.confirmDeleteUsuario();
+        },
+      },
+      { separator: true },
+    ];
 
   }
 
@@ -116,6 +135,11 @@ public confirmDeleteUsuario(){
 public usuarioChanged(){
 
 }
+
+public onContextMenuSelect(event) {
+    this.selectedUsuario = event.data;}
+
+
 
 
 public onClickMenuUsuario(usr:Usuario){

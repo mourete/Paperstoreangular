@@ -492,7 +492,7 @@ public guadarDocumentoInstancia(){
 
         if ((ci.valor != null && ci.valor != '') && ci.valor.match(numbers) == null) {
 
-          var msg = 'La pregunta <strong>' + ci.descripcion + '</strong> no permite letras, solo permite números ';
+          var msg = 'La pregunta <strong>' + ci.descripcion + '</strong> no permite letras, ni carácteres, solo permite números ';
           this.msgs.push({severity: 'error', detail: msg, summary: ''});
 
         }

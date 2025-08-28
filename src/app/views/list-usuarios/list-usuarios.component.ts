@@ -49,8 +49,6 @@ export class ListUsuariosComponent implements OnInit {
 
   }
 
-
-
   public getUsuariosByUsuarioConsulta(){
     if( this.usuarioSession==null ){
       return;
@@ -63,9 +61,6 @@ export class ListUsuariosComponent implements OnInit {
 
   }
 
-
-
-
   public agregarUsuario(){
 
     let ref= this.dialogService.open( UsuarioComponent , {
@@ -77,11 +72,9 @@ export class ListUsuariosComponent implements OnInit {
 
   ref.onClose.subscribe(( usr : Usuario  ) => {
     if (usr!=null  ) {
-
+      this.getUsuariosByUsuarioConsulta();
     }
   });
-
-
 
   }
 
@@ -108,9 +101,6 @@ export class ListUsuariosComponent implements OnInit {
 
   }
 
-
-
-
   public configurarMarcas(){
     if( this.selectedUsuario==null   ){
         return;
@@ -126,11 +116,9 @@ export class ListUsuariosComponent implements OnInit {
   }
 
 
-
 public confirmDeleteUsuario(){
 
 }
-
 
 public usuarioChanged(){
 
@@ -139,14 +127,8 @@ public usuarioChanged(){
 public onContextMenuSelect(event) {
     this.selectedUsuario = event.data;}
 
-
-
-
 public onClickMenuUsuario(usr:Usuario){
 
 }
-
-
-
 
 }

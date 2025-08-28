@@ -154,10 +154,10 @@ export class ConceptoComponent implements OnInit {
     });
 
     this.profileConcepto.get('fechaMinima').valueChanges.subscribe(() => {
-      this.revisarFechaMin();
+      this.revisarRangoDeFechas();
     });
     this.profileConcepto.get('fechaMaxima').valueChanges.subscribe(() => {
-      this.revisarFechaMax();
+      this.revisarRangoDeFechas();
     });
 
     this.profileConcepto.get('horaMinima').valueChanges.subscribe(() => {
@@ -701,30 +701,22 @@ export class ConceptoComponent implements OnInit {
     }
   }
 
-  revisarFechaMin() {
-    const fechaMin = this.profileConcepto.get('fechaMinima').value;
-    const fechaMax = this.profileConcepto.get('fechaMaxima').value;
-    if (
-      fechaMin !== undefined &&
-      fechaMax !== undefined &&
-      !validarFecha(fechaMin, fechaMax)
-    ) {
-      this.profileConcepto.get('fechaMinima').setErrors({ dateError: true });
+  revisarRangoDeFechas() {
+    const fechaMinControl = this.profileConcepto.get('fechaMinima');
+    const fechaMaxControl = this.profileConcepto.get('fechaMaxima');
+
+    if (!validarFecha(fechaMinControl.value, fechaMaxControl.value)) {
+
+      fechaMinControl.setErrors({ dateError: true });
+      fechaMaxControl.setErrors({ dateError: true });
     } else {
-      this.profileConcepto.get('fechaMinima').setErrors(null);
-    }
-  }
-  revisarFechaMax() {
-    const fechaMin = this.profileConcepto.get('fechaMinima').value;
-    const fechaMax = this.profileConcepto.get('fechaMaxima').value;
-    if (
-      fechaMin !== undefined &&
-      fechaMax !== undefined &&
-      !validarFecha(fechaMin, fechaMax)
-    ) {
-      this.profileConcepto.get('fechaMaxima').setErrors({ dateError: true });
-    } else {
-      this.profileConcepto.get('fechaMaxima').setErrors(null);
+
+      if (fechaMinControl.hasError('dateError')) {
+        fechaMinControl.setErrors(null);
+      }
+      if (fechaMaxControl.hasError('dateError')) {
+        fechaMaxControl.setErrors(null);
+      }
     }
   }
 

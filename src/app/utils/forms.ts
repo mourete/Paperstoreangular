@@ -41,8 +41,34 @@ export function validarFecha(fechaMinStr: string, fechaMaxStr: string): boolean 
   }
 }
 
-export function validarHora(horaMin: string, horaMax: string): boolean {
-  const castMin: Date = parseTimeString(horaMin);
-  const castMax: Date = parseTimeString(horaMax);
-  return castMin <= castMax;
+export function validarHora(horaMinStr: string, horaMaxStr: string): boolean {
+  if (!horaMinStr || !horaMaxStr || typeof horaMinStr !== 'string' || typeof horaMaxStr !== 'string') {
+    return true;
+  }
+  const parsearHora = (horaStr: string): Date | null => {
+    const parts = horaStr.split(':');
+    if (parts.length !== 2) {
+      return null;
+    }
+    const hours = parseInt(parts[0], 10);
+    const minutes = parseInt(parts[1], 10);
+
+    if (isNaN(hours) || isNaN(minutes)) {
+      return null;
+    }
+    return new Date(1970, 0, 1, hours, minutes);
+  };
+
+  try {
+    const horaMin = parsearHora(horaMinStr);
+    const horaMax = parsearHora(horaMaxStr);
+
+    if (!horaMin || !horaMax) {
+      return true;
+    }
+    return horaMin <= horaMax;
+  } catch (e) {
+    console.error("Error al procesar horas:", e);
+    return true;
+  }
 }

@@ -161,10 +161,10 @@ export class ConceptoComponent implements OnInit {
     });
 
     this.profileConcepto.get('horaMinima').valueChanges.subscribe(() => {
-      this.revisarHoraMin();
+      this.revisarRangoDeHoras();
     });
     this.profileConcepto.get('horaMaxima').valueChanges.subscribe(() => {
-      this.revisarHoraMax();
+      this.revisarRangoDeHoras();
     });
 
     if (this.config.data.concepto != null) {
@@ -720,28 +720,20 @@ export class ConceptoComponent implements OnInit {
     }
   }
 
-  revisarHoraMin() {
-    const horaMin = this.profileConcepto.get('horaMinima').value;
-    const horaMax = this.profileConcepto.get('horaMaxima').value;
-    if (horaMin !== undefined &&
-      horaMax !== undefined &&
-      !validarHora(horaMin, horaMax))
-    {
-      this.profileConcepto.get('horaMinima').setErrors({ dateError: true });
+  revisarRangoDeHoras() {
+    const horaMinControl = this.profileConcepto.get('horaMinima');
+    const horaMaxControl = this.profileConcepto.get('horaMaxima');
+
+    if (!validarHora(horaMinControl.value, horaMaxControl.value)) {
+      horaMinControl.setErrors({ dateError: true });
+      horaMaxControl.setErrors({ dateError: true });
     } else {
-      this.profileConcepto.get('horaMinima').setErrors(null);
-    }
-  }
-  revisarHoraMax() {
-    const horaMin = this.profileConcepto.get('horaMinima').value;
-    const horaMax = this.profileConcepto.get('horaMaxima').value;
-    if (horaMin !== undefined &&
-      horaMax !== undefined &&
-      !validarHora(horaMin, horaMax))
-    {
-      this.profileConcepto.get('horaMaxima').setErrors({ dateError: true });
-    } else {
-      this.profileConcepto.get('horaMaxima').setErrors(null);
+      if (horaMinControl.hasError('dateError')) {
+        horaMinControl.setErrors(null);
+      }
+      if (horaMaxControl.hasError('dateError')) {
+        horaMaxControl.setErrors(null);
+      }
     }
   }
 

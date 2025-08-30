@@ -48,12 +48,7 @@ export class ListaComponent implements OnInit {
   get clave() { return this.profileForm.get('clave'); }
   get nombre() { return this.profileForm.get('nombre'); }
 
-
-
-
-
   ngOnInit(): void {
-
 
     this.usuarioSession = JSON.parse(localStorage.getItem('usuario'));
 
@@ -67,66 +62,51 @@ export class ListaComponent implements OnInit {
         this.listaAccion="AGREGANDO LISTA";
         this.catalogo.tipoListaId=1;
     }
-      this.profileForm.valueChanges.subscribe(val => {
-          if (this.catalogo) {
-              this.catalogo.clave = val.clave;
-              this.catalogo.nombre = val.nombre;
-              this.catalogo.filtro = val.filtro;
-              this.catalogo.filtrada = val.filtrada;
-              this.catalogo.listaFiltroOID = val.lista;
-          }
-      });
-
 
   }
 
+  public getListaByOID(listaOID: string) {
+    this.catalogo = null;
 
+    this.listaService.getListaByListaOID(listaOID, this.usuarioSession.usuarioOID).subscribe(
+      (data) => {
+        this.catalogo = data;
 
-  public getListaByOID( listaOID : string ){
-    this.catalogo=null;
+        if (!this.catalogo) {
+          return;
+        }
 
-    this.listaService.getListaByListaOID( listaOID , this.usuarioSession.usuarioOID).subscribe(
-      (data)=>{
+        this.profileForm.patchValue({
+          clave: this.catalogo.clave,
+          nombre: this.catalogo.nombre,
+          filtro: this.catalogo.filtro === 1,
+          filtrada: this.catalogo.filtrada === 1,
+        });
 
-          this.catalogo =data;
-          if (this.catalogo) {
-              this.profileForm.patchValue({
-                  clave: this.catalogo.clave,
-                  nombre: this.catalogo.nombre,
-                  filtro: this.catalogo.filtro === 1,
-                  filtrada: this.catalogo.filtrada === 1,
-                  selectedLista: {
-                      listaOID: this.catalogo.listaFiltroOID,
-                      nombre: this.catalogo.nombreLista
-                  }
-              });
-          }
+        if (this.catalogo.filtrada === 1) {
 
-          if(this.catalogo.filtro == 1)
-            this.filtro = true ;
+          this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe(
+            (opciones) => {
+              this.listaFiltrada = opciones;
 
-          if(this.catalogo.filtrada == 1){
-            this.filtrada = true ;
+              if (!this.listaFiltrada || this.listaFiltrada.length === 0) {
+                return;
+              }
 
-            this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe(
-              (data)=>{
-                  this.listaFiltrada = data;
+              const listaSeleccionada = this.listaFiltrada.find(
+                (item) => item.listaOID === this.catalogo.listaFiltroOID
+              );
 
-                  this.listaFiltrada.forEach((element) => {
-
-                    if( this.catalogo.listaFiltroOID == element.listaOID)
-                        this.selectedLista = element;
-                  });
-
-              });
-
-          }
-
-
-
+              if (listaSeleccionada) {
+                this.profileForm.get('selectedLista').setValue(listaSeleccionada);
+              } else {
+                console.error("ERROR CRÍTICO: El OID guardado no fue encontrado en la lista de opciones. No se puede preseleccionar el valor.");
+              }
+            }
+          );
+        }
       }
-     );
-
+    );
   }
 
 
@@ -137,57 +117,45 @@ export class ListaComponent implements OnInit {
 
   public clickFiltrada(e) {
 
-    if(e.checked){
+    if (e.checked) {
 
       this.listaService.getListaFiltro(this.usuarioSession.usuarioOID).subscribe(
-        (data)=>{
-            this.listaFiltrada = data;
-            this.selectedLista = this.listaFiltrada[0];
-        });
-   //  this.conceptoFiltro(e.checked);
+        (data) => {
+          this.listaFiltrada = data;
+        }
+      );
+    } else {
+      this.profileForm.get('selectedLista').reset();
+      this.listaFiltrada = [];
     }
   }
 
-
-
   public guardarLista() {
-      if (this.profileForm.valid) {
-          const formValues = this.profileForm.value;
+    if (this.profileForm.invalid) {
+      this.msgs = [{ severity: 'error', summary: 'Error', detail: 'Faltan campos por rellenar' }];
+      return;
+    }
 
-          this.catalogo.clave = formValues.clave.toUpperCase();
-          this.catalogo.nombre = formValues.nombre;
-          this.catalogo.filtro = formValues.filtro ? 1 : 0;
-          this.catalogo.filtrada = formValues.filtrada ? 1 : 0;
-          this.catalogo.listaFiltroOID = formValues.selectedLista ? formValues.selectedLista.listaOID : null;
-          this.catalogo.nombreLista = formValues.selectedLista ? formValues.selectedLista.nombre : '';
+    const formValues = this.profileForm.value;
 
-          if (formValues.filtrada) {
-          this.catalogo.listaFiltroOID = this.selectedLista ? this.selectedLista.listaOID : null;
-          this.catalogo.nombreLista = this.selectedLista ? this.selectedLista.nombre : '';
-      } else {
-          this.catalogo.listaFiltroOID = null;
-          this.catalogo.nombreLista = "";
-      }
+    this.catalogo.clave = formValues.clave.toUpperCase();
+    this.catalogo.nombre = formValues.nombre;
+    this.catalogo.filtro = formValues.filtro ? 1 : 0;
+    this.catalogo.filtrada = formValues.filtrada ? 1 : 0;
 
-          if(formValues.selectedLista){
-            this.catalogo.listaFiltroOID = formValues.selectedLista.listaOID;
-            this.catalogo.nombreLista = formValues.selectedLista.nombre;
-          }
-          else {
-              this.catalogo.listaFiltroOID = null;
-              this.catalogo.nombreLista = null;
-          }
+    if (formValues.filtrada && formValues.selectedLista) {
 
-      this.listaService.guardarLista(this.catalogo, this.usuarioSession.usuarioOID).subscribe((data) => {
-          this.ref.close(this.catalogo);
-      });
-      } else {
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Error', detail:'Faltan campos por rellenar'});
+      this.catalogo.listaFiltroOID = formValues.selectedLista.listaOID;
+      this.catalogo.nombreLista = formValues.selectedLista.nombre;
+    } else {
+      this.catalogo.listaFiltroOID = null;
+      this.catalogo.nombreLista = null;
+    }
 
-}
-
- }
+    this.listaService.guardarLista(this.catalogo, this.usuarioSession.usuarioOID).subscribe((data) => {
+      this.ref.close(this.catalogo);
+    });
+  }
 
 
  public cancelarLista(){

@@ -71,11 +71,11 @@
         <td>Lista</td>
         <td>
           <p-dropdown
-
             formControlName="selectedLista"
             [options]="listaFiltrada"
             optionLabel="nombre"
             placeholder="Seleccione una opción"
+            [disabled]="!listaFiltrada || listaFiltrada.length === 0"
           ></p-dropdown>
         </td>
       </tr>

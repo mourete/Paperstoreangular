@@ -1,3 +1,4 @@
+import { InfoHuesped } from './../../model/info-huesped';
 import { Component, OnInit } from '@angular/core';
 import { InfoHuesped } from 'src/app/model/info-huesped';
 import { AccountService } from 'src/app/service/account.service';
@@ -21,13 +22,15 @@ export class InfoHuespedComponent implements OnInit {
 
       if( this.config.data.usuarioOID!=null   ){
             this.usuarioOID=this.config.data.usuarioOID;
+
+             this.listaHuespedes=this.config.data.huespedes;
       }
 
 
     }
 
   ngOnInit(): void {
-    this.obtenerHuespedes();
+   // this.obtenerHuespedes();
   }
 
 

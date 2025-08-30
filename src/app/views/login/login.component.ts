@@ -127,7 +127,8 @@ public seleccionarHuesped(  ){
       header: 'Seleccionar huesped',
       width: '70%',
       contentStyle: {"max-height": "550px" , "height" : "500px;"  } ,
-      data: {  usuarioOID: this.usuario.usuarioOID  }
+      data: {  usuarioOID: this.usuario.usuarioOID ,
+    huespedes: this.infoHuespedes   }
   });
 
 
